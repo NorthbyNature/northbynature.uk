@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="text-center">
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships and Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+            <a href="cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="content-section text-centered-container">
+            <div class="event-details">
+                <div class="event-image">
+                    <img src="C:/Users/Montelle/OneDrive/Business/NORTH BY NATURE/Website/website/Images/event-example.png" alt="Event Image">
+                </div>
+                <div class="event-info">
+                    <h2 class="event-title">Sample Event</h2>
+                    <div class="price">Starting from £20.00</div>
+                    <div class="ticket-selection">
+                        <button class="ticket-btn selected" data-price="1" data-name="Early Bird">Early Bird - £1</button>
+                        <button class="ticket-btn" data-price="30" data-name="Second Release">Second Release - £30</button>
+                        <button class="ticket-btn" data-price="40" data-name="Final Release">Final Release - £40</button>
+                    </div>
+                    <div class="quantity-selection">
+                        <button id="decrease-quantity">-</button>
+                        <input type="text" id="quantity-input" value="1" readonly>
+                        <button id="increase-quantity">+</button>
+                    </div>
+                    <div class="buttons-container">
+                        <button id="add-to-cart" class="btn btn-primary">Add to Cart</button>
+                        <button id="buy-now" class="btn btn-success">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="instagram-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-center">
+                <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
+                <iframe src="https://snapwidget.com/embed/1072640" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:480px; height:160px" title="Posts from Instagram"></iframe>
+                <p>&copy; 2024 North by Nature. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcnd.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
