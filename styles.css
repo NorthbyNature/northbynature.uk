@@ -822,3 +822,17 @@ ul li {
         width: 100%;
         height: auto;
     }
+.title-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 titles per row */
+    gap: 20px; /* Adjust the gap between titles */
+    text-align: center; /* Center the text */
+}
+
+.title-container h2 {
+    margin: 10px 0;
+    font-size: 1.5em; /* Adjust the size of the titles */
+    color: #ffcc00; /* Maintain the color you have set */
+    font-weight: 700;
+    text-transform: uppercase;
+}
