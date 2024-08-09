@@ -12,7 +12,6 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%; /* Add this line */
-    overflow-x: hidden; /* Add this line to prevent horizontal scrolling */
 }
 
 .header, .main-content, .footer {
@@ -42,7 +41,6 @@ nav ul {
     padding: 0;
     justify-content: center;
     width: 100%;
-    flex-wrap: wrap; /* Add this line for better mobile responsiveness */
 }
 
 nav ul li {
@@ -203,13 +201,11 @@ footer #social img {
     align-items: center;
     width: 100%;
     margin: 20px 0;
-    overflow: hidden; /* Add this line */
 }
 
 .video-container video {
-    max-width: 100%; /* Change from 75% to 100% for better fit */
+    max-width: 75%;
     height: auto;
-    object-fit: cover; /* Ensure the video covers the container */
 }
 
 .section-title {
@@ -778,42 +774,4 @@ ul li {
     position: relative;
     top: -10px;
     left: -10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .footer-links {
-        margin-left: 0;
-        text-align: center;
-        order: 1;
-    }
-
-    .footer-center {
-        order: 2;
-    }
-
-    .footer-container {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 600px) {
-    .video-container video {
-        width: 100%;
-        height: auto;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .footer-links {
-        text-align: center;
-        margin-left: 0;
-    }
-
-    .cart-container {
-        padding: 10px;
-    }
 }
