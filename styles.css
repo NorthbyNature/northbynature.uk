@@ -823,12 +823,12 @@ ul li {
         height: auto;
     }
 .nav-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns */
-    gap: 10px; /* Space between items */
-    width: 100%;
-    max-width: 800px; /* You can adjust this max-width */
-    margin: 0 auto; /* Center the grid */
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr)!important; /* 4 columns */
+    gap: 10px !important; /* Space between items */
+    width: 100% !important;
+    max-width: 800px !important; /* You can adjust this max-width */
+    margin: 0 auto !important; /* Center the grid */
 }
 
 .nav-grid .nav-item {
