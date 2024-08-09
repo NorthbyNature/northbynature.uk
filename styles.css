@@ -36,23 +36,21 @@ header {
 
 nav ul {
     list-style: none;
-    display: flex;
+    display: grid;
     gap: 20px;
     margin: 0;
     padding: 0;
     justify-content: center;
     width: 100%;
-    flex-wrap: wrap; /* Add this line for better mobile responsiveness */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: auto auto auto; /* 3 rows */
 }
 
-nav ul.nav-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+nav ul li:nth-child(4),
+nav ul li:nth-child(5) {
+    grid-column: span 2; /* Span 2 columns for the middle row */
 }
+
 nav ul li {
     position: relative;
     display: inline-block;
