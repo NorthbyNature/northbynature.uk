@@ -45,6 +45,14 @@ nav ul {
     flex-wrap: wrap; /* Add this line for better mobile responsiveness */
 }
 
+nav ul.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
 nav ul li {
     position: relative;
     display: inline-block;
@@ -822,15 +830,3 @@ ul li {
         width: 100%;
         height: auto;
     }
-.nav-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr)!important; /* 4 columns */
-    gap: 10px !important; /* Space between items */
-    width: 100% !important;
-    max-width: 800px !important; /* You can adjust this max-width */
-    margin: 0 auto !important; /* Center the grid */
-}
-
-.nav-grid .nav-item {
-    text-align: center;
-}
