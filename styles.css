@@ -816,4 +816,9 @@ ul li {
     .cart-container {
         padding: 10px;
     }
-}
+
+@media (max-width: 600px) {
+    .snapwidget-widget {
+        width: 100%;
+        height: auto;
+    }
