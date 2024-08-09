@@ -52,8 +52,8 @@ nav ul li:nth-child(5) {
 }
 
 nav ul li {
-    position: relative;
-    display: inline-block;
+     position: relative;
+    text-align: center;
 }
 
 nav ul li a {
