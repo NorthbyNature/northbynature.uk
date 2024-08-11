@@ -208,3 +208,13 @@ function renderPayPalButton() {
         }
     }).render('#paypal-button-container');
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener for handling the visibility of the event card
+    const eventCard = document.querySelector('.event-card');
+
+    if (eventCard && eventCard.getAttribute('data-active') === 'false') {
+        eventCard.style.display = 'none';
+    }
+});
+
