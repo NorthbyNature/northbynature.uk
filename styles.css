@@ -333,6 +333,16 @@ a:hover {
     text-decoration: none;
 }
 
+.gold-link {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+.gold-link:hover {
+    color: #e6b800;
+    text-decoration: none;
+}
+
 .footer-container {
     display: flex;
     flex-direction: column;
@@ -880,21 +890,15 @@ nav ul.nav-list.active {
         width: 100%;
         height: auto;
     }
-
-a:contains("click here") {
-    color: #ffcc00; /* Gold color */
 }
 
-a:contains("click here"):hover {
-    color: #e6b800; /* Slightly darker gold on hover */
-}
-
-.gold-link {
-    color: #ffcc00; /* Gold color */
+/* Apply gold color to specific links */
+a.gold-link {
+    color: #ffcc00;
     text-decoration: none;
 }
 
-.gold-link:hover {
-    color: #e6b800; /* Slightly darker gold on hover */
+a.gold-link:hover {
+    color: #e6b800;
     text-decoration: none;
 }
