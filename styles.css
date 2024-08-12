@@ -880,4 +880,11 @@ nav ul.nav-list.active {
         width: 100%;
         height: auto;
     }
+/* Optionally, if you want to make the change more specific to links that have "click here" in their text */
+a:contains("click here") {
+    color: #ffcc00; /* Gold color */
+}
+
+a:contains("click here"):hover {
+    color: #e6b800; /* Slightly darker gold on hover */
 }
