@@ -1,10 +1,12 @@
+require('dotenv').config(); // Add this line to load environment variables
+
 const express = require('express');
-const nodemailer = require('nodemailer'); // Add this line to include nodemailer
+const nodemailer = require('nodemailer'); 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Add this line to parse form data
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -22,7 +24,7 @@ app.post('/create-order', async (req, res) => {
     purchase_units: [{
       amount: {
         currency_code: 'GBP',
-        value: '10.00' // Replace with your ticket price
+        value: '10.00'
       }
     }]
   });
@@ -49,22 +51,22 @@ app.post('/capture-order', async (req, res) => {
   }
 });
 
-// New route to handle the contact form submission
+// Handle the contact form submission
 app.post('/send-mail', (req, res) => {
   const { email, subject, message } = req.body;
 
   // Set up Nodemailer to send the email
   let transporter = nodemailer.createTransport({
-    service: 'Gmail', // You may need to change this depending on your email provider
+    service: 'Outlook', // Change if using a different provider (Gmail, etc.)
     auth: {
-      user: 'info@northbynature.uk', // Replace with your email address
-      pass: 'FinnisFN2187',  // Replace with your email password
+      user: process.env.EMAIL_USER, // Use environment variables
+      pass: process.env.EMAIL_PASS, // Use environment variables
     },
   });
 
   let mailOptions = {
     from: email,
-    to: 'info@northbynature.uk', // Replace with the recipient's email address
+    to: 'info@northbynature.uk', 
     subject: subject,
     text: message,
   };
