@@ -1,7 +1,10 @@
-require('dotenv').config(); // Add this line to load environment variables
-
 const express = require('express');
-const nodemailer = require('nodemailer'); 
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
+
 const app = express();
 const port = 3000;
 
@@ -12,7 +15,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Your existing PayPal routes
+// PayPal routes (assuming these are correct and in place)
 const paypal = require('@paypal/checkout-server-sdk');
 const { client } = require('./paypalConfig');
 
@@ -24,7 +27,7 @@ app.post('/create-order', async (req, res) => {
     purchase_units: [{
       amount: {
         currency_code: 'GBP',
-        value: '10.00'
+        value: '10.00' // Replace with your ticket price
       }
     }]
   });
@@ -51,22 +54,22 @@ app.post('/capture-order', async (req, res) => {
   }
 });
 
-// Handle the contact form submission
+// Route to handle the contact form submission
 app.post('/send-mail', (req, res) => {
   const { email, subject, message } = req.body;
 
   // Set up Nodemailer to send the email
   let transporter = nodemailer.createTransport({
-    service: 'Outlook', // Change if using a different provider (Gmail, etc.)
+    service: 'Outlook', // Adjust this if needed
     auth: {
-      user: process.env.EMAIL_USER, // Use environment variables
-      pass: process.env.EMAIL_PASS, // Use environment variables
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   let mailOptions = {
     from: email,
-    to: 'info@northbynature.uk', 
+    to: process.env.EMAIL_TO, // Use the recipient's email from the environment variable
     subject: subject,
     text: message,
   };
@@ -82,5 +85,5 @@ app.post('/send-mail', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://northbynature.uk/`);
+  console.log(`Server running at http://localhost:${port}/`);
 });
