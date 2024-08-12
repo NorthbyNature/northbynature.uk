@@ -57,14 +57,14 @@ app.post('/send-mail', (req, res) => {
   let transporter = nodemailer.createTransport({
     service: 'Gmail', // You may need to change this depending on your email provider
     auth: {
-      user: 'your-email@gmail.com', // Replace with your email address
-      pass: 'your-email-password',  // Replace with your email password
+      user: 'info@northbynature.uk', // Replace with your email address
+      pass: 'FinnisFN2187',  // Replace with your email password
     },
   });
 
   let mailOptions = {
     from: email,
-    to: 'your-email@gmail.com', // Replace with the recipient's email address
+    to: 'info@northbynature.uk', // Replace with the recipient's email address
     subject: subject,
     text: message,
   };
