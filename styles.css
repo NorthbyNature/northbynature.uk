@@ -888,3 +888,13 @@ a:contains("click here") {
 a:contains("click here"):hover {
     color: #e6b800; /* Slightly darker gold on hover */
 }
+
+.gold-link {
+    color: #ffcc00; /* Gold color */
+    text-decoration: none;
+}
+
+.gold-link:hover {
+    color: #e6b800; /* Slightly darker gold on hover */
+    text-decoration: none;
+}
