@@ -60,7 +60,7 @@ app.post('/send-mail', (req, res) => {
 
   // Set up Nodemailer to send the email
   let transporter = nodemailer.createTransport({
-    service: 'Outlook', // Adjust this if needed
+    service: 'Gmail', // Adjust this if needed
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
