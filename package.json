@@ -12,7 +12,6 @@
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.3",
     "body-parser": "^1.20.2",
-    "express": "^4.19.2",
-    "nodemailer": "^6.9.14"
+    "express": "^4.19.2"
   }
 }
