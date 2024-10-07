@@ -1,128 +1,142 @@
+/* Importing Google Fonts - Barlow Condensed */
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap');
 
+/* General body styling */
 body {
-    font-family: 'Barlow Condensed', sans-serif;
-    background-color: #000;
-    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif; /* Applying the imported font */
+    background-color: #000; /* Setting background to black */
+    color: #fff; /* White text color */
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Layout styles for header, main content, and footer */
 .header, .main-content, .footer {
     width: 100%;
 }
 
+/* Header section styling */
 header {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 20px;
-    background-color: #000;
+    background-color: #000; /* Black background for header */
     width: 100%;
 }
 
+/* Logo image styling in the header */
 .logo {
     height: 150px;
-    max-width: 100%;
+    max-width: 100%; /* Ensures the logo is responsive */
     margin-bottom: 20px;
 }
 
+/* Navigation menu styling */
 nav ul {
-    list-style: none;
+    list-style: none; /* Removes default bullet points */
     display: flex;
-    gap: 20px;
+    gap: 20px; /* Adds spacing between items */
     margin: 0;
     padding: 0;
     justify-content: center;
     width: 100%;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
 }
 
+/* Grid layout for nav when necessary (optional feature) */
 nav ul.nav-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 10px; /* Spacing between items */
     width: 100%;
-    max-width: 800px;
+    max-width: 800px; /* Sets maximum width */
     margin: 0 auto;
 }
 
-/* Adjust the second row to only have 2 items */
+/* Ensures the second row has only 2 items centered */
 nav ul.nav-grid li:nth-child(4),
 nav ul.nav-grid li:nth-child(5) {
     grid-column: span 1 / span 1;
 }
 
-/* Forcing the 4th and 5th items to be centered in the second row */
+/* Center the 4th item in the grid */
 nav ul.nav-grid li:nth-child(4) {
     grid-column: 2 / 3;
 }
 
+/* Center the 5th item in the grid */
 nav ul.nav-grid li:nth-child(5) {
     grid-column: 2 / 3;
 }
 
-/* Ensure the third row displays 3 items */
+/* Ensure 3 items in the third row */
 nav ul.nav-grid li:nth-child(6),
 nav ul.nav-grid li:nth-child(7),
 nav ul.nav-grid li:nth-child(8) {
     grid-column: span 1 / span 1;
 }
 
+/* Individual list item styling */
 nav ul li {
     position: relative;
     display: inline-block;
 }
 
+/* Links in the navigation menu */
 nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
+    color: #fff; /* White text */
+    text-decoration: none; /* Removes underline */
+    padding: 10px 15px; /* Adds padding */
     display: block;
-    text-transform: uppercase;
+    text-transform: uppercase; /* Uppercase text */
     font-family: 'Barlow Condensed', sans-serif;
 }
 
+/* Hover effect for navigation links */
 nav ul li a:hover, nav ul li .dropbtn:hover {
-    background-color: #ffcc00;
-    color: #000;
+    background-color: #ffcc00; /* Changes background to gold */
+    color: #000; /* Text color changes to black */
 }
 
+/* Dropdown menu styles */
 .dropdown-content {
-    display: none;
+    display: none; /* Hidden by default */
     position: absolute;
-    background-color: #000;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: #000; /* Black dropdown */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2); /* Adds shadow effect */
     z-index: 1;
 }
 
+/* Dropdown link styles */
 .dropdown-content a {
-    color: #fff;
+    color: #fff; /* White text */
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    font-family: 'Barlow Condensed', sans-serif;
 }
 
+/* Hover effect for dropdown links */
 .dropdown-content a:hover {
-    background-color: #ffcc00;
+    background-color: #ffcc00; /* Gold background on hover */
     color: #000;
 }
 
+/* Shows the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
+/* Main content section styling */
 main {
     padding: 20px;
-    background-color: #000;
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -130,32 +144,33 @@ main {
     width: 100%;
 }
 
+/* Section element styling */
 section {
     margin-bottom: 40px;
     color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
     text-align: center;
 }
 
+/* Headings styles (h1, h2, h3) */
 h1, h2, h3 {
-    color: #ffcc00;
-    font-family: 'Barlow Condensed', sans-serif;
+    color: #ffcc00; /* Gold color for headings */
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
 }
 
-/* Additional styles for the contact form */
+/* Form styling */
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Adds spacing between form elements */
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto; /* Centers the form */
     text-align: center;
 }
 
+/* Input and textarea styles */
 form input[type="email"],
 form input[type="text"],
 form textarea,
@@ -167,65 +182,72 @@ form input[type="submit"] {
     margin: 10px 0;
 }
 
+/* Input field and textarea styles */
 form input[type="email"],
 form input[type="text"],
 form textarea {
-    background-color: #fff;
-    color: #333;
+    background-color: #fff; /* White background */
+    color: #333; /* Dark text */
     width: 100%;
     box-sizing: border-box;
 }
 
+/* Textarea specific styling */
 form textarea {
-    height: 150px;
+    height: 150px; /* Sets a fixed height for textareas */
 }
 
+/* Submit button styling */
 form input[type="submit"] {
-    background-color: #ffcc00;
-    color: #000;
+    background-color: #ffcc00; /* Gold background */
+    color: #000; /* Black text */
     cursor: pointer;
 }
 
+/* Submit button hover effect */
 form input[type="submit"]:hover {
-    background-color: #e6b800;
+    background-color: #e6b800; /* Darker gold on hover */
 }
 
+/* Label styles */
 form label {
     color: #fff;
     text-align: left;
     margin-left: 10px;
 }
 
+/* Footer styling */
 footer {
-    background-color: #000;
+    background-color: #000; /* Black background */
     padding: 20px;
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
+    color: #fff; /* White text */
     text-align: center;
     width: 100%;
 }
 
+/* Section within footer */
 footer section {
     margin-bottom: 20px;
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
     text-align: center;
 }
 
+/* Footer links */
 footer a {
-    color: #fff;
+    color: #fff; /* White text */
     text-decoration: none;
-    font-family: 'Barlow Condensed', sans-serif;
 }
 
+/* Footer link hover effect */
 footer a:hover {
-    color: #ffcc00;
+    color: #ffcc00; /* Gold on hover */
 }
 
+/* Social media icons in footer */
 footer #social img {
-    height: 30px;
+    height: 30px; /* Fixed size for social icons */
 }
 
+/* Video container styling */
 .video-container {
     display: flex;
     justify-content: center;
@@ -235,19 +257,21 @@ footer #social img {
     overflow: hidden;
 }
 
+/* Video element styling */
 .video-container video {
-    max-width: 100%;
+    max-width: 100%; /* Ensures video is responsive */
     height: auto;
     object-fit: cover;
 }
 
+/* Section title styling */
 .section-title {
     text-align: center;
     font-size: 2em;
     margin-bottom: 20px;
 }
 
-/* Container for text and image */
+/* Container for text and image layout */
 .text-and-image {
     display: flex;
     flex-direction: column;
@@ -255,6 +279,7 @@ footer #social img {
     text-align: center;
 }
 
+/* Larger screens layout */
 @media (min-width: 768px) {
     .text-and-image {
         flex-direction: row;
@@ -278,31 +303,7 @@ footer #social img {
     }
 }
 
-/* Ensure form inputs and textareas are larger */
-form input, form textarea {
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
-    font-family: 'Barlow Condensed', sans-serif;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.centered-text p {
-    margin: 0;
-    line-height: 1.6;
-    text-align: center;
-}
-
-.text-centered-container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 20px;
-}
-
+/* Instagram link in the header */
 .instagram-link {
     width: 100%;
     background-color: #000;
@@ -311,48 +312,51 @@ form input, form textarea {
     font-size: 14px;
 }
 
+/* Instagram link styling */
 .instagram-link a {
     color: #fff;
     text-decoration: none;
     display: block;
 }
 
+/* Hover effect for Instagram link */
 .instagram-link a:hover {
-    color: #808080;
-    background-color: transparent;
-    text-decoration: none;
+    color: #808080; /* Gray on hover */
 }
 
+/* General link styling */
 a {
-    color: #ffcc00;
+    color: #ffcc00; /* Gold color for links */
     text-decoration: none;
 }
 
+/* Hover effect for general links */
 a:hover {
-    color: #e6b800;
-    text-decoration: none;
+    color: #e6b800; /* Darker gold on hover */
 }
 
+/* Gold link specific styling */
 .gold-link {
-    color: #ffcc00;
-    text-decoration: none;
+    color: #ffcc00; /* Gold link color */
 }
 
+/* Gold link hover effect */
 .gold-link:hover {
-    color: #e6b800;
-    text-decoration: none;
+    color: #e6b800; /* Darker gold on hover */
 }
 
+/* Footer container layout */
 .footer-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1200px; /* Maximum width for the footer */
     margin: 0 auto;
 }
 
+/* Footer links layout */
 .footer-links {
     text-align: left;
     margin-top: 20px;
@@ -360,54 +364,54 @@ a:hover {
     order: 2;
 }
 
+/* Footer heading */
 .footer-links h4 {
     margin-bottom: 10px;
     color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
     text-transform: uppercase;
 }
 
+/* Footer links list */
 .footer-links ul {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
+/* Individual link items in footer */
 .footer-links ul li {
     margin-bottom: 10px;
 }
 
+/* Footer link styling */
 .footer-links ul li a {
-    color: #fff;
+    color: #fff; /* White text */
     text-decoration: none;
-    font-family: 'Barlow Condensed', sans-serif;
 }
 
+/* Footer link hover effect */
 .footer-links ul li a:hover {
-    color: #ffcc00;
-    text-decoration: none;
+    color: #ffcc00; /* Gold on hover */
 }
 
+/* Footer center content */
 .footer-center {
     text-align: center;
     margin-bottom: 20px;
     order: 1;
 }
 
+/* Footer centered text */
 .footer-center p {
     margin: 10px 0;
 }
 
+/* Centered iframe in footer (e.g., for Instagram) */
 .footer-center iframe {
     display: block;
     margin: 0 auto;
 }
 
-.footer-left,
-.footer-center {
-    flex: 1;
-}
-
+/* Instagram footer layout */
 .instagram-footer {
     display: flex;
     flex-direction: column;
@@ -417,461 +421,26 @@ a:hover {
     width: 100%;
     border-top: 1px solid #fff;
     margin-top: 40px;
-    padding-top: 40px;
 }
 
+/* Instagram footer text and links */
 .instagram-footer p, .instagram-footer a, .instagram-footer iframe {
     margin: 10px 0;
 }
 
+/* Unordered lists styling */
 ul {
-    list-style-type: none;
+    list-style-type: none; /* Removes bullets */
     padding: 0;
 }
 
+/* List item spacing */
 ul li {
     margin-bottom: 10px;
 }
 
-.events-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px 0;
-}
-
-.event {
-    background-color: #222;
-    border-radius: 10px;
-    overflow: hidden;
-    max-width: 300px;
-    text-align: center;
-    margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.event img {
-    width: 100%;
-    height: auto;
-}
-
-.event-details {
-    padding: 15px;
-}
-
-.event-price {
-    color: #ffcc00;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.event button {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding: 10px 15px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.event button:hover {
-    background-color: #e6b800;
-}
-
-.event-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid #444;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s;
-}
-
-.event-card:hover {
-    transform: scale(1.05);
-}
-
-.event-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.event-card .event-info {
-    padding: 10px;
-    background-color: #222;
-}
-
-.event-card .event-info h3,
-.event-card .event-info p {
-    margin: 0;
-    color: #fff;
-}
-
-.event-details-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.event-image {
-    flex: 1;
-    margin-right: 20px;
-}
-
-.event-info {
-    flex: 1;
-    text-align: left;
-}
-
-.ticket-types {
-    margin: 20px 0;
-}
-
-.ticket-btn {
-    border: 2px solid transparent;
-    background-color: transparent;
-    color: #fff;
-    font-size: 1.2em;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Center align the ticket selection buttons */
-.ticket-selection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.ticket-btn:hover {
-    border-color: grey;
-}
-
-.ticket-btn.selected {
-    background-color: white;
-    color: #000;
-    border-color: grey;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* Center align the quantity selection buttons */
-.quantity-selection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-
-/* Add some styles for the Add to Cart and Buy Now buttons */
-.event-info .btn {
-    width: 150px;
-    margin: 10px;
-}
-
-/* Center the buttons container */
-.buttons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.quantity-btn {
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-#quantity-input {
-    width: 60px;
-    text-align: center;
-    margin: 0 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #fff;
-    color: #000;
-    border-radius: 5px;
-}
-
-#add-to-cart {
-    background-color: #ffcc00;
-    color: #000;
-    font-size: 18px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-.selected {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #ffcc00;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.cart-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-.cart-icon a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.cart-icon a i {
-    font-size: 24px;
-}
-
-#cart-count {
-    background-color: #ffcc00;
-    color: #000;
-    border-radius: 50%;
-    padding: 5px 10px;
-    position: relative;
-    top: -10px;
-    left: -10px;
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-.remove-item i {
-    font-size: 18px;
-}
-
-/* Cart Styles */
-.cart-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-}
-
-.cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ffcc00;
-    padding-bottom: 10px;
-}
-
-.cart-header h2 {
-    margin: 0;
-}
-
-.cart-header .cart-total {
-    font-size: 1.2em;
-}
-
-.cart-items {
-    list-style: none;
-    padding: 0;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
-}
-
-.cart-item img {
-    max-width: 100px;
-    height: auto;
-    margin-right: 20px;
-}
-
-.cart-item-details {
-    flex: 1;
-    text-align: left;
-}
-
-.cart-item-quantity {
-    display: flex;
-    align-items: center;
-}
-
-.cart-item-quantity input {
-    width: 50px;
-    text-align: center;
-    border: none;
-    background-color: #fff;
-    color: #000;
-    border-radius: 5px;
-}
-
-.cart-item-quantity button {
-    background: none;
-    border: none;
-    color: grey;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.cart-item-quantity button:hover {
-    color: white;
-    border-color: white;
-}
-
-.cart-item-remove {
-    color: white;
-    cursor: pointer;
-}
-
-.cart-item-remove:hover {
-    color: darkred;
-}
-
-.cart-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    border-top: 2px solid #ffcc00;
-    padding-top: 10px;
-}
-
-.cart-footer .total-price {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.cart-footer .checkout-btn {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-}
-
-.cart-footer .checkout-btn:hover {
-    background-color: #e6b800;
-}
-
-/* Quantity buttons without background */
-.quantity-selection button {
-    background: none;
-    color: grey;
-    border: 1px solid grey;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.quantity-selection button:hover {
-    color: white;
-    border-color: white;
-}
-
-/* Cart icon styles */
-.cart-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-.cart-icon a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.cart-icon a i {
-    font-size: 24px;
-}
-
-#cart-count {
-    background-color: #ffcc00;
-    color: #000;
-    border-radius: 50%;
-    padding: 5px 10px;
-    position: relative;
-    top: -10px;
-    left: -10px;
-}
-
-/* Mobile Menu Styles */
-.mobile-menu-toggle {
-    display: none;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-nav ul.nav-list {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    width: 100%;
-}
-
-nav ul.nav-list.active {
-    flex-direction: column;
-    align-items: center;
-}
-
+/* Mobile-specific styles (media queries) */
 @media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: block;
-    }
-
-    nav ul.nav-list {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #000;
-    }
-
-    nav ul.nav-list.active {
-        display: flex;
-    }
-
-    nav ul.nav-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        width: 100%;
-    }
-}
-
-@media (max-width: 600px) {
     .video-container video {
         width: 100%;
         height: auto;
@@ -881,24 +450,14 @@ nav ul.nav-list.active {
         text-align: center;
         margin-left: 0;
     }
-
-    .cart-container {
-        padding: 10px;
-    }
-
-    .snapwidget-widget {
-        width: 100%;
-        height: auto;
-    }
 }
 
-/* Apply gold color to specific links */
+/* Styles for the "gold-link" class */
 a.gold-link {
-    color: #ffcc00;
+    color: #ffcc00; /* Gold color */
     text-decoration: none;
 }
 
 a.gold-link:hover {
-    color: #e6b800;
-    text-decoration: none;
+    color: #e6b800; /* Darker gold on hover */
 }

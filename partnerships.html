@@ -4,19 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>North by Nature - Partnerships and Collaborations</title>
+    
+    <!-- Link to the main stylesheet (styles.css) -->
+    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Bootstrap CSS -->
+    
+    <!-- Bootstrap CSS for layout and component styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for using icon fonts (e.g., social media or shopping cart icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
     <header class="text-center">
+        <!-- Instagram link that opens in a new tab -->
+        <!-- To update this link or text, change the href and the link text below -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
         </div>
+        
+        <!-- Placeholder for the logo image -->
+        <!-- Change 'logo-placeholder.png' to the actual path of your logo image if different -->
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        
+        <!-- Navigation menu with links to different pages -->
         <nav>
             <ul class="nav justify-content-center">
+                <!-- Each list item contains a link to a different section of the website -->
+                <!-- To add more navigation items, copy and paste <li> elements and update the href -->
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
@@ -27,28 +43,49 @@
                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
             </ul>
         </nav>
+
+        <!-- Shopping cart icon with a counter -->
+        <!-- The cart icon uses Font Awesome. To change or add more icons, use Font Awesome's library -->
+        <!-- Update the href if the cart page is located elsewhere -->
         <div class="cart-icon">
             <a href="cart.html">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
+                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
+                <span id="cart-count">0</span> <!-- Cart count set to 0 by default -->
             </a>
         </div>
     </header>
+
+    <!-- Main Content Section: Information about partnerships and collaborations -->
     <main class="main-content">
         <section class="content-section text-centered-container">
+            <!-- Image related to partnerships -->
+            <!-- Replace 'win-win.png' with the path to your own image if needed -->
             <img src="Images/win-win.png" alt="Win Win" class="img-fluid" style="max-width: 300px; margin-bottom: 40px;">
+            
+            <!-- Heading and paragraph text -->
+            <!-- To change the content, modify the text within the <h2> and <p> tags -->
             <h2>PARTNERSHIPS</h2>
             <p>Additionally, North by Nature Exclusive explores partnerships with different businesses and services, which we aim to include discounts, complimentary products, or collaborative competitions at your establishment or service. In doing so, you receive content opportunities, ensuring that you know have regular high-calibre consumers of your product or service as a result of our collaboration. Benefits include:</p>
+            
+            <!-- List of benefits for potential partners -->
             <div class="benefits">
                 <p>More consumers | Higher social media engagement | Positive reputation | Networking links | Reviews | + More</p>
             </div>
+            
+            <!-- Content opportunities section -->
             <h2>CONTENT OPPORTUNITIES</h2>
             <p>We offer businesses a "win-win" opportunity by engaging with our members, in return for advertising, engagement, and content coverage tailored to your specifications. This may include your products or services for our company or members to review, promote, or engage with. Rest assured, our members are consistently high-caliber individuals, ensuring the quality and value of the content they produce. Examples of providable content include:</p>
+            
+            <!-- Types of content that can be created -->
             <div class="content-opportunities">
                 <p>Reels | TikToks | Instagram Posts | Stories</p>
             </div>
+            
+            <!-- How to become a partner -->
             <h2>HOW TO BECOME A PARTNER</h2>
             <p>To register an interest in becoming an exclusive partnered business, all you have to do is contact us with the following information (if applicable):</p>
+            
+            <!-- List of required information for potential partners -->
             <div class="partner-info">
                 <p>Name of your Business</p>
                 <p>The product or service that you or your company provide</p>
@@ -57,29 +94,54 @@
                 <p>Any websites, social media, and/or contact information</p>
                 <p>How you heard about North by Nature Exclusive</p>
             </div>
+            
+            <!-- Call-to-action link to the contact page -->
+            <!-- If you want to change the link color or style, modify the "gold-link" class in your CSS -->
             <p><a class="gold-link" href="contact.html">Click here to contact us.</a></p>
         </section>
     </main>
-  <footer class="instagram-footer">
-    <div class="footer-container">
-        <div class="footer-links">
-            <h4>Policies</h4>
-            <ul>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
+
+    <!-- Footer Section: Links to policies, Instagram feed, and copyright -->
+    <footer class="instagram-footer">
+        <div class="footer-container">
+            <!-- Links to privacy policy and terms of service -->
+            <!-- Modify the href if the location of these pages changes -->
+            <div class="footer-links">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Instagram widget and social media follow section -->
+            <!-- You can add other social media platforms here by adding more links or embeds -->
+            <div class="footer-center">
+                <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
+                
+                <!-- Embedded Instagram widget using iframe -->
+                <!-- If you want to embed a different widget, replace this iframe with the new one -->
+                <iframe src="https://snapwidget.com/embed/1072640" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:400px; height:150px" title="Posts from Instagram"></iframe>
+                
+                <!-- Copyright notice -->
+                <!-- Update the year and business name as needed -->
+                <p>&copy; 2024 North by Nature. All rights reserved.</p>
+            </div>
         </div>
-        <div class="footer-center">
-            <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
-            <iframe src="https://snapwidget.com/embed/1072640" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:400px; height:150px" title="Posts from Instagram"></iframe>
-            <p>&copy; 2024 North by Nature. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
-    <!-- Bootstrap JS and dependencies -->
+    </footer>
+
+    <!-- JavaScript Section: External scripts for functionality -->
+    <!-- jQuery for DOM manipulation -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <!-- Popper.js for positioning, required by Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    
+    <!-- Bootstrap's JavaScript for components like modals, tooltips, etc. -->
     <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Link to your custom JavaScript file -->
+    <!-- Add custom scripts for dynamic functionality in the scripts.js file -->
     <script src="scripts.js"></script>
 </body>
 </html>
