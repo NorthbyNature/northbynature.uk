@@ -118,6 +118,7 @@ section {
 
 h1, h2, h3 {
     color: #ffcc00;
+    font-family: 'Barlow Condensed', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
