@@ -311,6 +311,7 @@ ul li {
     }
 }
 
+/* Adjustments for screens smaller than 600px */
 @media (max-width: 600px) {
     .video-container video {
         width: 100%;
@@ -319,5 +320,21 @@ ul li {
         text-align: center;
         margin-left: 0;
     }
-}
+    
+    /* Reduce the font size and line height for headings on mobile */
+    h1, h2, h3 {
+        font-size: 1.5em; /* Adjust as needed for smaller screens */
+        line-height: 1.2;  /* Reduce the space between lines */
+    }
 
+    /* Adjust navigation link font size and padding for smaller screens */
+    nav ul li a {
+        font-size: 0.9em; /* Smaller font size for nav items */
+        padding: 3px 5px; /* Reduce padding to make items fit better */
+    }
+
+    /* Optional: Adjust overall body font size if necessary */
+    body {
+        font-size: 0.9em; /* Slightly smaller body text for mobile */
+    }
+}
