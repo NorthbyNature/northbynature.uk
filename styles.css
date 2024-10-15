@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
-    font-family: 'Barlow Condensed', sans-serif !important;
+    font-family: 'Philosopher', sans-serif !important;
     background-color: #000;
     color: #fff;
     margin: 0;
@@ -68,7 +68,7 @@ nav ul li a {
     padding: 10px 15px;
     display: block;
     text-transform: uppercase;
-    font-family: 'Barlow Condensed', sans-serif; /* Ensure this font is usedd here */
+    font-family: 'Philosopher', sans-serif; /* Ensure this font is usedd here */
 }
 
 nav ul li a:hover, nav ul li .dropbtn:hover {
@@ -118,7 +118,7 @@ section {
 
 h1, h2, h3 {
     color: #ffcc00;
-    font-family: 'Barlow Condensed', sans-serif !important;
+    font-family: 'Philosopher', sans-serif !important;
     text-transform: uppercase;
     font-weight: 700;
     text-align: center;
