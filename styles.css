@@ -320,7 +320,7 @@ ul li {
         text-align: center;
         margin-left: 0;
     }
-    
+
     /* Reduce the font size and line height for headings on mobile */
     h1, h2, h3 {
         font-size: 1.5em; /* Adjust as needed for smaller screens */
@@ -331,6 +331,19 @@ ul li {
     nav ul li a {
         font-size: 0.9em; /* Smaller font size for nav items */
         padding: 3px 5px; /* Reduce padding to make items fit better */
+    }
+
+    /* Spread navigation items closer to the screen edges */
+    nav ul {
+        gap: 5px; /* Reduced gap between the items */
+        padding: 0 10px; /* Add padding to spread items closer to the margins */
+    }
+
+    /* Ensure nav items wrap and distribute across the available space */
+    nav ul.nav-list {
+        display: flex;
+        justify-content: space-between; /* Spread items evenly across the width */
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
     }
 
     /* Optional: Adjust overall body font size if necessary */
