@@ -120,7 +120,7 @@ h1, h2, h3 {
     color: #ffcc00;
     font-family: 'Philosopher', sans-serif !important;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: normal;
     text-align: center;
 }
 
