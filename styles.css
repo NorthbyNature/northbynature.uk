@@ -345,3 +345,16 @@ ul li {
         flex-wrap: wrap; /* Allow wrapping on smaller screens */
     }
 
+/* Adjust heading sizes for mobile */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em; /* Adjust as needed */
+    }
+    h2 {
+        font-size: 1.6em; /* Adjust as needed */
+    }
+    h3 {
+        font-size: 1.4em; /* Adjust as needed */
+    }
+    /* Repeat for h4, h5, h6 if necessary */
+}
