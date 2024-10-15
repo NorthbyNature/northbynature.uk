@@ -68,7 +68,7 @@ nav ul li a {
     padding: 10px 15px;
     display: block;
     text-transform: uppercase;
-    font-family: 'Barlow Condensed', sans-serif; /* Ensure this font is used here */
+    font-family: 'Barlow Condensed', sans-serif; /* Ensure this font is usedd here */
 }
 
 nav ul li a:hover, nav ul li .dropbtn:hover {
