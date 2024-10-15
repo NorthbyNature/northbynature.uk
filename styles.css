@@ -323,7 +323,6 @@ ul li {
 
     /* Reduce the font size and line height for headings on mobile */
     h1, h2, h3 {
-        font-size: 1.5em; /* Adjust as needed for smaller screens */
         line-height: 1.2;  /* Reduce the space between lines */
     }
 
