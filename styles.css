@@ -346,8 +346,3 @@ ul li {
         flex-wrap: wrap; /* Allow wrapping on smaller screens */
     }
 
-    /* Optional: Adjust overall body font size if necessary */
-    body {
-        font-size: 0.9em; /* Slightly smaller body text for mobile */
-    }
-}
