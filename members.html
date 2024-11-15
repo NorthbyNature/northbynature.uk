@@ -6,7 +6,6 @@
     <title>North by Nature - Members</title>
     
     <!-- Link to the main stylesheet (styles.css) -->
-    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
     <link rel="stylesheet" href="styles.css">
     
     <!-- Bootstrap CSS for layout and component styling -->
@@ -16,23 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
     <header class="text-center">
-        <!-- Instagram link that opens in a new tab -->
-        <!-- To update this link or text, change the href and the link text below -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
         </div>
         
-        <!-- Placeholder for the logo image -->
-        <!-- Change 'logo-placeholder.png' to the actual path of your logo image if different -->
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
         
-        <!-- Navigation menu with links to different pages -->
         <nav>
             <ul class="nav justify-content-center">
-                <!-- Each list item contains a link to a different section of the website -->
-                <!-- To add more navigation items, copy and paste <li> elements and update the href -->
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
@@ -44,47 +35,37 @@
             </ul>
         </nav>
 
-        <!-- Shopping cart icon with a counter -->
-        <!-- The cart icon uses Font Awesome. To change or add more icons, use Font Awesome's library -->
-        <!-- Update the href if the cart page is located elsewhere -->
         <div class="cart-icon">
             <a href="cart.html">
-                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
-                <span id="cart-count">0</span> <!-- Cart count set to 0 by default -->
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
             </a>
         </div>
     </header>
 
-    <!-- Main Content Section: Information about membership -->
     <main class="main-content">
         <section class="content-section text-centered-container container">
-            <!-- Image related to membership -->
-            <!-- Replace 'member-card.png' with the path to your own image if needed -->
             <img src="Images/member-card.png" alt="Membership Card" class="img-fluid" style="max-width: 300px; margin-bottom: 40px;">
             
-            <!-- Heading for the membership section -->
             <h1 class="section-title">Members</h1>
             
-            <!-- Row containing text related to membership -->
-            <!-- You can add more content by copying and pasting more <div> or <p> elements -->
             <div class="text-and-image row justify-content-center">
                 <div class="text-centered-container">
                     <p>By becoming an Official Member of Exclusive by NBN, you'll be invited to our client private events, exclusive gatherings, and receive free, or discounted products and services from our partners. Additionally, you'll be entitled to VIP access or discounted entry to our own events.</p>
                     
-                    <!-- Sub-heading and explanation on how to become a member -->
                     <h2>How do I become a member?</h2>
                     <p>Free memberships rely on our selection process which prioritizes those from creative, business-oriented, or entertainment backgrounds. Other members can apply for membership through contacting us or by applying via our website.</p>
                     <p>Once you officially become a member you will be issued with a personal Membership Card that grants you all the privileges of becoming a member.</p>
+                    
+                    <!-- New Link to Membership Form Page -->
+                    <p><a href="membership_form.html" class="gold-link">Apply for Membership Here</a></p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer Section: Links to policies, Instagram feed, and copyright -->
     <footer class="instagram-footer">
         <div class="footer-container">
-            <!-- Links to privacy policy and terms of service -->
-            <!-- Modify the href if the location of these pages changes -->
             <div class="footer-links">
                 <h4>Policies</h4>
                 <ul>
@@ -92,35 +73,19 @@
                     <li><a href="terms.html">Terms of Service</a></li>
                 </ul>
             </div>
-
-            <!-- Instagram widget and social media follow section -->
-            <!-- You can add other social media platforms here by adding more links or embeds -->
             <div class="footer-center">
                 <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
                 
-                <!-- Embedded Instagram widget using iframe -->
-                <!-- If you want to embed a different widget, replace this iframe with the new one -->
                 <iframe src="https://snapwidget.com/embed/1072640" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:400px; height:150px" title="Posts from Instagram"></iframe>
                 
-                <!-- Copyright notice -->
-                <!-- Update the year and business name as needed -->
                 <p>&copy; 2024 North by Nature. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript Section: External scripts for functionality -->
-    <!-- jQuery for DOM manipulation -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
-    <!-- Popper.js for positioning, required by Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    
-    <!-- Bootstrap's JavaScript for components like modals, tooltips, etc. -->
     <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- Link to your custom JavaScript file -->
-    <!-- Add custom scripts for dynamic functionality in the scripts.js file -->
     <script src="scripts.js"></script>
 </body>
 </html>
