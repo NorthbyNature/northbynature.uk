@@ -218,3 +218,49 @@ document.addEventListener('DOMContentLoaded', function() {
         eventCard.style.display = 'none'; // Hide the card if it is inactive
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const fieldsets = document.querySelectorAll('form.membership-form fieldset');
+    const nextButtons = document.querySelectorAll('.next-btn');
+    const prevButtons = document.querySelectorAll('.prev-btn');
+    const submitButton = document.querySelector('.submit-btn');
+    let currentStep = 0;
+
+    function updateFormSteps() {
+        fieldsets.forEach((fieldset, index) => {
+            if (index === currentStep) {
+                fieldset.style.display = 'block';
+            } else {
+                fieldset.style.display = 'none';
+            }
+        });
+        updateButtonsVisibility();
+    }
+
+    function updateButtonsVisibility() {
+        prevButtons.forEach(button => button.style.display = currentStep > 0 ? 'inline-block' : 'none');
+        nextButtons.forEach(button => button.style.display = currentStep < fieldsets.length - 1 ? 'inline-block' : 'none');
+        submitButton.style.display = currentStep === fieldsets.length - 1 ? 'inline-block' : 'none';
+    }
+
+    nextButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentStep < fieldsets.length - 1) {
+                currentStep++;
+                updateFormSteps();
+            }
+        });
+    });
+
+    prevButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateFormSteps();
+            }
+        });
+    });
+
+    // Initialize the form steps
+    updateFormSteps();
+});
+
