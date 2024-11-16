@@ -264,3 +264,44 @@ document.addEventListener('DOMContentLoaded', function() {
     updateFormSteps();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const fieldsets = document.querySelectorAll('form fieldset');
+    const nextButtons = document.querySelectorAll('.next-btn');
+    const prevButtons = document.querySelectorAll('.prev-btn');
+    let currentStep = 0;
+
+    // Function to show the current step and hide others
+    function showStep(step) {
+        fieldsets.forEach((fieldset, index) => {
+            if (index === step) {
+                fieldset.style.display = 'block';
+            } else {
+                fieldset.style.display = 'none';
+            }
+        });
+    }
+
+    // Event listener for Next buttons
+    nextButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (currentStep < fieldsets.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+    });
+
+    // Event listener for Back buttons
+    prevButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+    });
+
+    // Initialize the form to show the first step
+    showStep(currentStep);
+});
+

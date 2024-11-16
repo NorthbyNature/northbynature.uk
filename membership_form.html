@@ -23,7 +23,7 @@
             
             <form action="/submit-form" method="POST" class="membership-form">
                 <!-- Page 1: Contact Information -->
-                <fieldset>
+                <fieldset style="display: block;">
                     <legend>Contact Information</legend>
                     <p>We collect this information so we can contact you with the outcome of your application.</p>
                     
@@ -46,7 +46,7 @@
                 </fieldset>
 
                 <!-- Page 2: Social Media Profile -->
-                <fieldset>
+                <fieldset style="display: none;">
                     <legend>Social Media Profile</legend>
 
                     <label for="description">What best describes you? *</label>
@@ -80,7 +80,7 @@
                 </fieldset>
 
                 <!-- Page 3: Social Media Engagement -->
-                <fieldset>
+                <fieldset style="display: none;">
                     <legend>Social Media Engagement</legend>
 
                     <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
@@ -107,7 +107,7 @@
                         <option value="1M+">1M +</option>
                     </select>
 
-                    <label for="username">Primary Social Media Username *</label>
+                    <label for="username">Primary Social Media Username*</label>
                     <input type="text" id="username" name="username" required>
 
                     <button type="button" class="prev-btn">Back</button>
@@ -115,7 +115,7 @@
                 </fieldset>
 
                 <!-- Page 4: Interests -->
-                <fieldset>
+                <fieldset style="display: none;">
                     <legend>Interests</legend>
 
                     <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
