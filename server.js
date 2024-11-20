@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update cart count in the header (next to cart icon)
     updateCartCount();
 
-    // Functionality for the multi-step form
+    // Initialize the multi-step form functionality
     setupMultiStepForm();
 });
 
@@ -53,11 +53,7 @@ function setupMultiStepForm() {
 
     function updateFormSteps() {
         fieldsets.forEach((fieldset, index) => {
-            if (index === currentStep) {
-                fieldset.style.display = 'block';
-            } else {
-                fieldset.style.display = 'none';
-            }
+            fieldset.style.display = index === currentStep ? 'block' : 'none';
         });
         updateButtonsVisibility();
     }
@@ -65,7 +61,9 @@ function setupMultiStepForm() {
     function updateButtonsVisibility() {
         prevButtons.forEach(button => button.style.display = currentStep > 0 ? 'inline-block' : 'none');
         nextButtons.forEach(button => button.style.display = currentStep < fieldsets.length - 1 ? 'inline-block' : 'none');
-        submitButton.style.display = currentStep === fieldsets.length - 1 ? 'inline-block' : 'none';
+        if (submitButton) {
+            submitButton.style.display = currentStep === fieldsets.length - 1 ? 'inline-block' : 'none';
+        }
     }
 
     nextButtons.forEach(button => {
@@ -141,4 +139,4 @@ function updateCartCount() {
     document.getElementById('cart-count').innerText = cartCount; // Update cart count display
 }
 
-// Other existing cart-related functions stay unchanged
+// Other existing cart-related functions remain unchanged
