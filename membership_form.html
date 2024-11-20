@@ -1,61 +1,135 @@
-<form action="/submit-form" method="POST" class="membership-form">
-    <!-- Page 1: Contact Information -->
-    <fieldset id="step-1">
-        <legend>Contact Information</legend>
-        <p>We collect this information so we can contact you with the outcome of your application.</p>
-        <label for="first-name">First Name *</label>
-        <input type="text" id="first-name" name="first_name" required>
-        <label for="last-name">Last Name *</label>
-        <input type="text" id="last-name" name="last_name" required>
-        <label for="phone-number">Phone Number</label>
-        <input type="tel" id="phone-number" name="phone_number">
-        <label for="email">Email *</label>
-        <input type="email" id="email" name="email" required>
-        <label for="city">Primary City/Town Residency *</label>
-        <input type="text" id="city" name="city" required>
-        <button type="button" class="next-btn">Next</button>
-    </fieldset>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North by Nature - Membership Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="text-center">
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+    </header>
 
-    <!-- Page 2: Social Media Profile -->
-    <fieldset id="step-2" style="display: none;">
-        <legend>Social Media Profile</legend>
-        <label for="description">What best describes you? *</label>
-        <select id="description" name="description" required>
-            <option value="social media influencer">Social Media Influencer</option>
-            <option value="content creator">Content Creator</option>
-            <option value="streamer">Streamer</option>
-            <!-- Add other options here -->
-        </select>
-        <label>Which social media platforms do you post on/engage with regularly? *</label>
-        <label><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
-        <label><input type="checkbox" name="platforms" value="tiktok"> TikTok</label>
-        <button type="button" class="prev-btn">Back</button>
-        <button type="button" class="next-btn">Next</button>
-    </fieldset>
+    <main class="main-content">
+        <section class="content-section text-centered-container container">
+            <h1 class="section-title">Become a Member</h1>
+            <p class="form-intro">A JOURNEY OF 1000 MILES BEGINS WITH A SINGLE STEP.</p>
 
-    <!-- Page 3: Social Media Engagement -->
-    <fieldset id="step-3" style="display: none;">
-        <legend>Social Media Engagement</legend>
-        <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
-        <select id="highest-engagement" name="highest_engagement" required>
-            <option value="instagram">Instagram</option>
-            <option value="tiktok">TikTok</option>
-        </select>
-        <label for="followers">How many followers/subscribers do you have on your primary social media? *</label>
-        <select id="followers" name="followers" required>
-            <option value="<5k">Less than 5k</option>
-        </select>
-        <button type="button" class="prev-btn">Back</button>
-        <button type="button" class="next-btn">Next</button>
-    </fieldset>
+            <form class="membership-form">
+                <!-- Page 1: Contact Information -->
+                <fieldset data-step="1" style="display: block;">
+                    <legend>Contact Information</legend>
+                    <p>We collect this information so we can contact you with the outcome of your application.</p>
+                    <label for="first-name">First Name *</label>
+                    <input type="text" id="first-name" name="first_name" required>
 
-    <!-- Page 4: Interests -->
-    <fieldset id="step-4" style="display: none;">
-        <legend>Interests</legend>
-        <label>Are you interested in receiving discounts and offers? *</label>
-        <label><input type="radio" name="discounts" value="yes" required> Yes</label>
-        <label><input type="radio" name="discounts" value="no"> No</label>
-        <button type="button" class="prev-btn">Back</button>
-        <button type="submit" class="submit-btn">Submit Application</button>
-    </fieldset>
-</form>
+                    <label for="last-name">Last Name *</label>
+                    <input type="text" id="last-name" name="last_name" required>
+
+                    <label for="phone-number">Phone Number</label>
+                    <input type="tel" id="phone-number" name="phone_number">
+
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="city">Primary City/Town Residency *</label>
+                    <input type="text" id="city" name="city" required>
+
+                    <button type="button" class="next-btn">Next</button>
+                </fieldset>
+
+                <!-- Page 2: Social Media Profile -->
+                <fieldset data-step="2" style="display: none;">
+                    <legend>Social Media Profile</legend>
+
+                    <label for="description">What best describes you? *</label>
+                    <select id="description" name="description" required>
+                        <option value="social media influencer">Social Media Influencer</option>
+                        <option value="content creator">Content Creator</option>
+                        <option value="streamer">Streamer</option>
+                        <option value="business owner/representative">Business Owner/Representative</option>
+                        <option value="entrepreneur">Entrepreneur</option>
+                        <option value="media creative">Media Creative</option>
+                        <option value="sportsperson">Sportsperson</option>
+                        <option value="tv personality">TV Personality</option>
+                        <option value="public figure">Public Figure</option>
+                        <option value="model or actor/actress">Model or Actor/Actress</option>
+                        <option value="public audience">Public Audience</option>
+                    </select>
+
+                    <label>Which social media platforms do you post on/engage with regularly? *</label>
+                    <div>
+                        <label><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
+                        <label><input type="checkbox" name="platforms" value="tiktok"> TikTok</label>
+                        <label><input type="checkbox" name="platforms" value="facebook"> Facebook</label>
+                        <label><input type="checkbox" name="platforms" value="linkedin"> LinkedIn</label>
+                        <label><input type="checkbox" name="platforms" value="twitch"> Twitch</label>
+                        <label><input type="checkbox" name="platforms" value="youtube"> YouTube</label>
+                        <label><input type="checkbox" name="platforms" value="onlyfans"> OnlyFans</label>
+                    </div>
+
+                    <button type="button" class="prev-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </fieldset>
+
+                <!-- Page 3: Social Media Engagement -->
+                <fieldset data-step="3" style="display: none;">
+                    <legend>Social Media Engagement</legend>
+
+                    <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
+                    <select id="highest-engagement" name="highest_engagement" required>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="twitch">Twitch</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="onlyfans">OnlyFans</option>
+                    </select>
+
+                    <label for="followers">How many followers/subscribers do you have on your primary social media? *</label>
+                    <select id="followers" name="followers" required>
+                        <option value="<5k">Less than 5k</option>
+                        <option value="5k-9k">5k - 9k</option>
+                        <option value="10k-24k">10k - 24k</option>
+                        <option value="25k-49k">25k - 49k</option>
+                        <option value="50k-99k">50k - 99k</option>
+                        <option value="100k-249k">100k - 249k</option>
+                        <option value="250k-500k">250k - 500k</option>
+                        <option value="500k-1M">500k - 1M</option>
+                        <option value="1M+">1M +</option>
+                    </select>
+
+                    <label for="username">Primary Social Media Username *</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <button type="button" class="prev-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </fieldset>
+
+                <!-- Page 4: Interests -->
+                <fieldset data-step="4" style="display: none;">
+                    <legend>Interests</legend>
+
+                    <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
+                    <label><input type="radio" name="discounts" value="yes" required> Yes</label>
+                    <label><input type="radio" name="discounts" value="no"> No</label>
+
+                    <label>Are you interested in attending events with high-profile guests? *</label>
+                    <label><input type="radio" name="events" value="yes" required> Yes</label>
+                    <label><input type="radio" name="events" value="no"> No</label>
+
+                    <label>Are you ready to take yourself or your brand to the next level? *</label>
+                    <label><input type="radio" name="next_level" value="yes" required> Yes</label>
+                    <label><input type="radio" name="next_level" value="no"> No</label>
+
+                    <button type="button" class="prev-btn">Back</button>
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
