@@ -1,75 +1,89 @@
-// Importing the necessary modules
-const express = require('express'); // Express framework for handling HTTP requests
-const dotenv = require('dotenv'); // dotenv to manage environment variables
+document.addEventListener('DOMContentLoaded', function () {
+    // Multi-step form navigation logic
+    const fieldsets = document.querySelectorAll('form.membership-form fieldset');
+    const nextButtons = document.querySelectorAll('.next-btn');
+    const prevButtons = document.querySelectorAll('.prev-btn');
+    const form = document.querySelector('form.membership-form');
+    let currentStep = 0;
 
-// Load environment variables from .env file
-dotenv.config(); // This allows you to use variables from a .env file
+    // Function to update fieldset visibility
+    function updateStep(step) {
+        fieldsets.forEach((fieldset, index) => {
+            fieldset.style.display = index === step ? 'block' : 'none';
+        });
+    }
 
-const app = express(); // Initialize the express app
-const port = 3000; // Define the port the server will run on
+    // Function to validate the current step before moving forward
+    function validateStep(step) {
+        const inputs = fieldsets[step].querySelectorAll('input, select');
+        for (let input of inputs) {
+            if (!input.checkValidity()) {
+                input.reportValidity(); // Show validation error
+                return false;
+            }
+        }
+        return true;
+    }
 
-// Middleware to parse incoming JSON and URL-encoded data
-app.use(express.json()); // Allows express to parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data from forms
+    // Event listener for "Next" buttons
+    nextButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < fieldsets.length - 1) {
+                    currentStep++;
+                    updateStep(currentStep);
+                }
+            }
+        });
+    });
 
-// CORS middleware to allow requests from your domain
-// Modify the 'origin' value if you want to allow access from another domain
-app.use(cors({ origin: 'https://www.northbynature.uk' }));
+    // Event listener for "Back" buttons
+    prevButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep(currentStep);
+            }
+        });
+    });
 
-// A basic route that sends 'Hello World!' when accessing the root URL
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+    // Initialize the first step
+    updateStep(currentStep);
 
-// PayPal SDK and configuration (assuming PayPal setup is correct)
-const paypal = require('@paypal/checkout-server-sdk');
-const { client } = require('./paypalConfig'); // PayPal client configuration
+    // Original code - other functionalities
 
-// Route to create a PayPal order
-app.post('/create-order', async (req, res) => {
-  // Set up the PayPal order creation request
-  const request = new paypal.orders.OrdersCreateRequest();
-  request.prefer("return=representation"); // Request the full order details in the response
+    const addToCartBtn = document.getElementById('add-to-cart');
+    if (addToCartBtn) addToCartBtn.addEventListener('click', addToCart);
 
-  // Define the order details (replace with your dynamic order details if needed)
-  request.requestBody({
-    intent: 'CAPTURE', // PayPal intent for capturing payment immediately
-    purchase_units: [{
-      amount: {
-        currency_code: 'GBP', // Set currency (e.g., GBP for British Pounds)
-        value: '10.00' // Set the ticket price (you can make this dynamic)
-      }
-    }]
-  });
+    const buyNowBtn = document.getElementById('buy-now');
+    if (buyNowBtn) buyNowBtn.addEventListener('click', buyNow);
 
-  try {
-    // Execute the request to create the PayPal order
-    const order = await client.execute(request);
-    res.json({ id: order.result.id }); // Respond with the PayPal order ID
-  } catch (err) {
-    // Handle errors in the order creation process
-    console.error(err);
-    res.status(500).send('Error creating order');
-  }
-});
+    const decreaseQuantityBtn = document.getElementById('decrease-quantity');
+    const increaseQuantityBtn = document.getElementById('increase-quantity');
+    if (decreaseQuantityBtn) decreaseQuantityBtn.addEventListener('click', decreaseQuantity);
+    if (increaseQuantityBtn) increaseQuantityBtn.addEventListener('click', increaseQuantity);
 
-// Route to capture a PayPal order
-app.post('/capture-order', async (req, res) => {
-  const { orderID } = req.body; // Get the PayPal order ID from the request body
-  const request = new paypal.orders.OrdersCaptureRequest(orderID); // Prepare the capture request
+    const ticketButtons = document.querySelectorAll('.ticket-btn');
+    ticketButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            ticketButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        });
+    });
 
-  try {
-    // Execute the capture request to capture the payment
-    const capture = await client.execute(request);
-    res.json({ status: capture.result.status }); // Respond with the capture status (e.g., COMPLETED)
-  } catch (err) {
-    // Handle errors in the capture process
-    console.error(err);
-    res.status(500).send('Error capturing order');
-  }
-});
+    const checkoutButton = document.getElementById('checkout-button');
+    if (checkoutButton) checkoutButton.addEventListener('click', redirectToPayment);
 
-// Start the server on the specified port
-app.listen(port, () => {
-  console.log(`Server running at https://www.northbynature.uk/`); // Log the URL when the server is running
+    if (document.body.classList.contains('cart-page')) {
+        displayCartItems();
+    }
+
+    if (document.body.classList.contains('payment-page')) {
+        renderPayPalButton();
+    }
+
+    updateCartCount();
+
+    // Other existing functionalities remain unchanged
+    // You can keep adding additional functionality as needed...
 });
