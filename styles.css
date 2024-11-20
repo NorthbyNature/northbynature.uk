@@ -482,7 +482,4 @@ fieldset {
     border: none;
 }
 
-fieldset.active {
-    display: block; /* Show only the active fieldset */
-}
 
