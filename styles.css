@@ -477,4 +477,12 @@ button.next-btn, button.prev-btn, button.submit-btn {
 button.next-btn:hover, button.prev-btn:hover, button.submit-btn:hover {
     background-color: #e6b800;
 }
+fieldset {
+    display: none; /* Hide all fieldsets by default */
+    border: none;
+}
+
+fieldset.active {
+    display: block; /* Show only the active fieldset */
+}
 
