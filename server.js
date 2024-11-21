@@ -31,7 +31,8 @@ app.post('/submit-form', (req, res) => {
     // Process the form data (e.g., save to a database or send an email)
     // Example: Save the data to a database or perform some validation here
 
-    res.json({ success: true, message: 'Form submitted successfully!' }); // Respond with a success message
+    // Redirect to the thank-you page after successful form submission
+    res.redirect('/thank-you');
 });
 
 // PayPal SDK and configuration (assuming PayPal setup is correct)
@@ -74,6 +75,9 @@ app.post('/capture-order', async (req, res) => {
         res.status(500).send('Error capturing order');
     }
 });
+
+// Serve static files to handle thank-you page and other frontend assets
+app.use(express.static('public'));
 
 // Start the server on the specified port
 app.listen(port, () => {
