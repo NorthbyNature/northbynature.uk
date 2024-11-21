@@ -140,3 +140,17 @@ function updateCartCount() {
 }
 
 // Other existing cart-related functions remain unchanged
+
+function goToNextStep() {
+    if (currentStep < fieldsets.length - 1) {
+        currentStep++;
+        updateFormSteps();
+    }
+}
+
+function goToPrevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        updateFormSteps();
+    }
+}
