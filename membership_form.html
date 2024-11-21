@@ -17,8 +17,8 @@
             <h1 class="section-title">Become a Member</h1>
             <p class="form-intro">A JOURNEY OF 1000 MILES BEGINS WITH A SINGLE STEP.</p>
 
-            <form class="membership-form">
-                <!-- Page 1: Contact Information -->
+            <form action="/submit-form" method="POST" class="membership-form">
+                <!-- Contact Information -->
                 <fieldset>
                     <legend>Contact Information</legend>
                     <p>We collect this information so we can contact you with the outcome of your application.</p>
@@ -36,14 +36,11 @@
 
                     <label for="city">Primary City/Town Residency *</label>
                     <input type="text" id="city" name="city" required>
-
-                    <button type="button" class="next-btn">Next</button>
                 </fieldset>
 
-                <!-- Page 2: Social Media Profile -->
+                <!-- Social Media Profile -->
                 <fieldset>
                     <legend>Social Media Profile</legend>
-
                     <label for="description">What best describes you? *</label>
                     <select id="description" name="description" required>
                         <option value="social media influencer">Social Media Influencer</option>
@@ -69,15 +66,11 @@
                         <label><input type="checkbox" name="platforms" value="youtube"> YouTube</label>
                         <label><input type="checkbox" name="platforms" value="onlyfans"> OnlyFans</label>
                     </div>
-
-                    <button type="button" class="prev-btn">Back</button>
-                    <button type="button" class="next-btn">Next</button>
                 </fieldset>
 
-                <!-- Page 3: Social Media Engagement -->
+                <!-- Social Media Engagement -->
                 <fieldset>
                     <legend>Social Media Engagement</legend>
-
                     <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
                     <select id="highest-engagement" name="highest_engagement" required>
                         <option value="instagram">Instagram</option>
@@ -104,15 +97,11 @@
 
                     <label for="username">Primary Social Media Username *</label>
                     <input type="text" id="username" name="username" required>
-
-                    <button type="button" class="prev-btn">Back</button>
-                    <button type="button" class="next-btn">Next</button>
                 </fieldset>
 
-                <!-- Page 4: Interests -->
+                <!-- Interests -->
                 <fieldset>
                     <legend>Interests</legend>
-
                     <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
                     <label><input type="radio" name="discounts" value="yes" required> Yes</label>
                     <label><input type="radio" name="discounts" value="no"> No</label>
@@ -124,10 +113,9 @@
                     <label>Are you ready to take yourself or your brand to the next level? *</label>
                     <label><input type="radio" name="next_level" value="yes" required> Yes</label>
                     <label><input type="radio" name="next_level" value="no"> No</label>
-
-                    <button type="button" class="prev-btn">Back</button>
-                    <button type="submit" class="submit-btn">Submit Application</button>
                 </fieldset>
+
+                <button type="submit" class="submit-btn">Submit Application</button>
             </form>
         </section>
     </main>
