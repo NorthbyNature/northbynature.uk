@@ -360,7 +360,7 @@ ul li {
 }
 
 /* Form Styling */
-.membership-form {
+.membership-application {
     background-color: #000;
     color: #ffcc00;
     padding: 20px;
@@ -369,28 +369,28 @@ ul li {
     font-family: 'Philosopher', sans-serif;
 }
 
-.membership-form fieldset {
+.membership-application fieldset {
     border: none;
     margin-bottom: 20px;
 }
 
-.membership-form legend {
+.membership-application legend {
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
     color: #ffcc00;
 }
 
-.membership-form label {
+.membership-application label {
     display: block;
     margin-top: 10px;
     color: #ffcc00;
 }
 
-.membership-form input[type="text"],
-.membership-form input[type="email"],
-.membership-form input[type="tel"],
-.membership-form select {
+.membership-application input[type="text"],
+.membership-application input[type="email"],
+.membership-application input[type="tel"],
+.membership-application select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -398,12 +398,12 @@ ul li {
     border: none;
 }
 
-.membership-form input[type="checkbox"],
-.membership-form input[type="radio"] {
+.membership-application input[type="checkbox"],
+.membership-application input[type="radio"] {
     margin-right: 10px;
 }
 
-.membership-form .submit-btn {
+.membership-application .submit-btn {
     background-color: #ffcc00;
     color: #000;
     border: none;
@@ -414,11 +414,11 @@ ul li {
     margin-top: 20px;
 }
 
-.membership-form .submit-btn:hover {
+.membership-application .submit-btn:hover {
     background-color: #e6b800;
 }
 /* Style for checkboxes */
-.membership-form input[type="checkbox"] {
+.membership-application input[type="checkbox"] {
     -webkit-appearance: none; /* Remove default styling */
     -moz-appearance: none;
     appearance: none;
@@ -435,12 +435,12 @@ ul li {
     transition: background-color 0.3s ease;
 }
 
-.membership-form input[type="checkbox"]:checked {
+.membership-application input[type="checkbox"]:checked {
     background-color: #ffcc00; /* Gold background when checked */
     position: relative;
 }
 
-.membership-form input[type="checkbox"]:checked::after {
+.membership-application input[type="checkbox"]:checked::after {
     content: "✓";
     color: #fff; /* White checkmark */
     font-size: 16px;
@@ -450,17 +450,17 @@ ul li {
     top: -1px;
 }
 
-.membership-form label {
+.membership-application label {
     display: flex;
     align-items: center;
     margin-top: 10px;
     color: #ffcc00;
 }
-form.membership-form fieldset {
+form.membership-application fieldset {
     display: none; /* Hide all fieldsets by default */
 }
 
-form.membership-form fieldset:first-of-type {
+form.membership-application fieldset:first-of-type {
     display: block; /* Show the first fieldset */
 }
 
