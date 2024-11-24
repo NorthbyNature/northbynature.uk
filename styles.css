@@ -151,7 +151,7 @@ form input[type="submit"] {
     border-radius: 5px; /* Slightly rounded corners */
     text-transform: uppercase; /* Capitalised text */
     font-weight: bold; /* Bold text */
-    width: 100%; /* Make the button span the full width of the container */
+    width: 100%; /* Make the button span the full width of the container*/
 }
 
 form input[type="submit"]:hover {
