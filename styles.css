@@ -146,6 +146,7 @@ form input, form textarea, form select {
     color: #333;
     width: 100%;
     margin-bottom: 20px; /* Add space below inputs */
+    display: block; /* Ensure inputs are block-level elements */
 }
 
 form input[type="submit"] {
@@ -153,11 +154,12 @@ form input[type="submit"] {
     color: #000;
     cursor: pointer;
     font-size: 16px;
-    padding: 12px 20px; /* Increased padding for better appearance */
+    padding: 12px 20px; /* Adjust padding for proper button size */
     border: none;
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
+    width: 100%; /* Ensure the button spans the full width */
 }
 
 form input[type="submit"]:hover {
