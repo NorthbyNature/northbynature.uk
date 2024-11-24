@@ -525,3 +525,16 @@ top: 50%; /* Center vertically */
     background-color: #e6b800; /* Slightly darker gold on hover */
     color: #000; /* Keep text black */
 }
+textarea {
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    width: 100%; /* Full width */
+    font-family: 'Philosopher', sans-serif; /* Match form font */
+    font-size: 16px;
+    resize: none; /* Prevent resizing if not needed */
+    box-sizing: border-box; /* Ensure padding doesn't overflow */
+}
+
