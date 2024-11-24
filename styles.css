@@ -506,3 +506,22 @@ top: 50%; /* Center vertically */
     gap: 5px; /* Space between items */
     align-items: flex-start; /* Align everything to the left */
     margin-top: 10px; /* Add space above */
+}
+/* Gold button style for links */
+.gold-button {
+    display: inline-block; /* Makes it look like a button */
+    background-color: #ffcc00; /* Gold background */
+    color: #000; /* Black text */
+    padding: 12px 20px; /* Add padding for button appearance */
+    border-radius: 5px; /* Rounded corners */
+    text-transform: uppercase; /* Capitalized text */
+    font-weight: bold; /* Bold text */
+    text-decoration: none; /* Remove underline */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.gold-button:hover {
+    background-color: #e6b800; /* Slightly darker gold on hover */
+    color: #000; /* Keep text black */
+}
