@@ -489,13 +489,13 @@ button.submit-btn:hover {
     display: flex; /* Use flex layout for each label */
     justify-content: space-between; /* Push text to the left and checkbox to the right */
     align-items: center; /* Vertically center the text and checkbox */
-    width: 50%; /* Ensure the label spans the full width */
+    width:50%; /* Ensure the label spans the full width */
     text-align: left; /* Align the label text to the left */
 }
 
 /* Optional: Style the text independently */
 .checkbox-item span {
-    flex-grow: -10; /* Take up remaining space in the label */
+    flex-grow: 1; /* Take up remaining space in the label */
     color: #fff; /* Keep text white */
 }
 .checkbox-group {
