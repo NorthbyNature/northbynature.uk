@@ -484,8 +484,6 @@ button.submit-btn:hover {
 top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust positioning */
-    top: 3px;
-    left: 3px;
 }
 
 /* Align the checkboxes to the right and text to the left */
