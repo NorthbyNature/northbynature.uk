@@ -416,8 +416,9 @@ ul li {
 /* Radio Button Styling */
 .membership-application .radio-group {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    gap: 15px; /* Space between options */
+    flex-direction: column; /* Stack options vertically */
+    align-items: center; /* Center-align the options */
+    gap: 10px; /* Add spacing between the options */
 }
 
 .membership-application .radio-group label {
