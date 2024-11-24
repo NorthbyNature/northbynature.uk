@@ -68,7 +68,7 @@ nav ul li a {
     padding: 10px 15px;
     display: block;
     text-transform: uppercase;
-    font-family: 'Philosopher', sans-serif; /* Ensure this font is usedd here */
+    font-family: 'Philosopher', sans-serif; /* Ensure this font is used here */
 }
 
 nav ul li a:hover, nav ul li .dropbtn:hover {
@@ -117,11 +117,14 @@ section {
 }
 
 h1, h2, h3 {
-    color: #ffcc00;
+    background-color: #ffcc00; /* Gold background */
+    color: #fff; /* White text */
     font-family: 'Philosopher', sans-serif !important;
     text-transform: uppercase;
     font-weight: normal;
     text-align: center;
+    padding: 10px; /* Add padding for visual appeal */
+    border-radius: 5px; /* Optional for rounded edges */
 }
 
 form {
@@ -287,199 +290,30 @@ ul li {
     background-color: #222;
 }
 
+@media (max-width: 768px) {
+    form.membership-application fieldset {
+        display: block !important; /* Ensure all questions show */
+    }
+
+    h1, h2, h3 {
+        font-size: 1.6em !important;
+    }
+
+    form input[type="submit"] {
+        background-color: #ffcc00;
+        color: #000;
+        font-size: 1em;
+        padding: 15px;
+    }
+}
+
 @media (min-width: 768px) {
     .text-and-image {
         display: flex;
         justify-content: center;
     }
+
     .text-content, .image-content {
         margin: 10px;
     }
 }
-
-@media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: block;
-    }
-    nav ul.nav-list {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-    }
-    nav ul.nav-list.active {
-        display: flex;
-    }
-}
-
-/* Adjustments for screens smaller than 600px */
-@media (max-width: 600px) {
-    .video-container video {
-        width: 100%;
-    }
-    .footer-links {
-        text-align: center;
-        margin-left: 0;
-    }
-
-    /* Reduce the font size and line height for headings on mobile */
-    h1, h2, h3 {
-        line-height: 1.2;  /* Reduce the space between lines */
-    }
-
-    /* Adjust navigation link font size and padding for smaller screens */
-    nav ul li a {
-        font-size: 0.9em; /* Smaller font size for nav items */
-        padding: 3px 5px; /* Reduce padding to make items fit better */
-    }
-
-    /* Spread navigation items closer to the screen edges */
-    nav ul {
-        gap: 5px; /* Reduced gap between the items */
-        padding: 0 10px; /* Add padding to spread items closer to the margins */
-    }
-
-    /* Ensure nav items wrap and distribute across the available space */
-    nav ul.nav-list {
-        display: flex;
-        justify-content: space-between; /* Spread items evenly across the width */
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    }
-
-/* Adjust heading sizes for mobile */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.8em !important; /* Adjust as needed */
-    }
-    h2 {
-        font-size: 1.6em !important; /* Adjust as needed */
-    }
-    h3 {
-        font-size: 1.4em !important; /* Adjust as needed */
-    }
-    /* Repeat for h4, h5, h6 if necessary */
-}
-
-/* Form Styling */
-.membership-application {
-    background-color: #000;
-    color: #ffcc00;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    font-family: 'Philosopher', sans-serif;
-}
-
-.membership-application fieldset {
-    border: none;
-    margin-bottom: 20px;
-}
-
-.membership-application legend {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #ffcc00;
-}
-
-.membership-application label {
-    display: block;
-    margin-top: 10px;
-    color: #ffcc00;
-}
-
-.membership-application input[type="text"],
-.membership-application input[type="email"],
-.membership-application input[type="tel"],
-.membership-application select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: none;
-}
-
-.membership-application input[type="checkbox"],
-.membership-application input[type="radio"] {
-    margin-right: 10px;
-}
-
-.membership-application .submit-btn {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.membership-application .submit-btn:hover {
-    background-color: #e6b800;
-}
-/* Style for checkboxes */
-.membership-application input[type="checkbox"] {
-    -webkit-appearance: none; /* Remove default styling */
-    -moz-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #ffcc00; /* Gold border */
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-    background-color: #000; /* Default background */
-    transition: background-color 0.3s ease;
-}
-
-.membership-application input[type="checkbox"]:checked {
-    background-color: #ffcc00; /* Gold background when checked */
-    position: relative;
-}
-
-.membership-application input[type="checkbox"]:checked::after {
-    content: "✓";
-    color: #fff; /* White checkmark */
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    left: 2px;
-    top: -1px;
-}
-
-.membership-application label {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    color: #ffcc00;
-}
-form.membership-application fieldset {
-    display: none; /* Hide all fieldsets by default */
-}
-
-form.membership-application fieldset:first-of-type {
-    display: block; /* Show the first fieldset */
-}
-
-button.next-btn, button.prev-btn, button.submit-btn {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button.next-btn:hover, button.prev-btn:hover, button.submit-btn:hover {
-    background-color: #e6b800;
-}
-fieldset {
-    display: none; /* Hide all fieldsets by default */
-    border: none;
-}
-
-
