@@ -486,8 +486,17 @@ button.submit-btn:hover {
 
 /* Label styling for spacing */
 .checkbox-group label {
-    display: flex; /* Flex layout to allow alignment */
-    justify-content: space-between; /* Push checkbox to the right */
-    width: 100%; /* Ensure label spans full width */
-    text-align: left; /* Keep label text aligned to the left */
+    display: flex; /* Use flex layout for each label */
+    justify-content: space-between; /* Move text to the left and checkbox to the right */
+    align-items: center; /* Vertically center the text and checkbox */
+    width: 100%; /* Make the label span full width */
+    text-align: left; /* Align the label text to the left */
+}
+/* Align the checkboxes to the right and text to the left */
+.checkbox-group label {
+    display: flex; /* Use flex layout for each label */
+    justify-content: space-between; /* Push text to the left and checkbox to the right */
+    align-items: center; /* Vertically center the text and checkbox */
+    width: 100%; /* Ensure the label spans the full width */
+    text-align: left; /* Align the label text to the left */
 }
