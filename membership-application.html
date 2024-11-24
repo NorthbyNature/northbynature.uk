@@ -45,6 +45,7 @@
                     <legend>Social Media Profile</legend>
                     <label for="description">What best describes you? *</label>
                     <select id="description" name="description" required>
+                        <option value="public audience">Public Audience</option>
                         <option value="social media influencer">Social Media Influencer</option>
                         <option value="content creator">Content Creator</option>
                         <option value="streamer">Streamer</option>
@@ -55,7 +56,8 @@
                         <option value="tv personality">TV Personality</option>
                         <option value="public figure">Public Figure</option>
                         <option value="model or actor/actress">Model or Actor/Actress</option>
-                        <option value="public audience">Public Audience</option>
+                        <option value="public figure">Public Figure</option>
+                        <option value="other">Other</option>
                     </select>
 
                   <label>Which social media platforms do you post on/engage with regularly? (You may select multiple) *</label>
@@ -83,7 +85,7 @@
         <option value="onlyfans">OnlyFans</option>
     </select>
 
-    <label for="followers">How many followers/subscribers do you have on your primary social media? *</label>
+    <label for="followers">How many followers/subscribers do you have on your personal or business's primary social media? *</label>
     <select id="followers" name="followers" required>
         <option value="<5k">Less than 5k</option>
         <option value="5k-9k">5k - 9k</option>
@@ -96,8 +98,14 @@
         <option value="1M+">1M +</option>
     </select>
 
-    <label for="username">Primary Social Media Username *</label>
+    <label for="username">Your Personal or Business's Primary Social Media Username *</label>
     <input type="text" id="username" name="username" required>
+</fieldset>
+
+<fieldset>
+    <legend>Additional Notes</legend>
+  <label for="additional notes">Please add any further notes relevant for membership</label>
+    <input type="text" id="additional notes" name="additional notes" required>
 </fieldset>
                <fieldset>
     <legend>Interests</legend>
