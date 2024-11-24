@@ -457,7 +457,7 @@ button.submit-btn:hover {
     -moz-appearance: none;
     appearance: none;
     width: 20px; /* Size of the checkbox */
-    height: 20px;
+    height: 10px;
     border: 2px solid #ffcc00; /* Gold border */
     border-radius: 3px; /* Slight rounding */
     background-color: #333; /* Grey background */
