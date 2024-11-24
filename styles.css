@@ -489,7 +489,7 @@ button.submit-btn:hover {
     display: flex; /* Use flex layout for each label */
     justify-content: space-between; /* Push text to the left and checkbox to the right */
     align-items: center; /* Vertically center the text and checkbox */
-    width:100%; /* Ensure the label spans the full width */
+    width:60%; /* Ensure the label spans the full width */
     text-align: center; /* Align the label text to the center */
 }
 
