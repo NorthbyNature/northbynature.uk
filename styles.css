@@ -132,32 +132,19 @@ form {
     margin: 0 auto;
 }
 
-/* Ensure inputs and labels stack properly */
-form label {
-    display: block;
-    margin-bottom: 5px; /* Add spacing below the label */
-}
-
-form input, form textarea, form select {
+form input, form textarea {
     padding: 15px;
     border: none;
     border-radius: 5px;
     background-color: #fff;
     color: #333;
     width: 100%;
-    margin-bottom: 20px; /* Add space below inputs */
 }
 
 form input[type="submit"] {
     background-color: #ffcc00;
     color: #000;
     cursor: pointer;
-    font-size: 16px;
-    padding: 12px 20px; /* Increased padding for better appearance */
-    border: none;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-weight: bold;
 }
 
 form input[type="submit"]:hover {
@@ -181,8 +168,182 @@ footer a:hover {
     color: #ffcc00;
 }
 
-.footer-links {
+footer #social img {
+    height: 30px;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.video-container video {
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.text-centered-container {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
+    padding: 0 20px;
+}
+
+.instagram-link {
+    width: 100%;
+    background-color: #000;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.instagram-link a {
+    color: #fff;
+    display: block;
+}
+
+.instagram-link a:hover {
+    color: #808080;
+}
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e6b800;
+}
+
+.gold-link:hover {
+    color: #e6b800;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+.cart-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10; /* Ensure it stays on top of other content */
+}
+
+.cart-icon a {
+    color: #fff;
+}
+
+.cart-icon a i {
+    font-size: 24px;
+}
+
+#cart-count {
+    background-color: #ffcc00;
+    color: #000;
+    border-radius: 50%;
+    padding: 5px 10px;
+    position: relative;
+    top: -10px;
+    left: -10px;
+}
+
+.event-card {
+    display: block;
+    text-decoration: none;
+    border: 1px solid #444;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.event-card:hover {
+    transform: scale(1.05);
+}
+
+.event-card img {
+    width: 100%;
+}
+
+.event-card .event-info {
+    padding: 10px;
+    background-color: #222;
+}
+
+@media (min-width: 768px) {
+    .text-and-image {
+        display: flex;
+        justify-content: center;
+    }
+    .text-content, .image-content {
+        margin: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+    nav ul.nav-list {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+    }
+    nav ul.nav-list.active {
+        display: flex;
+    }
+}
+
+/* Adjustments for screens smaller than 600px */
+@media (max-width: 600px) {
+    .video-container video {
+        width: 100%;
+    }
+    .footer-links {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    h1, h2, h3 {
+        line-height: 1.2; /* Reduce the space between lines */
+    }
+
+    nav ul li a {
+        font-size: 0.9em; /* Smaller font size for nav items */
+        padding: 3px 5px; /* Reduce padding to make items fit better */
+    }
+
+    nav ul {
+        gap: 5px; /* Reduced gap between the items */
+        padding: 0 10px; /* Add padding to spread items closer to the margins */
+    }
+
+    h1 {
+        font-size: 1.8em !important; /* Adjust as needed */
+    }
+    h2 {
+        font-size: 1.6em !important; /* Adjust as needed */
+    }
+    h3 {
+        font-size: 1.4em !important; /* Adjust as needed */
+    }
 }
 
 /* Membership Application Form */
