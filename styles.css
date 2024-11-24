@@ -349,7 +349,7 @@ ul li {
 /* Membership Application Form */
 .membership-application {
     background-color: #000;
-    color: #ffcc00;
+    color: #fff; /* Default text is white */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -362,7 +362,7 @@ ul li {
 }
 
 .membership-application legend {
-    color: #ffcc00; /* Gold text */
+    color: #ffcc00; /* Gold text for subheadings */
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
@@ -372,7 +372,7 @@ ul li {
 .membership-application label {
     display: block;
     margin-top: 10px;
-    color: #ffcc00;
+    color: #fff; /* White text for labels */
 }
 
 .membership-application input[type="text"],
