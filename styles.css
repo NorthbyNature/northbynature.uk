@@ -130,15 +130,28 @@ form {
     gap: 15px;
     max-width: 600px;
     margin: 0 auto;
+    text-align: center; /* Ensure labels are center-aligned */
 }
 
-form input, form textarea {
+form input, 
+form textarea, 
+form select {
     padding: 15px;
     border: none;
     border-radius: 5px;
     background-color: #fff;
     color: #333;
-    width: 100%;
+    display: block; /* Make inputs block-level to ensure proper stacking */
+    margin: 0 auto 20px auto; /* Center inputs and add spacing */
+    width: 80%; /* Reduce width for better appearance */
+    max-width: 500px; /* Ensure inputs don't get too wide */
+    text-align: left; /* Align text inside inputs to the left */
+}
+
+form label {
+    display: block; /* Stack label above the input */
+    text-align: center; /* Center the label text */
+    margin-bottom: 10px; /* Add space between label and input */
 }
 
 form input[type="submit"] {
@@ -479,3 +492,4 @@ button.submit-btn:hover {
     color: #fff; /* White text */
     margin-right: 15px; /* Spacing between checkboxes */
 }
+
