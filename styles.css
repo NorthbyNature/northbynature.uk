@@ -495,7 +495,7 @@ button.submit-btn:hover {
 
 /* Optional: Style the text independently */
 .checkbox-item span {
-    flex-grow: -1; /* Take up remaining space in the label */
+    flex-grow: -10; /* Take up remaining space in the label */
     color: #fff; /* Keep text white */
 }
 .checkbox-group {
