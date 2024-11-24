@@ -463,6 +463,7 @@ button.submit-btn:hover {
     background-color: #333; /* Grey background */
     cursor: pointer;
     display: inline-block;
+ vertical-align: middle; /* Align with text */
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -480,6 +481,9 @@ button.submit-btn:hover {
     font-size: 16px;
     font-weight: bold;
     position: absolute;
+top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust positioning */
     top: 3px;
     left: 3px;
 }
