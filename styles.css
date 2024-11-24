@@ -389,21 +389,41 @@ ul li {
     text-align: center;
 }
 
-/* Radio Button Styling */
-.membership-application .radio-group {
-    display: flex;
-    flex-direction: column; /* Stack question and options vertically */
-    align-items: center; /* Center-align the group */
-    text-align: center; /* Ensure text alignment for the question */
-    gap: 10px; /* Add spacing between the question and the options */
+.membership-application input[type="radio"] {
+    -webkit-appearance: none; /* Remove default browser styling */
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px; /* Size of the radio button */
+    height: 20px;
+    border: 2px solid #ffcc00; /* Gold border */
+    border-radius: 50%; /* Make it circular */
+    background-color: #333; /* Dark grey background */
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle; /* Align with text */
+    position: relative; /* Allow inner dot centering */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.membership-application .radio-group .radio-options {
-    display: flex;
-    justify-content: center; /* Center-align the Yes/No options */
-    gap: 20px; /* Space between Yes and No options */
+/* Checked state styling */
+.membership-application input[type="radio"]:checked {
+    background-color: #ffcc00; /* Gold background when selected */
+    border-color: #ffcc00; /* Gold border when selected */
 }
 
+/* Inner dot for checked state */
+.membership-application input[type="radio"]:checked::after {
+    content: "";
+    display: block;
+    width: 10px; /* Size of the inner dot */
+    height: 10px;
+    background-color: #000; /* Black inner dot */
+    border-radius: 50%; /* Fully round */
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to perfectly center */
+}
 .membership-application input[type="radio"] {
     -webkit-appearance: none; /* Remove default styling */
     -moz-appearance: none;
