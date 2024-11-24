@@ -195,6 +195,50 @@ footer a:hover {
     text-align: center;
 }
 
+/* Checkbox Styling */
+.membership-application .checkbox-group {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    gap: 15px; /* Add space between options */
+}
+
+.membership-application .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between the checkbox and text */
+    color: #fff; /* Keep the label text white */
+}
+
+.membership-application input[type="checkbox"] {
+    -webkit-appearance: none; /* Remove default styling */
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffcc00; /* Gold border for checkbox */
+    border-radius: 3px;
+    background-color: #333; /* Dark grey background */
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.membership-application input[type="checkbox"]:checked {
+    background-color: #ffcc00; /* Gold background when checked */
+    border-color: #ffcc00; /* Gold border when checked */
+    position: relative;
+}
+
+.membership-application input[type="checkbox"]:checked::after {
+    content: "✓";
+    color: #000; /* Dark tick */
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    left: 4px;
+    top: 1px;
+}
+
 /* Radio Button Styling */
 .membership-application .radio-group {
     display: flex;
@@ -204,9 +248,16 @@ footer a:hover {
     gap: 10px; /* Add spacing between the question and the options */
 }
 
+.membership-application .radio-group label {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center-align the radio button with its label */
+    gap: 8px; /* Space between the radio button and the text */
+    color: #fff; /* White text for the labels */
+}
+
 .membership-application .radio-group .radio-options {
     display: flex;
-    justify-content: center; /* Center-align the Yes/No options */
     gap: 20px; /* Space between Yes and No options */
 }
 
