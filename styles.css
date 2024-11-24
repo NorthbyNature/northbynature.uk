@@ -501,6 +501,6 @@ button.submit-btn:hover {
 .checkbox-group {
     display: flex;
     flex-direction: column; /* Stack checkboxes vertically */
-    gap: 10px; /* Space between items */
+    gap: 5px; /* Space between items */
     align-items: flex-start; /* Align everything to the left */
     margin-top: 10px; /* Add space above */
