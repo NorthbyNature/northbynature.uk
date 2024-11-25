@@ -1,0 +1,176 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North by Nature - Partnership Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="text-center">
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+    </header>
+
+    <main class="main-content">
+        <section class="content-section text-centered-container container">
+            <h1 class="section-title">Become a Member</h1>
+            <p class="form-intro">A JOURNEY OF THOUSAND MILES BEGINS WITH A SINGLE STEP.</p>
+
+            <form method="POST" class="Partnership-application" data-netlify="true" action="/thank-you.html">
+                <input type="hidden" name="Partnership-application" value="Partnership-application">
+                
+                <!-- Contact Information -->
+                <fieldset>
+                    <legend>Contact Information</legend>
+                    <p>We collect this information so we can contact you with the outcome of your application. This information relates to the personal information of the form submitter or the businesses primary contact </p>
+                    <label for="first-name">First Name *</label>
+                    <input type="text" id="first-name" name="first_name" required>
+
+                    <label for="last-name">Last Name *</label>
+                    <input type="text" id="last-name" name="last_name" required>
+
+                    <label for="phone-number">Phone Number</label>
+                    <input type="tel" id="phone-number" name="phone_number">
+
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="city">Primary City/Town Residency *</label>
+                    <input type="text" id="city" name="city" required>
+                </fieldset>
+
+                 <!-- Business Contact Information -->
+                <fieldset>
+                    <legend>Business Information</legend>
+                    <p>We collect this information so we can contact you with the outcome of your application. This information relates to the personal information of the form submitter or the businesses primary contact </p>
+                    <label for="business-name">Business Name *</label>
+                    <input type="text" id="business-name" name="business-name" required>
+
+                    <label for="phone-number">Phone Number</label>
+                    <input type="tel" id="phone-number" name="phone_number">
+
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="city">City/Town of Business *</label>
+                    <p>If your business is in multiple locations please state all locations. If the number of different locations exceeds 5 then please respond with "Multiple". If your business is only online please respond with "Online" </p>
+                    <input type="text" id="city" name="city" required>
+                </fieldset>
+
+                <!-- Social Media Presence -->
+                <fieldset>
+                    <legend>Social Media Presence</legend>
+                    <label for="description">What best describes the nature of your business? *</label>
+                    <select id="description" name="description" required>
+                        <option value="Bar or Resturant">Public Audience</option>
+                        <option value="Clothing">Social Media Influencer</option>
+                        <option value="Healthcare">Content Creator</option>
+                        <option value="Events & Entertainment">Streamer</option>
+                        <option value="Management Agency">Business Owner/Representative</option>
+                        <option value="Beauty Industry">Entrepreneur</option>
+                        <option value="TV or Media">Media Creative</option>
+                        <option value="Leisure or Activities">Sportsperson</option>
+                        <option value="Boutique Retailer">TV Personality</option>
+                        <option value="Other">Public Figure</option>
+                        <option value="model or actor/actress">Model or Actor/Actress</option>
+                        <option value="public figure">Public Figure</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <label for="description">Whats the nature of your engagement? *</label>
+                    <select id="description" name="description" required>
+                        <option value="Sporting">Sporting</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Music">Music</option>
+                        <option value="Live Entertainment">Live Entertainment</option>
+                        <option value="Food & Beverages">Food & Beverages</option>
+                        <option value="TV or Film">TV or Film</option>
+                        <option value="Events">Events</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Product Promotion">Product Promotion</option>
+                        <option value="News">News</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Media">Media</option>
+                        <option value="Adult Entertainment">Adult Entertainment</option>
+                        <option value="Other">Other</option>            
+                    </select>
+                  <label>Which social media platforms do you post on/engage with regularly? (You may select multiple) *</label>
+<div class="checkbox-group">
+    <label class="checkbox-item"><span>Instagram</span><input type="checkbox" name="platforms" value="instagram"></label>
+    <label class="checkbox-item"><span>TikTok</span><input type="checkbox" name="platforms" value="tiktok"></label>
+    <label class="checkbox-item"><span>Facebook</span><input type="checkbox" name="platforms" value="facebook"></label>
+    <label class="checkbox-item"><span>LinkedIn</span><input type="checkbox" name="platforms" value="linkedin"></label>
+    <label class="checkbox-item"><span>Twitch</span><input type="checkbox" name="platforms" value="twitch"></label>
+    <label class="checkbox-item"><span>YouTube</span><input type="checkbox" name="platforms" value="youtube"></label>
+    <label class="checkbox-item"><span>OnlyFans</span><input type="checkbox" name="platforms" value="onlyfans"></label>
+</div>
+
+          <!-- Social Media Engagement -->
+<fieldset>
+    <legend>Social Media Engagement</legend>
+    <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
+    <select id="highest-engagement" name="highest_engagement" required>
+        <option value="instagram">Instagram</option>
+        <option value="tiktok">TikTok</option>
+        <option value="facebook">Facebook</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="twitch">Twitch</option>
+        <option value="youtube">YouTube</option>
+        <option value="onlyfans">OnlyFans</option>
+    </select>
+
+    <label for="followers">How many followers/subscribers do you have on your personal or business's primary social media? *</label>
+    <select id="followers" name="followers" required>
+        <option value="<5k">Less than 5k</option>
+        <option value="5k-9k">5k - 9k</option>
+        <option value="10k-24k">10k - 24k</option>
+        <option value="25k-49k">25k - 49k</option>
+        <option value="50k-99k">50k - 99k</option>
+        <option value="100k-249k">100k - 249k</option>
+        <option value="250k-500k">250k - 500k</option>
+        <option value="500k-1M">500k - 1M</option>
+        <option value="1M+">1M +</option>
+    </select>
+
+    <label for="username">Your Personal or Business's Primary Social Media Username *</label>
+    <input type="text" id="username" name="username" required>
+</fieldset>
+
+<fieldset>
+    <legend>Additional Notes</legend>
+    <label for="additional-notes">Please add any further notes about you or your business that may be relevant for your membership</label>
+    <textarea id="additional-notes" name="additional-notes" rows="5" required></textarea>
+</fieldset>
+               <fieldset>
+    <legend>Interests</legend>
+    <div class="radio-group">
+        <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
+        <div class="radio-options">
+            <label><input type="radio" name="discounts" value="yes" required> Yes</label>
+            <label><input type="radio" name="discounts" value="no"> No</label>
+        </div>
+    </div>
+    <div class="radio-group">
+        <label>Are you interested in attending events with high-profile guests? *</label>
+        <div class="radio-options">
+            <label><input type="radio" name="events" value="yes" required> Yes</label>
+            <label><input type="radio" name="events" value="no"> No</label>
+        </div>
+    </div>
+    <div class="radio-group">
+        <label>Are you ready to take yourself or your brand to the next level? *</label>
+        <div class="radio-options">
+            <label><input type="radio" name="next_level" value="yes" required> Yes</label>
+            <label><input type="radio" name="next_level" value="no"> No</label>
+        </div>
+    </div>
+</fieldset>
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
