@@ -30,74 +30,59 @@
                     <label for="last-name">Last Name *</label>
                     <input type="text" id="last-name" name="last_name" required>
 
-                    <label for="phone-number">Phone Number</label>
-                    <input type="tel" id="phone-number" name="phone_number">
-
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-
-                    <label for="city">Primary City/Town Residency *</label>
-                    <input type="text" id="city" name="city" required>
-                </fieldset>
-
-                 <!-- Business Contact Information -->
-                <fieldset>
-                    <legend>Business Information</legend>
-                    <p>We collect this information so we can contact you with the outcome of your application. This information relates to the personal information of the form submitter or the businesses primary contact </p>
                     <label for="business-name">Business Name *</label>
-                    <input type="text" id="business-name" name="business-name" required>
+                    <input type="text" id="business-name" name="business-name" required>  
+                  
+                    <label for="phone-number">Best Contact Number*</label>
+                    <input type="tel" id="phone-number" name="phone_number" required>
 
-                    <label for="phone-number">Phone Number</label>
-                    <input type="tel" id="phone-number" name="phone_number">
-
-                    <label for="email">Email *</label>
+                    <label for="email">Personal or Business Email *</label>
                     <input type="email" id="email" name="email" required>
+
+                    <label for="website">Website </label>
+                    <input type="website" id="website" name="website">
+
+                    <label for="city">Primary City/Town Residency of From Submitter *</label>
+                    <input type="text" id="city" name="city" required>
 
                     <label for="city">City/Town of Business *</label>
                     <p>If your business is in multiple locations please state all locations. If the number of different locations exceeds 5 then please respond with "Multiple". If your business is only online please respond with "Online" </p>
                     <input type="text" id="city" name="city" required>
                 </fieldset>
 
-                <!-- Social Media Presence -->
+                <!-- Business Information -->
                 <fieldset>
-                    <legend>Social Media Presence</legend>
+                    <legend>Business Information</legend>
                     <label for="description">What best describes the nature of your business? *</label>
                     <select id="description" name="description" required>
-                        <option value="Bar or Resturant">Public Audience</option>
-                        <option value="Clothing">Social Media Influencer</option>
-                        <option value="Healthcare">Content Creator</option>
-                        <option value="Events & Entertainment">Streamer</option>
-                        <option value="Management Agency">Business Owner/Representative</option>
-                        <option value="Beauty Industry">Entrepreneur</option>
-                        <option value="TV or Media">Media Creative</option>
-                        <option value="Leisure or Activities">Sportsperson</option>
-                        <option value="Boutique Retailer">TV Personality</option>
-                        <option value="Other">Public Figure</option>
-                        <option value="model or actor/actress">Model or Actor/Actress</option>
-                        <option value="public figure">Public Figure</option>
-                        <option value="other">Other</option>
+                        <option value="Bar or Resturant">Bar or Resturant</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Events & Entertainment">Events & Entertainment</option>
+                        <option value="Management Agency">Management Agency</option>
+                        <option value="Beauty Industry">Beauty Industry</option>
+                        <option value="TV or Media">TV or Media</option>
+                        <option value="Leisure or Activities">Leisure or Activities</option>
+                        <option value="Boutique Retailer">Boutique Retailer</option>
+                        <option value="Other">Other</option>
+                        </select>
+
+                    <label for="size">Whats the size of your business? *</label>
+<p>Size refers to the approximate number of employees within the organisation. </p>
+                    <select id="size" name="size" required>
+                        <option value="Solo Trader">Solo Trader</option>
+                        <option value="2-9">2-9</option>
+                        <option value="10-24">10-24</option>
+                        <option value="25-49">25-49</option>
+                        <option value="50-99">50-99</option>
+                        <option value="100-199">100-199</option>
+                        <option value="200+">200+</option>       
                     </select>
-                    <label for="description">Whats the nature of your engagement? *</label>
-                    <select id="description" name="description" required>
-                        <option value="Sporting">Sporting</option>
-                        <option value="Gaming">Gaming</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Music">Music</option>
-                        <option value="Live Entertainment">Live Entertainment</option>
-                        <option value="Food & Beverages">Food & Beverages</option>
-                        <option value="TV or Film">TV or Film</option>
-                        <option value="Events">Events</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Product Promotion">Product Promotion</option>
-                        <option value="News">News</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Lifestyle">Lifestyle</option>
-                        <option value="Media">Media</option>
-                        <option value="Adult Entertainment">Adult Entertainment</option>
-                        <option value="Other">Other</option>            
-                    </select>
-                  <label>Which social media platforms do you post on/engage with regularly? (You may select multiple) *</label>
+
+                  <!-- Social Media Engagement -->
+                  <fieldset>
+                  <legend>Social Media Engagement</legend>
+                  <label>Which social media platforms does your business post on/engage with regularly? (You may select multiple) *</label>
 <div class="checkbox-group">
     <label class="checkbox-item"><span>Instagram</span><input type="checkbox" name="platforms" value="instagram"></label>
     <label class="checkbox-item"><span>TikTok</span><input type="checkbox" name="platforms" value="tiktok"></label>
@@ -107,10 +92,8 @@
     <label class="checkbox-item"><span>YouTube</span><input type="checkbox" name="platforms" value="youtube"></label>
     <label class="checkbox-item"><span>OnlyFans</span><input type="checkbox" name="platforms" value="onlyfans"></label>
 </div>
+    </select>
 
-          <!-- Social Media Engagement -->
-<fieldset>
-    <legend>Social Media Engagement</legend>
     <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
     <select id="highest-engagement" name="highest_engagement" required>
         <option value="instagram">Instagram</option>
@@ -122,7 +105,7 @@
         <option value="onlyfans">OnlyFans</option>
     </select>
 
-    <label for="followers">How many followers/subscribers do you have on your personal or business's primary social media? *</label>
+    <label for="followers">How many followers/subscribers do you have on your business's primary social media? *</label>
     <select id="followers" name="followers" required>
         <option value="<5k">Less than 5k</option>
         <option value="5k-9k">5k - 9k</option>
@@ -135,38 +118,50 @@
         <option value="1M+">1M +</option>
     </select>
 
-    <label for="username">Your Personal or Business's Primary Social Media Username *</label>
+    <label for="username">Business's Primary Social Media Username *</label>
     <input type="text" id="username" name="username" required>
 </fieldset>
 
 <fieldset>
     <legend>Additional Notes</legend>
-    <label for="additional-notes">Please add any further notes about you or your business that may be relevant for your membership</label>
-    <textarea id="additional-notes" name="additional-notes" rows="5" required></textarea>
+    <label for="additional-notes">Please add any further notes about you or your business that may be relevant for your partnership</label>
+    <textarea id="additional-notes" name="additional-notes" rows="5"></textarea>
 </fieldset>
                <fieldset>
+
+  <!-- Partnership -->
+                  <fieldset>
+                  <legend>Partnership</legend>
+                  <label>What are you looking for? (You may select multiple) *</label>
+<div class="checkbox-group">
+    <label class="checkbox-item"><span>More Social Media Engagement</span><input type="checkbox" name="platforms" value="instagram"></label>
+    <label class="checkbox-item"><span>Higher Quality Customers</span><input type="checkbox" name="platforms" value="tiktok"></label>
+    <label class="checkbox-item"><span>Marketing Support</span><input type="checkbox" name="platforms" value="facebook"></label>
+    <label class="checkbox-item"><span>More Customers</span><input type="checkbox" name="platforms" value="linkedin"></label>
+    <label class="checkbox-item"><span>More Collaborations</span><input type="checkbox" name="platforms" value="twitch"></label>
+    <label class="checkbox-item"><span>Venue Hire Opportunities</span><input type="checkbox" name="platforms" value="youtube"></label>
+    <label class="checkbox-item"><span>A More Esteemed Reputation</span><input type="checkbox" name="platforms" value="onlyfans"></label>
+    <label class="checkbox-item"><span>Business Development</span><input type="checkbox" name="platforms" value="Business Development"></label>
+    <label class="checkbox-item"><span>Social Media Management</span><input type="checkbox" name="platforms" value="Social Media Management"></label>
+</div>
+    </select>
+
+<!-- Intersts -->
     <legend>Interests</legend>
     <div class="radio-group">
-        <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
+        <label>Are you happy to offer discounts and/or offers to our high-calibre members?*</label>
         <div class="radio-options">
             <label><input type="radio" name="discounts" value="yes" required> Yes</label>
             <label><input type="radio" name="discounts" value="no"> No</label>
         </div>
     </div>
     <div class="radio-group">
-        <label>Are you interested in attending events with high-profile guests? *</label>
+        <label>If you have a venue, are you interested in allowing us to host exclusive private events for high-profile guests? *</label>
         <div class="radio-options">
             <label><input type="radio" name="events" value="yes" required> Yes</label>
             <label><input type="radio" name="events" value="no"> No</label>
+            <label><input type="radio" name="events" value="We are not a venue"> We are not a venue</label>
         </div>
-    </div>
-    <div class="radio-group">
-        <label>Are you ready to take yourself or your brand to the next level? *</label>
-        <div class="radio-options">
-            <label><input type="radio" name="next_level" value="yes" required> Yes</label>
-            <label><input type="radio" name="next_level" value="no"> No</label>
-        </div>
-    </div>
 </fieldset>
                 <button type="submit" class="submit-btn">Submit Application</button>
             </form>
