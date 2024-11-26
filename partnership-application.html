@@ -42,9 +42,6 @@
                     <label for="website">Website </label>
                     <input type="website" id="website" name="website">
 
-                    <label for="city">Primary City/Town Residency of Form Submitter *</label>
-                    <input type="text" id="city" name="city" required>
-
                     <label for="city">City/Town of Business *</label>
                     <p>If your business is in multiple locations please state all locations. If the number of different locations exceeds 3 then please respond with "Multiple". If your business is only online please respond with "Online" </p>
                     <input type="text" id="city" name="city" required>
@@ -78,6 +75,20 @@
                         <option value="100-199">100-199</option>
                         <option value="200+">200+</option>       
                     </select>
+
+<label>What are you looking for? (You may select multiple) *</label>
+<div class="checkbox-group">
+    <label class="checkbox-item"><span>More Social Media Engagement</span><input type="checkbox" name="platforms" value="instagram"></label>
+    <label class="checkbox-item"><span>Higher Quality Customers</span><input type="checkbox" name="platforms" value="tiktok"></label>
+    <label class="checkbox-item"><span>Marketing Support</span><input type="checkbox" name="platforms" value="facebook"></label>
+    <label class="checkbox-item"><span>More Customers</span><input type="checkbox" name="platforms" value="linkedin"></label>
+    <label class="checkbox-item"><span>More Collaborations</span><input type="checkbox" name="platforms" value="twitch"></label>
+    <label class="checkbox-item"><span>Venue Hire Opportunities</span><input type="checkbox" name="platforms" value="youtube"></label>
+    <label class="checkbox-item"><span>A More Esteemed Reputation</span><input type="checkbox" name="platforms" value="onlyfans"></label>
+    <label class="checkbox-item"><span>Business Development</span><input type="checkbox" name="platforms" value="Business Development"></label>
+    <label class="checkbox-item"><span>Social Media Management</span><input type="checkbox" name="platforms" value="Social Media Management"></label>
+</div>
+    </select>
 
                   <!-- Social Media Engagement -->
                   <fieldset>
@@ -129,34 +140,17 @@
 </fieldset>
                <fieldset>
 
-  <!-- Partnership -->
-                  <fieldset>
-                  <legend>Partnership</legend>
-                  <label>What are you looking for? (You may select multiple) *</label>
-<div class="checkbox-group">
-    <label class="checkbox-item"><span>More Social Media Engagement</span><input type="checkbox" name="platforms" value="instagram"></label>
-    <label class="checkbox-item"><span>Higher Quality Customers</span><input type="checkbox" name="platforms" value="tiktok"></label>
-    <label class="checkbox-item"><span>Marketing Support</span><input type="checkbox" name="platforms" value="facebook"></label>
-    <label class="checkbox-item"><span>More Customers</span><input type="checkbox" name="platforms" value="linkedin"></label>
-    <label class="checkbox-item"><span>More Collaborations</span><input type="checkbox" name="platforms" value="twitch"></label>
-    <label class="checkbox-item"><span>Venue Hire Opportunities</span><input type="checkbox" name="platforms" value="youtube"></label>
-    <label class="checkbox-item"><span>A More Esteemed Reputation</span><input type="checkbox" name="platforms" value="onlyfans"></label>
-    <label class="checkbox-item"><span>Business Development</span><input type="checkbox" name="platforms" value="Business Development"></label>
-    <label class="checkbox-item"><span>Social Media Management</span><input type="checkbox" name="platforms" value="Social Media Management"></label>
-</div>
-    </select>
-
-<!-- Intersts -->
+  <!-- Intersts -->
     <legend>Interests</legend>
     <div class="radio-group">
-        <label>Are you happy to offer discounts and/or offers to our high-calibre members?*</label>
+        <label>Are you happy to offer discounts and/or offers to our exclusive members?*</label>
         <div class="radio-options">
             <label><input type="radio" name="discounts" value="yes" required> Yes</label>
             <label><input type="radio" name="discounts" value="no"> No</label>
         </div>
     </div>
     <div class="radio-group">
-        <label>If you have a venue, are you interested in allowing us to host exclusive private events for high-profile guests such as launch events, afterparties, celebrations, + more? * (if you aren't a venue please select N?A)</label>
+        <label>If you have a venue, are you interested in allowing us to host exclusive private events for high-profile guests such as launch events, afterparties, celebrations, + more? * (if you aren't a venue please select N/A)</label>
         <div class="radio-options">
             <label><input type="radio" name="events" value="yes" required> Yes</label>
             <label><input type="radio" name="events" value="no"> No</label>
