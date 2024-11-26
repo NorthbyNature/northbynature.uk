@@ -22,8 +22,21 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-// Route to handle form submission
+// Route to handle membership form submission
 app.post('/submit-form', (req, res) => {
+    const formData = req.body; // Get form data from the request body
+
+    console.log('Form Data Received:', formData); // Log the form data for debugging
+
+    // Process the form data (e.g., save to a database or send an email)
+    // Example: Save the data to a database or perform some validation here
+
+    // Redirect to the thank-you page after successful form submission
+    res.redirect('/thank-you');
+});
+
+// Route to handle partnership form submission
+app.post('/submited-form', (req, res) => {
     const formData = req.body; // Get form data from the request body
 
     console.log('Form Data Received:', formData); // Log the form data for debugging
