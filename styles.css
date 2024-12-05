@@ -683,6 +683,7 @@ textarea {
     justify-content: center; /* Center horizontally */
     gap: 10px; /* Space between elements */
     margin-top: 15px; /* Add space above the container */
+    margin-bottom: 15px; /* Add space below the container */
 }
 
 /* Styling for the quantity input */
@@ -708,7 +709,7 @@ textarea {
     color: #fff; /* White text */
     font-size: 18px; /* Larger text for readability */
     font-weight: bold; /* Bold text */
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #ffffff; /* Gold border */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor for interactivity */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
@@ -716,7 +717,7 @@ textarea {
 
 /* Hover effect for buttons */
 .quantity-selection button:hover {
-    background-color: #ffcc00; /* Gold background */
+    background-color: #ffffff; /* Gold background */
     color: #000; /* Black text */
 }
 
@@ -725,5 +726,5 @@ textarea {
     background-color: #ccc; /* Light grey for disabled state */
     color: #666; /* Dark grey text for disabled state */
     cursor: not-allowed; /* Show "not allowed" cursor */
-    border-color: #ccc; /* Match the border to the background */
+    border-color: #fff; /* Match the border to the background */
 }
