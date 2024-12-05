@@ -1,43 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for adding items to cart
+document.addEventListener('DOMContentLoaded', function () {
+    // Add to Cart and Buy Now buttons
     const addToCartBtn = document.getElementById('add-to-cart');
     if (addToCartBtn) addToCartBtn.addEventListener('click', addToCart);
 
     const buyNowBtn = document.getElementById('buy-now');
     if (buyNowBtn) buyNowBtn.addEventListener('click', buyNow);
 
-    // Event listeners for quantity buttons
+    // Quantity buttons
     const decreaseQuantityBtn = document.getElementById('decrease-quantity');
     const increaseQuantityBtn = document.getElementById('increase-quantity');
     if (decreaseQuantityBtn) decreaseQuantityBtn.addEventListener('click', decreaseQuantity);
     if (increaseQuantityBtn) increaseQuantityBtn.addEventListener('click', increaseQuantity);
 
-    // Event listeners for ticket buttons
+    // Ticket selection buttons
     const ticketButtons = document.querySelectorAll('.ticket-btn');
-    ticketButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            ticketButtons.forEach(btn => btn.classList.remove('selected'));
+    ticketButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            ticketButtons.forEach((btn) => btn.classList.remove('selected'));
             button.classList.add('selected');
         });
     });
 
-    // Event listener for checkout button
-    const checkoutButton = document.getElementById('checkout-button');
-    if (checkoutButton) checkoutButton.addEventListener('click', redirectToPayment);
-
-    // Check if we are on the cart page
+    // Cart page logic
     if (document.body.classList.contains('cart-page')) {
         displayCartItems();
     }
 
-    // Check if we are on the payment page
+    // Payment page logic
     if (document.body.classList.contains('payment-page')) {
         renderPayPalButton();
     }
 
+    // Update cart count for all pages
     updateCartCount();
 });
 
+// Quantity controls
 function decreaseQuantity() {
     const quantityInput = document.getElementById('quantity-input');
     let quantity = parseInt(quantityInput.value);
@@ -52,41 +50,45 @@ function increaseQuantity() {
     quantityInput.value = quantity + 1;
 }
 
-// Add item to cart
+// Add selected item to cart
 function addToCart() {
     const selectedTicket = document.querySelector('.ticket-btn.selected');
-    const price = selectedTicket ? selectedTicket.getAttribute('data-price') : 0;
+    const price = selectedTicket ? parseFloat(selectedTicket.getAttribute('data-price')) : 0;
     const quantity = parseInt(document.getElementById('quantity-input').value);
     const eventTitle = document.querySelector('.event-title').innerText;
     const ticketType = selectedTicket ? selectedTicket.getAttribute('data-name') : '';
 
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const item = {
-        eventTitle,
-        ticketType,
-        price,
-        quantity,
-    };
+    const existingItem = cart.find((item) => item.ticketType === ticketType && item.eventTitle === eventTitle);
 
-    cart.push(item);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({ eventTitle, ticketType, price, quantity });
+    }
+
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     alert('Item added to cart!');
 }
 
+// Buy Now functionality
 function buyNow() {
     addToCart();
     window.location.href = 'cart.html';
 }
 
-// Update cart item count
+// Update cart count displayed on all pages
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
-    document.getElementById('cart-count').innerText = cartCount;
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.innerText = cartCount;
+    }
 }
 
-// Display cart items
+// Display cart items on the cart page
 function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
@@ -103,18 +105,14 @@ function displayCartItems() {
             cartTotal += itemTotal;
             cartHTML += `
                 <div class="cart-item">
-                    <div class="cart-item-details">
-                        <h5>${item.eventTitle}</h5>
-                        <p>${item.ticketType} x ${item.quantity} = £${itemTotal.toFixed(2)}</p>
-                    </div>
-                    <div class="cart-item-quantity">
+                    <h5>${item.eventTitle}</h5>
+                    <p>${item.ticketType} x ${item.quantity} = £${itemTotal.toFixed(2)}</p>
+                    <div>
                         <button onclick="decreaseCartItemQuantity(${index})">-</button>
-                        <input type="text" value="${item.quantity}" readonly>
+                        <span>${item.quantity}</span>
                         <button onclick="increaseCartItemQuantity(${index})">+</button>
+                        <button onclick="removeItem(${index})" class="remove-item">Remove</button>
                     </div>
-                    <button class="remove-item" onclick="removeItem(${index})">
-                        <i class="fas fa-trash"></i>
-                    </button>
                 </div>
             `;
         });
@@ -125,7 +123,7 @@ function displayCartItems() {
     document.getElementById('checkout-button').disabled = cart.length === 0;
 }
 
-// Decrease item quantity in cart
+// Modify cart item quantities
 function decreaseCartItemQuantity(index) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart[index].quantity > 1) {
@@ -138,7 +136,6 @@ function decreaseCartItemQuantity(index) {
     updateCartCount();
 }
 
-// Increase item quantity in cart
 function increaseCartItemQuantity(index) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart[index].quantity++;
@@ -147,7 +144,6 @@ function increaseCartItemQuantity(index) {
     updateCartCount();
 }
 
-// Remove item from cart
 function removeItem(index) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart.splice(index, 1);
@@ -156,7 +152,7 @@ function removeItem(index) {
     updateCartCount();
 }
 
-// Redirect to payment page
+// Redirect to payment
 function redirectToPayment() {
     window.location.href = 'payment.html';
 }
@@ -164,47 +160,27 @@ function redirectToPayment() {
 // Render PayPal button
 function renderPayPalButton() {
     paypal.Buttons({
-        createOrder: function(data, actions) {
-            return fetch('/create-order', {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    // Customize this object to pass additional details if needed
-                })
-            }).then(function(res) {
-                console.log('Create order response:', res); // Log response
-                return res.json();
-            }).then(function(orderData) {
-                console.log('Order data:', orderData); // Log order data
-                return orderData.id;
-            }).catch(function(err) {
-                console.error('Create order error:', err); // Log error
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [
+                    {
+                        amount: {
+                            value: calculateCartTotal(),
+                        },
+                    },
+                ],
             });
         },
-        onApprove: function(data, actions) {
-            return fetch('/capture-order', {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    orderID: data.orderID
-                })
-            }).then(function(res) {
-                console.log('Capture order response:', res); // Log response
-                return res.json();
-            }).then(function(orderData) {
-                console.log('Order data:', orderData); // Log order data
-                if (orderData.status === 'COMPLETED') {
-                    window.location.href = 'success.html';
-                } else {
-                    window.location.href = 'failure.html';
-                }
-            }).catch(function(err) {
-                console.error('Capture order error:', err); // Log error
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                localStorage.removeItem('cart'); // Clear cart on success
+                window.location.href = 'success.html';
             });
-        }
+        },
     }).render('#paypal-button-container');
 }
+
+// Calculate cart total
+function calculateCartTotal() {
+    const cart = JSON.parse(localStorage.get
