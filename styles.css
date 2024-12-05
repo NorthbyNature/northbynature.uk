@@ -676,15 +676,54 @@ textarea {
     border-color: #ffffff; /* white border for selected button */
 }
 
-/* Styling for quantity selection buttons */
+/* Styling for the quantity selection container */
 .quantity-selection {
-    background-color: #fff; /* white background for quantity */
-    color: #000; /* black text */
-    font-size: 14px; /* Slightly smaller font for ticket options */
-    font-weight: bold; /* Bold text for emphasis */
-    padding: 10px 15px; /* Add spacing inside buttons */
-    border: 1px solid #ffffff; /* White border */
+    display: flex; /* Align elements horizontally */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    gap: 10px; /* Space between elements */
+    margin-top: 15px; /* Add space above the container */
+}
+
+/* Styling for the quantity input */
+.quantity-selection #quantity-input {
+    width: 50px; /* Width of the input box */
+    height: 40px; /* Height for consistent button alignment */
+    text-align: center; /* Center the number text */
+    font-size: 16px; /* Make the text readable */
+    font-weight: bold; /* Make the number stand out */
+    color: #000; /* Black text */
+    background-color: #fff; /* White background */
+    border: 2px solid #ffcc00; /* Gold border */
     border-radius: 5px; /* Slightly rounded corners */
-    cursor: text; /* Pointer cursor on hover */
-    margin: 5px; /* Space between buttons */
-    text-align: center; /* Center-align text */
+    outline: none; /* Remove default focus outline */
+    box-shadow: none; /* Remove shadow */
+}
+
+/* Styling for the buttons */
+.quantity-selection button {
+    width: 40px; /* Button width */
+    height: 40px; /* Button height */
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    font-size: 18px; /* Larger text for readability */
+    font-weight: bold; /* Bold text */
+    border: 2px solid #ffcc00; /* Gold border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for buttons */
+.quantity-selection button:hover {
+    background-color: #ffcc00; /* Gold background */
+    color: #000; /* Black text */
+}
+
+/* Optional: Disabled button styling */
+.quantity-selection button:disabled {
+    background-color: #ccc; /* Light grey for disabled state */
+    color: #666; /* Dark grey text for disabled state */
+    cursor: not-allowed; /* Show "not allowed" cursor */
+    border-color: #ccc; /* Match the border to the background */
+}
