@@ -695,7 +695,7 @@ textarea {
     font-weight: bold; /* Make the number stand out */
     color: #000; /* Black text */
     background-color: #fff; /* White background */
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #ffffff; /* Gold border */
     border-radius: 5px; /* Slightly rounded corners */
     outline: none; /* Remove default focus outline */
     box-shadow: none; /* Remove shadow */
@@ -709,7 +709,7 @@ textarea {
     color: #fff; /* White text */
     font-size: 18px; /* Larger text for readability */
     font-weight: bold; /* Bold text */
-    border: 2px solid #ffffff; /* Gold border */
+    border: 2px solid #ffffff; /* white border */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor for interactivity */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
@@ -717,7 +717,7 @@ textarea {
 
 /* Hover effect for buttons */
 .quantity-selection button:hover {
-    background-color: #ffffff; /* Gold background */
+    background-color: #ffffff; /* white background */
     color: #000; /* Black text */
 }
 
