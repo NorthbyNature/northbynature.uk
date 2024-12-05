@@ -649,7 +649,7 @@ textarea {
 
 /* Styling for ticket selection buttons */
 .ticket-btn {
-    background-color: #333; /* Dark background for unselected buttons */
+    background-color: #000; /* Dark background for unselected buttons */
     color: #fff; /* White text */
     font-size: 14px; /* Slightly smaller font for ticket options */
     font-weight: bold; /* Bold text for emphasis */
