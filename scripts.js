@@ -73,4 +73,80 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 5000);
     */
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // Select DOM elements
+    const quantityInput = document.querySelector('#quantity-input');
+    const increaseQuantityButton = document.querySelector('#increase-quantity');
+    const decreaseQuantityButton = document.querySelector('#decrease-quantity');
+    const ticketButtons = document.querySelectorAll('.ticket-btn');
+    const addToCartButton = document.querySelector('#add-to-cart');
+    const buyNowButton = document.querySelector('#buy-now');
+
+    let selectedTicket = null; // Track the currently selected ticket
+
+    // Function to update quantity
+    function updateQuantity(change) {
+        const currentQuantity = parseInt(quantityInput.value, 10) || 1; // Default to 1 if invalid
+        let newQuantity = currentQuantity + change;
+
+        // Prevent quantity from going below 1
+        if (newQuantity < 1) newQuantity = 1;
+
+        quantityInput.value = newQuantity;
+    }
+
+    // Event listeners for increasing/decreasing quantity
+    increaseQuantityButton.addEventListener('click', () => {
+        updateQuantity(1); // Increment quantity
+    });
+
+    decreaseQuantityButton.addEventListener('click', () => {
+        updateQuantity(-1); // Decrement quantity
+    });
+
+    // Event listeners for ticket selection
+    ticketButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            // Remove "selected" class from all buttons
+            ticketButtons.forEach((btn) => btn.classList.remove('selected'));
+
+            // Add "selected" class to the clicked button
+            button.classList.add('selected');
+
+            // Update the selected ticket
+            selectedTicket = {
+                name: button.getAttribute('data-name'),
+                price: parseFloat(button.getAttribute('data-price')),
+            };
+        });
+    });
+
+    // Event listener for "Add to Cart"
+    addToCartButton.addEventListener('click', () => {
+        const quantity = parseInt(quantityInput.value, 10) || 1;
+
+        if (!selectedTicket) {
+            alert('Please select a ticket type before adding to the cart!');
+            return;
+        }
+
+        // Add ticket to cart logic (replace this with actual cart integration)
+        console.log(`Added ${quantity} x ${selectedTicket.name} (£${selectedTicket.price} each) to the cart.`);
+        alert(`Added ${quantity} x ${selectedTicket.name} (£${selectedTicket.price} each) to your cart.`);
+    });
+
+    // Event listener for "Buy Now"
+    buyNowButton.addEventListener('click', () => {
+        const quantity = parseInt(quantityInput.value, 10) || 1;
+
+        if (!selectedTicket) {
+            alert('Please select a ticket type before proceeding!');
+            return;
+        }
+
+        // Redirect to checkout or handle the purchase directly
+        console.log(`Buying ${quantity} x ${selectedTicket.name} (£${selectedTicket.price} each) now.`);
+        alert(`Proceeding to buy ${quantity} x ${selectedTicket.name}.`);
+    });
+});
 
