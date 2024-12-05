@@ -606,4 +606,45 @@ textarea {
     position: absolute;
     top: 4px;
     left: 4px;
+}
+
+/* Styling for buttons on the event details page */
+.buttons-container button {
+    background-color: #ffcc00; /* Gold background */
+    color: #000; /* Black text */
+    font-size: 16px; /* Make the text readable */
+    font-weight: bold; /* Bold text for emphasis */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Match your site's aesthetic */
+    padding: 10px 20px; /* Add spacing inside buttons */
+    text-transform: uppercase; /* Ensure consistent capitalization */
+    cursor: pointer; /* Change cursor to pointer */
+    margin: 5px; /* Add spacing between buttons */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.buttons-container button#add-to-cart {
+    background-color: #ffcc00; /* Gold for Add to Cart button */
+}
+
+.buttons-container button#add-to-cart:hover {
+    background-color: #e6b800; /* Darker gold on hover */
+}
+
+.buttons-container button#buy-now {
+    background-color: #28a745; /* Green for Buy Now button */
+    color: #fff; /* White text */
+}
+
+.buttons-container button#buy-now:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Button alignment for consistency */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+}
+
 
