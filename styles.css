@@ -673,6 +673,18 @@ textarea {
 .ticket-btn.selected {
     background-color: #ffffff; /* White background for selected button */
     color: #000; /* Black text for selected button */
-    border-color: #e6b800; /* Slightly darker gold border for selected button */
+    border-color: #ffffff; /* white border for selected button */
 }
 
+/* Styling for quantity selection buttons */
+.quantity-selection {
+    background-color: #fff; /* white background for quantity */
+    color: #000; /* black text */
+    font-size: 14px; /* Slightly smaller font for ticket options */
+    font-weight: bold; /* Bold text for emphasis */
+    padding: 10px 15px; /* Add spacing inside buttons */
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: text; /* Pointer cursor on hover */
+    margin: 5px; /* Space between buttons */
+    text-align: center; /* Center-align text */
