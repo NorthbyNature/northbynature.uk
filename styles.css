@@ -647,4 +647,32 @@ textarea {
     gap: 15px; /* Space between buttons */
 }
 
+/* Styling for ticket selection buttons */
+.ticket-btn {
+    background-color: #333; /* Dark background for unselected buttons */
+    color: #fff; /* White text */
+    font-size: 14px; /* Slightly smaller font for ticket options */
+    font-weight: bold; /* Bold text for emphasis */
+    padding: 10px 15px; /* Add spacing inside buttons */
+    border: 2px solid #ffcc00; /* Gold border */
+    border-radius: 5px; /* Slightly rounded corners */
+    text-transform: uppercase; /* Capitalized text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover and selection effects */
+    margin: 5px; /* Space between buttons */
+    text-align: center; /* Center-align text */
+}
+
+/* Hover effect for ticket buttons */
+.ticket-btn:hover {
+    background-color: #ffcc00; /* Gold background on hover */
+    color: #000; /* Black text on hover */
+}
+
+/* Styling for the selected ticket button */
+.ticket-btn.selected {
+    background-color: #ffcc00; /* Gold background for selected button */
+    color: #000; /* Black text for selected button */
+    border-color: #e6b800; /* Slightly darker gold border for selected button */
+}
 
