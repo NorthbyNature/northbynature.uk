@@ -44,3 +44,33 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Form submitted!');
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const eventCards = document.querySelectorAll('.event-card'); // Select all event cards
+
+    // Function to hide or show events based on data-active attribute
+    function updateEventVisibility() {
+        eventCards.forEach((card) => {
+            const isActive = card.getAttribute('data-active') === 'true'; // Check if the event is active
+            if (isActive) {
+                card.style.display = 'block'; // Show the card if active
+            } else {
+                card.style.display = 'none'; // Hide the card if inactive
+            }
+        });
+    }
+
+    // Call the function to initialize event visibility
+    updateEventVisibility();
+
+    // Example: If you want to dynamically change the status of an event
+    // Uncomment and modify this section for testing or future functionality
+    /*
+    setTimeout(() => {
+        // Change the first event to active after 5 seconds
+        eventCards[0].setAttribute('data-active', 'true');
+        updateEventVisibility(); // Reapply the visibility changes
+    }, 5000);
+    */
+});
+
