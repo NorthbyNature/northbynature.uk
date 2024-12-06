@@ -728,3 +728,24 @@ textarea {
     cursor: not-allowed; /* Show "not allowed" cursor */
     border-color: #fff; /* Match the border to the background */
 }
+
+/* Styling for the event image container */
+.event-image {
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically if needed */
+    width: 100%; /* Ensure the container spans the full width */
+    margin: 0 auto; /* Center the container within its parent */
+    background-color: #000; /* Match the site's black background */
+    overflow: hidden; /* Prevent overflow if the image is too large */
+}
+
+/* Styling for the event image */
+.event-image img {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain the image's aspect ratio */
+    display: block; /* Remove any inline white space below the image */
+    object-fit: cover; /* Cover the container without distorting the image */
+    background-color: #000; /* Ensure no white background shows */
+}
+
