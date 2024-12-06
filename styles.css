@@ -734,7 +734,7 @@ textarea {
     display: flex;
     justify-content: center; /* Center the image horizontally */
     align-items: center; /* Center the image vertically if needed */
-    width: 100%; /* Ensure the container spans the full width */
+    max-width: 100%; /* Ensure the container spans the full width */
     margin: 0 auto; /* Center the container within its parent */
     background-color: #000; /* Match the site's black background */
     overflow: hidden; /* Prevent overflow if the image is too large */
