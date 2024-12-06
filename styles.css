@@ -762,53 +762,60 @@ textarea {
     border-radius: 5px; /* Optional: Add rounded corners for style */
 }
 
-/* Quantity selection styling in the cart page */
+/* Ensure consistent styling for the quantity buttons in the cart */
 .cart-page .quantity-selection {
-    display: flex; /* Align buttons and input horizontally */
-    justify-content: center; /* Center the quantity selector */
-    align-items: center; /* Align elements vertically */
-    gap: 10px; /* Add space between the buttons and input */
-    margin: 10px 0; /* Add space around the quantity selector */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0; /* Adjust spacing around the selector */
 }
 
 /* Styling for the quantity input */
+.cart-page .quantity-selection input[type="text"],
 .cart-page .quantity-selection .quantity-input {
-    width: 50px; /* Fixed width for the input */
-    height: 40px; /* Match button height */
-    text-align: center; /* Center-align the text */
-    font-size: 16px; /* Readable text size */
-    font-weight: bold; /* Bold for emphasis */
-    color: #000; /* Black text */
-    background-color: #fff; /* White background */
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
     border: 2px solid #ffcc00; /* Gold border */
-    border-radius: 5px; /* Rounded corners */
-    outline: none; /* Remove default focus outline */
+    border-radius: 5px;
+    outline: none;
 }
 
 /* Styling for the decrease and increase buttons */
-.cart-page .quantity-selection button {
-    width: 40px; /* Fixed width for the buttons */
-    height: 40px; /* Square shape */
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
-    font-size: 18px; /* Larger font size */
-    font-weight: bold; /* Bold for emphasis */
+.cart-page .quantity-selection button,
+.cart-page .quantity-selection .decrease-quantity,
+.cart-page .quantity-selection .increase-quantity {
+    width: 40px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
     border: 2px solid #ffcc00; /* Gold border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effects */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hover effect for buttons */
-.cart-page .quantity-selection button:hover {
+.cart-page .quantity-selection button:hover,
+.cart-page .quantity-selection .decrease-quantity:hover,
+.cart-page .quantity-selection .increase-quantity:hover {
     background-color: #ffcc00; /* Gold background on hover */
     color: #000; /* Black text on hover */
 }
 
 /* Optional: Disabled button styling */
-.cart-page .quantity-selection button:disabled {
-    background-color: #ccc; /* Grey background for disabled buttons */
-    color: #666; /* Grey text */
-    cursor: not-allowed; /* Show "not allowed" cursor */
-    border-color: #ccc; /* Match the border to the background */
+.cart-page .quantity-selection button:disabled,
+.cart-page .quantity-selection .decrease-quantity:disabled,
+.cart-page .quantity-selection .increase-quantity:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    border-color: #ccc;
 }
