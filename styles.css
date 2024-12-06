@@ -312,7 +312,7 @@ ul li {
 
 .event-card .event-info {
     padding: 10px; /* Add spacing inside the info section */
-    background-color: #ffcc00; /* Dark background for the card details */
+    background-color: #000; /* black background for the card details */
     color: #fff; /* Ensure text is readable on the dark background */
     text-align: center; /* Center-align the text */
     font-size: 14px; /* Consistent font size for card details */
