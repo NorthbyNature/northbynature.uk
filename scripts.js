@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Event listener for adding items to cart
     const addToCartBtn = document.getElementById('add-to-cart');
     if (addToCartBtn) addToCartBtn.addEventListener('click', addToCart);
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners for ticket buttons
     const ticketButtons = document.querySelectorAll('.ticket-btn');
     ticketButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             ticketButtons.forEach(btn => btn.classList.remove('selected'));
             button.classList.add('selected');
         });
@@ -108,9 +108,9 @@ function displayCartItems() {
                         <p>${item.ticketType} x ${item.quantity} = £${itemTotal.toFixed(2)}</p>
                     </div>
                     <div class="cart-item-quantity">
-                        <button onclick="decreaseCartItemQuantity(${index})">-</button>
-                        <input type="text" value="${item.quantity}" readonly>
-                        <button onclick="increaseCartItemQuantity(${index})">+</button>
+                        <button class="decrease-quantity" onclick="decreaseCartItemQuantity(${index})">-</button>
+                        <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                        <button class="increase-quantity" onclick="increaseCartItemQuantity(${index})">+</button>
                     </div>
                     <button class="remove-item" onclick="removeItem(${index})">
                         <i class="fas fa-trash"></i>
@@ -164,47 +164,53 @@ function redirectToPayment() {
 // Render PayPal button
 function renderPayPalButton() {
     paypal.Buttons({
-        createOrder: function(data, actions) {
+        createOrder: function (data, actions) {
             return fetch('/create-order', {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
                 },
                 body: JSON.stringify({
                     // Customize this object to pass additional details if needed
+                }),
+            })
+                .then(function (res) {
+                    console.log('Create order response:', res); // Log response
+                    return res.json();
                 })
-            }).then(function(res) {
-                console.log('Create order response:', res); // Log response
-                return res.json();
-            }).then(function(orderData) {
-                console.log('Order data:', orderData); // Log order data
-                return orderData.id;
-            }).catch(function(err) {
-                console.error('Create order error:', err); // Log error
-            });
+                .then(function (orderData) {
+                    console.log('Order data:', orderData); // Log order data
+                    return orderData.id;
+                })
+                .catch(function (err) {
+                    console.error('Create order error:', err); // Log error
+                });
         },
-        onApprove: function(data, actions) {
+        onApprove: function (data, actions) {
             return fetch('/capture-order', {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
                 },
                 body: JSON.stringify({
-                    orderID: data.orderID
+                    orderID: data.orderID,
+                }),
+            })
+                .then(function (res) {
+                    console.log('Capture order response:', res); // Log response
+                    return res.json();
                 })
-            }).then(function(res) {
-                console.log('Capture order response:', res); // Log response
-                return res.json();
-            }).then(function(orderData) {
-                console.log('Order data:', orderData); // Log order data
-                if (orderData.status === 'COMPLETED') {
-                    window.location.href = 'success.html';
-                } else {
-                    window.location.href = 'failure.html';
-                }
-            }).catch(function(err) {
-                console.error('Capture order error:', err); // Log error
-            });
-        }
+                .then(function (orderData) {
+                    console.log('Order data:', orderData); // Log order data
+                    if (orderData.status === 'COMPLETED') {
+                        window.location.href = 'success.html';
+                    } else {
+                        window.location.href = 'failure.html';
+                    }
+                })
+                .catch(function (err) {
+                    console.error('Capture order error:', err); // Log error
+                });
+        },
     }).render('#paypal-button-container');
 }
