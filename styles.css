@@ -304,7 +304,7 @@ ul li {
 .event-card img {
     display: block; /* Remove inline spacing issues */
     width: 100%; /* Ensure the image fits the card width */
-    height: 200px; /* Set a fixed height */
+    height: auto; /* Set a fixed height */
     object-fit: cover; /* Crop image to fit without distortion */
     border-top-left-radius: 8px; /* Match the card's rounded corners */
     border-top-right-radius: 8px; /* Match the card's rounded corners */
@@ -312,7 +312,7 @@ ul li {
 
 .event-card .event-info {
     padding: 10px; /* Add spacing inside the info section */
-    background-color: #222; /* Dark background for the card details */
+    background-color: #ffcc00; /* Dark background for the card details */
     color: #fff; /* Ensure text is readable on the dark background */
     text-align: center; /* Center-align the text */
     font-size: 14px; /* Consistent font size for card details */
