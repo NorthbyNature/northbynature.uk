@@ -289,22 +289,33 @@ ul li {
 .event-card {
     display: block;
     text-decoration: none;
-    border: 1px solid #444;
-    border-radius: 8px;
-    transition: transform 0.2s;
+    border: 1px solid #444; /* Keep the dark border */
+    border-radius: 8px; /* Rounded corners */
+    transition: transform 0.2s; /* Smooth scaling on hover */
+    max-width: 300px; /* Limit the maximum width of the card */
+    margin: 10px auto; /* Center the card and add spacing */
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .event-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Slight zoom on hover */
 }
 
 .event-card img {
-    width: 100%;
+    display: block; /* Remove inline spacing issues */
+    width: 100%; /* Ensure the image fits the card width */
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Crop image to fit without distortion */
+    border-top-left-radius: 8px; /* Match the card's rounded corners */
+    border-top-right-radius: 8px; /* Match the card's rounded corners */
 }
 
 .event-card .event-info {
-    padding: 10px;
-    background-color: #222;
+    padding: 10px; /* Add spacing inside the info section */
+    background-color: #222; /* Dark background for the card details */
+    color: #fff; /* Ensure text is readable on the dark background */
+    text-align: center; /* Center-align the text */
+    font-size: 14px; /* Consistent font size for card details */
 }
 
 @media (min-width: 768px) {
