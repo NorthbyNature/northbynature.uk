@@ -762,42 +762,41 @@ textarea {
     border-radius: 5px; /* Optional: Add rounded corners for style */
 }
 
-/* Quantity selection container on the cart page */
+/* Quantity selection styling in the cart page */
 .cart-page .quantity-selection {
-    display: flex; /* Align elements horizontally */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    gap: 10px; /* Space between buttons and input */
-    margin: 10px 0; /* Add spacing around the quantity selector */
+    display: flex; /* Align buttons and input horizontally */
+    justify-content: center; /* Center the quantity selector */
+    align-items: center; /* Align elements vertically */
+    gap: 10px; /* Add space between the buttons and input */
+    margin: 10px 0; /* Add space around the quantity selector */
 }
 
-/* Quantity input styling */
-.cart-page .quantity-selection input[type="text"] {
-    width: 50px; /* Fixed width */
+/* Styling for the quantity input */
+.cart-page .quantity-selection .quantity-input {
+    width: 50px; /* Fixed width for the input */
     height: 40px; /* Match button height */
-    text-align: center; /* Center the text */
-    font-size: 16px; /* Make text readable */
-    font-weight: bold; /* Emphasize the text */
+    text-align: center; /* Center-align the text */
+    font-size: 16px; /* Readable text size */
+    font-weight: bold; /* Bold for emphasis */
     color: #000; /* Black text */
     background-color: #fff; /* White background */
     border: 2px solid #ffcc00; /* Gold border */
-    border-radius: 5px; /* Slightly rounded corners */
+    border-radius: 5px; /* Rounded corners */
     outline: none; /* Remove default focus outline */
-    box-shadow: none; /* Remove default shadow */
 }
 
-/* Button styling for decrease/increase */
+/* Styling for the decrease and increase buttons */
 .cart-page .quantity-selection button {
-    width: 40px; /* Fixed size */
-    height: 40px; /* Square buttons */
+    width: 40px; /* Fixed width for the buttons */
+    height: 40px; /* Square shape */
     background-color: #000; /* Black background */
     color: #fff; /* White text */
-    font-size: 18px; /* Larger font for readability */
-    font-weight: bold; /* Bold text for emphasis */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold; /* Bold for emphasis */
     border: 2px solid #ffcc00; /* Gold border */
-    border-radius: 5px; /* Rounded corners for a consistent look */
-    cursor: pointer; /* Pointer cursor for interactivity */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effects */
 }
 
 /* Hover effect for buttons */
@@ -806,11 +805,10 @@ textarea {
     color: #000; /* Black text on hover */
 }
 
-/* Disabled button styling (optional) */
+/* Optional: Disabled button styling */
 .cart-page .quantity-selection button:disabled {
-    background-color: #ccc; /* Light grey background */
+    background-color: #ccc; /* Grey background for disabled buttons */
     color: #666; /* Grey text */
-    cursor: not-allowed; /* Not-allowed cursor for disabled buttons */
-    border-color: #ccc; /* Match border color to background */
+    cursor: not-allowed; /* Show "not allowed" cursor */
+    border-color: #ccc; /* Match the border to the background */
 }
-

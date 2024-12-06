@@ -37,11 +37,12 @@
     <main class="main-content">
         <h2>Your Shopping Cart</h2>
         <div id="cart-items"></div>
-        <div class="cart-page .quantity-selection">
-           <button id="decrease-quantity" onclick="decreaseCartItemQuantity(index)">-</button>
-           <input type="text" id="quantity-input" value="1" readonly>
-           <button id="increase-quantity" onclick="increaseCartItemQuantity(index)">+</button>
-        </div>
+<div class="quantity-selection">
+        <button class="decrease-quantity">-</button>
+        <input type="text" class="quantity-input" value="2" readonly>
+        <button class="increase-quantity">+</button>
+    </div>
+</div>
         <div id="cart-total"></div>
         <div id="paypal-button-container"></div>
        <button id="checkout-button" class="btn btn-primary" onclick="window.location.href='payment.html'" disabled>Checkout</button>
