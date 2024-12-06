@@ -763,7 +763,7 @@ textarea {
 }
 
 /* Ensure consistent styling for the quantity buttons in the cart */
-.cart-page .quantity-selection {
+#cart-items .quantity-selection {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -772,8 +772,8 @@ textarea {
 }
 
 /* Styling for the quantity input */
-.cart-page .quantity-selection input[type="text"],
-.cart-page .quantity-selection .quantity-input {
+#cart-items .quantity-selection input[type="text"],
+#cart-items .quantity-selection .quantity-input {
     width: 50px;
     height: 40px;
     text-align: center;
@@ -787,9 +787,9 @@ textarea {
 }
 
 /* Styling for the decrease and increase buttons */
-.cart-page .quantity-selection button,
-.cart-page .quantity-selection .decrease-quantity,
-.cart-page .quantity-selection .increase-quantity {
+#cart-items .quantity-selection button,
+#cart-items .quantity-selection .decrease-quantity,
+#cart-items .quantity-selection .increase-quantity {
     width: 40px;
     height: 40px;
     background-color: #000;
@@ -803,17 +803,17 @@ textarea {
 }
 
 /* Hover effect for buttons */
-.cart-page .quantity-selection button:hover,
-.cart-page .quantity-selection .decrease-quantity:hover,
-.cart-page .quantity-selection .increase-quantity:hover {
+#cart-items .quantity-selection button:hover,
+#cart-items .quantity-selection .decrease-quantity:hover,
+#cart-items .quantity-selection .increase-quantity:hover {
     background-color: #ffcc00; /* Gold background on hover */
     color: #000; /* Black text on hover */
 }
 
 /* Optional: Disabled button styling */
-.cart-page .quantity-selection button:disabled,
-.cart-page .quantity-selection .decrease-quantity:disabled,
-.cart-page .quantity-selection .increase-quantity:disabled {
+#cart-items .quantity-selection button:disabled,
+#cart-items .quantity-selection .decrease-quantity:disabled,
+#cart-items .quantity-selection .increase-quantity:disabled {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
