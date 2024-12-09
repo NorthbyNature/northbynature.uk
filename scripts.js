@@ -214,3 +214,27 @@ function renderPayPalButton() {
         },
     }).render('#paypal-button-container');
 }
+document.addEventListener('DOMContentLoaded', () => {
+    // Fade in the page when it loads
+    document.body.classList.add('visible');
+
+    // Add a fade-out effect on links
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', event => {
+            const href = link.getAttribute('href');
+
+            // Only apply fade-out for internal links
+            if (href && !href.startsWith('http') && !href.startsWith('#')) {
+                event.preventDefault();
+                document.body.classList.remove('visible'); // Fade out
+
+                // Wait for the fade-out transition before navigating
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500); // Match the transition duration
+            }
+        });
+    });
+});
+
