@@ -10,20 +10,17 @@ body {
     overflow-x: hidden;
 }
 
-/* Initial state for the page (hidden with opacity 0) */
-body {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out; /* Smooth fade-in effect */
+/* Ensure a smooth transition */
+.fade-in {
+    opacity: 0; /* Initially hidden */
+    transform: translateY(10px); /* Optional: Start slightly shifted */
+    transition: opacity 1.5s ease-in, transform 1.5s ease-in; /* Smooth fade-in and slide */
 }
 
-/* Visible state for the page (fully opaque) */
-body.visible {
-    opacity: 1;
-}
-
-/* Optional: Prevent scroll during transition */
-body.hidden {
-    overflow: hidden;
+/* When the content is ready */
+.fade-in.active {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Return to normal position */
 }
 
 .header, .main-content, .footer {
