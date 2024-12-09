@@ -14,13 +14,12 @@ body {
 .fade-in {
     opacity: 0; /* Initially hidden */
     transform: translateY(10px); /* Optional: Start slightly shifted */
-    transition: opacity 1.5s ease-in, transform 1.5s ease-in; /* Smooth fade-in and slide */
+    transition: opacity 1.5s ease-in; /* Smooth fade-in and slide */
 }
 
 /* When the content is ready */
 .fade-in.active {
     opacity: 1; /* Fully visible */
-    transform: translateY(0); /* Return to normal position */
 }
 
 .header, .main-content, .footer {
