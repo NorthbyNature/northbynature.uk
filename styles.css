@@ -10,17 +10,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Ensure a smooth transition */
-.fade-in {
-    opacity: 0; /* Initially hidden */
-    transition: opacity 2.5s ease-in; /* Smooth fade-in */
-}
-
-/* When the content is ready */
-.fade-in.active {
-    opacity: 1; /* Fully visible */
-}
-
 .header, .main-content, .footer {
     width: 100%;
 }
