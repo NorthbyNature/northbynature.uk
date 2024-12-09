@@ -13,8 +13,7 @@ body {
 /* Ensure a smooth transition */
 .fade-in {
     opacity: 0; /* Initially hidden */
-    transform: translateY(10px); /* Optional: Start slightly shifted */
-    transition: opacity 1.5s ease-in; /* Smooth fade-in and slide */
+    transition: opacity 1.5s ease-in; /* Smooth fade-in */
 }
 
 /* When the content is ready */
