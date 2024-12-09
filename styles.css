@@ -10,6 +10,22 @@ body {
     overflow-x: hidden;
 }
 
+/* Initial state for the page (hidden with opacity 0) */
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* Smooth fade-in effect */
+}
+
+/* Visible state for the page (fully opaque) */
+body.visible {
+    opacity: 1;
+}
+
+/* Optional: Prevent scroll during transition */
+body.hidden {
+    overflow: hidden;
+}
+
 .header, .main-content, .footer {
     width: 100%;
 }
