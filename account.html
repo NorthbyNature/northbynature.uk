@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North by Nature - Account</title>
+    
+    <!-- Link to the main stylesheet (styles.css) -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Bootstrap CSS for layout and component styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for using icon fonts (e.g., social media or shopping cart icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
+    <header class="text-center">
+        <!-- Account icon to navigate to the login/account page -->
+        <div class="account-icon">
+            <a href="account.html" id="account-link">
+                <i class="fas fa-user"></i> <!-- Account icon -->
+            </a>
+        </div>
+        
+        <!-- Instagram link -->
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
+        
+        <!-- Placeholder for the logo image -->
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+
+        <!-- Shopping cart icon -->
+        <div class="cart-icon">
+            <a href="cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Section: Account details -->
+    <main class="main-content">
+        <section class="content-section text-centered-container">
+            <!-- Account Heading -->
+            <h1>Your Account</h1>
+            
+            <!-- User details -->
+            <div class="account-details">
+                <h2>Welcome, [User's Name]</h2>
+                <p>Email: [user@example.com]</p>
+                <p>Membership Tier: Gold</p>
+            </div>
+            
+            <!-- Links to additional account functionalities -->
+            <div class="account-actions">
+                <a href="edit-profile.html" class="gold-button">Edit Profile</a>
+                <a href="order-history.html" class="gold-button">View Order History</a>
+                <a href="#" id="logout-button" class="gold-button">Log Out</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="instagram-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-center">
+                <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
+                <iframe src="https://snapwidget.com/embed/1072640" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:400px; height:150px" title="Posts from Instagram"></iframe>
+                <p>&copy; 2024 North by Nature. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
