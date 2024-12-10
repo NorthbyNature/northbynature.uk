@@ -961,9 +961,12 @@ textarea {
     color: #000;
     font-weight: bold;
     cursor: pointer;
+    padding: 15px 20px; /* Increased padding for a larger button */
+    font-size: 18px; /* Increased font size for better readability */
+    border: none;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
 .login-container button:hover, #logout-button:hover {
     background-color: #e6b800;
 }
