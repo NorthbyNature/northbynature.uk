@@ -912,4 +912,58 @@ textarea {
     border-top: 2px solid #ffcc00;
     padding-top: 10px;
 }
+.account-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
 
+.account-icon a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.account-icon a:hover {
+    color: #ffcc00; /* Gold hover effect */
+}
+
+.login-container, .account-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #222;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.login-container h1, .account-container h1 {
+    text-align: center;
+    color: #ffcc00;
+}
+
+.login-container form, .account-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-container input, .account-container button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-container button, #logout-button {
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover, #logout-button:hover {
+    background-color: #e6b800;
+}
