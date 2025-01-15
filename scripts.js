@@ -222,3 +222,192 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200); // Slight delay for smoothness (200ms)
     }
 });
+// Frontend: Script for Login, Logout, and Profile Management
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
+    const logoutButton = document.getElementById("logout-button");
+    const editProfileForm = document.getElementById("edit-profile-form");
+
+    // Helper function to get the token from localStorage
+    function getToken() {
+        return localStorage.getItem("authToken");
+    }
+
+    // Helper function to update the account link
+    function updateAccountLink() {
+        const accountLink = document.getElementById("account-link");
+        if (localStorage.getItem("currentUser")) {
+            accountLink.href = "account.html";
+        } else {
+            accountLink.href = "login.html";
+        }
+    }
+
+    // Login functionality
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("username").value; // Email used as username
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("/.netlify/functions/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (response.ok) {
+                    const { user, token } = await response.json();
+                    localStorage.setItem("currentUser", JSON.stringify(user));
+                    localStorage.setItem("authToken", token);
+                    window.location.href = "account.html";
+                } else {
+                    const error = await response.json();
+                    document.getElementById("login-error").textContent = error.message || "Login failed";
+                    document.getElementById("login-error").style.display = "block";
+                }
+            } catch (err) {
+                console.error("Login error:", err);
+                document.getElementById("login-error").textContent = "An error occurred. Please try again.";
+                document.getElementById("login-error").style.display = "block";
+            }
+        });
+    }
+
+    // Logout functionality
+    if (logoutButton) {
+        logoutButton.addEventListener("click", () => {
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("authToken");
+            window.location.href = "login.html";
+        });
+    }
+
+    // Profile editing functionality
+    if (editProfileForm) {
+        editProfileForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const location = document.getElementById("location").value;
+            const primarySocialMedia = document.getElementById("primary-social-media").value;
+
+            try {
+                const response = await fetch("/.netlify/functions/updateProfile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${getToken()}`,
+                    },
+                    body: JSON.stringify({ location, primarySocialMedia }),
+                });
+
+                if (response.ok) {
+                    alert("Profile successfully updated!");
+                } else {
+                    alert("Error updating profile.");
+                }
+            } catch (err) {
+                console.error("Profile update error:", err);
+                alert("An error occurred while updating the profile.");
+            }
+        });
+    }
+
+    // Update account link on page load
+    updateAccountLink();
+});
+
+// Backend: Netlify Function for Login
+exports.handler = async (event) => {
+    const { createClient } = require("@supabase/supabase-js");
+    const supabase = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_API_KEY
+    );
+
+    if (event.httpMethod !== "POST") {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ message: "Method Not Allowed" }),
+        };
+    }
+
+    const { email, password } = JSON.parse(event.body);
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            return {
+                statusCode: 401,
+                body: JSON.stringify({ message: "Invalid email or password" }),
+            };
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ user: data.user, token: data.session.access_token }),
+        };
+    } catch (err) {
+        console.error("Error logging in:", err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Server error" }),
+        };
+    }
+};
+
+// Backend: Netlify Function for Updating Profile
+exports.handler = async (event) => {
+    const { createClient } = require("@supabase/supabase-js");
+    const supabase = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_API_KEY
+    );
+
+    if (event.httpMethod !== "POST") {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ message: "Method Not Allowed" }),
+        };
+    }
+
+    const token = event.headers.authorization?.split(" ")[1];
+    const { location, primarySocialMedia } = JSON.parse(event.body);
+
+    try {
+        const { data, error } = await supabase.auth.getUser(token);
+
+        if (error) {
+            return {
+                statusCode: 401,
+                body: JSON.stringify({ message: "Unauthorized" }),
+            };
+        }
+
+        const userId = data.user.id;
+
+        const { error: updateError } = await supabase
+            .from("profiles")
+            .update({ location, primary_social_media: primarySocialMedia })
+            .eq("id", userId);
+
+        if (updateError) {
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ message: "Failed to update profile" }),
+            };
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: "Profile updated successfully" }),
+        };
+    } catch (err) {
+        console.error("Error updating profile:", err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Server error" }),
+        };
+    }
+};
