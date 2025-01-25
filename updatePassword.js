@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     if (!token || !password) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ message: "Token and password are required" }),
+            body: JSON.stringify({ message: "Token and password are required." }),
         };
     }
 
@@ -27,20 +27,20 @@ exports.handler = async (event) => {
         if (error) {
             console.error("Error updating password:", error);
             return {
-                statusCode: 400,
-                body: JSON.stringify({ message: "Failed to update password" }),
+                statusCode: 401,
+                body: JSON.stringify({ message: "Invalid or expired token." }),
             };
         }
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Password updated successfully" }),
+            body: JSON.stringify({ message: "Password updated successfully." }),
         };
     } catch (err) {
-        console.error("Server error:", err);
+        console.error("Error:", err);
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: "Server error" }),
+            body: JSON.stringify({ message: "Server error. Please try again." }),
         };
     }
 };
