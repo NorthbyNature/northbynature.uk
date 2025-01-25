@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAccountLink();
 });
 
-// Backend: Netlify Function for Login
+// Login Function
 exports.handler = async (event) => {
     const { createClient } = require("@supabase/supabase-js");
     const supabase = createClient(
@@ -334,10 +334,18 @@ exports.handler = async (event) => {
 
     const { email, password } = JSON.parse(event.body);
 
+    if (!email || !password) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: "Email and password are required" }),
+        };
+    }
+
     try {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
         if (error) {
+            console.error("Login error:", error);
             return {
                 statusCode: 401,
                 body: JSON.stringify({ message: "Invalid email or password" }),
@@ -357,7 +365,7 @@ exports.handler = async (event) => {
     }
 };
 
-// Backend: Netlify Function for Updating Profile
+// Update Profile Function
 exports.handler = async (event) => {
     const { createClient } = require("@supabase/supabase-js");
     const supabase = createClient(
@@ -375,10 +383,25 @@ exports.handler = async (event) => {
     const token = event.headers.authorization?.split(" ")[1];
     const { location, primarySocialMedia } = JSON.parse(event.body);
 
+    if (!token) {
+        return {
+            statusCode: 401,
+            body: JSON.stringify({ message: "Authorization token is required" }),
+        };
+    }
+
+    if (!location || !primarySocialMedia) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: "Location and primary social media are required" }),
+        };
+    }
+
     try {
         const { data, error } = await supabase.auth.getUser(token);
 
         if (error) {
+            console.error("Authorization error:", error);
             return {
                 statusCode: 401,
                 body: JSON.stringify({ message: "Unauthorized" }),
@@ -393,6 +416,7 @@ exports.handler = async (event) => {
             .eq("id", userId);
 
         if (updateError) {
+            console.error("Profile update error:", updateError);
             return {
                 statusCode: 500,
                 body: JSON.stringify({ message: "Failed to update profile" }),
@@ -411,3 +435,55 @@ exports.handler = async (event) => {
         };
     }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+    const resetPasswordForm = document.getElementById("reset-password-form");
+
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get("token"); // Extract token from URL
+
+            if (!token) {
+                document.getElementById("reset-error").textContent = "Invalid or missing token.";
+                document.getElementById("reset-error").style.display = "block";
+                return;
+            }
+
+            const newPassword = document.getElementById("new-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (newPassword !== confirmPassword) {
+                document.getElementById("reset-error").textContent = "Passwords do not match.";
+                document.getElementById("reset-error").style.display = "block";
+                return;
+            }
+
+            try {
+                const response = await fetch("/.netlify/functions/updatePassword", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ token, password: newPassword }),
+                });
+
+                if (response.ok) {
+                    document.getElementById("reset-success").style.display = "block";
+                    document.getElementById("reset-error").style.display = "none";
+                } else {
+                    const error = await response.json();
+                    document.getElementById("reset-error").textContent = error.message || "Failed to reset password.";
+                    document.getElementById("reset-error").style.display = "block";
+                }
+            } catch (err) {
+                console.error("Password reset error:", err);
+                document.getElementById("reset-error").textContent = "An error occurred. Please try again.";
+                document.getElementById("reset-error").style.display = "block";
+            }
+        });
+    }
+});
+
