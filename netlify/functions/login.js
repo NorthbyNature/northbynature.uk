@@ -2,12 +2,12 @@ const { createClient } = require("@supabase/supabase-js");
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_API_KEY // Ensure this matches your Netlify environment variable
+  process.env.SUPABASE_API_KEY
 );
 
 exports.handler = async (event) => {
   const headers = {
-    "Access-Control-Allow-Origin": "*", // Replace '*' with your frontend URL if needed
+    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Update to your actual frontend URL
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
   };
@@ -22,6 +22,14 @@ exports.handler = async (event) => {
 
   const { email, password } = JSON.parse(event.body);
 
+  if (!email || !password) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Email and password are required." }),
+    };
+  }
+
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -30,21 +38,24 @@ exports.handler = async (event) => {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: error.message }),
+        body: JSON.stringify({ error: "Invalid email or password." }),
       };
     }
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ user: data.user }),
+      body: JSON.stringify({
+        user: { id: data.user.id, email: data.user.email },
+        token: data.session.access_token, // Include the session token if needed
+      }),
     };
   } catch (err) {
     console.error("Server Error:", err);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: "Internal Server Error" }),
+      body: JSON.stringify({ error: "Internal Server Error." }),
     };
   }
 };
