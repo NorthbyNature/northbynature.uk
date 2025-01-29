@@ -102,7 +102,7 @@ function displayCartItems() {
             const itemTotal = item.price * item.quantity;
             cartTotal += itemTotal;
             cartHTML += 
-                div class="cart-item">
+                 div class="cart-item">
                     <div class="cart-item-details">
                         <h5>${item.eventTitle}</h5>
                         <p>${item.ticketType} x ${item.quantity} = £${itemTotal.toFixed(2)}</p>
