@@ -7,7 +7,7 @@ const supabase = createClient(
 
 exports.handler = async (event) => {
   const headers = {
-    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Update to your actual frontend URL
+    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Make sure this is your correct frontend domain
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
   };
@@ -31,6 +31,7 @@ exports.handler = async (event) => {
   }
 
   try {
+    // Sign in with email and password
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
@@ -42,12 +43,25 @@ exports.handler = async (event) => {
       };
     }
 
+    const user = data.user;
+
+    // Fetch the full_name from the profiles table
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", user.id)
+      .single();
+
+    if (profileError) {
+      console.error("Profile Fetch Error:", profileError.message);
+    }
+
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        user: { id: data.user.id, email: data.user.email },
-        token: data.session.access_token, // Include the session token if needed
+        user: { id: user.id, email: user.email, full_name: profile?.full_name || "User" },
+        token: data.session.access_token,
       }),
     };
   } catch (err) {

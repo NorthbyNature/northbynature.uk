@@ -233,15 +233,28 @@ document.addEventListener("DOMContentLoaded", () => {
         return localStorage.getItem("authToken");
     }
 
-    // Helper function to update the account link
+    // Helper function to update the account link and welcome message
     function updateAccountLink() {
         const accountLink = document.getElementById("account-link");
-        if (localStorage.getItem("currentUser")) {
+        const accountWelcome = document.getElementById("account-welcome");
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (currentUser) {
             accountLink.href = "account.html";
+
+            // Update welcome message with user's full name from the profile table
+            if (accountWelcome) {
+                accountWelcome.innerText = `Welcome, ${currentUser.full_name || "User"}!`;
+            }
         } else {
             accountLink.href = "login.html";
         }
     }
+
+    // Run updateAccountLink when the page loads
+    updateAccountLink();
+});
+
 
     // Login functionality
     if (loginForm) {
