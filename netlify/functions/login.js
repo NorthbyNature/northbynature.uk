@@ -1,48 +1,61 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
+const { createClient } = require("@supabase/supabase-js");
 
-    // Helper function to update the welcome message on login page
-    function updateWelcomeMessage() {
-        const accountWelcome = document.getElementById("account-welcome");
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_API_KEY
+);
 
-        if (currentUser && accountWelcome) {
-            accountWelcome.innerText = `Welcome, ${currentUser.full_name || "User"}!`;
-        }
+exports.handler = async (event) => {
+  const headers = {
+    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Update to your actual frontend URL
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json",
+  };
+
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers,
+      body: "",
+    };
+  }
+
+  const { email, password } = JSON.parse(event.body);
+
+  if (!email || !password) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Email and password are required." }),
+    };
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      console.error("Login Error:", error.message);
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Invalid email or password." }),
+      };
     }
 
-    // Login functionality
-    if (loginForm) {
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            try {
-                const response = await fetch("/.netlify/functions/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                if (response.ok) {
-                    const { user, token } = await response.json();
-                    localStorage.setItem("currentUser", JSON.stringify(user));
-                    localStorage.setItem("authToken", token);
-                    updateWelcomeMessage(); // Update welcome message after login
-                    window.location.href = "account.html";
-                } else {
-                    const error = await response.json();
-                    document.getElementById("login-error").textContent = error.message || "Login failed";
-                    document.getElementById("login-error").style.display = "block";
-                }
-            } catch (err) {
-                console.error("Login error:", err);
-                document.getElementById("login-error").textContent = "An error occurred. Please try again.";
-                document.getElementById("login-error").style.display = "block";
-            }
-        });
-    }
-
-    updateWelcomeMessage(); // Run on page load in case user is already logged in
-});
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        user: { id: data.user.id, email: data.user.email },
+        token: data.session.access_token, // Include the session token if needed
+      }),
+    };
+  } catch (err) {
+    console.error("Server Error:", err);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: "Internal Server Error." }),
+    };
+  }
+};
