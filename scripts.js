@@ -101,7 +101,7 @@ function displayCartItems() {
         cart.forEach((item, index) => {
             const itemTotal = item.price * item.quantity;
             cartTotal += itemTotal;
-            cartHTML += `
+            cartHTML += 
                 <div class="cart-item">
                     <div class="cart-item-details">
                         <h5>${item.eventTitle}</h5>
@@ -116,9 +116,9 @@ function displayCartItems() {
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
-            `;
+            ;
         });
-        cartTotalContainer.innerHTML = `Total: £${cartTotal.toFixed(2)}`;
+        cartTotalContainer.innerHTML = Total: £${cartTotal.toFixed(2)};
     }
 
     cartItemsContainer.innerHTML = cartHTML;
@@ -233,28 +233,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return localStorage.getItem("authToken");
     }
 
-    // Helper function to update the account link and welcome message
+    // Helper function to update the account link
     function updateAccountLink() {
         const accountLink = document.getElementById("account-link");
-        const accountWelcome = document.getElementById("account-welcome");
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-        if (currentUser) {
+        if (localStorage.getItem("currentUser")) {
             accountLink.href = "account.html";
-
-            // Update welcome message with user's full name from the profile table
-            if (accountWelcome) {
-                accountWelcome.innerText = `Welcome, ${currentUser.full_name || "User"}!`;
-            }
         } else {
             accountLink.href = "login.html";
         }
     }
-
-    // Run updateAccountLink when the page loads
-    updateAccountLink();
-});
-
 
     // Login functionality
     if (loginForm) {
@@ -309,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${getToken()}`,
+                        Authorization: Bearer ${getToken()},
                     },
                     body: JSON.stringify({ location, primarySocialMedia }),
                 });
