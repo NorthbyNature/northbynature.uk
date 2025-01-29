@@ -7,7 +7,7 @@ const supabase = createClient(
 
 exports.handler = async (event) => {
   const headers = {
-    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Update to your actual frontend URL
+    "Access-Control-Allow-Origin": "https://www.northbynature.uk",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
   };
@@ -36,7 +36,7 @@ exports.handler = async (event) => {
     if (error) {
       console.error("Login Error:", error.message);
       return {
-        statusCode: 400,
+        statusCode: 401, // Changed to 401 for Unauthorized
         headers,
         body: JSON.stringify({ error: "Invalid email or password." }),
       };
@@ -47,7 +47,7 @@ exports.handler = async (event) => {
       headers,
       body: JSON.stringify({
         user: { id: data.user.id, email: data.user.email },
-        token: data.session.access_token, // Include the session token if needed
+        token: data.session.access_token,
       }),
     };
   } catch (err) {

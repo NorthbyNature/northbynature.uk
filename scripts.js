@@ -228,12 +228,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutButton = document.getElementById("logout-button");
     const editProfileForm = document.getElementById("edit-profile-form");
 
-    // Helper function to get the token from localStorage
+    // Get auth token from local storage
     function getToken() {
         return localStorage.getItem("authToken");
     }
 
-    // Helper function to update the account link
+    // Update the account page link
     function updateAccountLink() {
         const accountLink = document.getElementById("account-link");
         if (localStorage.getItem("currentUser")) {
@@ -243,11 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Login functionality
+    // ✅ Login functionality (client-side)
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const email = document.getElementById("username").value; // Email used as username
+            const email = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
             try {
@@ -261,10 +261,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const { user, token } = await response.json();
                     localStorage.setItem("currentUser", JSON.stringify(user));
                     localStorage.setItem("authToken", token);
-                    window.location.href = "account.html";
+                    window.location.href = "account.html"; // Redirect to account page
                 } else {
                     const error = await response.json();
-                    document.getElementById("login-error").textContent = error.message || "Login failed";
+                    document.getElementById("login-error").textContent = error.error || "Login failed";
                     document.getElementById("login-error").style.display = "block";
                 }
             } catch (err) {
@@ -275,16 +275,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Logout functionality
+    // ✅ Logout functionality
     if (logoutButton) {
         logoutButton.addEventListener("click", () => {
             localStorage.removeItem("currentUser");
             localStorage.removeItem("authToken");
-            window.location.href = "login.html";
+            window.location.href = "login.html"; // Redirect to login page
         });
     }
 
-    // Profile editing functionality
+    // ✅ Profile Update
     if (editProfileForm) {
         editProfileForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: Bearer ${getToken()},
+                        Authorization: `Bearer ${getToken()}`, // ✅ Fixed the incorrect formatting here
                     },
                     body: JSON.stringify({ location, primarySocialMedia }),
                 });
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Update account link on page load
+    // ✅ Run updateAccountLink on page load
     updateAccountLink();
 });
 
