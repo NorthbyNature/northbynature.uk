@@ -1,75 +1,48 @@
-const { createClient } = require("@supabase/supabase-js");
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_API_KEY
-);
+    // Helper function to update the welcome message on login page
+    function updateWelcomeMessage() {
+        const accountWelcome = document.getElementById("account-welcome");
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-exports.handler = async (event) => {
-  const headers = {
-    "Access-Control-Allow-Origin": "https://www.northbynature.uk", // Make sure this is your correct frontend domain
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Content-Type": "application/json",
-  };
-
-  if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 200,
-      headers,
-      body: "",
-    };
-  }
-
-  const { email, password } = JSON.parse(event.body);
-
-  if (!email || !password) {
-    return {
-      statusCode: 400,
-      headers,
-      body: JSON.stringify({ error: "Email and password are required." }),
-    };
-  }
-
-  try {
-    // Sign in with email and password
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      console.error("Login Error:", error.message);
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: "Invalid email or password." }),
-      };
+        if (currentUser && accountWelcome) {
+            accountWelcome.innerText = `Welcome, ${currentUser.full_name || "User"}!`;
+        }
     }
 
-    const user = data.user;
+    // Login functionality
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    // Fetch the full_name from the profiles table
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("full_name")
-      .eq("id", user.id)
-      .single();
+            try {
+                const response = await fetch("/.netlify/functions/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
 
-    if (profileError) {
-      console.error("Profile Fetch Error:", profileError.message);
+                if (response.ok) {
+                    const { user, token } = await response.json();
+                    localStorage.setItem("currentUser", JSON.stringify(user));
+                    localStorage.setItem("authToken", token);
+                    updateWelcomeMessage(); // Update welcome message after login
+                    window.location.href = "account.html";
+                } else {
+                    const error = await response.json();
+                    document.getElementById("login-error").textContent = error.message || "Login failed";
+                    document.getElementById("login-error").style.display = "block";
+                }
+            } catch (err) {
+                console.error("Login error:", err);
+                document.getElementById("login-error").textContent = "An error occurred. Please try again.";
+                document.getElementById("login-error").style.display = "block";
+            }
+        });
     }
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        user: { id: user.id, email: user.email, full_name: profile?.full_name || "User" },
-        token: data.session.access_token,
-      }),
-    };
-  } catch (err) {
-    console.error("Server Error:", err);
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({ error: "Internal Server Error." }),
-    };
-  }
-};
+    updateWelcomeMessage(); // Run on page load in case user is already logged in
+});
