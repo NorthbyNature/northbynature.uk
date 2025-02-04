@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="login-container">
-        <h2>Login</h2>
-        <form id="login-form">
-            <label for="username" id="username-label">Username</label>
-            <input type="email" id="username" name="username" aria-labelledby="username-label" required>
-            
-            <label for="password" id="password-label">Password</label>
-            <input type="password" id="password" name="password" aria-labelledby="password-label" required>
-            
-            <button type="submit">Login</button>
-            <div id="loading-spinner" style="display: none; text-align: center; margin-top: 10px;">
-                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #ffcc00;"></i>
-                <p>Logging in...</p>
-            </div>
-        </form>
-        <p id="login-error" role="alert" style="color: red; display: none; text-align: center;">Invalid username or password.</p>
-        <p style="text-align: center;"><a href="forgot-password.html" class="gold-link">Forgot your password?</a></p>
-    </main>
-    <script src="scripts.js"></script>
+  <main class="login-container">
+    <h2>Login</h2>
+    <!-- Added method="post" to ensure a POST submission -->
+    <form id="login-form" method="post">
+      <label for="username" id="username-label">Username</label>
+      <input type="email" id="username" name="username" aria-labelledby="username-label" required>
+      
+      <label for="password" id="password-label">Password</label>
+      <input type="password" id="password" name="password" aria-labelledby="password-label" required>
+      
+      <button type="submit">Login</button>
+      <div id="loading-spinner" style="display: none; text-align: center; margin-top: 10px;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #ffcc00;"></i>
+        <p>Logging in...</p>
+      </div>
+    </form>
+    <p id="login-error" role="alert" style="color: red; display: none; text-align: center;">Invalid username or password.</p>
+    <p style="text-align: center;">
+      <a href="forgot-password.html" class="gold-link">Forgot your password?</a>
+    </p>
+  </main>
+  <script src="scripts.js"></script>
 </body>
 </html>
