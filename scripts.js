@@ -102,7 +102,7 @@ function displayCartItems() {
             const itemTotal = item.price * item.quantity;
             cartTotal += itemTotal;
             cartHTML += 
-                 <div class="cart-item">
+                 `<div class="cart-item">
                     <div class="cart-item-details">
                         <h5>${item.eventTitle}</h5>
                         <p>${item.ticketType} x ${item.quantity} = £${itemTotal.toFixed(2)}</p>
@@ -115,10 +115,9 @@ function displayCartItems() {
                     <button class="remove-item" onclick="removeItem(${index})">
                         <i class="fas fa-trash"></i>
                     </button>
-                </div>
-            ;
+                </div>`;
         });
-        cartTotalContainer.innerHTML = Total: £${cartTotal.toFixed(2)};
+        cartTotalContainer.innerHTML = `Total: £${cartTotal.toFixed(2)}`;
     }
 
     cartItemsContainer.innerHTML = cartHTML;
@@ -222,6 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200); // Slight delay for smoothness (200ms)
     }
 });
+
 // Frontend: Script for Login, Logout, and Profile Management
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
@@ -245,10 +245,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ Login functionality (client-side)
     if (loginForm) {
+        console.log("Login form found, attaching event listener.");
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const email = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            const email = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            console.log("Login submitted with email:", email);
 
             try {
                 const response = await fetch("/.netlify/functions/login", {
@@ -261,9 +264,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     const { user, token } = await response.json();
                     localStorage.setItem("currentUser", JSON.stringify(user));
                     localStorage.setItem("authToken", token);
+                    console.log("Login successful, redirecting to account.html");
                     window.location.href = "account.html"; // Redirect to account page
                 } else {
                     const error = await response.json();
+                    console.error("Login failed:", error);
                     document.getElementById("login-error").textContent = error.error || "Login failed";
                     document.getElementById("login-error").style.display = "block";
                 }
@@ -296,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${getToken()}`, // ✅ Fixed the incorrect formatting here
+                        Authorization: `Bearer ${getToken()}`,
                     },
                     body: JSON.stringify({ location, primarySocialMedia }),
                 });
@@ -317,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAccountLink();
 });
 
-// Login Function
+// Login Function (Serverless) - DO NOT MODIFY if not testing server-side
 exports.handler = async (event) => {
     const { createClient } = require("@supabase/supabase-js");
     const supabase = createClient(
@@ -365,7 +370,7 @@ exports.handler = async (event) => {
     }
 };
 
-// Update Profile Function
+// Update Profile Function (Serverless)
 exports.handler = async (event) => {
     const { createClient } = require("@supabase/supabase-js");
     const supabase = createClient(
@@ -486,4 +491,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
