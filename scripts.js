@@ -490,4 +490,49 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+});
+document.addEventListener("DOMContentLoaded", async () => {
+  // Check if we're on the account page by looking for an element unique to that page.
+  const accountDetailsElem = document.querySelector(".account-details");
+  if (!accountDetailsElem) return; // Not on the account page
+
+  // Retrieve the stored user object
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Initialize Supabase client (using your public anon key)
+  // Note: Replace the placeholders with your actual Supabase URL and anon key.
+  const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
+  const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+  try {
+    // Query the profiles table for the user's first name
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("first_name")
+      .eq("id", currentUser.id)
+      .single();
+
+    let displayName = currentUser.email; // fallback to email if no first_name is found
+    if (!error && data && data.first_name) {
+      displayName = data.first_name;
+    }
+
+    // Update the DOM with the user's details
+    const welcomeHeading = accountDetailsElem.querySelector("h2");
+    const emailDisplay = accountDetailsElem.querySelector("p");
+    if (welcomeHeading) {
+      welcomeHeading.textContent = `Welcome, ${displayName}`;
+    }
+    if (emailDisplay) {
+      emailDisplay.textContent = `Email: ${currentUser.email}`;
+    }
+  } catch (err) {
+    console.error("Error fetching profile data:", err);
+  }
 });
