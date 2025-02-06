@@ -505,7 +505,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Initialize Supabase client (using your public anon key)
-  // Note: Replace the placeholders with your actual Supabase URL and anon key.
+  // Replace the placeholders with your actual Supabase URL and anon key.
   const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
   const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
@@ -517,6 +517,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       .select("full_name")
       .eq("id", currentUser.id)
       .single();
+
+    if (error) {
+      console.error("Error fetching profile data:", error);
+      // Optionally update the DOM to notify the user
+      const welcomeHeading = accountDetailsElem.querySelector("h2");
+      if (welcomeHeading) {
+        welcomeHeading.textContent = "Welcome, [Error loading name]";
+      }
+    }
 
     let displayName = currentUser.email; // fallback to email if no full_name is found
     if (!error && data && data.full_name) {
@@ -536,4 +545,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
-
