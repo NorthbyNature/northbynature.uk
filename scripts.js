@@ -438,7 +438,7 @@ exports.handler = async (event) => {
             statusCode: 500,
             body: JSON.stringify({ message: "Server error" }),
         };
-    }
+    }s
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -511,16 +511,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // Query the profiles table for the user's first name
+    // Query the profiles table for the user's full name
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("first_name")
+      .select("full_name")
       .eq("id", currentUser.id)
       .single();
 
-    let displayName = currentUser.email; // fallback to email if no first_name is found
-    if (!error && data && data.first_name) {
-      displayName = data.first_name;
+    let displayName = currentUser.email; // fallback to email if no full_name is found
+    if (!error && data && data.full_name) {
+      displayName = data.full_name;
     }
 
     // Update the DOM with the user's details
@@ -536,3 +536,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
+
