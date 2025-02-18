@@ -1,3 +1,8 @@
+// 1) Make sure this script runs after the Supabase library is loaded.
+// For example, add in your HTML: 
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+// <script src="scripts.js"></script>
+
 document.addEventListener('DOMContentLoaded', function () {
     // Event listener for adding items to cart
     const addToCartBtn = document.getElementById('add-to-cart');
@@ -213,6 +218,7 @@ function renderPayPalButton() {
         },
     }).render('#paypal-button-container');
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     const fadeInElement = document.querySelector(".fade-in");
     if (fadeInElement) {
@@ -322,216 +328,52 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAccountLink();
 });
 
-// Login Function (Serverless) - DO NOT MODIFY if not testing server-side
-exports.handler = async (event) => {
-    const { createClient } = require("@supabase/supabase-js");
-    const supabase = createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_API_KEY
-    );
-
-    if (event.httpMethod !== "POST") {
-        return {
-            statusCode: 405,
-            body: JSON.stringify({ message: "Method Not Allowed" }),
-        };
-    }
-
-    const { email, password } = JSON.parse(event.body);
-
-    if (!email || !password) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "Email and password are required" }),
-        };
-    }
-
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-            console.error("Login error:", error);
-            return {
-                statusCode: 401,
-                body: JSON.stringify({ message: "Invalid email or password" }),
-            };
-        }
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ user: data.user, token: data.session.access_token }),
-        };
-    } catch (err) {
-        console.error("Error logging in:", err);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: "Server error" }),
-        };
-    }
-};
-
-// Update Profile Function (Serverless)
-exports.handler = async (event) => {
-    const { createClient } = require("@supabase/supabase-js");
-    const supabase = createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_API_KEY
-    );
-
-    if (event.httpMethod !== "POST") {
-        return {
-            statusCode: 405,
-            body: JSON.stringify({ message: "Method Not Allowed" }),
-        };
-    }
-
-    const token = event.headers.authorization?.split(" ")[1];
-    const { location, primarySocialMedia } = JSON.parse(event.body);
-
-    if (!token) {
-        return {
-            statusCode: 401,
-            body: JSON.stringify({ message: "Authorization token is required" }),
-        };
-    }
-
-    if (!location || !primarySocialMedia) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: "Location and primary social media are required" }),
-        };
-    }
-
-    try {
-        const { data, error } = await supabase.auth.getUser(token);
-
-        if (error) {
-            console.error("Authorization error:", error);
-            return {
-                statusCode: 401,
-                body: JSON.stringify({ message: "Unauthorized" }),
-            };
-        }
-
-        const userId = data.user.id;
-
-        const { error: updateError } = await supabase
-            .from("profiles")
-            .update({ location, primary_social_media: primarySocialMedia })
-            .eq("id", userId);
-
-        if (updateError) {
-            console.error("Profile update error:", updateError);
-            return {
-                statusCode: 500,
-                body: JSON.stringify({ message: "Failed to update profile" }),
-            };
-        }
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: "Profile updated successfully" }),
-        };
-    } catch (err) {
-        console.error("Error updating profile:", err);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: "Server error" }),
-        };
-    }s
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-    const resetPasswordForm = document.getElementById("reset-password-form");
-
-    if (resetPasswordForm) {
-        resetPasswordForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get("token"); // Extract token from URL
-
-            if (!token) {
-                document.getElementById("reset-error").textContent = "Invalid or missing token.";
-                document.getElementById("reset-error").style.display = "block";
-                return;
-            }
-
-            const newPassword = document.getElementById("new-password").value;
-            const confirmPassword = document.getElementById("confirm-password").value;
-
-            if (newPassword !== confirmPassword) {
-                document.getElementById("reset-error").textContent = "Passwords do not match.";
-                document.getElementById("reset-error").style.display = "block";
-                return;
-            }
-
-            try {
-                const response = await fetch("/.netlify/functions/updatePassword", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ token, password: newPassword }),
-                });
-
-                if (response.ok) {
-                    document.getElementById("reset-success").style.display = "block";
-                    document.getElementById("reset-error").style.display = "none";
-                } else {
-                    const error = await response.json();
-                    document.getElementById("reset-error").textContent = error.message || "Failed to reset password.";
-                    document.getElementById("reset-error").style.display = "block";
-                }
-            } catch (err) {
-                console.error("Password reset error:", err);
-                document.getElementById("reset-error").textContent = "An error occurred. Please try again.";
-                document.getElementById("reset-error").style.display = "block";
-            }
-        });
-    }
-
-});
+// ===========================
+//    Supabase Account Page
+// ===========================
 document.addEventListener("DOMContentLoaded", async () => {
-  // Check if we're on the account page by looking for an element unique to that page.
+  // 2) Make sure we're on the account page
   const accountDetailsElem = document.querySelector(".account-details");
   if (!accountDetailsElem) return; // Not on the account page
 
-  // Retrieve the stored user object
+  // 3) Retrieve the user object from localStorage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
     window.location.href = "login.html";
     return;
   }
 
-  // Initialize Supabase client (using your public anon key)
+  // 4) Initialize Supabase (anon key)
   const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
   const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // Query the profiles table for the user's full name using the email
+    // 5) Query the profiles table by email
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name")
+      .select("full_name")  // or more fields if needed
       .eq("email", currentUser.email)
       .single();
 
+    console.log("Query error:", error);
+    console.log("Profile data:", data);
+
     if (error) {
       console.error("Error fetching profile data:", error);
-      // Optionally update the DOM to notify the user
       const welcomeHeading = accountDetailsElem.querySelector("h2");
       if (welcomeHeading) {
         welcomeHeading.textContent = "Welcome, [Error loading name]";
       }
     }
 
-    let displayName = currentUser.email; // fallback to email if no full_name is found
+    // 6) Fallback to email if no full_name is found
+    let displayName = currentUser.email;
     if (!error && data && data.full_name) {
       displayName = data.full_name;
     }
 
-    // Update the DOM with the user's details
+    // 7) Update the DOM
     const welcomeHeading = accountDetailsElem.querySelector("h2");
     const emailDisplay = accountDetailsElem.querySelector("p");
     if (welcomeHeading) {
