@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAccountLink();
 });
 
-// ===========================
+/// ===========================
 //    Supabase Account Page
 // ===========================
 document.addEventListener("DOMContentLoaded", async () => {
@@ -349,10 +349,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // 5) Query the profiles table by email
+    // 5) Query the profiles table by email for full_name and membership_tier
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier")  // or more fields if needed
+      .select("full_name, membership_tier")
       .eq("email", currentUser.email)
       .single();
 
@@ -373,16 +373,26 @@ document.addEventListener("DOMContentLoaded", async () => {
       displayName = data.full_name;
     }
 
-    // 7) Update the DOM
+    // 7) Update the DOM for welcome message, email, and membership tier
     const welcomeHeading = accountDetailsElem.querySelector("h2");
-    const emailDisplay = accountDetailsElem.querySelector("p");
+    const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
+    const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
+
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
     }
+    if (membershipTierEl) {
+      if (!error && data && data.membership_tier) {
+        membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
+      } else {
+        membershipTierEl.textContent = "Membership Tier: Unknown";
+      }
+    }
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
 });
+
