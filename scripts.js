@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (error) {
       console.error("Error fetching profile data:", error);
-      const welcomeHeading = accountDetailsElem.querySelector("h2");
+      const welcomeHeading = accountDetailsElem.querySelector("h1");
       if (welcomeHeading) {
         welcomeHeading.textContent = "Welcome, [Error loading name]";
       }
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // 7) Update the DOM for welcome message, email, and membership tier
-    const welcomeHeading = accountDetailsElem.querySelector("h2");
+    const welcomeHeading = accountDetailsElem.querySelector("h1");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
 
