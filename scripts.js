@@ -332,72 +332,57 @@ document.addEventListener("DOMContentLoaded", () => {
 //    Supabase Account Page
 // ===========================
 document.addEventListener("DOMContentLoaded", async () => {
- // 2) Make sure we're on the account page
-const accountDetailsElem = document.querySelector(".account-details");
-if (!accountDetailsElem) return; // Not on the account page
+  // 2) Make sure we're on the account page
+  const accountDetailsElem = document.querySelector(".account-details");
+  if (!accountDetailsElem) return; // Not on the account page
 
-// 3) Retrieve the user object from localStorage
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-if (!currentUser) {
-  window.location.href = "login.html";
-  return;
-}
+  // 3) Retrieve the user object from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    window.location.href = "login.html";
+    return;
+  }
 
-// 4) Initialize Supabase (anon key)
-const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+  // 4) Initialize Supabase (anon key)
+  const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
+  const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-try {
-  // 5) Query the profiles table by email
-  const { data, error } = await supabaseClient
-    .from("profiles")
-    .select("full_name, membership_tier")  // Fetch both columns
-    .eq("email", currentUser.email)
-    .single();
+  try {
+    // 5) Query the profiles table by email
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("full_name, membership_tier")  // or more fields if needed
+      .eq("email", currentUser.email)
+      .single();
 
-  console.log("Query error:", error);
-  console.log("Profile data:", data);
+    console.log("Query error:", error);
+    console.log("Profile data:", data);
 
-  if (error) {
-    console.error("Error fetching profile data:", error);
+    if (error) {
+      console.error("Error fetching profile data:", error);
+      const welcomeHeading = accountDetailsElem.querySelector("h2");
+      if (welcomeHeading) {
+        welcomeHeading.textContent = "Welcome, [Error loading name]";
+      }
+    }
+
+    // 6) Fallback to email if no full_name is found
+    let displayName = currentUser.email;
+    if (!error && data && data.full_name) {
+      displayName = data.full_name;
+    }
+
+    // 7) Update the DOM
     const welcomeHeading = accountDetailsElem.querySelector("h2");
+    const emailDisplay = accountDetailsElem.querySelector("p");
     if (welcomeHeading) {
-      welcomeHeading.textContent = "Welcome, [Error loading name]";
+      welcomeHeading.textContent = `Welcome, ${displayName}`;
     }
-  }
-
-  // 6) Fallback to email if no full_name is found
-  let displayName = currentUser.email;
-  if (!error && data && data.full_name) {
-    displayName = data.full_name;
-  }
-
-  // 7) Update the DOM
-  const welcomeHeading = accountDetailsElem.querySelector("h2");
-  const emailDisplay = accountDetailsElem.querySelector("p");
-  const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-
-  // Update "Welcome" heading
-  if (welcomeHeading) {
-    welcomeHeading.textContent = `Welcome, ${displayName}`;
-  }
-
-  // Update email display
-  if (emailDisplay) {
-    emailDisplay.textContent = `Email: ${currentUser.email}`;
-  }
-
-  // Update membership tier display
-  if (membershipTierEl) {
-    if (!error && data && data.membership_tier) {
-      membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
-    } else {
-      membershipTierEl.textContent = "Membership Tier: Unknown";
+    if (emailDisplay) {
+      emailDisplay.textContent = `Email: ${currentUser.email}`;
     }
+  } catch (err) {
+    console.error("Error fetching profile data:", err);
   }
-
-} catch (err) {
-  console.error("Error fetching profile data:", err);
-}
-
+});
