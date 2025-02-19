@@ -3,40 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>North by Nature - Account</title>
+    <title>North by Nature - About Us</title>
     
     <!-- Link to the main stylesheet (styles.css) -->
+    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
     <link rel="stylesheet" href="styles.css">
     
     <!-- Bootstrap CSS for layout and component styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Font Awesome for using icon fonts (e.g., social media or shopping cart icons) -->
+    <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
     <header class="text-center">
-        <!-- Account icon to navigate to the login/account page -->
-        <div class="account-icon">
-            <a href="account.html" id="account-link">
-                <i class="fas fa-user"></i> <!-- Account icon -->
-            </a>
-        </div>
-        
-        <!-- Instagram link -->
+         <div class="account-icon">
+        <a href="login.html" id="account-link">
+            <i class="fas fa-user"></i> <!-- Account icon -->
+        </a>
+    </div>
+        <!-- Instagram link that opens in a new tab -->
+        <!-- To update this link or text, change the href and the link text below -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
         </div>
         
         <!-- Placeholder for the logo image -->
+        <!-- Change 'logo-placeholder.png' to the actual path of your logo image if different -->
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        
+        <!-- Navigation menu with links to different pages -->
+        <nav>
+            <ul class="nav justify-content-center">
+                <!-- Each list item contains a link to a different section of the website -->
+                <!-- To add more navigation items, copy and paste <li> elements and update the href -->
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
 
-        <!-- Shopping cart icon -->
+        <!-- Shopping cart icon with a counter -->
+        <!-- The cart icon uses Font Awesome. To change or add more icons, use Font Awesome's library -->
+        <!-- Update the href if the cart page is located elsewhere -->
         <div class="cart-icon">
             <a href="cart.html">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
+                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
+                <span id="cart-count">0</span> <!-- Cart count set to 0 by default -->
             </a>
         </div>
     </header>
