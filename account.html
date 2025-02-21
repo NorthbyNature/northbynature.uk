@@ -68,6 +68,19 @@
             <!-- User details -->
             <div class="account-details">
                 <h1>Welcome, [User's Name]</h1>
+<div class="profile-picture-container">
+  <!-- This image shows the current profile picture or a default placeholder -->
+  <img id="profile-picture" src="default-placeholder.png" alt="Profile Picture" />
+
+  <!-- Button to trigger file upload -->
+  <button id="change-picture-button">Change Photo</button>
+  
+  <!-- Hidden file input for selecting a new profile picture -->
+  <input type="file" id="profile-picture-input" accept="image/*" style="display: none;" />
+  
+  <!-- (Optional) Button to remove the current picture -->
+  <button id="remove-picture-button" style="display: none;">Remove Photo</button>
+</div>
                 <p>Email: [user@example.com]</p>
                 <p id="membership-tier">Membership Tier: Gold</p>
             </div>

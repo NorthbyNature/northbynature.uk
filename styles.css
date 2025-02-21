@@ -1011,3 +1011,30 @@ textarea {
     color: #e6b800; /* Slightly darker gold on hover */
     text-decoration: underline;
 }
+.profile-picture-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+#change-picture-button,
+#remove-picture-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#change-picture-button:hover,
+#remove-picture-button:hover {
+  background-color: #e6b800;
+}
