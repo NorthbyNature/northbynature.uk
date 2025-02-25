@@ -395,35 +395,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
-document.getElementById("change-picture-button").addEventListener("click", () => {
-  document.getElementById("profile-picture-input").click();
-});
-document.getElementById("profile-picture-input").addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  
-  // (Implement upload logic here: use Supabase Storage to upload the file)
-  // For example, call an async function uploadProfilePicture(file) that returns the image URL.
-  
-  const imageUrl = await uploadProfilePicture(file);
-  
-  // Update the profile picture on the page:
-  document.getElementById("profile-picture").src = imageUrl;
-  
-  // Optionally, show the "Remove Photo" button:
-  document.getElementById("remove-picture-button").style.display = "inline-block";
-  
-  // Also, update the user's profile record in your database with the new image URL.
-});
-document.getElementById("remove-picture-button").addEventListener("click", async () => {
-  // Optionally, delete the image from storage here.
-  
-  // Reset to the default placeholder image.
-  document.getElementById("profile-picture").src = "default-placeholder.png";
-  
-  // Hide the remove button.
-  document.getElementById("remove-picture-button").style.display = "none";
-  
-  // Also update the user’s profile record to clear the image URL.
-});
-
