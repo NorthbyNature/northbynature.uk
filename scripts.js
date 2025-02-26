@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-    const locationEll = accountDetailsElem.querySelector("#primary-location");
+    const locationEl = accountDetailsElem.querySelector("#primary-location");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
@@ -391,11 +391,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         membershipTierEl.textContent = "Membership Tier: Unknown";
       }
-    if (locationEll) {
+    if (locationEl) {
       if (!error && data && data.location) {
-        locationEll.textContent = `Primary Location: ${data.location}`;
+        locationEl.textContent = `Primary Location: ${data.location}`;
       } else {
-        locationEll.textContent = "Primary Location: Unknown";
+        locationEl.textContent = "Primary Location: Unknown";
     }
   } catch (err) {
     console.error("Error fetching profile data:", err);
