@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Query the profiles table by email for full_name, membership_tier, and Location
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier,")
+      .select("full_name, membership_tier")
       .eq("email", currentUser.email)
       .single();
 
