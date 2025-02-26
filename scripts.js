@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-    const locationEll = accountDetailsElem.querySelector("#membership-tier");
+    const locationEll = accountDetailsElem.querySelector("#primary-location");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
