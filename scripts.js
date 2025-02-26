@@ -349,10 +349,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // 5) Query the profiles table by email for full_name, membership_tier, and Location
+    // 5) Query the profiles table by email for full_name, membership_tier, Location, Primary Social media
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier, location")
+      .select("full_name, membership_tier, location, primary_social_media")
       .eq("email", currentUser.email)
       .single();
 
@@ -378,6 +378,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
     const locationEl = accountDetailsElem.querySelector("#location");
+    const primarysocialmediaEl = accountDetailsElem.querySelector("#primary-social-media");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
@@ -397,6 +398,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         locationEl.textContent = `Primary Location: ${data.location}`;
       } else {
         locationEl.textContent = "Primary Location: Not set";
+      }
+    }
+      if (primarysocialmediaEl) {
+       if (!error && data && data.primary_social_media) {
+        primarysocialmediaEl.textContent = `Primary Social Media: ${data.primary_social_media}`;
+      } else {
+        primarysocialmediaEl.textContent = "Primary Social Media: Not set";
       }
     }
   } catch (err) {
