@@ -394,9 +394,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
       if (locationEl) {
        if (!error && data && data.location) {
-        locationEl.textContent = `Location: ${data.location}`;
+        locationEl.textContent = `Primary Location: ${data.location}`;
       } else {
-        locationEl.textContent = "Location: Not set";
+        locationEl.textContent = "Primary Location: Not set";
       }
     }
   } catch (err) {
