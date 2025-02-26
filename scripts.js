@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Query the profiles table by email for full_name, membership_tier, and Location
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier")
+      .select("full_name, membership_tier, location")
       .eq("email", currentUser.email)
       .single();
 
@@ -377,6 +377,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
+    const locationEl = accountDetailsElem.querySelector("#location");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
@@ -389,6 +390,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
       } else {
         membershipTierEl.textContent = "Membership Tier: Unknown";
+      }
+    }
+      if (locationEl) {
+       if (!error && data && data.location) {
+        locationEl.textContent = `Location: ${data.location}`;
+      } else {
+        locationEl.textContent = "Location: Not set";
       }
     }
   } catch (err) {
