@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Query the profiles table by email for full_name, membership_tier, and Location
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier, location")
+      .select("full_name, membership_tier,")
       .eq("email", currentUser.email)
       .single();
 
@@ -377,7 +377,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-    const locationEl = accountDetailsElem.querySelector("#primary-location");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
@@ -391,11 +390,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         membershipTierEl.textContent = "Membership Tier: Unknown";
       }
-    if (locationEl) {
-      if (!error && data && data.location) {
-        locationEl.textContent = `Primary Location: ${data.location}`;
-      } else {
-        locationEl.textContent = "Primary Location: Unknown";
     }
   } catch (err) {
     console.error("Error fetching profile data:", err);
