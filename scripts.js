@@ -373,61 +373,58 @@ document.addEventListener("DOMContentLoaded", async () => {
       displayName = data.full_name;
     }
 
-    // 7) Update the DOM for welcome message, email, and membership tier
-    const welcomeHeading = accountDetailsElem.querySelector("h1");
-    const roleEl = accountDetailsElem.querySelector("#user-role");
-    const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
-    const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-    const locationEl = accountDetailsElem.querySelector("#location");
-    const primarysocialmediaEl = accountDetailsElem.querySelector("#primary-social-media");
-    const socialmediausernameEl = accountDetailsElem.querySelector("#social-media-username");
-    const profilePictureEl = accountDetailsElem.querySelector("#profile-picture");
+   // 7) Update the DOM for welcome message, email, and membership tier
+const welcomeHeading = accountDetailsElem.querySelector("h1");
+const roleEl = accountDetailsElem.querySelector("#user-role");
+const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
+const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
+const locationEl = accountDetailsElem.querySelector("#location");
+const primarysocialmediaEl = accountDetailsElem.querySelector("#primary-social-media");
+const socialmediausernameEl = accountDetailsElem.querySelector("#social-media-username");
+const profilePictureEl = accountDetailsElem.querySelector("#profile-picture");
 
-    if (welcomeHeading) {
-      welcomeHeading.textContent = `Welcome, ${displayName}`;
-    }
-    if (roleEl) {
-      roleEl.textContent = !error && data && data.role
-        userroleEl.textContent = `${data.role}`;
-         ? data.role
-         : "";
-    }
-    if (emailDisplay) {
-      emailDisplay.textContent = `Email: ${currentUser.email}`;
-    }
-    if (membershipTierEl) {
-      if (!error && data && data.membership_tier) {
-        membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
-      } else {
-        membershipTierEl.textContent = "Membership Tier: Unknown";
-      }
-    }
-      if (locationEl) {
-       if (!error && data && data.location) {
-        locationEl.textContent = `Primary Location: ${data.location}`;
-      } else {
-        locationEl.textContent = "Primary Location: Not set";
-      }
-    }
-      if (primarysocialmediaEl) {
-       if (!error && data && data.primary_social_media) {
-        primarysocialmediaEl.textContent = `Primary Social Media: ${data.primary_social_media}`;
-      } else {
-        primarysocialmediaEl.textContent = "Primary Social Media: Not set";
-      }
-    }
-      if (socialmediausernameEl) {
-       if (!error && data && data.primary_social_media) {
-        socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
-      } else {
-        socialmediausernameEl.textContent = "Social Media Username: Not set";
-      }
-    }
-      if (profilePictureEl) {
-      profilePictureEl.src = !error && data && data.profile_picture
-        ? data.profile_picture
-        : "Images/default-placeholder.png";
-     }
+if (welcomeHeading) {
+  welcomeHeading.textContent = `Welcome, ${displayName}`;
+}
+if (roleEl) {
+  roleEl.textContent = !error && data && data.role ? data.role : "";
+}
+if (emailDisplay) {
+  emailDisplay.textContent = `Email: ${currentUser.email}`;
+}
+if (membershipTierEl) {
+  if (!error && data && data.membership_tier) {
+    membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
+  } else {
+    membershipTierEl.textContent = "Membership Tier: Unknown";
+  }
+}
+if (locationEl) {
+  if (!error && data && data.location) {
+    locationEl.textContent = `Primary Location: ${data.location}`;
+  } else {
+    locationEl.textContent = "Primary Location: Not set";
+  }
+}
+if (primarysocialmediaEl) {
+  if (!error && data && data.primary_social_media) {
+    primarysocialmediaEl.textContent = `Primary Social Media: ${data.primary_social_media}`;
+  } else {
+    primarysocialmediaEl.textContent = "Primary Social Media: Not set";
+  }
+}
+if (socialmediausernameEl) {
+  if (!error && data && data.social_media_username) {
+    socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
+  } else {
+    socialmediausernameEl.textContent = "Social Media Username: Not set";
+  }
+}
+if (profilePictureEl) {
+  profilePictureEl.src = !error && data && data.profile_picture
+    ? data.profile_picture
+    : "Images/default-placeholder.png";
+}
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
