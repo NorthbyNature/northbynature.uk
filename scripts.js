@@ -375,6 +375,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 7) Update the DOM for welcome message, email, and membership tier
     const welcomeHeading = accountDetailsElem.querySelector("h1");
+    const userroleEl = accountDetailsElem.querySelector("#role");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
     const locationEl = accountDetailsElem.querySelector("#location");
@@ -384,6 +385,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
+    }
+    if (userroleEl) {
+      userroleEl.textContent = `${data.role}`;
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
