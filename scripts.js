@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Query the profiles table by email for full_name, membership_tier, Location, Primary Social media, and social media username
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier, location, primary_social_media, social_media_username")
+      .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture")
       .eq("email", currentUser.email)
       .single();
 
@@ -380,6 +380,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const locationEl = accountDetailsElem.querySelector("#location");
     const primarysocialmediaEl = accountDetailsElem.querySelector("#primary-social-media");
     const socialmediausernameEl = accountDetailsElem.querySelector("#social-media-username");
+    const profilePictureEl = accountDetailsElem.querySelector("#profile-picture");
 
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
@@ -413,8 +414,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
       } else {
         socialmediausernameEl.textContent = "Social Media Username: Not set";
-      }
     }
+      if (profilePictureEl) {
+      profilePictureEl.src = !error && data && data.profile_picture
+        ? data.profile_picture
+        : "default-placeholder.png";
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
