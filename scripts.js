@@ -389,9 +389,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (userroleEl) {
       if (!error && data && data.role) {
         userroleEl.textContent = `${data.role}`;
-      } else {
-        userroleEl.textContent = "[User Role]";
-      }
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
