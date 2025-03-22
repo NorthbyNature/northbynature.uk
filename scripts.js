@@ -419,7 +419,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (profilePictureEl) {
       profilePictureEl.src = !error && data && data.profile_picture
         ? data.profile_picture
-        : "default-placeholder.png";
+        : "Images/default-placeholder.png";
      }
   } catch (err) {
     console.error("Error fetching profile data:", err);
