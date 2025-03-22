@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Query the profiles table by email for full_name, membership_tier, Location, Primary Social media, and social media username
     const { data, error } = await supabaseClient
       .from("profiles")
-      .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture")
+      .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
       .eq("email", currentUser.email)
       .single();
 
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 7) Update the DOM for welcome message, email, and membership tier
     const welcomeHeading = accountDetailsElem.querySelector("h1");
-    const userroleEl = accountDetailsElem.querySelector("h2");
+    const roleEl = accountDetailsElem.querySelector("#user-role");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
     const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
     const locationEl = accountDetailsElem.querySelector("#location");
@@ -386,9 +386,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (welcomeHeading) {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
     }
-    if (userroleEl) {
-      if (!error && data && data.role) {
+    if (roleEl) {
+      roleEl.textContent = !error && data && data.role
         userroleEl.textContent = `${data.role}`;
+         ? data.role
+         : "";
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
