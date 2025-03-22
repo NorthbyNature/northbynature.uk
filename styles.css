@@ -1011,3 +1011,10 @@ textarea {
     color: #e6b800; /* Slightly darker gold on hover */
     text-decoration: underline;
 }
+
+#profile-picture {
+  width: 200px;    /* Set the desired width */
+  height: 300px;   /* Set the desired height */
+  object-fit: cover; /* Ensures the image fills the box while preserving aspect ratio */
+  border-radius: 5px; /* Optional: round the corners slightly */
+}
