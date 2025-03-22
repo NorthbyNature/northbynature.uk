@@ -414,6 +414,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
       } else {
         socialmediausernameEl.textContent = "Social Media Username: Not set";
+      }
     }
       if (profilePictureEl) {
       profilePictureEl.src = !error && data && data.profile_picture
