@@ -387,7 +387,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
     }
     if (userroleEl) {
-      userroleEl.textContent = `${data.role}`;
+      if (!error && data && data.role) {
+        userroleEl.textContent = `${data.role}`;
+      } else {
+        userroleEl.textContent = "[User Role]";
+      }
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
