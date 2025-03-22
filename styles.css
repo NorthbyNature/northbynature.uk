@@ -1026,3 +1026,12 @@ textarea {
     font-size: 14px;     /* Optionally reduce the font size */
   }
 }
+@media (max-width: 600px) {
+  #logout-button {
+    display: inline-block; /* Ensure it's treated as a block-level element */
+    padding: 8px 12px;
+    margin: 5px;
+    font-size: 14px;
+  }
+}
+
