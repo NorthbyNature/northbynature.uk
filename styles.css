@@ -1018,3 +1018,11 @@ textarea {
   object-fit: cover; /* Ensures the image fills the box while preserving aspect ratio */
   border-radius: 5px; /* Optional: round the corners slightlyy */
 }
+
+@media (max-width: 600px) {
+  .gold-button {
+    padding: 8px 12px;   /* Reduce the internal padding */
+    margin: 5px;         /* Add some margin to keep buttons apart */
+    font-size: 14px;     /* Optionally reduce the font size */
+  }
+}
