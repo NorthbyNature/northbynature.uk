@@ -401,6 +401,7 @@ if (membershipTierEl) {
       membershipTierEl.style.color = 'platinum';
 }
   }
+    }
 if (locationEl) {
   if (!error && data && data.location) {
     locationEl.textContent = `Primary Location: ${data.location}`;
