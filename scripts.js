@@ -396,6 +396,7 @@ if (membershipTierEl) {
   if (!error && data && data.membership_tier) {
     membershipTierEl.textContent = `${data.membership_tier}`;
 }
+  }
 if (locationEl) {
   if (!error && data && data.location) {
     locationEl.textContent = `Primary Location: ${data.location}`;
