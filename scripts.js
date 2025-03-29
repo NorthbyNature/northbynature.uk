@@ -394,10 +394,7 @@ if (emailDisplay) {
 }
 if (membershipTierEl) {
   if (!error && data && data.membership_tier) {
-    membershipTierEl.textContent = `Membership Tier: ${data.membership_tier}`;
-  } else {
-    membershipTierEl.textContent = "Membership Tier: Unknown";
-  }
+    membershipTierEl.textContent = `${data.membership_tier}`;
 }
 if (locationEl) {
   if (!error && data && data.location) {
