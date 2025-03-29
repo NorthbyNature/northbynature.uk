@@ -394,7 +394,7 @@ if (emailDisplay) {
 }
 if (membershipTierEl) {
   if (!error && data && data.membership_tier) {
-    membershipTierEl.textContent = `${data.membership_tier}`;
+    membershipTierEl.textContent = `${data.membership_tier} MEMBER`;
     membershipTierEl.classList.remove('gold', 'platinum');
    if(data.membership_tier.toLowerCase() === 'gold'){
     membershipTierEl.classList.add('gold');
