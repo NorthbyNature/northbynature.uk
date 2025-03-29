@@ -395,6 +395,10 @@ if (emailDisplay) {
 if (membershipTierEl) {
   if (!error && data && data.membership_tier) {
     membershipTierEl.textContent = `${data.membership_tier}`;
+   if(data.membership_tier.toLowerCase() === 'gold'){
+      membershipTierEl.style.color = 'gold';
+} else if(data.membership_tier.toLowerCase() === 'platinum'){
+      membershipTierEl.style.color = 'platinum';
 }
   }
 if (locationEl) {

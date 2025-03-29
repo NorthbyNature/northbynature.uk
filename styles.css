@@ -1034,4 +1034,21 @@ textarea {
     font-size: 14px;
   }
 }
+/* For Gold Gradient Text */
+.gold {
+  background: linear-gradient(90deg, #FFD700, #FF8C00); /* Gold and darker gold */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Fallback for non-webkit browsers if supported */
+  color: transparent;
+}
+
+/* For Platinum (Silver) Gradient Text */
+.platinum {
+  background: linear-gradient(90deg, #C0C0C0, #E0E0E0); /* Light silver to a lighter shade */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
 
