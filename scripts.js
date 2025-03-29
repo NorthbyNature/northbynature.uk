@@ -396,9 +396,9 @@ if (membershipTierEl) {
   if (!error && data && data.membership_tier) {
     membershipTierEl.textContent = `${data.membership_tier} MEMBER`;
     membershipTierEl.classList.remove('gold', 'platinum');
-   if(data.membership_tier.toUpperCase() === 'gold'){
+   if(data.membership_tier.toLowerCase() === 'gold'){
     membershipTierEl.classList.add('gold');
-} else if(data.membership_tier.toUpperCase() === 'platinum'){
+} else if(data.membership_tier.toLowerCase() === 'platinum'){
     membershipTierEl.classList.add('platinum');
 }
   }
