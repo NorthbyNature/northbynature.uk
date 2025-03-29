@@ -28,12 +28,16 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', () => {
   // Select all event cards
   const eventCards = document.querySelectorAll('.event-card');
+  console.log("Event cards found:", eventCards.length);
+
   eventCards.forEach(card => {
-    // Get the value of the data-active attribute
+    // Log the current value of data-active for debugging
     const isActive = card.getAttribute('data-active');
-    // If not active (i.e., not "true"), hide the card
+    console.log("Card data-active value:", isActive);
+    // Hide the card if data-active is not "true"
     if (isActive !== "true") {
       card.style.display = "none";
+      console.log("Hiding card");
     }
   });
 });
