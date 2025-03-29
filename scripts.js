@@ -25,7 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add('selected');
         });
     });
-
+document.addEventListener('DOMContentLoaded', () => {
+  // Select all event cards
+  const eventCards = document.querySelectorAll('.event-card');
+  eventCards.forEach(card => {
+    // Get the value of the data-active attribute
+    const isActive = card.getAttribute('data-active');
+    // If not active (i.e., not "true"), hide the card
+    if (isActive !== "true") {
+      card.style.display = "none";
+    }
+  });
+});
     // Event listener for checkout button
     const checkoutButton = document.getElementById('checkout-button');
     if (checkoutButton) checkoutButton.addEventListener('click', redirectToPayment);
