@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log("Hiding card");
     }
   });
-});
     // Event listener for checkout button
     const checkoutButton = document.getElementById('checkout-button');
     if (checkoutButton) checkoutButton.addEventListener('click', redirectToPayment);
