@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Card data-active value:", isActive);
     // Hide the card if data-active is not "true"
     if (isActive !== "true") {
-      card.style.display = "none";
+      card.style.setProperty("display", "none", "important"); // Force hiding if needed
       console.log("Hiding card");
     }
   });
