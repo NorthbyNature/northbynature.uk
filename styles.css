@@ -1063,3 +1063,4 @@ textarea {
     background-position: -200% center;
   }
 }
+card.style.setProperty("display", "none", "important");

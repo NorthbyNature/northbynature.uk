@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.add('selected');
         });
     });
-document.addEventListener('DOMContentLoaded', () => {
   // Select all event cards
   const eventCards = document.querySelectorAll('.event-card');
   console.log("Event cards found:", eventCards.length);
