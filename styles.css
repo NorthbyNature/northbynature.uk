@@ -1034,17 +1034,17 @@ textarea {
     font-size: 14px;
   }
 }
-/* Gold gradient text with multiple stops */
+/* Gold gradient with more contrast */
 .gold {
-  background: linear-gradient(90deg, #FFD700, #FFC107, #FFB300);
+  background: linear-gradient(90deg, #b8860b, #ffd700, #fff8dc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Platinum (silver) gradient text with multiple stops */
+/* Platinum (silver) gradient with more contrast */
 .platinum {
-  background: linear-gradient(90deg, #C0C0C0, #D3D3D3, #E0E0E0);
+  background: linear-gradient(90deg, #6e6e6e, #b0b0b0, #e0e0e0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
