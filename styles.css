@@ -1069,7 +1069,9 @@ card.style.setProperty("display", "none", "important");
 
 .snapwidget-wrapper {
   position: relative;
-  display: inline-block; /* or block, depending on your layout */
+  display: inline-block; /* Ensures it only takes the space of its contents */
+  width: 400px;  /* Match the iframe’s width */
+  height: 150px; /* Match the iframe’s height */
 }
 
 .snapwidget-overlay {
@@ -1079,6 +1081,6 @@ card.style.setProperty("display", "none", "important");
   width: 100%;
   height: 100%;
   z-index: 10;
-  background: transparent; /* Invisible overlay */
-  text-decoration: none;   /* No underline */
+  background: transparent;
+  text-decoration: none;
 }
