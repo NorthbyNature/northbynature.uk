@@ -450,20 +450,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const editProfileForm = document.getElementById("edit-profile-form");
   if (!editProfileForm) return;
 
-  // Get auth token from localStorage (if needed)
   function getToken() {
     return localStorage.getItem("authToken");
   }
 
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Use the correct input IDs from your HTML
+    
+    // Use the correct element IDs from your HTML
     const fullName = document.getElementById("full-name-input").value.trim();
     const location = document.getElementById("location-input").value.trim();
     const primarySocialMedia = document.getElementById("primary-social-media-input").value.trim();
     const socialMediaUsername = document.getElementById("social-media-username-input").value.trim();
     
-    // Retrieve the current user's email from localStorage
+    // Retrieve the currentUser from localStorage. Ensure currentUser includes the email.
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!currentUser) {
       window.location.href = "login.html";
@@ -475,15 +475,15 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `Bearer ${getToken()}`
         },
+        // Send the email and other fields
         body: JSON.stringify({
-          userId: currentUser.id,
-          email: currentUser.email,
+          email: currentUser.email,   // Email from the currentUser stored in localStorage
           full_name: fullName,
           location: location,
           primary_social_media: primarySocialMedia,
-          social_media_username: socialMediaUsername,
+          social_media_username: socialMediaUsername
         }),
       });
   
