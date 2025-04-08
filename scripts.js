@@ -446,3 +446,48 @@ if (profilePictureEl) {
     console.error("Error fetching profile data:", err);
   }
 });
+document.addEventListener("DOMContentLoaded", async () => {
+  // Only run if the edit profile form is on the current page
+  const editProfileForm = document.getElementById("edit-profile-form");
+  if (!editProfileForm) return;
+
+  // Retrieve the current user object from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  // Initialize Supabase client
+  const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
+  const supabaseAnonKey = "YOUR_ANON_KEY_HERE"; // Replace with your actual anon key
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+  
+  try {
+    // Query the profiles table for the user's data
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("full_name, location, primary_social_media, social_media_username, profile_picture, role")
+      .eq("email", currentUser.email)
+      .single();
+    
+    console.log("Edit Profile Query error:", error);
+    console.log("Edit Profile data:", data);
+    
+    if (!error && data) {
+      // Pre-populate the form fields with the retrieved data
+      document.getElementById("full-name-input").value = data.full_name || "";
+      document.getElementById("location-input").value = data.location || "";
+      document.getElementById("primary-social-media-input").value = data.primary_social_media || "";
+      document.getElementById("social-media-username-input").value = data.social_media_username || "";
+      
+      // (Optional) Update a profile picture preview if your form includes one:
+      const profilePictureEl = document.getElementById("profile-picture");
+      if (profilePictureEl) {
+        profilePictureEl.src = data.profile_picture ? data.profile_picture : "Images/default-placeholder.png";
+      }
+    }
+  } catch (err) {
+    console.error("Error pre-populating profile form:", err);
+  }
+});
