@@ -478,6 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
           Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
+          userId: currentUser.id,
           email: currentUser.email,
           full_name: fullName,
           location: location,
