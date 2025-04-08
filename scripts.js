@@ -450,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const editProfileForm = document.getElementById("edit-profile-form");
   if (!editProfileForm) return;
 
-  // Get auth token function (if not already defined)
+  // Get auth token from localStorage (if needed)
   function getToken() {
     return localStorage.getItem("authToken");
   }
@@ -462,20 +462,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const location = document.getElementById("location-input").value.trim();
     const primarySocialMedia = document.getElementById("primary-social-media-input").value.trim();
     const socialMediaUsername = document.getElementById("social-media-username-input").value.trim();
-
+    
     // Retrieve the current user's email from localStorage
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!currentUser) {
       window.location.href = "login.html";
       return;
     }
-
+    
     try {
       const response = await fetch("/.netlify/functions/updateProfile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`, // assuming getToken() returns your auth token
+          Authorization: `Bearer ${getToken()}`,
         },
         body: JSON.stringify({
           email: currentUser.email,
@@ -485,15 +485,15 @@ document.addEventListener("DOMContentLoaded", () => {
           social_media_username: socialMediaUsername,
         }),
       });
-
+  
       if (response.ok) {
-        alert("Profile successfully updated!");
+        alert("Profile updated successfully!");
       } else {
         const errData = await response.json();
-        alert("Error updating profile: " + errData.error);
+        alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
       }
     } catch (err) {
-      console.error("Profile update error:", err);
+      console.error("Error updating profile:", err);
       alert("An error occurred while updating the profile.");
     }
   });
