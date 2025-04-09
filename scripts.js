@@ -498,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("An error occurred while updating the profile.");
     }
   });
-
+});
 const payload = {
   email: currentUser.email,
   full_name: fullName,
