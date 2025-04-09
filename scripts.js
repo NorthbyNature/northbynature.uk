@@ -308,152 +308,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ✅ Profile Update
-    if (editProfileForm) {
-        editProfileForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const location = document.getElementById("location").value;
-            const primarySocialMedia = document.getElementById("primary-social-media").value;
-
-            try {
-                const response = await fetch("/.netlify/functions/updateProfile", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${getToken()}`,
-                    },
-                    body: JSON.stringify({ location, primarySocialMedia }),
-                });
-
-                if (response.ok) {
-                    alert("Profile successfully updated!");
-                } else {
-                    alert("Error updating profile.");
-                }
-            } catch (err) {
-                console.error("Profile update error:", err);
-                alert("An error occurred while updating the profile.");
-            }
-        });
-    }
-
-    // ✅ Run updateAccountLink on page load
-    updateAccountLink();
-});
-
-/// ===========================
-//    Supabase Account Page
-// ===========================
-document.addEventListener("DOMContentLoaded", async () => {
-  // 2) Make sure we're on the account page
-  const accountDetailsElem = document.querySelector(".account-details");
-  if (!accountDetailsElem) return; // Not on the account page
-
-  // 3) Retrieve the user object from localStorage
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  // 4) Initialize Supabase (anon key)
-  const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
-  const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
-  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-  try {
-    // 5) Query the profiles table by email for full_name, membership_tier, Location, Primary Social media, and social media username
-    const { data, error } = await supabaseClient
-      .from("profiles")
-      .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
-      .eq("email", currentUser.email)
-      .single();
-
-    console.log("Query error:", error);
-    console.log("Profile data:", data);
-
-    if (error) {
-      console.error("Error fetching profile data:", error);
-      const welcomeHeading = accountDetailsElem.querySelector("h1");
-      if (welcomeHeading) {
-        welcomeHeading.textContent = "Welcome, [Error loading name]";
-      }
-    }
-
-    // 6) Fallback to email if no full_name is found
-    let displayName = currentUser.email;
-    if (!error && data && data.full_name) {
-      displayName = data.full_name;
-    }
-
-   // 7) Update the DOM for welcome message, email, and membership tier
-const welcomeHeading = accountDetailsElem.querySelector("h1");
-const roleEl = accountDetailsElem.querySelector("#user-role");
-const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
-const membershipTierEl = accountDetailsElem.querySelector("#membership-tier");
-const locationEl = accountDetailsElem.querySelector("#location");
-const primarysocialmediaEl = accountDetailsElem.querySelector("#primary-social-media");
-const socialmediausernameEl = accountDetailsElem.querySelector("#social-media-username");
-const profilePictureEl = accountDetailsElem.querySelector("#profile-picture");
-
-if (welcomeHeading) {
-  welcomeHeading.textContent = `Welcome, ${displayName}`;
-}
-if (roleEl) {
-  roleEl.textContent = !error && data && data.role ? data.role : "";
-}
-if (emailDisplay) {
-  emailDisplay.textContent = `Email: ${currentUser.email}`;
-}
-if (membershipTierEl) {
-  if (!error && data && data.membership_tier) {
-    membershipTierEl.textContent = `${data.membership_tier} MEMBER`;
-    membershipTierEl.classList.remove('gold', 'platinum');
-   if(data.membership_tier.toLowerCase() === 'gold'){
-    membershipTierEl.classList.add('gold');
-} else if(data.membership_tier.toLowerCase() === 'platinum'){
-    membershipTierEl.classList.add('platinum');
-}
-  }
-    }
-if (locationEl) {
-  if (!error && data && data.location) {
-    locationEl.textContent = `Primary Location: ${data.location}`;
-  } else {
-    locationEl.textContent = "Primary Location: Not set";
-  }
-}
-if (primarysocialmediaEl) {
-  if (!error && data && data.primary_social_media) {
-    primarysocialmediaEl.textContent = `Primary Social Media: ${data.primary_social_media}`;
-  } else {
-    primarysocialmediaEl.textContent = "Primary Social Media: Not set";
-  }
-}
-if (socialmediausernameEl) {
-  if (!error && data && data.social_media_username) {
-    socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
-  } else {
-    socialmediausernameEl.textContent = "Social Media Username: Not set";
-  }
-}
-if (profilePictureEl) {
-  profilePictureEl.src = !error && data && data.profile_picture
-    ? data.profile_picture
-    : "Images/default-placeholder.png";
-}
-  } catch (err) {
-    console.error("Error fetching profile data:", err);
-  }
-});
+    // -------------------------
+// Edit Profile - Update Form Submission
+// -------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const editProfileForm = document.getElementById("edit-profile-form");
   if (!editProfileForm) return;
-
+  
+  // Helper function to get the auth token
   function getToken() {
     return localStorage.getItem("authToken");
   }
-
+  
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     
@@ -470,13 +336,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     
-    // Construct the payload inside the event listener
+    // Construct the payload
     const payload = {
       email: currentUser.email,
       full_name: fullName,
       location: location,
       primary_social_media: primarySocialMedia,
-      social_media_username: socialMediaUsername
+      social_media_username: socialMediaUsername,
     };
     
     console.log("Updating profile with payload:", payload);
@@ -502,4 +368,94 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("An error occurred while updating the profile.");
     }
   });
+});
+
+// -------------------------
+// Supabase Account Page - Update Display on Account Page
+// -------------------------
+document.addEventListener("DOMContentLoaded", async () => {
+  const accountDetailsElem = document.querySelector(".account-details");
+  if (!accountDetailsElem) return; // Not on the account page
+  
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  // Initialize Supabase (anon key)
+  const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
+  const supabaseAnonKey = "YOUR_ANON_KEY_HERE"; // Replace with your actual anon key
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+  
+  try {
+    // Query the profiles table for all required fields
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
+      .eq("email", currentUser.email)
+      .single();
+    
+    console.log("Query error:", error);
+    console.log("Profile data:", data);
+    
+    // Fallback: use email if full_name is not provided
+    let displayName = currentUser.email;
+    if (!error && data && data.full_name) {
+      displayName = data.full_name;
+    }
+    
+    // Update the DOM elements using specific IDs
+    const welcomeHeading = accountDetailsElem.querySelector("h1");
+    const emailDisplay = document.getElementById("email-display");
+    const roleEl = document.getElementById("user-role");
+    const membershipTierEl = document.getElementById("membership-tier");
+    const locationEl = document.getElementById("location");
+    const primarySocialMediaEl = document.getElementById("primary-social-media");
+    const socialMediaUsernameEl = document.getElementById("social-media-username");
+    const profilePictureEl = document.getElementById("profile-picture");
+    
+    if (welcomeHeading) {
+      welcomeHeading.textContent = `Welcome, ${displayName}`;
+    }
+    if (emailDisplay) {
+      emailDisplay.textContent = `Email: ${currentUser.email}`;
+    }
+    if (roleEl) {
+      roleEl.textContent = (!error && data && data.role) ? data.role : "";
+    }
+    if (membershipTierEl) {
+      if (!error && data && data.membership_tier) {
+        membershipTierEl.textContent = `${data.membership_tier} MEMBER`;
+        membershipTierEl.classList.remove('gold', 'platinum');
+        if(data.membership_tier.toLowerCase() === 'gold'){
+          membershipTierEl.classList.add('gold');
+        } else if(data.membership_tier.toLowerCase() === 'platinum'){
+          membershipTierEl.classList.add('platinum');
+        }
+      }
+    }
+    if (locationEl) {
+      locationEl.textContent = (!error && data && data.location)
+        ? `Primary Location: ${data.location}`
+        : "Primary Location: Not set";
+    }
+    if (primarySocialMediaEl) {
+      primarySocialMediaEl.textContent = (!error && data && data.primary_social_media)
+        ? `Primary Social Media: ${data.primary_social_media}`
+        : "Primary Social Media: Not set";
+    }
+    if (socialMediaUsernameEl) {
+      socialMediaUsernameEl.textContent = (!error && data && data.social_media_username)
+        ? `Social Media Username: ${data.social_media_username}`
+        : "Social Media Username: Not set";
+    }
+    if (profilePictureEl) {
+      profilePictureEl.src = (!error && data && data.profile_picture)
+        ? data.profile_picture
+        : "Images/default-placeholder.png";
+    }
+  } catch (err) {
+    console.error("Error fetching profile data:", err);
+  }
 });
