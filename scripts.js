@@ -507,4 +507,3 @@ const payload = {
   social_media_username: socialMediaUsername
 };
 console.log("Updating profile with payload:", payload);
-
