@@ -498,4 +498,13 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("An error occurred while updating the profile.");
     }
   });
-});
+
+const payload = {
+  email: currentUser.email,
+  full_name: fullName,
+  location: location,
+  primary_social_media: primarySocialMedia,
+  social_media_username: socialMediaUsername
+};
+console.log("Updating profile with payload:", payload);
+
