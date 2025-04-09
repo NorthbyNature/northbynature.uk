@@ -450,16 +450,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const editProfileForm = document.getElementById("edit-profile-form");
   if (!editProfileForm) return;
 
-  // Helper function to get the auth token
   function getToken() {
     return localStorage.getItem("authToken");
   }
 
-  // Listen for form submission on the edit profile form
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     
-    // Get the updated values from your form inputs
+    // Get updated values from form inputs
     const fullName = document.getElementById("full-name-input").value.trim();
     const location = document.getElementById("location-input").value.trim();
     const primarySocialMedia = document.getElementById("primary-social-media-input").value.trim();
@@ -472,16 +470,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     
-    // Construct the payload to send to the serverless function
+    // Construct the payload inside the event listener
     const payload = {
-      email: currentUser.email,   // Email from currentUser
+      email: currentUser.email,
       full_name: fullName,
       location: location,
       primary_social_media: primarySocialMedia,
       social_media_username: socialMediaUsername
     };
     
-    // Log the payload for debugging
     console.log("Updating profile with payload:", payload);
     
     try {
