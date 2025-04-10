@@ -2,10 +2,13 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
 exports.handler = async (event) => {
-  // Parse the incoming JSON. Expect the following keys: email, full_name, location, primary_social_media, social_media_username.
+  // Parse the incoming JSON.
   const { email, full_name, location, primary_social_media, social_media_username } = JSON.parse(event.body);
+  
+  // Log the received payload for debugging.
+  console.log("Received update payload:", { email, full_name, location, primary_social_media, social_media_username });
 
-  // Update the profiles table based on the user's email
+  // Update the profiles table based on the user's email.
   const { data, error } = await supabase
     .from('profiles')
     .update({
@@ -15,6 +18,9 @@ exports.handler = async (event) => {
       social_media_username
     })
     .eq('email', email);
+
+  // Log the update query result.
+  console.log("Update result data:", data, "Update error:", error);
 
   if (error) {
     return {
