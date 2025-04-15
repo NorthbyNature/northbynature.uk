@@ -314,10 +314,30 @@ document.addEventListener("DOMContentLoaded", () => {
 if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Use the updated input IDs from your HTML form
-    const locationValue = document.getElementById("location-input").value;
-    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value;
+    // Retrieve updated values using the proper IDs from your HTML form
+    const fullName = document.getElementById("full-name-input").value.trim();
+    const locationValue = document.getElementById("location-input").value.trim();
+    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
+    const socialMediaUsername = document.getElementById("social-media-username-input").value.trim();
 
+    // Retrieve currentUser from localStorage; it must include the email.
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser || !currentUser.email) {
+      window.location.href = "login.html";
+      return;
+    }
+    
+    // Construct the payload with all required keys, ensuring the keys match your Supabase table columns.
+    const payload = {
+      email: currentUser.email,
+      full_name: fullName,
+      location: locationValue,
+      primary_social_media: primarySocialMediaValue,
+      social_media_username: socialMediaUsername
+    };
+    
+    console.log("Updating profile with payload:", payload);
+    
     try {
       const response = await fetch("/.netlify/functions/updateProfile", {
         method: "POST",
@@ -325,18 +345,14 @@ if (editProfileForm) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`
         },
-        // Now sending the payload with correct keys and values;
-        // Note the key for primary social media is now primary_social_media
-        body: JSON.stringify({ 
-          location: locationValue, 
-          primary_social_media: primarySocialMediaValue 
-        })
+        body: JSON.stringify(payload)
       });
-
+  
       if (response.ok) {
-        alert("Profile successfully updated!");
+        alert("Profile updated successfully!");
       } else {
-        alert("Error updating profile.");
+        const errData = await response.json();
+        alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
       }
     } catch (err) {
       console.error("Error updating profile:", err);
