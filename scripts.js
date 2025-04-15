@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return localStorage.getItem("authToken");
   }
 
-  // Update the account page link (for navigation in header)
+  // Update the account page link in the header
   function updateAccountLink() {
     const accountLink = document.getElementById("account-link");
     if (localStorage.getItem("currentUser")) {
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ----- Login Functionality (client-side) -----
+  // ----- Login functionality (client-side) -----
   if (loginForm) {
     console.log("Login form found, attaching event listener.");
     loginForm.addEventListener("submit", async (e) => {
@@ -284,17 +284,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok) {
           const { user, token } = await response.json();
-          // Store the returned user object and auth token in localStorage
+          // Store the returned user and token in localStorage
           localStorage.setItem("currentUser", JSON.stringify(user));
           localStorage.setItem("authToken", token);
           console.log("Login successful, redirecting to account.html");
           window.location.href = "account.html"; // Redirect to account page
         } else {
-          const error = await response.json();
-          console.error("Login failed:", error);
+          const errData = await response.json();
+          console.error("Login failed:", errData);
           const loginErrorEl = document.getElementById("login-error");
           if (loginErrorEl) {
-            loginErrorEl.textContent = error.error || "Login failed";
+            loginErrorEl.textContent = errData.error || "Login failed";
             loginErrorEl.style.display = "block";
           }
         }
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----- Logout Functionality -----
+  // ----- Logout functionality -----
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("currentUser");
@@ -318,96 +318,93 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----- Profile Update (Edit Profile Form) -----
-// ✅ Profile Update
-if (editProfileForm) {
-  editProfileForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  // ----- Profile Update functionality -----
+  if (editProfileForm) {
+    editProfileForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    // Retrieve updated values using input IDs from your HTML form
-    const fullName = document.getElementById("full-name-input").value.trim();
-    const locationValue = document.getElementById("location-input").value.trim();
-    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
-    const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
+      // Retrieve updated values using correct input IDs from your HTML form
+      const fullName = document.getElementById("full-name-input").value.trim();
+      const locationValue = document.getElementById("location-input").value.trim();
+      const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
+      const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
-    // Retrieve currentUser from localStorage; must include the email
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (!currentUser || !currentUser.email) {
-      window.location.href = "login.html";
-      return;
-    }
-
-    // Construct the payload with keys matching your Supabase table
-    const payload = {
-      email: currentUser.email,
-      full_name: fullName,
-      location: locationValue,
-      primary_social_media: primarySocialMediaValue,
-      social_media_username: socialMediaUsernameValue
-    };
-
-    console.log("Updating profile with payload:", payload);
-
-    try {
-      const response = await fetch("/.netlify/functions/updateProfile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        alert("Profile updated successfully!");
-        // Optionally redirect to the account page:
-        window.location.href = "account.html";
-      } else {
-        const errData = await response.json();
-        if (errData.error && errData.error.includes("JWT expired")) {
-          alert("Session expired. Please log in again.");
-          localStorage.removeItem("currentUser");
-          localStorage.removeItem("authToken");
-          window.location.href = "login.html";
-        } else {
-          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
-        }
+      // Retrieve currentUser from localStorage; must include email
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser || !currentUser.email) {
+        window.location.href = "login.html";
+        return;
       }
-    } catch (err) {
-      console.error("Error updating profile:", err);
-      alert("An error occurred while updating the profile.");
-    }
-  });
-}
 
-// ✅ Run updateAccountLink on page load
-updateAccountLink();
+      // Construct the payload with keys matching your Supabase table
+      const payload = {
+        email: currentUser.email,
+        full_name: fullName,
+        location: locationValue,
+        primary_social_media: primarySocialMediaValue,
+        social_media_username: socialMediaUsernameValue
+      };
 
+      console.log("Updating profile with payload:", payload);
+
+      try {
+        const response = await fetch("/.netlify/functions/updateProfile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          alert("Profile updated successfully!");
+          // Redirect to account page after updating if desired:
+          window.location.href = "account.html";
+        } else {
+          const errData = await response.json();
+          if (errData.error && errData.error.includes("JWT expired")) {
+            alert("Session expired. Please log in again.");
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("authToken");
+            window.location.href = "login.html";
+          } else {
+            alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
+          }
+        }
+      } catch (err) {
+        console.error("Error updating profile:", err);
+        alert("An error occurred while updating the profile.");
+      }
+    });
+  }
+
+  // Update the account link on page load
+  updateAccountLink();
 });
-
 
 // ===========================
 //    Supabase Account Page - Update DOM with Profile Data
 // ===========================
 document.addEventListener("DOMContentLoaded", async () => {
-  // 2) Ensure we're on the account page by checking for .account-details
+  // Ensure we're on the account page by checking for .account-details
   const accountDetailsElem = document.querySelector(".account-details");
-  if (!accountDetailsElem) return; // Not on the account page
+  if (!accountDetailsElem) return;
 
-  // 3) Retrieve the user object from localStorage
+  // Retrieve the user object from localStorage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
     window.location.href = "login.html";
     return;
   }
 
-  // 4) Initialize Supabase (anon key)
+  // Initialize Supabase (anon key)
   const supabaseUrl = "https://jwospecasjxrknmyycno.supabase.co";
   const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs";
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // 5) Query the profiles table by email for user data
+    // Query the profiles table by email for the desired fields
     const { data, error } = await supabaseClient
       .from("profiles")
       .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
@@ -425,13 +422,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    // 6) Fallback to email if full_name isn’t available
+    // Fallback to email if full_name isn’t available
     let displayName = currentUser.email;
     if (!error && data && data.full_name) {
       displayName = data.full_name;
     }
 
-    // 7) Update the DOM elements with profile data
+    // Update the DOM elements with profile data
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const roleEl = accountDetailsElem.querySelector("#user-role");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
@@ -445,7 +442,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       welcomeHeading.textContent = `Welcome, ${displayName}`;
     }
     if (roleEl) {
-      roleEl.textContent = !error && data && data.role ? data.role : "";
+      roleEl.textContent = (!error && data && data.role) ? data.role : "";
     }
     if (emailDisplay) {
       emailDisplay.textContent = `Email: ${currentUser.email}`;
@@ -462,28 +459,22 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
     if (locationEl) {
-      if (!error && data && data.location) {
-        locationEl.textContent = `Primary Location: ${data.location}`;
-      } else {
-        locationEl.textContent = "Primary Location: Not set";
-      }
+      locationEl.textContent = (!error && data && data.location)
+        ? `Primary Location: ${data.location}`
+        : "Primary Location: Not set";
     }
     if (primarysocialmediaEl) {
-      if (!error && data && data.primary_social_media) {
-        primarysocialmediaEl.textContent = `Primary Social Media: ${data.primary_social_media}`;
-      } else {
-        primarysocialmediaEl.textContent = "Primary Social Media: Not set";
-      }
+      primarysocialmediaEl.textContent = (!error && data && data.primary_social_media)
+        ? `Primary Social Media: ${data.primary_social_media}`
+        : "Primary Social Media: Not set";
     }
     if (socialmediausernameEl) {
-      if (!error && data && data.social_media_username) {
-        socialmediausernameEl.textContent = `Social Media Username: ${data.social_media_username}`;
-      } else {
-        socialmediausernameEl.textContent = "Social Media Username: Not set";
-      }
+      socialmediausernameEl.textContent = (!error && data && data.social_media_username)
+        ? `Social Media Username: ${data.social_media_username}`
+        : "Social Media Username: Not set";
     }
     if (profilePictureEl) {
-      profilePictureEl.src = !error && data && data.profile_picture
+      profilePictureEl.src = (!error && data && data.profile_picture)
         ? data.profile_picture
         : "Images/default-placeholder.png";
     }
