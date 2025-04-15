@@ -241,138 +241,147 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Frontend: Script for Login, Logout, and Profile Management
+// ===========================
+//    Frontend: Script for Login, Logout, and Profile Management
+// ===========================
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
-    const logoutButton = document.getElementById("logout-button");
-    const editProfileForm = document.getElementById("edit-profile-form");
+  // Retrieve elements (if they exist on the page)
+  const loginForm = document.getElementById("login-form");
+  const logoutButton = document.getElementById("logout-button");
+  const editProfileForm = document.getElementById("edit-profile-form");
 
-    // Get auth token from local storage
-    function getToken() {
-        return localStorage.getItem("authToken");
+  // Helper function to get auth token from localStorage
+  function getToken() {
+    return localStorage.getItem("authToken");
+  }
+
+  // Update the account page link (for navigation in header)
+  function updateAccountLink() {
+    const accountLink = document.getElementById("account-link");
+    if (localStorage.getItem("currentUser")) {
+      accountLink.href = "account.html";
+    } else {
+      accountLink.href = "login.html";
     }
+  }
 
-    // Update the account page link
-    function updateAccountLink() {
-        const accountLink = document.getElementById("account-link");
-        if (localStorage.getItem("currentUser")) {
-            accountLink.href = "account.html";
+  // ----- Login Functionality (client-side) -----
+  if (loginForm) {
+    console.log("Login form found, attaching event listener.");
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("username").value.trim().toLowerCase();
+      const password = document.getElementById("password").value.trim();
+
+      console.log("Login submitted with email:", email);
+
+      try {
+        const response = await fetch("/.netlify/functions/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+          const { user, token } = await response.json();
+          // Store the returned user object and auth token in localStorage
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          localStorage.setItem("authToken", token);
+          console.log("Login successful, redirecting to account.html");
+          window.location.href = "account.html"; // Redirect to account page
         } else {
-            accountLink.href = "login.html";
+          const error = await response.json();
+          console.error("Login failed:", error);
+          const loginErrorEl = document.getElementById("login-error");
+          if (loginErrorEl) {
+            loginErrorEl.textContent = error.error || "Login failed";
+            loginErrorEl.style.display = "block";
+          }
         }
-    }
-
-    // ✅ Login functionality (client-side)
-    if (loginForm) {
-        console.log("Login form found, attaching event listener.");
-        loginForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const email = document.getElementById("username").value.trim().toLowerCase();
-            const password = document.getElementById("password").value.trim();
-
-            console.log("Login submitted with email:", email);
-
-            try {
-                const response = await fetch("/.netlify/functions/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                if (response.ok) {
-                    const { user, token } = await response.json();
-                    localStorage.setItem("currentUser", JSON.stringify(user));
-                    localStorage.setItem("authToken", token);
-                    console.log("Login successful, redirecting to account.html");
-                    window.location.href = "account.html"; // Redirect to account page
-                } else {
-                    const error = await response.json();
-                    console.error("Login failed:", error);
-                    document.getElementById("login-error").textContent = error.error || "Login failed";
-                    document.getElementById("login-error").style.display = "block";
-                }
-            } catch (err) {
-                console.error("Login error:", err);
-                document.getElementById("login-error").textContent = "An error occurred. Please try again.";
-                document.getElementById("login-error").style.display = "block";
-            }
-        });
-    }
-
-    // ✅ Logout functionality
-    if (logoutButton) {
-        logoutButton.addEventListener("click", () => {
-            localStorage.removeItem("currentUser");
-            localStorage.removeItem("authToken");
-            window.location.href = "login.html"; // Redirect to login page
-        });
-    }
-
-   // Assuming the rest of your code is intact
-
-// ✅ Profile Update
-const editProfileForm = document.getElementById("edit-profile-form");
-if (editProfileForm) {
-  editProfileForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Retrieve updated values using input IDs from your HTML form
-    const fullName = document.getElementById("full-name-input").value.trim();
-    const locationValue = document.getElementById("location-input").value.trim();
-    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
-    const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
-
-    // Retrieve currentUser from localStorage; must include the email
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (!currentUser || !currentUser.email) {
-      window.location.href = "login.html";
-      return;
-    }
-
-    // Construct the payload with keys matching your Supabase table
-    const payload = {
-      email: currentUser.email,
-      full_name: fullName,
-      location: locationValue,
-      primary_social_media: primarySocialMediaValue,
-      social_media_username: socialMediaUsernameValue
-    };
-
-    console.log("Updating profile with payload:", payload);
-
-    try {
-      const response = await fetch("/.netlify/functions/updateProfile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        alert("Profile updated successfully!");
-        // Redirect to account page after updating if desired:
-        // window.location.href = "account.html";
-      } else {
-        const errData = await response.json();
-        alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
+      } catch (err) {
+        console.error("Login error:", err);
+        const loginErrorEl = document.getElementById("login-error");
+        if (loginErrorEl) {
+          loginErrorEl.textContent = "An error occurred. Please try again.";
+          loginErrorEl.style.display = "block";
+        }
       }
-    } catch (err) {
-      console.error("Error updating profile:", err);
-      alert("An error occurred while updating the profile.");
-    }
-  });
-}
+    });
+  }
 
-// ✅ Run updateAccountLink on page load
-updateAccountLink();
+  // ----- Logout Functionality -----
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("authToken");
+      window.location.href = "login.html"; // Redirect to login page
+    });
+  }
 
-/// ===========================
-//    Supabase Account Page
+  // ----- Profile Update (Edit Profile Form) -----
+  if (editProfileForm) {
+    editProfileForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Retrieve updated values using correct input IDs from the form
+      const fullName = document.getElementById("full-name-input").value.trim();
+      const locationValue = document.getElementById("location-input").value.trim();
+      const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
+      const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
+
+      // Retrieve currentUser from localStorage; must include email
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser || !currentUser.email) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Construct the payload with keys matching your Supabase table columns
+      const payload = {
+        email: currentUser.email,
+        full_name: fullName,
+        location: locationValue,
+        primary_social_media: primarySocialMediaValue,
+        social_media_username: socialMediaUsernameValue
+      };
+
+      console.log("Updating profile with payload:", payload);
+
+      try {
+        const response = await fetch("/.netlify/functions/updateProfile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          alert("Profile updated successfully!");
+          // Uncomment the following line if you want to redirect after updating:
+          // window.location.href = "account.html";
+        } else {
+          const errData = await response.json();
+          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
+        }
+      } catch (err) {
+        console.error("Error updating profile:", err);
+        alert("An error occurred while updating the profile.");
+      }
+    });
+  }
+
+  // Update the account link on page load (for the header)
+  updateAccountLink();
+});
+
+
+// ===========================
+//    Supabase Account Page - Update DOM with Profile Data
 // ===========================
 document.addEventListener("DOMContentLoaded", async () => {
-  // 2) Make sure we're on the account page
+  // 2) Ensure we're on the account page by checking for .account-details
   const accountDetailsElem = document.querySelector(".account-details");
   if (!accountDetailsElem) return; // Not on the account page
 
@@ -389,7 +398,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
-    // 5) Query the profiles table by email for full_name, membership_tier, Location, Primary Social media, and social media username
+    // 5) Query the profiles table by email for user data
     const { data, error } = await supabaseClient
       .from("profiles")
       .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
@@ -407,13 +416,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    // 6) Fallback to email if no full_name is found
+    // 6) Fallback to email if full_name isn’t available
     let displayName = currentUser.email;
     if (!error && data && data.full_name) {
       displayName = data.full_name;
     }
 
-    // 7) Update the DOM for welcome message, email, and membership tier
+    // 7) Update the DOM elements with profile data
     const welcomeHeading = accountDetailsElem.querySelector("h1");
     const roleEl = accountDetailsElem.querySelector("#user-role");
     const emailDisplay = accountDetailsElem.querySelector("p"); // Assumes this <p> is for email
@@ -436,9 +445,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!error && data && data.membership_tier) {
         membershipTierEl.textContent = `${data.membership_tier} MEMBER`;
         membershipTierEl.classList.remove('gold', 'platinum');
-        if(data.membership_tier.toLowerCase() === 'gold'){
+        if (data.membership_tier.toLowerCase() === 'gold') {
           membershipTierEl.classList.add('gold');
-        } else if(data.membership_tier.toLowerCase() === 'platinum'){
+        } else if (data.membership_tier.toLowerCase() === 'platinum') {
           membershipTierEl.classList.add('platinum');
         }
       }
@@ -473,4 +482,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
-
