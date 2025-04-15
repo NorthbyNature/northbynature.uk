@@ -315,8 +315,8 @@ if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     // Use the updated input IDs from your HTML form
-    const location = document.getElementById("location-input").value;
-    const primarySocialMedia = document.getElementById("primary-social-media-input").value;
+    const locationValue = document.getElementById("location-input").value;
+    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value;
 
     try {
       const response = await fetch("/.netlify/functions/updateProfile", {
@@ -325,8 +325,12 @@ if (editProfileForm) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getToken()}`
         },
-        // Now sending the payload with correct keys and values
-        body: JSON.stringify({ location, primarySocialMedia })
+        // Now sending the payload with correct keys and values;
+        // Note the key for primary social media is now primary_social_media
+        body: JSON.stringify({ 
+          location: locationValue, 
+          primary_social_media: primarySocialMediaValue 
+        })
       });
 
       if (response.ok) {
