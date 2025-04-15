@@ -320,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ----- Profile Update (Edit Profile Form) -----
 // ✅ Profile Update
-const editProfileForm = document.getElementById("edit-profile-form");
 if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
