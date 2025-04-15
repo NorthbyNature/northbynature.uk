@@ -255,15 +255,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return localStorage.getItem("authToken");
   }
 
-  // Update the account page link in the header
-  function updateAccountLink() {
-    const accountLink = document.getElementById("account-link");
+ // Update the account page link in the header
+function updateAccountLink() {
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
     if (localStorage.getItem("currentUser")) {
       accountLink.href = "account.html";
     } else {
       accountLink.href = "login.html";
     }
+  } else {
+    console.warn("Element with ID 'account-link' not found.");
   }
+}
 
   // ----- Login functionality (client-side) -----
   if (loginForm) {
@@ -488,4 +492,68 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const changePasswordForm = document.getElementById("change-password-form");
+  if (!changePasswordForm) return;
+
+  changePasswordForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Get the input values
+    const currentPassword = document.getElementById("current-password").value.trim();
+    const newPassword = document.getElementById("new-password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+    // Basic Validation: All fields must be filled in.
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Check that new password and confirm password match
+    if (newPassword !== confirmPassword) {
+      alert("New Password and Confirm New Password do not match.");
+      return;
+    }
+
+    // (Optional) Additional client-side password strength validations can be added here
+
+    // Retrieve currentUser from localStorage; must include a valid email (and token is stored separately)
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser || !currentUser.email) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    // Construct payload for the change password function
+    const payload = {
+      currentPassword,
+      newPassword
+    };
+
+    console.log("Changing password with payload:", payload);
+
+    try {
+      const response = await fetch("/.netlify/functions/changePassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        alert("Password changed successfully!");
+        window.location.href = "account.html"; // Redirect to account page
+      } else {
+        const errData = await response.json();
+        alert("Error changing password: " + (errData.error || errData.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Error changing password:", err);
+      alert("An error occurred while changing the password.");
+    }
+  });
 });
