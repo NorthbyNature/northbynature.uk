@@ -316,20 +316,20 @@ if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Retrieve updated values from inputs
+    // Retrieve updated values using input IDs from your HTML form
     const fullName = document.getElementById("full-name-input").value.trim();
     const locationValue = document.getElementById("location-input").value.trim();
     const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
     const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
-    // Retrieve currentUser from localStorage; must contain user.email
+    // Retrieve currentUser from localStorage; must include the email
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!currentUser || !currentUser.email) {
       window.location.href = "login.html";
       return;
     }
 
-    // Construct payload
+    // Construct the payload with keys matching your Supabase table
     const payload = {
       email: currentUser.email,
       full_name: fullName,
@@ -345,8 +345,6 @@ if (editProfileForm) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // If you have a getToken() function to retrieve auth tokens
-          // include it here, else remove the Authorization line
           Authorization: `Bearer ${getToken()}`
         },
         body: JSON.stringify(payload)
@@ -354,7 +352,7 @@ if (editProfileForm) {
 
       if (response.ok) {
         alert("Profile updated successfully!");
-        // Optional: redirect to account page, if desired
+        // Redirect to account page after updating if desired:
         // window.location.href = "account.html";
       } else {
         const errData = await response.json();
@@ -369,7 +367,6 @@ if (editProfileForm) {
 
 // ✅ Run updateAccountLink on page load
 updateAccountLink();
-});
 
 /// ===========================
 //    Supabase Account Page
