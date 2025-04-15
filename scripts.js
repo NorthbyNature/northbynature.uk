@@ -286,13 +286,13 @@ function updateAccountLink() {
           body: JSON.stringify({ email, password }),
         });
 
-        if (response.ok) {
-          const { user, token } = await response.json();
-          // Store the returned user and token in localStorage
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          localStorage.setItem("authToken", token);
-          console.log("Login successful, redirecting to account.html");
-          window.location.href = "account.html"; // Redirect to account page
+       if (response.ok) {
+  const { user, token } = await response.json();
+  console.log("Token received:", token); // Confirm token is received
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  localStorage.setItem("authToken", token);
+  window.location.href = "account.html";
+} 
         } else {
           const errData = await response.json();
           console.error("Login failed:", errData);
