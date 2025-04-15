@@ -90,31 +90,40 @@
     </div>
   </header>
 
-  <!-- Main Content: Edit Profile Form -->
   <main class="main-content">
-    <section class="content-section text-centered-container edit-profile-container">
-      <h2>Edit Profile</h2>
-      <form id="edit-profile-form">
-        <div class="form-group">
-          <label for="full-name-input">Full Name</label>
-          <input type="text" id="full-name-input" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-          <label for="location-input">Primary Location</label>
-          <input type="text" id="location-input" placeholder="Enter your location">
-        </div>
-        <div class="form-group">
-          <label for="primary-social-media-input">Primary Social Media</label>
-          <input type="text" id="primary-social-media-input" placeholder="Enter your primary social media">
-        </div>
-        <div class="form-group">
-          <label for="social-media-username-input">Social Media Username</label>
-          <input type="text" id="social-media-username-input" placeholder="Enter your social media username">
-        </div>
-        <button type="submit" class="submit-btn">Save Changes</button>
-      </form>
-    </section>
-  </main>
+  <section class="content-section text-centered-container edit-profile-container">
+    <h2>Edit Profile</h2>
+    <!-- Edit Profile Form -->
+    <form id="edit-profile-form">
+      <!-- Removed full-name-input since full name is not updateable -->
+      
+      <div class="form-group">
+        <label for="location-input">Primary Location</label>
+        <input type="text" id="location-input" name="location" placeholder="Enter your location">
+      </div>
+      
+      <div class="form-group">
+        <label for="primary-social-media-input">Primary Social Media</label>
+        <select id="primary-social-media-input" name="primarySocialMedia">
+          <option value="Instagram">Instagram</option>
+          <option value="TikTok">TikTok</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Linkedin">Linkedin</option>
+          <option value="Twitch">Twitch</option>
+          <option value="YouTube">YouTube</option>
+          <option value="OnlyFans">OnlyFans</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="social-media-username-input">Social Media Username</label>
+        <input type="text" id="social-media-username-input" name="socialMediaUsername" placeholder="Enter your social media username (include @)">
+      </div>
+      
+      <button type="submit" class="submit-btn">Save Changes</button>
+    </form>
+  </section>
+</main>
 
   <!-- Footer Section -->
   <footer class="instagram-footer">

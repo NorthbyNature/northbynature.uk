@@ -318,66 +318,68 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ----- Profile Update functionality -----
-  if (editProfileForm) {
-    editProfileForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+// ----- Profile Update Functionality ------
+if (editProfileForm) {
+  editProfileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      // Retrieve updated values using correct input IDs from your HTML form
-      const fullName = document.getElementById("full-name-input").value.trim();
-      const locationValue = document.getElementById("location-input").value.trim();
-      const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
-      const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
+    // Retrieve updated values using proper input IDs
+    const locationValue = document.getElementById("location-input").value.trim();
+    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value; // from dropdown
+    let socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
-      // Retrieve currentUser from localStorage; must include email
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (!currentUser || !currentUser.email) {
-        window.location.href = "login.html";
-        return;
-      }
+    // Ensure social media username begins with '@'
+    if (socialMediaUsernameValue && !socialMediaUsernameValue.startsWith("@")) {
+      socialMediaUsernameValue = "@" + socialMediaUsernameValue;
+    }
 
-      // Construct the payload with keys matching your Supabase table
-      const payload = {
-        email: currentUser.email,
-        full_name: fullName,
-        location: locationValue,
-        primary_social_media: primarySocialMediaValue,
-        social_media_username: socialMediaUsernameValue
-      };
+    // Retrieve currentUser from localStorage; must include the email
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser || !currentUser.email) {
+      window.location.href = "login.html";
+      return;
+    }
 
-      console.log("Updating profile with payload:", payload);
+    // Construct the payload with keys matching your Supabase table columns (excluding full_name)
+    const payload = {
+      email: currentUser.email,
+      location: locationValue,
+      primary_social_media: primarySocialMediaValue,
+      social_media_username: socialMediaUsernameValue
+    };
 
-      try {
-        const response = await fetch("/.netlify/functions/updateProfile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          },
-          body: JSON.stringify(payload)
-        });
+    console.log("Updating profile with payload:", payload);
 
-        if (response.ok) {
-          alert("Profile updated successfully!");
-          // Redirect to account page after updating if desired:
-          window.location.href = "account.html";
+    try {
+      const response = await fetch("/.netlify/functions/updateProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        alert("Profile updated successfully!");
+        window.location.href = "account.html"; // Redirect to account page after update
+      } else {
+        const errData = await response.json();
+        if (errData.error && errData.error.includes("JWT expired")) {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("authToken");
+          window.location.href = "login.html";
         } else {
-          const errData = await response.json();
-          if (errData.error && errData.error.includes("JWT expired")) {
-            alert("Session expired. Please log in again.");
-            localStorage.removeItem("currentUser");
-            localStorage.removeItem("authToken");
-            window.location.href = "login.html";
-          } else {
-            alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
-          }
+          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
         }
-      } catch (err) {
-        console.error("Error updating profile:", err);
-        alert("An error occurred while updating the profile.");
       }
-    });
-  }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      alert("An error occurred while updating the profile.");
+    }
+  });
+}
 
   // Update the account link on page load
   updateAccountLink();
