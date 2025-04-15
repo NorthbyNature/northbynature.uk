@@ -319,17 +319,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 // ----- Profile Update Functionality ------
+// ----- Profile Update Functionality -----
+const editProfileForm = document.getElementById("edit-profile-form");
 if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Retrieve updated values using proper input IDs
+    // Retrieve updated values using correct input IDs from the HTML form
     const locationValue = document.getElementById("location-input").value.trim();
-    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value; // from dropdown
+    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
     let socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
+    // Validation: Ensure all fields are filled in.
+    if (!locationValue || !primarySocialMediaValue || !socialMediaUsernameValue) {
+      alert("Please complete all fields before saving changes.");
+      return;
+    }
+
     // Ensure social media username begins with '@'
-    if (socialMediaUsernameValue && !socialMediaUsernameValue.startsWith("@")) {
+    if (!socialMediaUsernameValue.startsWith("@")) {
       socialMediaUsernameValue = "@" + socialMediaUsernameValue;
     }
 
@@ -340,7 +348,7 @@ if (editProfileForm) {
       return;
     }
 
-    // Construct the payload with keys matching your Supabase table columns (excluding full_name)
+    // Construct the payload with keys matching your Supabase table
     const payload = {
       email: currentUser.email,
       location: locationValue,
@@ -362,7 +370,7 @@ if (editProfileForm) {
 
       if (response.ok) {
         alert("Profile updated successfully!");
-        window.location.href = "account.html"; // Redirect to account page after update
+        window.location.href = "account.html";
       } else {
         const errData = await response.json();
         if (errData.error && errData.error.includes("JWT expired")) {
@@ -380,7 +388,6 @@ if (editProfileForm) {
     }
   });
 }
-
   // Update the account link on page load
   updateAccountLink();
 });
