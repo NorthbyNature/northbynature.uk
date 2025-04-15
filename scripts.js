@@ -319,58 +319,58 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Profile Update (Edit Profile Form) -----
-  if (editProfileForm) {
-    editProfileForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+ if (editProfileForm) {
+  editProfileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      // Retrieve updated values using correct input IDs from the form
-      const fullName = document.getElementById("full-name-input").value.trim();
-      const locationValue = document.getElementById("location-input").value.trim();
-      const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
-      const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
+    // Retrieve updated values using input IDs from your HTML form
+    const fullName = document.getElementById("full-name-input").value.trim();
+    const locationValue = document.getElementById("location-input").value.trim();
+    const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
+    const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
-      // Retrieve currentUser from localStorage; must include email
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (!currentUser || !currentUser.email) {
-        window.location.href = "login.html";
-        return;
+    // Retrieve currentUser from localStorage; must include the email
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser || !currentUser.email) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    // Construct the payload with keys matching your Supabase table
+    const payload = {
+      email: currentUser.email,
+      full_name: fullName,
+      location: locationValue,
+      primary_social_media: primarySocialMediaValue,
+      social_media_username: socialMediaUsernameValue
+    };
+
+    console.log("Updating profile with payload:", payload);
+
+    try {
+      const response = await fetch("/.netlify/functions/updateProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        alert("Profile updated successfully!");
+        // Redirect to account page after updating
+        window.location.href = "account.html";
+      } else {
+        const errData = await response.json();
+        alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
       }
-
-      // Construct the payload with keys matching your Supabase table columns
-      const payload = {
-        email: currentUser.email,
-        full_name: fullName,
-        location: locationValue,
-        primary_social_media: primarySocialMediaValue,
-        social_media_username: socialMediaUsernameValue
-      };
-
-      console.log("Updating profile with payload:", payload);
-
-      try {
-        const response = await fetch("/.netlify/functions/updateProfile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${getToken()}`
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          alert("Profile updated successfully!");
-          // Uncomment the following line if you want to redirect after updating:
-          // window.location.href = "account.html";
-        } else {
-          const errData = await response.json();
-          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
-        }
-      } catch (err) {
-        console.error("Error updating profile:", err);
-        alert("An error occurred while updating the profile.");
-      }
-    });
-  }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      alert("An error occurred while updating the profile.");
+    }
+  });
+}
 
   // Update the account link on page load (for the header)
   updateAccountLink();
