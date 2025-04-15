@@ -3,13 +3,21 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API
 
 exports.handler = async (event) => {
   try {
-    // Parse the incoming JSON
+    // Extract the token from the Authorization header and set it
+    const token = event.headers.authorization 
+      ? event.headers.authorization.replace("Bearer ", "") 
+      : null;
+    if (token) {
+      supabase.auth.setAuth(token);
+    }
+
+    // Parse the incoming JSON.
     const { email, full_name, location, primary_social_media, social_media_username } = JSON.parse(event.body);
-    
-    // Log the received payload for debugging
+
+    // Log the received payload for debugging.
     console.log("Received update payload:", { email, full_name, location, primary_social_media, social_media_username });
 
-    // Update the 'profiles' table based on the user's email
+    // Update the profiles table based on the user's email.
     const { data, error } = await supabase
       .from('profiles')
       .update({
@@ -20,7 +28,7 @@ exports.handler = async (event) => {
       })
       .eq('email', email);
 
-    // Log the update query result
+    // Log the update query result.
     console.log("Update result data:", data, "Update error:", error);
 
     if (error) {
