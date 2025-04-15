@@ -1,24 +1,34 @@
 const { createClient } = require('@supabase/supabase-js');
+
+// Create a default client without a token (fallback)
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
 exports.handler = async (event) => {
   try {
-    // Extract the token from the Authorization header and set it
+    // Extract the token from the Authorization header
     const token = event.headers.authorization 
       ? event.headers.authorization.replace("Bearer ", "") 
       : null;
-    if (token) {
-      supabase.auth.setAuth(token);
-    }
 
-    // Parse the incoming JSON.
+    // Create a new Supabase client with the token set in the global headers.
+    // This ensures that auth methods and RLS policies (using auth.email()) will work.
+    const supabaseWithAuth = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_API_KEY,
+      {
+        global: {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      }
+    );
+
+    // Parse the incoming JSON payload.
     const { email, full_name, location, primary_social_media, social_media_username } = JSON.parse(event.body);
-
-    // Log the received payload for debugging.
+    
     console.log("Received update payload:", { email, full_name, location, primary_social_media, social_media_username });
 
-    // Update the profiles table based on the user's email.
-    const { data, error } = await supabase
+    // Use the authenticated client to update the profiles table by email.
+    const { data, error } = await supabaseWithAuth
       .from('profiles')
       .update({
         full_name,
@@ -28,7 +38,6 @@ exports.handler = async (event) => {
       })
       .eq('email', email);
 
-    // Log the update query result.
     console.log("Update result data:", data, "Update error:", error);
 
     if (error) {
