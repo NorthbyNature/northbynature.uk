@@ -319,8 +319,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 // ----- Profile Update Functionality ------
-// ----- Profile Update Functionality -----
-const editProfileForm = document.getElementById("edit-profile-form");
 if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
