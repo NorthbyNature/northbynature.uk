@@ -311,45 +311,51 @@ document.addEventListener("DOMContentLoaded", () => {
    // Assuming the rest of your code is intact
 
 // ✅ Profile Update
+const editProfileForm = document.getElementById("edit-profile-form");
 if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Retrieve updated values using the proper IDs from your HTML form
+
+    // Retrieve updated values from inputs
     const fullName = document.getElementById("full-name-input").value.trim();
     const locationValue = document.getElementById("location-input").value.trim();
     const primarySocialMediaValue = document.getElementById("primary-social-media-input").value.trim();
-    const socialMediaUsername = document.getElementById("social-media-username-input").value.trim();
+    const socialMediaUsernameValue = document.getElementById("social-media-username-input").value.trim();
 
-    // Retrieve currentUser from localStorage; it must include the email.
+    // Retrieve currentUser from localStorage; must contain user.email
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (!currentUser || !currentUser.email) {
       window.location.href = "login.html";
       return;
     }
-    
-    // Construct the payload with all required keys, ensuring the keys match your Supabase table columns.
+
+    // Construct payload
     const payload = {
       email: currentUser.email,
       full_name: fullName,
       location: locationValue,
       primary_social_media: primarySocialMediaValue,
-      social_media_username: socialMediaUsername
+      social_media_username: socialMediaUsernameValue
     };
-    
+
     console.log("Updating profile with payload:", payload);
-    
+
     try {
       const response = await fetch("/.netlify/functions/updateProfile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // If you have a getToken() function to retrieve auth tokens
+          // include it here, else remove the Authorization line
           Authorization: `Bearer ${getToken()}`
         },
         body: JSON.stringify(payload)
       });
-  
+
       if (response.ok) {
         alert("Profile updated successfully!");
+        // Optional: redirect to account page, if desired
+        // window.location.href = "account.html";
       } else {
         const errData = await response.json();
         alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
