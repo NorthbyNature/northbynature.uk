@@ -319,7 +319,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----- Profile Update (Edit Profile Form) -----
- if (editProfileForm) {
+// ✅ Profile Update
+const editProfileForm = document.getElementById("edit-profile-form");
+if (editProfileForm) {
   editProfileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -359,11 +361,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         alert("Profile updated successfully!");
-        // Redirect to account page after updating
+        // Optionally redirect to the account page:
         window.location.href = "account.html";
       } else {
         const errData = await response.json();
-        alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
+        if (errData.error && errData.error.includes("JWT expired")) {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("currentUser");
+          localStorage.removeItem("authToken");
+          window.location.href = "login.html";
+        } else {
+          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
+        }
       }
     } catch (err) {
       console.error("Error updating profile:", err);
@@ -372,8 +381,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 }
 
-  // Update the account link on page load (for the header)
-  updateAccountLink();
+// ✅ Run updateAccountLink on page load
+updateAccountLink();
+
 });
 
 
