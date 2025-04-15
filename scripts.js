@@ -292,7 +292,6 @@ function updateAccountLink() {
   localStorage.setItem("currentUser", JSON.stringify(user));
   localStorage.setItem("authToken", token);
   window.location.href = "account.html";
-} 
         } else {
           const errData = await response.json();
           console.error("Login failed:", errData);
