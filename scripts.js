@@ -270,7 +270,7 @@ function updateAccountLink() {
 }
 
   // ----- Login functionality (client-side) -----
- if (loginForm) {
+if (loginForm) {
   console.log("Login form found, attaching event listener.");
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -296,7 +296,10 @@ function updateAccountLink() {
         localStorage.setItem("currentUser", JSON.stringify(user));
         localStorage.setItem("authToken", token);
 
-        // If you have links that change based on logged‑in state:
+        // debug: immediately verify it really wrote
+        console.log("localStorage authToken now contains:", localStorage.getItem("authToken"));
+
+        // update header link if you’re dynamically switching it
         if (typeof updateAccountLink === "function") updateAccountLink();
 
         window.location.href = "account.html";
@@ -317,7 +320,6 @@ function updateAccountLink() {
     }
   });
 }
-
   // ----- Logout functionality -----
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
