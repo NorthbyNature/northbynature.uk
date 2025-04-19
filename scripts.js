@@ -270,47 +270,53 @@ function updateAccountLink() {
 }
 
   // ----- Login functionality (client-side) -----
-  if (loginForm) {
-    console.log("Login form found, attaching event listener.");
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("username").value.trim().toLowerCase();
-      const password = document.getElementById("password").value.trim();
+ if (loginForm) {
+  console.log("Login form found, attaching event listener.");
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      console.log("Login submitted with email:", email);
+    // Hide any previous error
+    const loginErrorEl = document.getElementById("login-error");
+    if (loginErrorEl) loginErrorEl.style.display = "none";
 
-      try {
-        const response = await fetch("/.netlify/functions/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
+    const email = document.getElementById("username").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
 
-       if (response.ok) {
-  const { user, token } = await response.json();
-  console.log("Token received:", token); // Confirm token is received
-  localStorage.setItem("currentUser", JSON.stringify(user));
-  localStorage.setItem("authToken", token);
-  window.location.href = "account.html";
-        } else {
-          const errData = await response.json();
-          console.error("Login failed:", errData);
-          const loginErrorEl = document.getElementById("login-error");
-          if (loginErrorEl) {
-            loginErrorEl.textContent = errData.error || "Login failed";
-            loginErrorEl.style.display = "block";
-          }
-        }
-      } catch (err) {
-        console.error("Login error:", err);
-        const loginErrorEl = document.getElementById("login-error");
+    try {
+      const response = await fetch("/.netlify/functions/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const { user, token } = await response.json();
+        console.log("Token received:", token);
+
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        localStorage.setItem("authToken", token);
+
+        // If you have links that change based on logged‑in state:
+        if (typeof updateAccountLink === "function") updateAccountLink();
+
+        window.location.href = "account.html";
+      } else {
+        const errData = await response.json();
+        console.error("Login failed:", errData);
         if (loginErrorEl) {
-          loginErrorEl.textContent = "An error occurred. Please try again.";
+          loginErrorEl.textContent = errData.error || "Login failed";
           loginErrorEl.style.display = "block";
         }
       }
-    });
-  }
+    } catch (err) {
+      console.error("Login error:", err);
+      if (loginErrorEl) {
+        loginErrorEl.textContent = "An error occurred. Please try again.";
+        loginErrorEl.style.display = "block";
+      }
+    }
+  });
+}
 
   // ----- Logout functionality -----
   if (logoutButton) {
