@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const supabaseUrl    = "https://jwospecasjxrknmyycno.supabase.co";
-  const supabaseAnonKey= "YOUR_ANON_KEY"; // keep yours here
+  const supabaseAnonKey= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs"; // keep yours here
   const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
   try {
