@@ -395,7 +395,7 @@ try {
           alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
         }
       }
-    } catch (err) {
+    }) catch (err) {
       console.error("Error updating profile:", err);
       alert("An error occurred while updating the profile.");
     })
