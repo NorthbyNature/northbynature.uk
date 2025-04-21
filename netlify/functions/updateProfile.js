@@ -1,61 +1,58 @@
-const { createClient } = require('@supabase/supabase-js');
+// netlify/functions/updateProfile.js
+const { createClient } = require('@supabase/supabase-js')
 
-// Create a default client without a token (fallback)
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  { auth: { persistSession: false } }
+)
 
 exports.handler = async (event) => {
   try {
-    // Extract the token from the Authorization header
-    const token = event.headers.authorization 
-      ? event.headers.authorization.replace("Bearer ", "") 
-      : null;
+    const {
+      email,
+      full_name,
+      location,
+      primary_social_media,
+      social_media_username,
+    } = JSON.parse(event.body)
 
-    // Create a new Supabase client with the token set in the global headers.
-    // This ensures that auth methods and RLS policies (using auth.email()) will work.
-    const supabaseWithAuth = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_API_KEY,
-      {
-        global: {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      }
-    );
+    console.log('Received update payload:', {
+      email,
+      full_name,
+      location,
+      primary_social_media,
+      social_media_username,
+    })
 
-    // Parse the incoming JSON payload.
-    const { email, full_name, location, primary_social_media, social_media_username } = JSON.parse(event.body);
-    
-    console.log("Received update payload:", { email, full_name, location, primary_social_media, social_media_username });
-
-    // Use the authenticated client to update the profiles table by email.
-    const { data, error } = await supabaseWithAuth
+    const { data, error } = await supabase
       .from('profiles')
       .update({
         full_name,
         location,
         primary_social_media,
-        social_media_username
+        social_media_username,
       })
-      .eq('email', email);
+      .eq('email', email)
 
-    console.log("Update result data:", data, "Update error:", error);
+    console.log('Update result:', { data, error })
 
     if (error) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: error.message }),
-      };
+      }
     }
 
     return {
       statusCode: 200,
       body: JSON.stringify({ message: 'Profile updated successfully', data }),
-    };
+    }
   } catch (err) {
-    console.error("Unhandled error:", err);
+    console.error('Unhandled error:', err)
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message || "Server error" }),
-    };
+      body: JSON.stringify({ error: err.message || 'Server error' }),
+    }
   }
-};
+}

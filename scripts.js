@@ -372,8 +372,6 @@ if (editProfileForm) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
         body: JSON.stringify(payload)
       });
 
