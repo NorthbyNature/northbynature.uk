@@ -396,7 +396,7 @@ if (editProfileForm) {
     console.error("Error updating profile:", err);
     alert("An error occurred while updating the profile.");
   }
-}); // ← closes the addEventListener callback
+}) // ← closes the addEventListener callback
 
   // Update the account link on page load
   updateAccountLink();
