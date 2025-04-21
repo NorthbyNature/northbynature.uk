@@ -398,7 +398,7 @@ try {
     } catch (err) {
       console.error("Error updating profile:", err);
       alert("An error occurred while updating the profile.");
-    }
+    })
   });
 }
   // Update the account link on page load
