@@ -242,32 +242,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ===========================
-// ===========================
-// Frontend: Login, Logout, Profile Update & Account‑Link
+//    Frontend: Script for Login, Logout, Profile Update & Account‑Link
 // ===========================
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm        = document.getElementById("login-form");
-  const logoutButton     = document.getElementById("logout-button");
-  const editProfileForm  = document.getElementById("edit-profile-form");
-  const accountLinkEl    = document.getElementById("account-link");
+  // Retrieve elements (if they exist on the page)
+  const loginForm = document.getElementById("login-form");
+  const logoutButton = document.getElementById("logout-button");
+  const editProfileForm = document.getElementById("edit-profile-form");
 
+  // Helper to get auth token
   function getToken() {
     return localStorage.getItem("authToken");
   }
 
+  // Update the account page link in the header
   function updateAccountLink() {
-    if (!accountLinkEl) return;
-    accountLinkEl.href = localStorage.getItem("currentUser")
-      ? "account.html"
-      : "login.html";
+    const accountLink = document.getElementById("account-link");
+    if (accountLink) {
+      accountLink.href = localStorage.getItem("currentUser")
+        ? "account.html"
+        : "login.html";
+    }
   }
 
-  // — Login —
+  // ----- Login functionality -----
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const errEl = document.getElementById("login-error");
-      if (errEl) errEl.style.display = "none";
+      const loginErrorEl = document.getElementById("login-error");
+      if (loginErrorEl) loginErrorEl.style.display = "none";
 
       const email = document.getElementById("username").value.trim().toLowerCase();
       const password = document.getElementById("password").value.trim();
@@ -280,10 +283,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (!res.ok) {
-          const { error } = await res.json();
-          if (errEl) {
-            errEl.textContent = error || "Login failed";
-            errEl.style.display = "block";
+          const err = await res.json();
+          if (loginErrorEl) {
+            loginErrorEl.textContent = err.error || "Login failed";
+            loginErrorEl.style.display = "block";
           }
           return;
         }
@@ -293,18 +296,16 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("authToken", token);
         updateAccountLink();
         window.location.href = "account.html";
-
-      } catch (err) {
-        console.error("Login error:", err);
-        if (errEl) {
-          errEl.textContent = "An error occurred. Please try again.";
-          errEl.style.display = "block";
+      } catch {
+        if (loginErrorEl) {
+          loginErrorEl.textContent = "An error occurred. Please try again.";
+          loginErrorEl.style.display = "block";
         }
       }
     });
   }
 
-  // — Logout —
+  // ----- Logout functionality -----
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("currentUser");
@@ -314,33 +315,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // — Profile Update —
+  // ----- Profile Update functionality -----
   if (editProfileForm) {
     editProfileForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const locationVal  = document.getElementById("location-input").value.trim();
-      const primarySM    = document.getElementById("primary-social-media-input").value.trim();
-      let   smUsername   = document.getElementById("social-media-username-input").value.trim();
+      // Gather & validate
+      const loc = document.getElementById("location-input").value.trim();
+      const prim = document.getElementById("primary-social-media-input").value.trim();
+      let usern = document.getElementById("social-media-username-input").value.trim();
 
-      // validation
-      if (!locationVal || !primarySM || !smUsername) {
-        return alert("Please complete all fields before saving changes.");
+      if (!loc || !prim || !usern) {
+        alert("Please complete all fields before saving changes.");
+        return;
       }
-      if (!smUsername.startsWith("@")) {
-        smUsername = "@" + smUsername;
-      }
+      if (!usern.startsWith("@")) usern = "@" + usern;
 
-      const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
-      if (!currentUser.email) {
-        return window.location.href = "login.html";
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (!currentUser?.email) {
+        window.location.href = "login.html";
+        return;
       }
 
       const payload = {
         email: currentUser.email,
-        location: locationVal,
-        primary_social_media: primarySM,
-        social_media_username: smUsername
+        location: loc,
+        primary_social_media: prim,
+        social_media_username: usern,
       };
 
       try {
@@ -351,48 +352,49 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (!res.ok) {
-          const errData = await res.json();
-          if (errData.error?.includes("JWT expired")) {
+          const err = await res.json();
+          if (err.error?.includes("JWT expired")) {
             alert("Session expired. Please log in again.");
             localStorage.clear();
-            return window.location.href = "login.html";
+            window.location.href = "login.html";
+          } else {
+            alert("Error updating profile: " + (err.error || err.message || ""));
           }
-          return alert("Error updating profile: " + (errData.error || errData.message));
+          return;
         }
 
         alert("Profile updated successfully!");
         window.location.href = "account.html";
-
-      } catch (err) {
-        console.error("Error updating profile:", err);
+      } catch {
         alert("An error occurred while updating the profile.");
       }
     });
   }
 
-  // initialize header link
+  // Always refresh the header link
   updateAccountLink();
 });
 
-
 // ===========================
-//  Supabase Account Page: Fetch & Render Profile
+//    Supabase Account Page — DOM Update
 // ===========================
 document.addEventListener("DOMContentLoaded", async () => {
   const accountDetailsElem = document.querySelector(".account-details");
   if (!accountDetailsElem) return;
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
-  if (!currentUser.email) {
-    return window.location.href = "login.html";
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser?.email) {
+    window.location.href = "login.html";
+    return;
   }
 
-  const supabaseUrl    = "https://jwospecasjxrknmyycno.supabase.co";
-  const supabaseAnonKey= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs"; // keep yours here
-  const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+  const supabase = supabase.createClient(
+    "https://jwospecasjxrknmyycno.supabase.co",
+    "YOUR-ANON-KEY-HERE"
+  );
 
   try {
-    const { data, error } = await supabaseClient
+    const { data, error } = await supabase
       .from("profiles")
       .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
       .eq("email", currentUser.email)
@@ -400,63 +402,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (error) throw error;
 
-    // fill in DOM...
-    const byId = id => accountDetailsElem.querySelector(id);
-    byId("user-role").textContent = data.role || "";
-    byId("#membership-tier").textContent = data.membership_tier + " MEMBER";
-    byId("#membership-tier").classList.toggle("gold", data.membership_tier.toLowerCase()==="gold");
-    byId("#membership-tier").classList.toggle("platinum", data.membership_tier.toLowerCase()==="platinum");
-    byId("#location").textContent = `Primary Location: ${data.location||"Not set"}`;
-    byId("#primary-social-media").textContent = `Primary Social Media: ${data.primary_social_media||"Not set"}`;
-    byId("#social-media-username").textContent = `Social Media Username: ${data.social_media_username||"Not set"}`;
-    byId("#profile-picture").src = data.profile_picture || "Images/default-placeholder.png";
+    const displayName = data.full_name || currentUser.email;
+    accountDetailsElem.querySelector("h1").textContent = `Welcome, ${displayName}`;
+    accountDetailsElem.querySelector("#user-role").textContent = data.role || "";
+    accountDetailsElem.querySelector("p").textContent = `Email: ${currentUser.email}`;
 
-    // Welcome + email:
-    accountDetailsElem.querySelector("h1").textContent = `Welcome, ${data.full_name || currentUser.email}`;
-    accountDetailsElem.querySelector("p").textContent  = `Email: ${currentUser.email}`;
+    const tierEl = accountDetailsElem.querySelector("#membership-tier");
+    if (data.membership_tier) {
+      tierEl.textContent = `${data.membership_tier} MEMBER`;
+      tierEl.classList.toggle("gold", data.membership_tier.toLowerCase()==="gold");
+      tierEl.classList.toggle("platinum", data.membership_tier.toLowerCase()==="platinum");
+    }
 
+    accountDetailsElem.querySelector("#location").textContent =
+      data.location ? `Primary Location: ${data.location}` : "Primary Location: Not set";
+    accountDetailsElem.querySelector("#primary-social-media").textContent =
+      data.primary_social_media ? `Primary Social Media: ${data.primary_social_media}` : "Primary Social Media: Not set";
+    accountDetailsElem.querySelector("#social-media-username").textContent =
+      data.social_media_username ? `Social Media Username: ${data.social_media_username}` : "Social Media Username: Not set";
+    accountDetailsElem.querySelector("#profile-picture").src =
+      data.profile_picture || "Images/default-placeholder.png";
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
-});
-
-
-// ===========================
-//  Change Password Form
-// ===========================
-document.addEventListener("DOMContentLoaded", () => {
-  const changePasswordForm = document.getElementById("change-password-form");
-  if (!changePasswordForm) return;
-
-  changePasswordForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const currentPwd = document.getElementById("current-password").value.trim();
-    const newPwd     = document.getElementById("new-password").value.trim();
-    const confirmPwd = document.getElementById("confirm-password").value.trim();
-
-    if (!currentPwd || !newPwd || !confirmPwd) {
-      return alert("Please fill in all fields.");
-    }
-    if (newPwd !== confirmPwd) {
-      return alert("New Password and Confirm New Password do not match.");
-    }
-
-    const response = await fetch("/.netlify/functions/changePassword", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-      },
-      body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
-    });
-
-    if (response.ok) {
-      alert("Password changed successfully!");
-      window.location.href = "account.html";
-    } else {
-      const errData = await response.json();
-      alert("Error changing password: " + (errData.error || errData.message));
-    }
-  });
 });
