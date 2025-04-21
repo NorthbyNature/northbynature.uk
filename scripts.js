@@ -365,16 +365,22 @@ if (editProfileForm) {
       social_media_username: socialMediaUsernameValue
     };
 
-    console.log("Updating profile with payload:", payload);
+   console.log("Updating profile with payload:", payload);
 
-    try {
-      const response = await fetch("/.netlify/functions/updateProfile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        body: JSON.stringify(payload)
-      });
+try {
+  const response = await fetch("/.netlify/functions/updateProfile", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },              // ← close headers here
+    body: JSON.stringify(payload)  // ← body goes here, outside of headers
+  });
 
+  // …rest of your logic…
+} catch (err) {
+  console.error("Error updating profile:", err);
+  // …
+}
       if (response.ok) {
         alert("Profile updated successfully!");
         window.location.href = "account.html";
