@@ -367,40 +367,37 @@ if (editProfileForm) {
 
    console.log("Updating profile with payload:", payload);
 
-try {
-  const response = await fetch("/.netlify/functions/updateProfile", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },              // ← close headers here
-    body: JSON.stringify(payload)  // ← body goes here, outside of headers
-  });
 
-  // …rest of your logic…
-} catch (err) {
-  console.error("Error updating profile:", err);
-  // …
-}
-      if (response.ok) {
-        alert("Profile updated successfully!");
-        window.location.href = "account.html";
+  try {
+    const response = await fetch("/.netlify/functions/updateProfile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      alert("Profile updated successfully!");
+      window.location.href = "account.html";
+    } else {
+      const errData = await response.json();
+      if (errData.error && errData.error.includes("JWT expired")) {
+        alert("Session expired. Please log in again.");
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("authToken");
+        window.location.href = "login.html";
       } else {
-        const errData = await response.json();
-        if (errData.error && errData.error.includes("JWT expired")) {
-          alert("Session expired. Please log in again.");
-          localStorage.removeItem("currentUser");
-          localStorage.removeItem("authToken");
-          window.location.href = "login.html";
-        } else {
-          alert("Error updating profile: " + (errData.error || errData.message || "Unknown error"));
-        }
+        alert(
+          "Error updating profile: " +
+            (errData.error || errData.message || "Unknown error")
+        );
       }
-    }) catch (err) {
-      console.error("Error updating profile:", err);
-      alert("An error occurred while updating the profile.");
-    })
-  });
-}
+    }
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    alert("An error occurred while updating the profile.");
+  }
+}); // ← closes the addEventListener callback
+
   // Update the account link on page load
   updateAccountLink();
 });
