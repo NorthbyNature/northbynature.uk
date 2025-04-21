@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("profiles")
       .select("full_name, membership_tier, location, primary_social_media, social_media_username, profile_picture, role")
       .eq("email", currentUser.email)
