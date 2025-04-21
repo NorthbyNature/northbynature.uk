@@ -373,7 +373,7 @@ if (editProfileForm) {
         headers: {
           "Content-Type": "application/json",
         body: JSON.stringify(payload)
-      })
+      });
 
       if (response.ok) {
         alert("Profile updated successfully!");
