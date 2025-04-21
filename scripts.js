@@ -400,7 +400,7 @@ if (editProfileForm) {
 
   // Update the account link on page load
   updateAccountLink();
-});
+};
 
 // ===========================
 //    Supabase Account Page - Update DOM with Profile Data
