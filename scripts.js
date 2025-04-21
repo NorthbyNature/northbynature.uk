@@ -562,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const errData = await response.json();
         alert("Error changing password: " + (errData.error || errData.message || "Unknown error"));
       }
-    } catch (err) {
+    }) catch (err) {
       console.error("Error changing password:", err);
       alert("An error occurred while changing the password.");
     }
