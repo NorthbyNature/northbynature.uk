@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // 1) Initialize Supabase client once
 const supabaseClient = supabase.createClient(
   "https://jwospecasjxrknmyycno.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs"
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs"
 );
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -258,10 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const editProfileForm  = document.getElementById("edit-profile-form");
   const changePassForm   = document.getElementById("change-password-form");
 
-  // Helper to read token
-  function getToken() {
-    return localStorage.getItem("authToken");
-  }
+  // Helpers to read tokens
+  function getToken()           { return localStorage.getItem("authToken"); }
+  function getRefreshToken()    { return localStorage.getItem("refreshToken"); }
 
   // Update the account icon link
   function updateAccountLink() {
@@ -278,13 +277,14 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const errEl = document.getElementById("login-error");
       if (errEl) errEl.style.display = "none";
+
       const email = document.getElementById("username").value.trim().toLowerCase();
       const pass  = document.getElementById("password").value;
 
       try {
         const res = await fetch("/.netlify/functions/login", {
           method: "POST",
-          headers: {"Content-Type":"application/json"},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password: pass })
         });
         if (!res.ok) {
@@ -295,9 +295,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           return;
         }
-        const { user, token } = await res.json();
+        // now capture both tokens
+        const { user, token, refreshToken } = await res.json();
         localStorage.setItem("currentUser", JSON.stringify(user));
         localStorage.setItem("authToken", token);
+        localStorage.setItem("refreshToken", refreshToken);
+
         updateAccountLink();
         window.location.href = "account.html";
       } catch {
@@ -314,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("currentUser");
       localStorage.removeItem("authToken");
+      localStorage.removeItem("refreshToken");
       updateAccountLink();
       window.location.href = "login.html";
     });
@@ -323,10 +327,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (editProfileForm) {
     editProfileForm.addEventListener("submit", async e => {
       e.preventDefault();
+
       const loc  = document.getElementById("location-input").value.trim();
       const prim = document.getElementById("primary-social-media-input").value.trim();
       let   usern= document.getElementById("social-media-username-input").value.trim();
-      if (!loc||!prim||!usern) {
+
+      if (!loc || !prim || !usern) {
         alert("Please fill in every field.");
         return;
       }
@@ -372,21 +378,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const cur = document.getElementById("current-password").value.trim();
       const neu = document.getElementById("new-password"    ).value.trim();
       const con = document.getElementById("confirm-password").value.trim();
+
       if (!cur||!neu||!con) {
         return alert("All fields required.");
       }
       if (neu!==con) {
         return alert("New & confirm must match.");
       }
-      // restore session
+
+      // 1) restore session
       const { error: sesErr } = await supabaseClient.auth.setSession({
-        access_token: getToken()
+        access_token: getToken(),
+        refresh_token: getRefreshToken()
       });
       if (sesErr) {
         console.error("Session restore failed:", sesErr);
-        return alert("Session expired.");
+        return alert("Session expired. Please log in again.");
       }
-      // change
+
+      // 2) perform update
       const { error: upErr } = await supabaseClient.auth.updateUser({
         password: neu
       });
@@ -394,12 +404,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Password change error:", upErr);
         return alert("Change failed: "+upErr.message);
       }
+
       alert("Password changed!");
       window.location.href="account.html";
     });
   }
 
-  // Always update the header link on page load
+  // Always refresh the header link on page load
   updateAccountLink();
 });
 
@@ -420,17 +431,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       .single();
     if (error) throw error;
 
-    // name
+    // populate UI...
     const name = data.full_name || cu.email;
     acct.querySelector("h1").textContent = `Welcome, ${name}`;
-
-    // role
     acct.querySelector("#user-role").textContent = data.role||"";
+    acct.querySelector("p").textContent       = `Email: ${cu.email}`;
 
-    // email
-    acct.querySelector("p").textContent = `Email: ${cu.email}`;
-
-    // membership
     const tierEl = acct.querySelector("#membership-tier");
     if (data.membership_tier) {
       tierEl.textContent = `${data.membership_tier} MEMBER`;
@@ -438,19 +444,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       tierEl.classList.toggle("platinum",data.membership_tier.toLowerCase()==="platinum");
     }
 
-    // location / social / username / pic
-    acct.querySelector("#location").textContent            = data.location
+    acct.querySelector("#location").textContent             = data.location
       ? `Primary Location: ${data.location}` : "Primary Location: Not set";
-
-    acct.querySelector("#primary-social-media").textContent= data.primary_social_media
+    acct.querySelector("#primary-social-media").textContent = data.primary_social_media
       ? `Primary Social Media: ${data.primary_social_media}` : "Primary Social Media: Not set";
-
     acct.querySelector("#social-media-username").textContent= data.social_media_username
       ? `Social Media Username: ${data.social_media_username}` : "Social Media Username: Not set";
-
     acct.querySelector("#profile-picture").src = data.profile_picture
       || "Images/default-placeholder.png";
+
   } catch (err) {
     console.error("Error fetching profile data:", err);
   }
 });
+
