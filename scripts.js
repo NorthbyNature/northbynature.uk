@@ -426,3 +426,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
+// …after you create your supabaseClient at the top of scripts.js…
+// initialize
+const supabaseClient = supabase.createClient(
+  "https://jwospecasjxrknmyycno.supabase.co",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs"
+);
+
+// Change‑password form handler
+document
+  .getElementById("change-password-form")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const currentPassword = document.getElementById("current-password").value.trim();
+    const newPassword     = document.getElementById("new-password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return alert("Please fill in all fields.");
+    }
+    if (newPassword !== confirmPassword) {
+      return alert("New passwords do not match.");
+    }
+
+    // 1) Restore session
+    const token = localStorage.getItem("authToken");
+    const { error: sessionErr } = await supabaseClient.auth.setSession({
+      access_token: token
+    });
+    if (sessionErr) {
+      console.error("Session restore failed:", sessionErr);
+      return alert("Session expired. Please log in again.");
+    }
+
+    // 2) Change the password
+    const { data, error } = await supabaseClient.auth.updateUser({
+      password: newPassword,
+    });
+    if (error) {
+      console.error("Password change error:", error);
+      return alert("Error changing password: " + error.message);
+    }
+
+    alert("Password changed successfully!");
+    window.location.href = "account.html";
+  });
