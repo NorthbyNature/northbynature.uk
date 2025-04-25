@@ -70,53 +70,51 @@
     <!-- PRIVATE EVENTS -->
     <section>
       <h2 class="section-title">Private Events</h2>
-      <div id="private-events" class="cards-grid">
-        <!-- cards will be injected here -->
-      </div>
+      <div id="private-events" class="cards-grid"></div>
     </section>
 
     <!-- CONTENT OPPORTUNITIES -->
     <section>
       <h2 class="section-title">Content Opportunities</h2>
-      <div id="content" class="cards-grid">
-        <!-- cards will be injected here -->
-      </div>
+      <div id="content-opportunities" class="cards-grid"></div>
     </section>
 
     <!-- TRAINING & COURSES -->
     <section>
       <h2 class="section-title">Training & Courses</h2>
-      <div id="development" class="cards-grid">
-        <!-- cards will be injected here -->
-      </div>
+      <div id="training-courses" class="cards-grid"></div>
     </section>
   </main>
 
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // 1) Create your client
     const supabaseClient = supabase.createClient(
       'https://jwospecasjxrknmyycno.supabase.co',
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
     );
 
     async function loadOpportunities() {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('opportunities')
         .select('*');
+
       if (error) {
         console.error('Error loading opportunities:', error);
         return;
       }
 
+      // map each category name exactly to your table’s category values
       const sections = {
-        'Private Events':    document.getElementById('private-events'),
-        'Content':            document.getElementById('content'),
-        'Development':        document.getElementById('development'),
+        'Private Events':        document.getElementById('private-events'),
+        'Content Opportunities': document.getElementById('content-opportunities'),
+        'Training & Courses':    document.getElementById('training-courses'),
       };
 
       for (const [category, container] of Object.entries(sections)) {
         if (!container) continue;
+
         const items = data.filter(o => o.category === category);
 
         if (items.length === 0) {
@@ -126,7 +124,8 @@
           container.innerHTML = items.map(op => `
             <div class="opportunity-card">
               <div class="card-header"></div>
-              <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+              <img src="${op.image_url || 'Images/default-placeholder.png'}"
+                   alt="${op.title}" />
               <div class="card-body">
                 <h3>${op.title}</h3>
                 <p>${op.description}</p>
