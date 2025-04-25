@@ -6,6 +6,24 @@
   <title>Opportunities – North by Nature</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
+    /* NAVIGATION AT TOP */
+    .opp-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .opp-nav a {
+      color: #9a7120;
+      text-decoration: none;
+      font-weight: bold;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+    .opp-nav a:hover {
+      border-color: #9a7120;
+    }
+
     /* SECTION TITLE */
     .section-title {
       font-size: 1.75rem;
@@ -14,6 +32,7 @@
       border-bottom: 2px solid #9a7120;
       display: inline-block;
     }
+
     /* CARDS GRID */
     .cards-grid {
       display: grid;
@@ -35,7 +54,7 @@
     }
     .opportunity-card img {
       width: 100%;
-      height: 140px;
+      aspect-ratio: 4 / 3;
       object-fit: cover;
     }
     .opportunity-card .card-body {
@@ -67,22 +86,29 @@
       Opportunities
     </h1>
 
+    <!-- 1) Top in-page nav -->
+    <nav class="opp-nav">
+      <a href="#private-events">Private Events</a>
+      <a href="#content-opportunities">Content Opportunities</a>
+      <a href="#development">Development</a>
+    </nav>
+
     <!-- PRIVATE EVENTS -->
-    <section>
+    <section id="private-events">
       <h2 class="section-title">Private Events</h2>
-      <div id="private-events" class="cards-grid"></div>
+      <div id="private-events-grid" class="cards-grid"></div>
     </section>
 
     <!-- CONTENT OPPORTUNITIES -->
-    <section>
+    <section id="content-opportunities">
       <h2 class="section-title">Content Opportunities</h2>
-      <div id="content-opportunities" class="cards-grid"></div>
+      <div id="content-opportunities-grid" class="cards-grid"></div>
     </section>
 
     <!-- TRAINING & COURSES -->
-    <section>
-      <h2 class="section-title">Training & Courses</h2>
-      <div id="training-courses" class="cards-grid"></div>
+    <section id="development">
+      <h2 class="section-title">Development</h2>
+      <div id="development-grid" class="cards-grid"></div>
     </section>
   </main>
 
@@ -105,11 +131,11 @@
         return;
       }
 
-      // map each category name exactly to your table’s category values
+      // match category names to container IDs
       const sections = {
-        'Private Events':        document.getElementById('private-events'),
-        'Content Opportunities': document.getElementById('content-opportunities'),
-        'Training & Courses':    document.getElementById('training-courses'),
+        'Private Events':        document.getElementById('private-events-grid'),
+        'Content Opportunities': document.getElementById('content-opportunities-grid'),
+        'Development':    document.getElementById('development-grid'),
       };
 
       for (const [category, container] of Object.entries(sections)) {
@@ -119,7 +145,7 @@
 
         if (items.length === 0) {
           container.innerHTML =
-            '<p>There are no available opportunities at this moment.</p>';
+            '<p>There are no available opportunities for this at this moment.</p>';
         } else {
           container.innerHTML = items.map(op => `
             <div class="opportunity-card">
