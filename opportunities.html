@@ -6,7 +6,7 @@
   <title>Opportunities – North by Nature</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    /* NAVIGATION AT TOP */
+    /* TOP IN-PAGE NAV */
     .opp-nav {
       display: flex;
       justify-content: center;
@@ -36,10 +36,11 @@
     /* CARDS GRID */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
+
     .opportunity-card {
       background: #fff;
       border-radius: 8px;
@@ -47,16 +48,22 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
+      max-width: 240px;
+      margin: 0 auto;
     }
+
     .opportunity-card .card-header {
       height: 6px;
       background: linear-gradient(90deg, #ffefd4, #9a7120);
     }
+
+    /* PORTRAIT-FIRST IMAGE */
     .opportunity-card img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 3 / 4;
       object-fit: cover;
     }
+
     .opportunity-card .card-body {
       padding: 1rem;
       flex: 1;
@@ -86,7 +93,7 @@
       Opportunities
     </h1>
 
-    <!-- 1) Top in-page nav -->
+    <!-- in-page navigation -->
     <nav class="opp-nav">
       <a href="#private-events">Private Events</a>
       <a href="#content-opportunities">Content Opportunities</a>
@@ -105,7 +112,7 @@
       <div id="content-opportunities-grid" class="cards-grid"></div>
     </section>
 
-    <!-- TRAINING & COURSES -->
+    <!-- DEVELOPMENT -->
     <section id="development">
       <h2 class="section-title">Development</h2>
       <div id="development-grid" class="cards-grid"></div>
@@ -115,14 +122,13 @@
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // 1) Create your client
-    const supabaseClient = supabase.createClient(
+    const supabase = supabase.createClient(
       'https://jwospecasjxrknmyycno.supabase.co',
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
     );
 
     async function loadOpportunities() {
-      const { data, error } = await supabaseClient
+      const { data, error } = await supabase
         .from('opportunities')
         .select('*');
 
@@ -131,11 +137,10 @@
         return;
       }
 
-      // match category names to container IDs
       const sections = {
         'Private Events':        document.getElementById('private-events-grid'),
         'Content Opportunities': document.getElementById('content-opportunities-grid'),
-        'Development':    document.getElementById('development-grid'),
+        'Development':           document.getElementById('development-grid'),
       };
 
       for (const [category, container] of Object.entries(sections)) {
@@ -150,8 +155,7 @@
           container.innerHTML = items.map(op => `
             <div class="opportunity-card">
               <div class="card-header"></div>
-              <img src="${op.image_url || 'Images/default-placeholder.png'}"
-                   alt="${op.title}" />
+              <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
               <div class="card-body">
                 <h3>${op.title}</h3>
                 <p>${op.description}</p>
