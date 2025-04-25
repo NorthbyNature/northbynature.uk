@@ -488,8 +488,8 @@ async function loadOpportunities() {
   // Map each category name → its container element
   const sections = {
     'Private Events':        document.getElementById('private-events'),
-    'Content Opportunities': document.getElementById('content'),
-    'Training & Courses':    document.getElementById('development'),
+    'Content': document.getElementById('content'),
+    'Development':    document.getElementById('development'),
   };
 
   for (const [category, container] of Object.entries(sections)) {
