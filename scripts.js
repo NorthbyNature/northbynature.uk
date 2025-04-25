@@ -457,4 +457,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
-
+// 8) Opportunities count
+(async () => {
+  // adjust table name & filters as needed
+  const { count, error } = await supabaseClient
+    .from('opportunities')
+    .select('*', { count: 'exact', head: true });
+  if (!error) {
+    const el = document.getElementById('opp-count');
+    if (el) el.textContent = count;
+  } else {
+    console.error('Failed to load opportunity count', error);
+  }
+})();

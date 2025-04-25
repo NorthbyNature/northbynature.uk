@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Opportunities – North by Nature</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 1.75rem;
+      color: #9a7120;
+      margin: 2rem 0 1rem;
+      border-bottom: 2px solid #9a7120;
+      display: inline-block;
+    }
+    /* CARDS GRID */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .opportunity-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .opportunity-card .card-header {
+      height: 6px;
+      background: linear-gradient(90deg, #ffefd4, #9a7120);
+    }
+    .opportunity-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .opportunity-card .card-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .opportunity-card h3 {
+      margin: 0 0 .5rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .opportunity-card p {
+      margin: .25rem 0;
+      color: #555;
+      font-size: .95rem;
+    }
+    .opportunity-card .requirements {
+      margin-top: auto;
+      font-style: italic;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <main class="main-content">
+    <h1 style="text-align:center; color:#9a7120; margin-top:2rem;">
+      Opportunities
+    </h1>
+
+    <!-- PRIVATE EVENTS -->
+    <section>
+      <h2 class="section-title">Private Events</h2>
+      <div class="cards-grid">
+        <!-- Example card; duplicate or remove as needed -->
+        <div class="opportunity-card">
+          <div class="card-header"></div>
+          <img src="Images/private-event.jpg" alt="Private Dinner"/>
+          <div class="card-body">
+            <h3>VIP Dinner Experience</h3>
+            <p>Join us for an exclusive chef-led dining event.</p>
+            <p><strong>Date:</strong> July 12, 2025</p>
+            <p class="requirements">Requirements: Gold membership</p>
+          </div>
+        </div>
+
+        <!-- If none, replace above grid with: -->
+        <!-- <p>There are no available opportunities for this at this moment.</p> -->
+      </div>
+    </section>
+
+    <!-- CONTENT OPPORTUNITIES -->
+    <section>
+      <h2 class="section-title">Content Opportunities</h2>
+      <div class="cards-grid">
+        <!-- Example card -->
+        <div class="opportunity-card">
+          <div class="card-header"></div>
+          <img src="Images/content-op.jpg" alt="Social Media Collab"/>
+          <div class="card-body">
+            <h3>Social Media Collab</h3>
+            <p>Get featured on our Instagram story.</p>
+            <p><strong>Date:</strong> Rolling</p>
+            <p class="requirements">Requirements: @username + portfolio link</p>
+          </div>
+        </div>
+
+        <!-- If none: -->
+        <!-- <p>There are no available opportunities for this at this moment.</p> -->
+      </div>
+    </section>
+
+    <!-- TRAINING & COURSES -->
+    <section>
+      <h2 class="section-title">Training &amp; Courses</h2>
+      <div class="cards-grid">
+        <!-- Example card -->
+        <div class="opportunity-card">
+          <div class="card-header"></div>
+          <img src="Images/training-course.jpg" alt="DJ Workshop"/>
+          <div class="card-body">
+            <h3>DJ Masterclass</h3>
+            <p>Learn pro-level mixing techniques.</p>
+            <p><strong>Date:</strong> August 3, 2025</p>
+            <p class="requirements">Requirements: Platinum membership</p>
+          </div>
+        </div>
+
+        <!-- If none: -->
+        <!-- <p>There are no available opportunities for this at this moment.</p> -->
+      </div>
+    </section>
+  </main>
+</body>
+</html>
