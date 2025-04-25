@@ -77,16 +77,16 @@
 
     <!-- CONTENT OPPORTUNITIES -->
     <section>
-      <h2 class="section-title">Content Opportunities</h2>
-      <div id="content-opps" class="cards-grid">
+      <h2 class="section-title">Content</h2>
+      <div id="content" class="cards-grid">
         <!-- cards will be injected here -->
       </div>
     </section>
 
     <!-- TRAINING & COURSES -->
     <section>
-      <h2 class="section-title">Training &amp; Courses</h2>
-      <div id="training-courses" class="cards-grid">
+      <h2 class="section-title">Development</h2>
+      <div id="development" class="cards-grid">
         <!-- cards will be injected here -->
       </div>
     </section>
@@ -96,8 +96,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabase = supabase.createClient(
-      'https://jwospecasjxrknmyycno.supabase.co',
-      'YOUR_ANON_KEY_HERE'
+      'https://jwospecasjxrknmyycno.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
     );
 
     async function loadOpportunities() {
@@ -111,9 +110,9 @@
 
       // group by category
       const sections = {
-        'Private events': document.getElementById('private-events'),
-        'Content Opportunities': document.getElementById('content-opps'),
-        'Training & Courses': document.getElementById('training-courses'),
+        'Private Events': document.getElementById('private-events'),
+        'Content': document.getElementById('content'),
+        'Development': document.getElementById('development'),
       };
 
       for (const [cat, container] of Object.entries(sections)) {
