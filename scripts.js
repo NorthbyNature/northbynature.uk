@@ -470,3 +470,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error('Failed to load opportunity count', error);
   }
 })();
+const sections = {
+  'Private Events': [],
+  'Content': [],
+  'Development': []
+};
+
+data.forEach(op => sections[op.category].push(op));
+
+let html = '';
+for (const [cat, items] of Object.entries(sections)) {
+  html += `<h2>${cat}</h2>`;
+  if (items.length === 0) {
+    html += `<p>There are no available opportunities for this at this moment.</p>`;
+  } else {
+    html += items.map(op => `
+      <div class="opportunity-item">
+        <img src="${op.image_url}" alt="${op.title}" />
+        <h3>${op.title}</h3>
+        <p>${op.description}</p>
+        <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+        <p><strong>Requirements:</strong> ${op.requirements}</p>
+      </div>
+    `).join('');
+  }
+}
+container.innerHTML = html;
