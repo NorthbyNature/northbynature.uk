@@ -95,6 +95,7 @@
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // initialize
     const supabase = supabase.createClient(
       'https://jwospecasjxrknmyycno.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
@@ -104,7 +105,6 @@
       const { data, error } = await supabase
         .from('opportunities')
         .select('*');
-
       if (error) {
         console.error('Error loading opportunities:', error);
         return;
@@ -112,10 +112,11 @@
 
       console.log('Raw opportunities:', data);
 
+      // match each sheet to its container ID
       const sections = {
-        'Private Events':    document.getElementById('private-events'),
-        'Content Opportunities': document.getElementById('content-opportunities'),
-        'Training & Courses':    document.getElementById('training-courses'),
+        'Private Events':         document.getElementById('private-events'),
+        'Content Opportunities':  document.getElementById('content-opportunities'),
+        'Training & Courses':     document.getElementById('training-courses'),
       };
 
       for (const [category, container] of Object.entries(sections)) {
@@ -124,12 +125,13 @@
         console.log(`— ${category}:`, items);
 
         if (items.length === 0) {
-          container.innerHTML = '<p>There are no available opportunities for this at this moment.</p>';
+          container.innerHTML =
+            '<p>There are no available opportunities for this at this moment.</p>';
         } else {
           container.innerHTML = items.map(op => `
             <div class="opportunity-card">
               <div class="card-header"></div>
-              <img src="${op.image_url||'Images/default-placeholder.png'}" alt="${op.title}" />
+              <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
               <div class="card-body">
                 <h3>${op.title}</h3>
                 <p>${op.description}</p>

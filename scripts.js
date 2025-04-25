@@ -457,42 +457,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching profile data:", err);
   }
 });
-// 8) Opportunities count
-(async () => {
-  // adjust table name & filters as needed
+//  OPPORTUNITIES LOGIC
+// --------------------
+
+// 1️⃣ Update the little “badge” on your account page
+async function updateOpportunityCount() {
   const { count, error } = await supabaseClient
     .from('opportunities')
     .select('*', { count: 'exact', head: true });
+
   if (!error) {
     const el = document.getElementById('opp-count');
     if (el) el.textContent = count;
   } else {
-    console.error('Failed to load opportunity count', error);
-  }
-})();
-const sections = {
-  'Private Events': [],
-  'Content': [],
-  'Development': []
-};
-
-data.forEach(op => sections[op.category].push(op));
-
-let html = '';
-for (const [cat, items] of Object.entries(sections)) {
-  html += `<h2>${cat}</h2>`;
-  if (items.length === 0) {
-    html += `<p>There are no available opportunities for this at this moment.</p>`;
-  } else {
-    html += items.map(op => `
-      <div class="opportunity-item">
-        <img src="${op.image_url}" alt="${op.title}" />
-        <h3>${op.title}</h3>
-        <p>${op.description}</p>
-        <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-        <p><strong>Requirements:</strong> ${op.requirements}</p>
-      </div>
-    `).join('');
+    console.error('Failed to load opportunity count:', error);
   }
 }
-container.innerHTML = html;
+
+// 2️⃣ Load & render all opportunities on opportunities.html
+async function loadOpportunities() {
+  const { data, error } = await supabaseClient
+    .from('opportunities')
+    .select('*');
+
+  if (error) {
+    console.error('Error loading opportunities:', error);
+    return;
+  }
+
+  // Map each category name → its container element
+  const sections = {
+    'Private Events':        document.getElementById('private-events'),
+    'Content Opportunities': document.getElementById('content'),
+    'Training & Courses':    document.getElementById('development'),
+  };
+
+  for (const [category, container] of Object.entries(sections)) {
+    if (!container) continue;
+
+    const items = data.filter(o => o.category === category);
+
+    if (items.length === 0) {
+      container.innerHTML =
+        `<p>There are no available opportunities for this at this moment.</p>`;
+    } else {
+      container.innerHTML = items.map(op => `
+        <div class="opportunity-card">
+          <div class="card-header"></div>
+          <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+          <div class="card-body">
+            <h3>${op.title}</h3>
+            <p>${op.description}</p>
+            <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+            <p class="requirements">Requirements: ${op.requirements}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+}
+
+// 3️⃣ Wire them up on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updateOpportunityCount();
+  loadOpportunities();
+});;
