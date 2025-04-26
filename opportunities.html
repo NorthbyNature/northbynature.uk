@@ -6,19 +6,38 @@
   <title>Opportunities – North by Nature</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
+    /* RESET & NO HORIZONTAL SCROLL */
+    html, body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    /* MAIN WRAPPER PADDING */
+    main.main-content {
+      padding: 0 1rem;
+      max-width: 100vw;
+    }
+
     /* TOP IN-PAGE NAV */
     .opp-nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 2rem;
+      gap: 1rem;
       margin: 2rem 0;
+      padding: 0 1rem;
     }
     .opp-nav a {
       color: #fff;
       text-decoration: none;
-      font-weight: bold;
       border-bottom: 2px solid transparent;
       padding-bottom: 4px;
+      font-weight: bold;
     }
     .opp-nav a:hover {
       border-color: #fff;
@@ -39,6 +58,9 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .opportunity-card {
@@ -95,10 +117,9 @@
 
     <!-- in-page navigation -->
     <nav class="opp-nav">
-      <a href="https://www.northbynature.uk/account.html">Account</a>
-      <a href="#section-private">Private Events</a>
-      <a href="#section-content">Content Opportunities</a>
-      <a href="#section-development">Development</a>
+      <a href="#section-private">PRIVATE EVENTS</a>
+      <a href="#section-content">CONTENT OPPORTUNITIES</a>
+      <a href="#section-development">DEVELOPMENT</a>
     </nav>
 
     <!-- PRIVATE EVENTS -->
@@ -138,7 +159,6 @@
         return;
       }
 
-      // Map your categories → container IDs
       const sections = {
         'Private Events':        document.getElementById('private-cards'),
         'Content Opportunities': document.getElementById('content-cards'),
