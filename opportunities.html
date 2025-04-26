@@ -57,7 +57,7 @@
       background: linear-gradient(90deg, #ffefd4, #9a7120);
     }
 
-    /* PORTRAIT-FIRST IMAGE */
+    /* PORTRAIT-FIRST IMAGE (4:3) */
     .opportunity-card img {
       width: 100%;
       aspect-ratio: 3 / 4;
@@ -95,27 +95,27 @@
 
     <!-- in-page navigation -->
     <nav class="opp-nav">
-      <a href="#private-events">Private Events</a>
-      <a href="#content-opportunities">Content Opportunities</a>
-      <a href="#development">Development</a>
+      <a href="#section-private">Private Events</a>
+      <a href="#section-content">Content Opportunities</a>
+      <a href="#section-development">Development</a>
     </nav>
 
     <!-- PRIVATE EVENTS -->
-    <section id="private-events">
+    <section id="section-private">
       <h2 class="section-title">Private Events</h2>
-      <div id="private-events" class="cards-grid"></div>
+      <div id="private-cards" class="cards-grid"></div>
     </section>
 
     <!-- CONTENT OPPORTUNITIES -->
-    <section id="content-opportunities">
+    <section id="section-content">
       <h2 class="section-title">Content Opportunities</h2>
-      <div id="content-opportunities" class="cards-grid"></div>
+      <div id="content-cards" class="cards-grid"></div>
     </section>
 
     <!-- DEVELOPMENT -->
-    <section id="development">
+    <section id="section-development">
       <h2 class="section-title">Development</h2>
-      <div id="development" class="cards-grid"></div>
+      <div id="development-cards" class="cards-grid"></div>
     </section>
   </main>
 
@@ -124,11 +124,11 @@
   <script>
     const supabaseClient = supabase.createClient(
       'https://jwospecasjxrknmyycno.supabase.co',
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
     );
 
     async function loadOpportunities() {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('opportunities')
         .select('*');
 
@@ -137,15 +137,15 @@
         return;
       }
 
+      // Map your categories → container IDs
       const sections = {
-        'Private Events':        document.getElementById('private-events'),
-        'Content Opportunities': document.getElementById('content-opportunities'),
-        'Development':           document.getElementById('development'),
+        'Private Events':        document.getElementById('private-cards'),
+        'Content Opportunities': document.getElementById('content-cards'),
+        'Development':           document.getElementById('development-cards'),
       };
 
       for (const [category, container] of Object.entries(sections)) {
         if (!container) continue;
-
         const items = data.filter(o => o.category === category);
 
         if (items.length === 0) {
