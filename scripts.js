@@ -468,7 +468,7 @@ async function updateOpportunityCount() {
 
   if (!error) {
     const el = document.getElementById('opp-count');
-    if (el) el.textContent = count;
+    if (el) el.textContent = `(${count})`;
   } else {
     console.error('Failed to load opportunity count:', error);
   }
@@ -485,16 +485,14 @@ async function loadOpportunities() {
     return;
   }
 
-  // Map each category name → its container element
   const sections = {
-    'Private Events':        document.getElementById('private-events'),
-    'Content': document.getElementById('content'),
-    'Development':    document.getElementById('development'),
+    'Private Events':         document.getElementById('private-events'),
+    'Content Opportunities':  document.getElementById('content-opportunities'),
+    'Development':            document.getElementById('development'),
   };
 
   for (const [category, container] of Object.entries(sections)) {
     if (!container) continue;
-
     const items = data.filter(o => o.category === category);
 
     if (items.length === 0) {
@@ -521,4 +519,4 @@ async function loadOpportunities() {
 document.addEventListener('DOMContentLoaded', () => {
   updateOpportunityCount();
   loadOpportunities();
-});;
+});
