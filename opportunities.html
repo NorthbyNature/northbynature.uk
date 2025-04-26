@@ -5,115 +5,151 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Opportunities – North by Nature</title>
   <link rel="stylesheet" href="styles.css"/>
-  <!-- Bootstrap & FontAwesome -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!-- Link to the main stylesheet (styles.css) -->
+    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Bootstrap CSS for layout and component styling -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
+    <header class="text-center">
+         <div class="account-icon">
+        <a href="login.html" id="account-link">
+            <i class="fas fa-user"></i> <!-- Account icon -->
+        </a>
+    </div>
+        <!-- Instagram link that opens in a new tab -->
+        <!-- To update this link or text, change the href and the link text below -->
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
+        
+        <!-- Placeholder for the logo image -->
+        <!-- Change 'logo-placeholder.png' to the actual path of your logo image if different -->
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        
+        <!-- Navigation menu with links to different pages -->
+        <nav>
   <style>
-    /* Reset & prevent horizontal scroll */
-    html, body { margin:0; padding:0; overflow-x:hidden; }
-    *, *::before, *::after { box-sizing:border-box; }
-
-    /* Site header */
-    header.text-center {
-      padding: 1rem 0;
-      background: #222;
-      color: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* RESET & NO HORIZONTAL SCROLL */
+    html, body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
-    .account-icon, .instagram-link, .cart-icon { margin: 0.5rem; display:inline-block; }
-    .account-icon a, .cart-icon a, .instagram-link a { color: #fff; }
-    header .logo { height: 50px; margin: 0.5rem; }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
 
-    nav.site-nav ul { justify-content:center; }
-    nav.site-nav .nav-link { color:#fff; padding:0.5rem 1rem; }
-    nav.site-nav .nav-link:hover { color:#ffcc00; }
+    /* MAIN WRAPPER PADDING */
+    main.main-content {
+      padding: 0 1rem;
+      max-width: 100vw;
+    }
 
-    /* In‐page nav */
+    /* TOP IN-PAGE NAV */
     .opp-nav {
-      display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;
-      margin:2rem 0; padding:0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      padding: 0 1rem;
     }
     .opp-nav a {
-      color:#fff; text-decoration:none; border-bottom:2px solid transparent;
-      padding-bottom:4px; font-weight:normal; font-size:1rem;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      font-weight: normal;       /* ← changed from bold to normal */
+      font-size: 1rem;
+      line-height: 1.2;
     }
-    .opp-nav a:hover { border-color:#fff; }
+    .opp-nav a:hover {
+      border-color: #fff;
+    }
 
-    /* Section titles */
+    /* SECTION TITLE */
     .section-title {
-      font-size:1.75rem; color:#9a7120; margin:2rem 1rem 1rem;
-      border-bottom:2px solid #9a7120; display:inline-block;
+      font-size: 1.75rem;
+      color: #9a7120;
+      margin: 2rem 0 1rem;
+      border-bottom: 2px solid #9a7120;
+      display: inline-block;
     }
 
-    /* Cards grid */
+    /* CARDS GRID */
     .cards-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:1.5rem;
-      margin:0 1rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .opportunity-card {
-      background:#fff; border-radius:8px; overflow:hidden;
-      box-shadow:0 4px 8px rgba(0,0,0,0.1);
-      display:flex; flex-direction:column; max-width:300px; margin:0 auto;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+      margin: 0 auto;
     }
+
     .opportunity-card .card-header {
-      height:6px;
-      background:linear-gradient(90deg,#ffefd4,#9a7120);
+      height: 6px;
+      background: linear-gradient(90deg, #ffefd4, #9a7120);
     }
+
+    /* PORTRAIT-FIRST IMAGE (4:3) */
     .opportunity-card img {
-      width:100%; aspect-ratio:3/4; object-fit:cover;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
     }
+
     .opportunity-card .card-body {
-      padding:1rem; flex:1; display:flex; flex-direction:column;
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
-    .opportunity-card h3 { margin:0 0 .5rem; font-size:1.2rem; color:#333; }
-    .opportunity-card p { margin:.25rem 0; color:#555; font-size:.95rem; }
+    .opportunity-card h3 {
+      margin: 0 0 .5rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .opportunity-card p {
+      margin: .25rem 0;
+      color: #555;
+      font-size: .95rem;
+    }
     .opportunity-card .requirements {
-      margin-top:auto; font-style:italic; color:#777;
+      margin-top: auto;
+      font-style: italic;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <!-- SITE HEADER -->
-  <header class="text-center">
-    <div class="account-icon">
-      <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
-    </div>
-    <div class="instagram-link">
-      <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-    </div>
-    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo"/>
-    <nav class="site-nav">
-      <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-        <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships</a></li>
-        <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="cart-icon">
-      <a href="cart.html">
-        <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
   <main class="main-content">
     <h1 style="text-align:center; color:#9a7120; margin-top:2rem;">
       Opportunities
     </h1>
 
-    <!-- In‐page navigation -->
+    <!-- in-page navigation -->
     <nav class="opp-nav">
+      <a href="https://www.northbynature.uk/account">ACCOUNT</a>
       <a href="#section-private">PRIVATE EVENTS</a>
       <a href="#section-content">CONTENT OPPORTUNITIES</a>
       <a href="#section-development">DEVELOPMENT</a>
@@ -138,28 +174,7 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="instagram-footer">
-    <div class="footer-container">
-      <div class="footer-links">
-        <h4>Policies</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div class="footer-center">
-        <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
-        <iframe src="https://snapwidget.com/embed/1072640"
-                class="snapwidget-widget" allowtransparency="true"
-                style="border:none; overflow:hidden; width:400px; height:150px"
-                title="Instagram Posts"></iframe>
-        <p>&copy; 2024 North by Nature. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Supabase & your script -->
+  <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabaseClient = supabase.createClient(
@@ -171,32 +186,39 @@
       const { data, error } = await supabaseClient
         .from('opportunities')
         .select('*');
+
       if (error) {
         console.error('Error loading opportunities:', error);
         return;
       }
+
       const sections = {
         'Private Events':        document.getElementById('private-cards'),
         'Content Opportunities': document.getElementById('content-cards'),
         'Development':           document.getElementById('development-cards'),
       };
+
       for (const [category, container] of Object.entries(sections)) {
         if (!container) continue;
         const items = data.filter(o => o.category === category);
-        container.innerHTML = items.length
-          ? items.map(op => `
-              <div class="opportunity-card">
-                <div class="card-header"></div>
-                <img src="${op.image_url||'Images/default-placeholder.png'}" alt="${op.title}" />
-                <div class="card-body">
-                  <h3>${op.title}</h3>
-                  <p>${op.description}</p>
-                  <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-                  <p class="requirements">Requirements: ${op.requirements}</p>
-                </div>
+
+        if (items.length === 0) {
+          container.innerHTML =
+            '<p>There are no available opportunities for this at this moment.</p>';
+        } else {
+          container.innerHTML = items.map(op => `
+            <div class="opportunity-card">
+              <div class="card-header"></div>
+              <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+              <div class="card-body">
+                <h3>${op.title}</h3>
+                <p>${op.description}</p>
+                <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+                <p class="requirements">Requirements: ${op.requirements}</p>
               </div>
-            `).join('')
-          : '<p>There are no available opportunities for this at this moment.</p>';
+            </div>
+          `).join('');
+        }
       }
     }
 
