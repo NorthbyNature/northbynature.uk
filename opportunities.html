@@ -177,52 +177,63 @@
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const supabaseClient = supabase.createClient(
-      'https://jwospecasjxrknmyycno.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
-    );
+  const supabaseClient = supabase.createClient(
+    'https://jwospecasjxrknmyycno.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
+  );
 
-    async function loadOpportunities() {
-      const { data, error } = await supabaseClient
-        .from('opportunities')
-        .select('*');
-
-      if (error) {
-        console.error('Error loading opportunities:', error);
-        return;
-      }
-
-      const sections = {
-        'Private Events':        document.getElementById('private-cards'),
-        'Content Opportunities': document.getElementById('content-cards'),
-        'Development':           document.getElementById('development-cards'),
-      };
-
-      for (const [category, container] of Object.entries(sections)) {
-        if (!container) continue;
-        const items = data.filter(o => o.category === category);
-
-        if (items.length === 0) {
-          container.innerHTML =
-            '<p>There are no available opportunities for this at this moment.</p>';
-        } else {
-          container.innerHTML = items.map(op => `
-            <div class="opportunity-card">
-              <div class="card-header"></div>
-              <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
-              <div class="card-body">
-                <h3>${op.title}</h3>
-                <p>${op.description}</p>
-                <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-                <p class="requirements">Requirements: ${op.requirements}</p>
-              </div>
-            </div>
-          `).join('');
-        }
+  async function loadOpportunities() {
+    // Restore the Supabase auth session so RLS applies
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+      if (sessErr) {
+        console.error('Session restore failed:', sessErr);
       }
     }
 
-    document.addEventListener('DOMContentLoaded', loadOpportunities);
-  </script>
+    // Fetch opportunities
+    const { data, error } = await supabaseClient
+      .from('opportunities')
+      .select('*');
+
+    if (error) {
+      console.error('Error loading opportunities:', error);
+      return;
+    }
+
+    // Map categories to container elements
+    const sections = {
+      'Private Events':        document.getElementById('private-cards'),
+      'Content Opportunities': document.getElementById('content-cards'),
+      'Development':           document.getElementById('development-cards'),
+    };
+
+    Object.entries(sections).forEach(([category, container]) => {
+      if (!container) return;
+      const items = data.filter(o => o.category === category);
+
+      if (items.length === 0) {
+        container.innerHTML =
+          '<p>There are no available opportunities for this at this moment.</p>';
+      } else {
+        container.innerHTML = items.map(op => `
+          <div class="opportunity-card">
+            <div class="card-header"></div>
+            <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+            <div class="card-body">
+              <h3>${op.title}</h3>
+              <p>${op.description}</p>
+              <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+              <p class="requirements">Requirements: ${op.requirements}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', loadOpportunities);
+</script>
 </body>
 </html>
