@@ -87,7 +87,8 @@ exports.handler = async (event) => {
       headers,
       body: JSON.stringify({
         user: { id: data.user.id, email: data.user.email },
-        token: data.session.access_token,
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
       }),
     };
   } catch (err) {

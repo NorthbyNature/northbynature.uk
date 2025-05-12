@@ -296,10 +296,10 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         // now capture both tokens
-        const { user, token, refreshToken } = await res.json();
+       const { user, access_token, refresh_token } = await response.json();
         localStorage.setItem("currentUser", JSON.stringify(user));
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("authToken", session.access_token);
+        localStorage.setItem("refreshToken", session.access_token);
 
         updateAccountLink();
         window.location.href = "account.html";

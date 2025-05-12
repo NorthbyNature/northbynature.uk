@@ -188,7 +188,11 @@
       // 2a) restore session so RLS applies
       const token = localStorage.getItem('authToken');
       if (token) {
-        const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+        const { error: sessErr } = const refresh = localStorage.getItem("refreshToken");
+await supabaseClient.auth.setSession({
+  access_token: token,
+  refresh_token: refresh
+});
         if (sessErr) console.error('Session restore failed:', sessErr);
       }
 
@@ -240,7 +244,11 @@
       // 3a) restore session for RLS
       const token = localStorage.getItem('authToken');
       if (token) {
-        const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+        const { error: sessErr } = const refresh = localStorage.getItem("refreshToken");
+await supabaseClient.auth.setSession({
+  access_token: token,
+  refresh_token: refresh
+});
         if (sessErr) {
           console.error('Session restore failed:', sessErr);
           alert('Session expired. Please log in again.');
