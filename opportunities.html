@@ -176,23 +176,21 @@
 
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+ <script>
+  // 1) Init client
   const supabaseClient = supabase.createClient(
     'https://jwospecasjxrknmyycno.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
   );
 
+  // 2) Load & render opportunities, **including** a “Register Interest” button
   async function loadOpportunities() {
-    // Restore the Supabase auth session so RLS applies
+    // restore session for RLS
     const token = localStorage.getItem('authToken');
     if (token) {
-      const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
-      if (sessErr) {
-        console.error('Session restore failed:', sessErr);
-      }
+      await supabaseClient.auth.setSession({ access_token: token });
     }
 
-    // Fetch opportunities
     const { data, error } = await supabaseClient
       .from('opportunities')
       .select('*');
@@ -202,20 +200,18 @@
       return;
     }
 
-    // Map categories to container elements
     const sections = {
       'Private Events':        document.getElementById('private-cards'),
       'Content Opportunities': document.getElementById('content-cards'),
       'Development':           document.getElementById('development-cards'),
     };
 
-    Object.entries(sections).forEach(([category, container]) => {
-      if (!container) return;
+    for (const [category, container] of Object.entries(sections)) {
+      if (!container) continue;
       const items = data.filter(o => o.category === category);
 
       if (items.length === 0) {
-        container.innerHTML =
-          '<p>There are no available opportunities for this at this moment.</p>';
+        container.innerHTML = `<p>There are no available opportunities for this at this moment.</p>`;
       } else {
         container.innerHTML = items.map(op => `
           <div class="opportunity-card">
@@ -226,43 +222,44 @@
               <p>${op.description}</p>
               <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
               <p class="requirements">Requirements: ${op.requirements}</p>
+              <button class="register-btn" data-id="${op.id}">Register Interest</button>
             </div>
           </div>
         `).join('');
       }
+    }
+  }
+
+  // 3) Insert into registrations table
+  async function registerInterest(opportunityId) {
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (!user.id) {
+      alert('Please log in first.');
+      return window.location.href = 'login.html';
+    }
+    const { error } = await supabaseClient
+      .from('registrations')
+      .insert({ user_id: user.id, opportunity_id: opportunityId });
+    if (error) {
+      console.error('Registration failed:', error);
+      return alert('Could not register interest: ' + error.message);
+    }
+    alert('Thanks! Your interest has been recorded.');
+  }
+
+  // 4) Load, render, then wire up the buttons
+  async function loadAndBind() {
+    await loadOpportunities();
+    document.querySelectorAll('.register-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        registerInterest(btn.dataset.id);
+      });
     });
   }
 
-async function registerInterest(opportunityId) {
-  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  if (!user.id) {
-    alert('Please log in first.');
-    return window.location.href = 'login.html';
-  }
-  const { error } = await supabaseClient
-    .from('registrations')
-    .insert({
-      user_id: user.id,
-      opportunity_id: opportunityId
-    });
-  if (error) {
-    console.error('Registration failed:', error);
-    return alert('Could not register interest: ' + error.message);
-  }
-  alert('Thanks! Your interest has been recorded.');
-}
-
-// wire up buttons after cards have rendered
-async function loadAndBind() {
-  await loadOpportunities();
-  document.querySelectorAll('.register-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const oppId = btn.dataset.id;
-      registerInterest(oppId);
-    });
-  });
-}
-  document.addEventListener('DOMContentLoaded', loadOpportunities);
+  // 5) Kick it off
+  document.addEventListener('DOMContentLoaded', loadAndBind);
 </script>
 </body>
 </html>
+
