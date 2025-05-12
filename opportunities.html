@@ -230,20 +230,42 @@
     }
   }
 
-  // 3) Insert into registrations table
+   <!-- …after your loadOpportunities and before </script>… -->
+  <!-- 3) Insert into registrations table -->
   async function registerInterest(opportunityId) {
+    // 3a) Restore the Supabase session so RLS kicks in
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const { error: sessErr } = await supabaseClient.auth.setSession({
+        access_token: token
+      });
+      if (sessErr) {
+        console.error('Session restore failed:', sessErr);
+        alert('Session expired. Please log in again.');
+        return window.location.href = 'login.html';
+      }
+    }
+
+    // 3b) Ensure we have a user ID
     const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (!user.id) {
       alert('Please log in first.');
       return window.location.href = 'login.html';
     }
+
+    // 3c) Perform the insert—RLS will now allow it for authenticated users
     const { error } = await supabaseClient
       .from('registrations')
-      .insert({ user_id: user.id, opportunity_id: opportunityId });
+      .insert({
+        user_id: user.id,
+        opportunity_id: opportunityId
+      });
+
     if (error) {
       console.error('Registration failed:', error);
       return alert('Could not register interest: ' + error.message);
     }
+
     alert('Thanks! Your interest has been recorded.');
   }
 
