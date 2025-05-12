@@ -508,6 +508,8 @@ async function loadOpportunities() {
             <p>${op.description}</p>
             <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
             <p class="requirements">Requirements: ${op.requirements}</p>
+<button class="register-btn" data-id="${op.id}">Register Interest</button>
+    </div>
           </div>
         </div>
       `).join('');

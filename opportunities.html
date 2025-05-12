@@ -233,6 +233,35 @@
     });
   }
 
+async function registerInterest(opportunityId) {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  if (!user.id) {
+    alert('Please log in first.');
+    return window.location.href = 'login.html';
+  }
+  const { error } = await supabaseClient
+    .from('registrations')
+    .insert({
+      user_id: user.id,
+      opportunity_id: opportunityId
+    });
+  if (error) {
+    console.error('Registration failed:', error);
+    return alert('Could not register interest: ' + error.message);
+  }
+  alert('Thanks! Your interest has been recorded.');
+}
+
+// wire up buttons after cards have rendered
+async function loadAndBind() {
+  await loadOpportunities();
+  document.querySelectorAll('.register-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const oppId = btn.dataset.id;
+      registerInterest(oppId);
+    });
+  });
+}
   document.addEventListener('DOMContentLoaded', loadOpportunities);
 </script>
 </body>
