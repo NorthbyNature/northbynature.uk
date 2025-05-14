@@ -239,7 +239,7 @@
     }
     const { error } = await supabaseClient
       .from('registrations')
-      .insert({ user_id: user.id, opportunity_id: opportunityId });
+      .insert({ user_id: profiles.id, opportunity_id: opportunities.id });
     if (error) {
       console.error('Registration failed:', error);
       return alert('Could not register interest: ' + error.message);
