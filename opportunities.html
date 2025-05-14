@@ -174,31 +174,22 @@
     </section>
   </main>
 
- <!-- Supabase client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  // 1) Init Supabase client
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ <script>
+  // 1) Init client
   const supabaseClient = supabase.createClient(
     'https://jwospecasjxrknmyycno.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
   );
 
-  // 2) Restore session for RLS (must have saved both tokens at login)
-  async function restoreSession() {
-    const access_token  = localStorage.getItem('authToken');
-    const refresh_token = localStorage.getItem('refreshToken');
-    if (access_token && refresh_token) {
-      const { error } = await supabaseClient.auth.setSession({
-        access_token,
-        refresh_token
-      });
-      if (error) console.error('Session restore failed:', error);
-    }
-  }
-
-  // 3) Load & render opportunities (with Register Interest button)
+  // 2) Load & render opportunities, **including** a “Register Interest” button
   async function loadOpportunities() {
-    await restoreSession();
+    // restore session for RLS
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      await supabaseClient.auth.setSession({ access_token: token });
+    }
 
     const { data, error } = await supabaseClient
       .from('opportunities')
@@ -239,38 +230,36 @@
     }
   }
 
-  // 4) Insert into registrations (checks session & user.id under RLS)
+  // 3) Insert into registrations table
   async function registerInterest(opportunityId) {
-    await restoreSession();
-
     const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (!user.id) {
       alert('Please log in first.');
       return window.location.href = 'login.html';
     }
-
     const { error } = await supabaseClient
       .from('registrations')
-      .insert({
-        user_id: user.id,
-        opportunity_id: opportunityId
-      });
-
+      .insert({ user_id: user.id, opportunity_id: opportunityId });
     if (error) {
       console.error('Registration failed:', error);
-      alert('Could not register interest: ' + error.message);
-    } else {
-      alert('Thanks! Your interest has been recorded.');
+      return alert('Could not register interest: ' + error.message);
     }
+    alert('Thanks! Your interest has been recorded.');
   }
 
-  // 5) Kick things off
-  document.addEventListener('DOMContentLoaded', async () => {
+  // 4) Load, render, then wire up the buttons
+  async function loadAndBind() {
     await loadOpportunities();
-    document.querySelectorAll('.register-btn').forEach(btn =>
-      btn.addEventListener('click', () => registerInterest(btn.dataset.id))
-    );
-  });
+    document.querySelectorAll('.register-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        registerInterest(btn.dataset.id);
+      });
+    });
+  }
+
+  // 5) Kick it off
+  document.addEventListener('DOMContentLoaded', loadAndBind);
 </script>
 </body>
 </html>
+
