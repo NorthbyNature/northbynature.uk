@@ -240,7 +240,10 @@
     const { error } = await supabaseClient
       .from('registrations')
       .insert({ user_id: user.id, opportunity_id: opportunityId });
-    if (error) {
+  if (error) {
+  if (error.code === '23505') {
+    return alert("You’ve already registered interest in this opportunity.");
+  }
       console.error('Registration failed:', error);
       return alert('Could not register interest: ' + error.message);
     }
