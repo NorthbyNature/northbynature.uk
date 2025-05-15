@@ -482,38 +482,15 @@ async function updateOpportunityCount() {
 
 // 2️⃣ Load & render all opportunities on opportunities.html
 async function loadOpportunities() {
-  // 2a) restore session for RLS
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
-    if (sessErr) console.error('Session restore failed:', sessErr);
-  }
-
-  // 2b) fetch opportunities
-  const { data: opps, error: oppErr } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from('opportunities')
     .select('*');
-  if (oppErr) {
-    console.error('Error loading opportunities:', oppErr);
+
+  if (error) {
+    console.error('Error loading opportunities:', error);
     return;
   }
 
-  // 2c) fetch this user's registrations
-  let registeredIds = [];
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  if (currentUser.id) {
-    const { data: regs, error: regErr } = await supabaseClient
-      .from('registrations')
-      .select('opportunity_id')
-      .eq('user_id', currentUser.id);
-    if (regErr) {
-      console.error('Error loading registrations:', regErr);
-    } else {
-      registeredIds = regs.map(r => r.opportunity_id);
-    }
-  }
-
-  // 2d) render into each category container
   const sections = {
     'Private Events':         document.getElementById('private-events'),
     'Content Opportunities':  document.getElementById('content-opportunities'),
@@ -522,45 +499,32 @@ async function loadOpportunities() {
 
   for (const [category, container] of Object.entries(sections)) {
     if (!container) continue;
-    const items = opps.filter(o => o.category === category);
+    const items = data.filter(o => o.category === category);
 
     if (items.length === 0) {
-      container.innerHTML = `<p>There are no available opportunities for this at this moment.</p>`;
+      container.innerHTML =
+        `<p>There are no available opportunities for this at this moment.</p>`;
     } else {
-      container.innerHTML = items.map(op => {
-        const isRegistered = registeredIds.includes(op.id);
-        return `
-          <div class="opportunity-card">
-            <div class="card-header"></div>
-            <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
-            <div class="card-body">
-              <h3>${op.title}</h3>
-              <p>${op.description}</p>
-              <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-              <p class="requirements">Requirements: ${op.requirements}</p>
-              <button 
-                class="register-btn ${isRegistered ? 'btn-success' : ''}" 
-                data-id="${op.id}" 
-                ${isRegistered ? 'disabled' : ''}
-              >
-                ${isRegistered ? '✓ Registered' : 'Register Interest'}
-              </button>
-            </div>
+      container.innerHTML = items.map(op => `
+        <div class="opportunity-card">
+          <div class="card-header"></div>
+          <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+          <div class="card-body">
+            <h3>${op.title}</h3>
+            <p>${op.description}</p>
+            <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+            <p class="requirements">Requirements: ${op.requirements}</p>
+<button class="register-btn" data-id="${op.id}">Register Interest</button>
+    </div>
           </div>
-        `;
-      }).join('');
+        </div>
+      `).join('');
     }
   }
 }
 
 // 3️⃣ Wire them up on page load
 document.addEventListener('DOMContentLoaded', () => {
-  updateOpportunityCount();  // your existing count badge updater
+  updateOpportunityCount();
   loadOpportunities();
-  // bind all the buttons (new or persisted)
-  document.body.addEventListener('click', e => {
-    if (e.target.classList.contains('register-btn') && !e.target.disabled) {
-      registerInterest(e.target.dataset.id);
-    }
-  });
 });

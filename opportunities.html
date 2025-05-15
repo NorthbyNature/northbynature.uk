@@ -174,109 +174,128 @@
     </section>
   </main>
 
-  <!-- Supabase client -->
+ <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
- <script>
-  // 1) Init client
-  const supabaseClient = supabase.createClient(
-    'https://jwospecasjxrknmyycno.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
-  );
+  <script>
+    // 1) Init
+    const supabaseClient = supabase.createClient(
+      'https://jwospecasjxrknmyycno.supabase.co',
+      'YOUR_ANON_KEY_HERE'
+    );
 
-  // 2) Load & render opportunities, **including** a “Register Interest” button
-  async function loadOpportunities() {
-    // restore session for RLS
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      await supabaseClient.auth.setSession({ access_token: token });
-    }
+    // 2) Load & render
+    async function loadOpportunities() {
+      // a) restore session for RLS
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+        if (sessErr) console.error('Session restore failed:', sessErr);
+      }
 
-    const { data, error } = await supabaseClient
-      .from('opportunities')
-      .select('*');
+      // b) fetch opportunities
+      const { data: opps, error: oppErr } = await supabaseClient
+        .from('opportunities')
+        .select('*');
+      if (oppErr) {
+        console.error('Error loading opportunities:', oppErr);
+        return;
+      }
 
-    if (error) {
-      console.error('Error loading opportunities:', error);
-      return;
-    }
+      // c) fetch your registrations
+      let registeredIds = [];
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      if (user.id) {
+        const { data: regs, error: regErr } = await supabaseClient
+          .from('registrations')
+          .select('opportunity_id')
+          .eq('user_id', user.id);
+        if (regErr) console.error('Error loading registrations:', regErr);
+        else registeredIds = regs.map(r => r.opportunity_id);
+      }
 
-    const sections = {
-      'Private Events':        document.getElementById('private-cards'),
-      'Content Opportunities': document.getElementById('content-cards'),
-      'Development':           document.getElementById('development-cards'),
-    };
+      // d) map into each container
+      const sections = {
+        'Private Events':        document.getElementById('private-cards'),
+        'Content Opportunities': document.getElementById('content-cards'),
+        'Development':           document.getElementById('development-cards'),
+      };
 
-    for (const [category, container] of Object.entries(sections)) {
-      if (!container) continue;
-      const items = data.filter(o => o.category === category);
-
-      if (items.length === 0) {
-        container.innerHTML = `<p>There are no available opportunities for this at this moment.</p>`;
-      } else {
-        container.innerHTML = items.map(op => `
-          <div class="opportunity-card">
-            <div class="card-header"></div>
-            <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
-            <div class="card-body">
-              <h3>${op.title}</h3>
-              <p>${op.description}</p>
-              <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-              <p class="requirements">Requirements: ${op.requirements}</p>
-              <button class="register-btn" data-id="${op.id}">Register Interest</button>
-            </div>
-          </div>
-        `).join('');
+      for (const [cat, container] of Object.entries(sections)) {
+        if (!container) continue;
+        const items = opps.filter(o => o.category === cat);
+        if (items.length === 0) {
+          container.innerHTML = `<p>There are no available opportunities for this at this moment.</p>`;
+        } else {
+          container.innerHTML = items.map(op => {
+            const isReg = registeredIds.includes(op.id);
+            return `
+              <div class="opportunity-card">
+                <div class="card-header"></div>
+                <img src="${op.image_url||'Images/default-placeholder.png'}" alt="${op.title}" />
+                <div class="card-body">
+                  <h3>${op.title}</h3>
+                  <p>${op.description}</p>
+                  <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+                  <p class="requirements">Requirements: ${op.requirements}</p>
+                  <button
+                    class="register-btn ${isReg? 'registered' : ''}"
+                    data-id="${op.id}"
+                    ${isReg? 'disabled' : ''}
+                  >
+                    ${isReg ? '<i class="fas fa-check"></i> Registered' : 'Register Interest'}
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
       }
     }
-  }
 
- // 3) Insert into registrations table + pop animation on success
-async function registerInterest(opportunityId) {
-  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  if (!user.id) {
-    alert('Please log in first.');
-    return window.location.href = 'login.html';
-  }
-
-  // grab the button you clicked (assumes data-id matches opportunityId)
-  const btn = document.querySelector(`button.register-btn[data-id="${opportunityId}"]`);
-
-  const { error } = await supabaseClient
-    .from('registrations')
-    .insert({ user_id: user.id, opportunity_id: opportunityId });
-
-  if (error) {
-    // unique constraint?
-    if (error.code === '23505') {
-      return alert("You’ve already registered interest in this opportunity.");
+    // 3) Register interest
+    async function registerInterest(id) {
+      const user = JSON.parse(localStorage.getItem('currentUser')||'{}');
+      if (!user.id) {
+        alert('Please log in first.');
+        return window.location.href = 'login.html';
+      }
+      const { error } = await supabaseClient
+        .from('registrations')
+        .insert({ user_id: user.id, opportunity_id: id });
+      if (error) {
+        if (error.code === '23505') { // unique violation
+          return alert("You’ve already registered interest.");
+        }
+        console.error('Registration failed:', error);
+        return alert('Could not register interest: '+error.message);
+      }
+      // on success, re-render so that button flips to green
+      alert('Thanks! Your interest has been recorded.');
+      loadOpportunities();
+      updateOpportunityCount();
     }
-    console.error('Registration failed:', error);
-    return alert('Could not register interest: ' + error.message);
-  }
 
-  // Success: animate & swap to checkmark
-  if (btn) {
-    btn.classList.add('btn-pop', 'btn-success');
-    btn.textContent = '✓ Registered';
-    btn.disabled = true;
-  }
-
-  alert('Thanks! Your interest has been recorded.');
-}
-
-  // 4) Load, render, then wire up the buttons
-  async function loadAndBind() {
-    await loadOpportunities();
-    document.querySelectorAll('.register-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        registerInterest(btn.dataset.id);
+    // 4) Wire up
+    document.addEventListener('DOMContentLoaded', () => {
+      updateOpportunityCount(); // your existing function for the badge
+      loadOpportunities();
+      document.body.addEventListener('click', e => {
+        if (e.target.matches('.register-btn') && !e.target.disabled) {
+          registerInterest(e.target.dataset.id);
+        }
       });
     });
-  }
+  </script>
+And in your CSS (either in <style> or your styles.css), add:
 
-  // 5) Kick it off
-  document.addEventListener('DOMContentLoaded', loadAndBind);
-</script>
-</body>
-</html>
-
+css
+Copy
+Edit
+.register-btn.registered {
+  background-color: #28a745;
+  color: #fff;
+  cursor: default;
+}
+.register-btn.registered .fa-check {
+  margin-right: 0.5em;
+}
