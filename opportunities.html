@@ -252,37 +252,40 @@
       }
     }
 
-    // 3) Register interest
-    async function registerInterest(id) {
-      const user = JSON.parse(localStorage.getItem('currentUser')||'{}');
-      if (!user.id) {
-        alert('Please log in first.');
-        return window.location.href = 'login.html';
-      }
-      const { error } = await supabaseClient
-        .from('registrations')
-        .insert({ user_id: user.id, opportunity_id: id });
-      if (error) {
-        if (error.code === '23505') { // unique violation
-          return alert("You’ve already registered interest.");
-        }
-        console.error('Registration failed:', error);
-        return alert('Could not register interest: '+error.message);
-      }
-      // on success, re-render so that button flips to green
-      alert('Thanks! Your interest has been recorded.');
-      loadOpportunities();
-      updateOpportunityCount();
-    }
+    // 3) Insert into registrations table + pop animation on success
+async function registerInterest(opportunityId) {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  if (!user.id) {
+    alert('Please log in first.');
+    return window.location.href = 'login.html';
+  }
 
-    // 4) Wire up
-    document.addEventListener('DOMContentLoaded', () => {
-      updateOpportunityCount(); // your existing function for the badge
-      loadOpportunities();
-      document.body.addEventListener('click', e => {
-        if (e.target.matches('.register-btn') && !e.target.disabled) {
-          registerInterest(e.target.dataset.id);
-        }
-      });
-    });
-  </script>
+  // grab the button you clicked (assumes data-id matches opportunityId)
+  const btn = document.querySelector(`button.register-btn[data-id="${opportunityId}"]`);
+
+  const { error } = await supabaseClient
+    .from('registrations')
+    .insert({ user_id: user.id, opportunity_id: opportunityId });
+
+  if (error) {
+    // unique constraint?
+    if (error.code === '23505') {
+      return alert("You’ve already registered interest in this opportunity.");
+    }
+    console.error('Registration failed:', error);
+    return alert('Could not register interest: ' + error.message);
+  }
+
+  // Success: animate & swap to checkmark
+  if (btn) {
+    btn.classList.add('btn-pop', 'btn-success');
+    btn.textContent = '✓ Registered';
+    btn.disabled = true;
+  }
+
+  alert('Thanks! Your interest has been recorded.');
+}
+
+  // 4) Load, render, then wire up the buttons
+  async function loadAndBind() {
+    await loadOpportunities();
