@@ -1082,4 +1082,11 @@ card.style.setProperty("display", "none", "important");
   color: #fff !important;
   border-color: #4CAF50 !important;
 }
-
+.register-btn.registered {
+  background-color: #28a745;
+  color: #fff;
+  cursor: default;
+}
+.register-btn.registered .fa-check {
+  margin-right: 0.5em;
+}
