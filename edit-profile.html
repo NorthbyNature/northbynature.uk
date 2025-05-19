@@ -33,7 +33,8 @@
       flex-direction: column;
       gap: 15px;
     }
-    .edit-profile-container input[type="text"] {
+    .edit-profile-container input[type="text"],
+    .edit-profile-container select {
       padding: 10px;
       border: none;
       border-radius: 5px;
@@ -71,7 +72,6 @@
     <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
     <nav>
       <ul class="nav justify-content-center">
-        <!-- Add your nav items here -->
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
@@ -91,39 +91,34 @@
   </header>
 
   <main class="main-content">
-  <section class="content-section text-centered-container edit-profile-container">
-    <h2>Edit Profile</h2>
-    <!-- Edit Profile Form -->
-    <form id="edit-profile-form">
-      <!-- Removed full-name-input since full name is not updateable -->
-      
-      <div class="form-group">
-        <label for="location-input">Primary Location</label>
-        <input type="text" id="location-input" name="location" placeholder="Enter your location">
-      </div>
-      
-      <div class="form-group">
-        <label for="primary-social-media-input">Primary Social Media</label>
-        <select id="primary-social-media-input" name="primarySocialMedia">
-          <option value="Instagram">Instagram</option>
-          <option value="TikTok">TikTok</option>
-          <option value="Facebook">Facebook</option>
-          <option value="Linkedin">Linkedin</option>
-          <option value="Twitch">Twitch</option>
-          <option value="YouTube">YouTube</option>
-          <option value="OnlyFans">OnlyFans</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="social-media-username-input">Social Media Username</label>
-        <input type="text" id="social-media-username-input" name="socialMediaUsername" placeholder="Enter your social media username (include @)">
-      </div>
-      
-      <button type="submit" class="submit-btn">Save Changes</button>
-    </form>
-  </section>
-</main>
+    <section class="content-section text-centered-container edit-profile-container">
+      <h2>Edit Profile</h2>
+      <form id="edit-profile-form">
+        <div class="form-group">
+          <label for="location-input">Primary Location</label>
+          <input type="text" id="location-input" name="location" placeholder="Enter your location" required>
+        </div>
+        <div class="form-group">
+          <label for="primary-social-media-input">Primary Social Media</label>
+          <select id="primary-social-media-input" name="primarySocialMedia" required>
+            <option value="">Select one</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Linkedin">LinkedIn</option>
+            <option value="Twitch">Twitch</option>
+            <option value="YouTube">YouTube</option>
+            <option value="OnlyFans">OnlyFans</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="social-media-username-input">Social Media Username</label>
+          <input type="text" id="social-media-username-input" name="socialMediaUsername" placeholder="Enter your username (include @)" required>
+        </div>
+        <button type="submit" class="submit-btn">Save Changes</button>
+      </form>
+    </section>
+  </main>
 
   <!-- Footer Section -->
   <footer class="instagram-footer">
@@ -146,7 +141,12 @@
   <!-- External Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- corrected Bootstrap include: -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Supabase SDK (must come before your app script) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- your application logic -->
   <script src="scripts.js"></script>
 </body>
 </html>
