@@ -498,7 +498,7 @@ async function loadOpportunities() {
     return;
   }
 
-  // 2c) fetch this user's registrations
+  // 2c) fetch this user's registrations (to persist green state)
   let registeredIds = [];
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
   if (currentUser.id) {
@@ -515,9 +515,9 @@ async function loadOpportunities() {
 
   // 2d) render into each category container
   const sections = {
-    'Private Events':         document.getElementById('private-events'),
-    'Content Opportunities':  document.getElementById('content-opportunities'),
-    'Development':            document.getElementById('development'),
+    'Private Events':        document.getElementById('private-cards'),
+    'Content Opportunities': document.getElementById('content-cards'),
+    'Development':            document.getElementById('development-cards'),
   };
 
   for (const [category, container] of Object.entries(sections)) {
@@ -538,9 +538,9 @@ async function loadOpportunities() {
               <p>${op.description}</p>
               <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
               <p class="requirements">Requirements: ${op.requirements}</p>
-              <button 
-                class="register-btn ${isRegistered ? 'btn-success' : ''}" 
-                data-id="${op.id}" 
+              <button
+                class="register-btn ${isRegistered ? 'btn-success' : ''}"
+                data-id="${op.id}"
                 ${isRegistered ? 'disabled' : ''}
               >
                 ${isRegistered ? '✓ Registered' : 'Register Interest'}
@@ -553,13 +553,61 @@ async function loadOpportunities() {
   }
 }
 
-// 3️⃣ Wire them up on page load
+// 3️⃣ Insert into registrations table (and flip the button green)
+async function registerInterest(opportunityId) {
+  // 3a) restore session for RLS
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+    if (sessErr) {
+      console.error('Session restore failed:', sessErr);
+      alert('Session expired. Please log in again.');
+      return window.location.href = 'login.html';
+    }
+  }
+
+  // 3b) get user
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  if (!user.id) {
+    alert('Please log in first.');
+    return window.location.href = 'login.html';
+  }
+
+  // 3c) insert
+  const { error } = await supabaseClient
+    .from('registrations')
+    .insert({ user_id: user.id, opportunity_id: opportunityId });
+
+  if (error) {
+    // unique constraint?
+    if (error.code === '23505') {
+      return alert("You’ve already registered interest in this opportunity.");
+    }
+    console.error('Registration failed:', error);
+    return alert('Could not register interest: ' + error.message);
+  }
+
+  // 3d) success: update badge + button state
+  updateOpportunityCount();
+
+  const btn = document.querySelector(`button.register-btn[data-id="${opportunityId}"]`);
+  if (btn) {
+    btn.textContent = '✓ Registered';
+    btn.disabled = true;
+    btn.classList.add('btn-success');
+  }
+
+  // optional: a little pop animation
+  btn && btn.classList.add('btn-pop');
+}
+
+// 4️⃣ Wire them up on page load
 document.addEventListener('DOMContentLoaded', () => {
-  updateOpportunityCount();  // your existing count badge updater
+  updateOpportunityCount();
   loadOpportunities();
-  // bind all the buttons (new or persisted)
+
   document.body.addEventListener('click', e => {
-    if (e.target.classList.contains('register-btn') && !e.target.disabled) {
+    if (e.target.matches('.register-btn') && !e.target.disabled) {
       registerInterest(e.target.dataset.id);
     }
   });
