@@ -1090,3 +1090,20 @@ card.style.setProperty("display", "none", "important");
 .register-btn.registered .fa-check {
   margin-right: 0.5em;
 }
+  .tc-checkbox {
+    width: 1.25em;
+    height: 1.25em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+  }
+
+  /* align the checkbox and label text nicely */
+  .tc-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .tc-label a {
+    text-decoration: underline;
+  }
