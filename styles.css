@@ -1093,16 +1093,14 @@ card.style.setProperty("display", "none", "important");
   .tc-checkbox {
     width: 1.25em;
     height: 1.25em;
-    vertical-align: left;
+    vertical-align: middle;
   }
 
   /* align the checkbox and label text nicely */
   .tc-label {
     display: flex;
     align-items: center;
+    justify-content: center;    /* ← center the checkbox + text */
     margin-bottom: 1rem;
-  }
-
-  .tc-label a {
-    text-decoration: underline;
+    width: 100%;         
   }
