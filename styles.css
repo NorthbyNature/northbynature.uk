@@ -1113,14 +1113,14 @@ card.style.setProperty("display", "none", "important");
 .snapwidget-container {
   position: relative;
   width: 100%;
-  max-width: 400px;       /* match your widget width */
+  max-width: 600px;       /* match your widget width */
   margin: 0 auto;         /* center it if desired */
 }
 
 .snapwidget-container iframe {
   display: block;
   width: 100%;
-  height: 150px;          /* match your widget height */
+  height: 300px;          /* match your widget height */
   border: none;
 }
 
