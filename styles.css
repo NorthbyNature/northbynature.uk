@@ -1111,14 +1111,14 @@ card.style.setProperty("display", "none", "important");
 }
 .snapwidget-container {
   position: relative;
-  width: 100%;
+  width: 150%;
   max-width: 1200px;   /* ← adjust as you like */
   margin: 0 auto;
 }
 
 .snapwidget-container iframe {
   display: block;
-  width: 100% !important;  /* override anything else */
+  width: 150% !important;  /* override anything else */
   height: 600px !important; /* ← adjust as you like */
   border: none;
 }
