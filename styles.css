@@ -1111,7 +1111,7 @@ card.style.setProperty("display", "none", "important");
 }
 .snapwidget-container {
   position: relative;
-  width: 100%;           /* fill its parent */
+  width: 120%;           /* fill its parent */
   max-width: 600px;      /* cap at whatever px you like */
   margin: 0 auto;        /* center it */
   overflow: hidden;      /* hide any overflow */
@@ -1119,7 +1119,7 @@ card.style.setProperty("display", "none", "important");
 
 .snapwidget-container iframe {
   display: block;
-  width: 100% !important;  /* absolutely fill container */
+  width: 120% !important;  /* absolutely fill container */
   height: 300px !important;/* pick your desired height */
   border: none;
   z-index: 1;              /* sit *below* the overlay */
