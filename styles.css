@@ -1120,7 +1120,7 @@ card.style.setProperty("display", "none", "important");
 .snapwidget-container iframe {
   display: block;
   width: 200% !important;  /* absolutely fill container */
-  height: 600px !important;/* pick your desired height */
+  height: 150px !important;/* pick your desired height */
   border: none;
   z-index: 1;              /* sit *below* the overlay */
 }
