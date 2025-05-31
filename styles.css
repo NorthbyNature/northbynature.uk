@@ -1114,7 +1114,7 @@ card.style.setProperty("display", "none", "important");
   width: 100%;           /* fill its parent */
   max-width: 600px;      /* cap at whatever px you like */
   margin: 0 auto;        /* center it */
-  overflow: hidden;      /* hide any overflow */
+  overflow: hidden;      /* hide any overflow **/
 }
 
 .snapwidget-container iframe {
@@ -1132,3 +1132,4 @@ card.style.setProperty("display", "none", "important");
   background: transparent; /* totally see-through */
   cursor: pointer;         /* pointer hand */
 }
+
