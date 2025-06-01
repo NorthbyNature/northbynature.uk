@@ -6,29 +6,33 @@
   <title>Member News – North by Nature</title>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    /* Make entire page background black and center content both vertically and horizontally */
+    /* === Make the entire viewport black and remove scrolling === */
     html, body {
       margin: 0;
       padding: 0;
       background-color: #000;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .canva-embed-wrapper {
-      position: relative;
-      width: 80%;
-      max-width: 800px;
-      /* maintain 141.4286% aspect ratio */
-      padding-top: 141.4286%;
-      box-shadow: 0 2px 8px rgba(63,69,81,0.16);
-      border-radius: 8px;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
     }
+
+    /* === Center the Canva embed wrapper and let it fill the screen === */
+    .canva-embed-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* optional box-shadow / border-radius if you still want them */
+      box-shadow: none;
+      border-radius: 0;
+      overflow: hidden;
+    }
+
     .canva-embed-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: none;
@@ -40,7 +44,7 @@
     <iframe
       loading="lazy"
       src="https://www.canva.com/design/DAGo7cU3M18/XWpwye-Umf-0nircJjm5tg/view?embed"
-      allowfullscreen="allowfullscreen"
+      allowfullscreen
       allow="fullscreen">
     </iframe>
   </div>
