@@ -1,0 +1,12 @@
+# --------------------------------------------------------------------------------
+# 1) Let the ACME challenge path (`/.well-known/*`) bypass any redirect logic
+#    so that Let's Encrypt validation can fetch it directly.
+# --------------------------------------------------------------------------------
+/.well-known/*    /.well-known/:splat    200
+
+# --------------------------------------------------------------------------------
+# 2) Redirect all other HTTP traffic to HTTPS automatically,
+#    forcing the www version as your canonical domain.
+#    The `!` after 301 ensures Netlify does not override this.
+# --------------------------------------------------------------------------------
+/*    https://www.northbynature.uk/:splat    301!
