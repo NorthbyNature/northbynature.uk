@@ -539,7 +539,7 @@ top: 50%; /* Center vertically */
 /* silver button style for links */
 .silver-button {
     display: inline-block; /* Makes it look like a button */
-    background-color: ##C4C4C4; /* silver background */
+    background-color: #E5E4E2; /* silver background */
     color: #F5F5F5; /* white text */
     padding: 12px 20px; /* Add padding for button appearance */
     border-radius: 5px; /* Rounded corners */
