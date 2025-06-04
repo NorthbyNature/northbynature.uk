@@ -552,36 +552,40 @@ top: 50%; /* Center vertically */
     overflow: hidden; /* Keep shine effect inside */
 }
 
+/* Optional: slight hover change still works on desktop */
 .silver-button:hover {
-    background-color: #71706e; /* Slightly darker silver on hover */
-    color: #F5F5F5; /* Keep text white */
+    background-color: #71706e;
+    color: #F5F5F5;
 }
 
-/* Shine overlay */
+/* Auto-shine effect */
 .silver-button::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -75%;
+    left: -100%;
     width: 50%;
     height: 100%;
     background: linear-gradient(
         120deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.5) 50%,
         rgba(255, 255, 255, 0) 100%
     );
     transform: skewX(-25deg);
+    animation: silverAutoShine 2.5s infinite ease-in-out;
     pointer-events: none;
 }
 
-.silver-button:hover::before {
-    animation: silverShine 0.8s ease-in-out;
-}
-
-@keyframes silverShine {
+@keyframes silverAutoShine {
+    0% {
+        left: -100%;
+    }
+    60% {
+        left: 100%;
+    }
     100% {
-        left: 125%;
+        left: 100%;
     }
 }
 textarea {
