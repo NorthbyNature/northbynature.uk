@@ -538,27 +538,24 @@ top: 50%; /* Center vertically */
 }
 /* silver button style for links */
 .silver-button {
-    display: inline-block; /* Makes it look like a button */
-    background-color: #999B9B; /* silver background */
-    color: #F5F5F5; /* white text */
-    padding: 12px 20px; /* Add padding for button appearance */
-    border-radius: 5px; /* Rounded corners */
-    text-transform: uppercase; /* Capitalized text */
-    font-weight: bold; /* Bold text */
-    text-decoration: none; /* Remove underline */
-    text-align: center; /* Center the text */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-    position: relative; /* Needed for shine overlay */
-    overflow: hidden; /* Keep shine effect inside */
-}
-
-/* Optional: slight hover change still works on desktop */
-.silver-button:hover {
-    background-color: #71706e;
+    display: inline-block;
+    background-color: #999B9B;
     color: #F5F5F5;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    /* 3D effect using shadow */
+    box-shadow: 0 6px 0 #7a7a7a, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Auto-shine effect */
+/* Shine effect layer */
 .silver-button::before {
     content: '';
     position: absolute;
@@ -577,6 +574,14 @@ top: 50%; /* Center vertically */
     pointer-events: none;
 }
 
+/* Hover press-in effect */
+.silver-button:hover {
+    background-color: #71706e;
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #7a7a7a, 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Shine animation */
 @keyframes silverAutoShine {
     0% {
         left: -100%;
