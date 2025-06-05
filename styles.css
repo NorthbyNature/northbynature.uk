@@ -534,7 +534,7 @@ top: 50%; /* Center vertically */
     /* 3D effect using shadow */
     box-shadow: 0 6px 0 #966919, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
-.silver-button:active {
+.gold-button:active {
   transform: translateY(2px);
   box-shadow: 0 3px 0 #966919, 0 2px 5px rgba(0, 0, 0, 0.15);
 
