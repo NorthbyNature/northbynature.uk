@@ -544,6 +544,9 @@ top: 50%; /* Center vertically */
 .gold-button:hover {
     background-color: #e6b800; /* Slightly darker gold on hover */
     color: #000; /* Keep text black */
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #7a7a7a, 0 3px 8px rgba(0, 0, 0, 0.15);
+
 }
 /* silver button style for links */
 .silver-button {
