@@ -1189,4 +1189,6 @@ card.style.setProperty("display", "none", "important");
   background: transparent; /* totally see-through */
   cursor: pointer;         /* pointer hand */
 }
-
+.account-actions {
+  margin-bottom: 25px; /* Adjust the value to your liking */
+}
