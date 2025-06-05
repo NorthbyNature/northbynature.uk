@@ -530,6 +530,7 @@ top: 50%; /* Center vertically */
     text-decoration: none; /* Remove underline */
     text-align: center; /* Center the text */
     transition: background-color 0.3s ease; /* Smooth hover effect */
+    transition: all 0.2s ease; /* Smooth hover and press-in effect */
 
     /* 3D effect using shadow */
     box-shadow: 0 6px 0 #966919, 0 6px 15px rgba(0, 0, 0, 0.2);
