@@ -532,7 +532,7 @@ top: 50%; /* Center vertically */
     transition: background-color 0.3s ease; /* Smooth hover effect */
 
     /* 3D effect using shadow */
-    box-shadow: 0 6px 0 #7a7a7a, 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 0 #966919, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .gold-button:hover {
