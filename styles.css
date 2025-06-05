@@ -529,7 +529,6 @@ top: 50%; /* Center vertically */
     font-weight: bold; /* Bold text */
     text-decoration: none; /* Remove underline */
     text-align: center; /* Center the text */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
     transition: all 0.3s ease; /* Smooth hover and press-in effect */
     position: relative;
     overflow: hidden;
@@ -544,7 +543,7 @@ top: 50%; /* Center vertically */
 }
 .gold-button:hover {
     background-color: #e6b800; /* Slightly darker gold on hover */
-    color: #000; /* Keep text black *//
+    color: #000; /* Keep text black */
 }
 /* silver button style for links */
 .silver-button {
