@@ -223,10 +223,9 @@ footer #social img {
 }
 
 .instagram-link {
-    width: 100%;
     text-align: centre;
-    padding: 5px 0;
-    backdrop-filter: blur(5px); /* Optional blur for consistency */
+    padding: 10px 0;
+    background: transparent; /* Removes background completely */
 }
 
 .instagram-link a {
