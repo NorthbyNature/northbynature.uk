@@ -14,37 +14,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            flex-wrap: wrap;
-            flex-direction: column;
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
         }
-        header {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: transparent;
-            width: 100%;
-            color: white;
-            z-index: 1;
-        }
-        .video-container {
+        .video-header {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 100vh;
             overflow: hidden;
         }
-        .video-container video {
+        .video-header video {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -52,68 +33,106 @@
             min-height: 100%;
             transform: translate(-50%, -50%);
             object-fit: cover;
+            z-index: 0;
+        }
+        .overlay-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .overlay-top {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .overlay-bottom {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .account-icon, .cart-icon {
+            padding: 0 20px;
+        }
+        .cart-icon span {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: yellow;
+            color: black;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        nav {
+            margin-top: 10px;
         }
         .logo {
             height: 120px;
-            max-width: 100%;
         }
-        .instagram-link {
-            text-align: center;
-            padding: 10px 0;
+        .instagram-link a {
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-<!-- Sticky Header Elements -->
-<div class="sticky-header">
-    <div class="account-icon">
-        <a href="login.html" id="account-link">
-            <i class="fas fa-user"></i>
-        </a>
-    </div>
+<div class="video-header">
+    <video autoplay muted loop playsinline>
+        <source src="Videos/nbn-vids.mp4" type="video/mp4">
+        <source src="Videos/nbn-vids.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>
 
-    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+    <div class="overlay-content">
+        <div class="overlay-top">
+            <div class="account-icon">
+                <a href="login.html" id="account-link">
+                    <i class="fas fa-user" style="color:white;"></i>
+                </a>
+            </div>
 
-    <div class="cart-icon">
-        <a href="cart.html">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-        </a>
-    </div>
+            <div class="cart-icon">
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart" style="color:white;"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
 
-    <div class="instagram-link">
-        <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+
+        <div class="overlay-bottom">
+            <div class="instagram-link">
+                <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+            </div>
+
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                    <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 
-<header class="text-center">
-    <!-- Video Background -->
-    <div class="video-container">
-        <video autoplay muted loop playsinline>
-            <source src="Videos/nbn-vid.mp4" type="video/mp4">
-            <source src="Videos/nbn-vid.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-        <ul class="nav justify-content-center">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-            <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-            <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-            <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-
 <!-- Main content -->
 <main class="text-center">
-    <h1 style="font-weight: bold;">Welcome to North by Nature</h1>
+    <h1 style="font-weight: bold; color: yellow;">Welcome to North by Nature</h1>
 </main>
 
 <!-- Footer -->
