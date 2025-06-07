@@ -12,6 +12,30 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        header {
+            position: relative;
+            height: 400px; /* Adjust height as necessary */
+            overflow: hidden;
+            color: #fff;
+        }
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,41 +49,44 @@
         </video>
     </div>
 
-    <!-- Account Icon -->
-    <div class="account-icon">
-        <a href="login.html" id="account-link">
-            <i class="fas fa-user"></i>
-        </a>
-    </div>
+    <!-- Content above video -->
+    <div class="header-content">
+        <!-- Account Icon -->
+        <div class="account-icon">
+            <a href="login.html" id="account-link">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
 
-    <!-- Instagram link -->
-    <div class="instagram-link">
-        <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-    </div>
+        <!-- Instagram link -->
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
 
-    <!-- Logo -->
-    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        <!-- Logo -->
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
 
-    <!-- Navigation -->
-    <nav>
-        <ul class="nav justify-content-center">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-            <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-            <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-            <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+        <!-- Navigation -->
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
 
-    <!-- Shopping Cart Icon -->
-    <div class="cart-icon">
-        <a href="cart.html">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-        </a>
+        <!-- Shopping Cart Icon -->
+        <div class="cart-icon">
+            <a href="cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
     </div>
 </header>
 
@@ -82,13 +109,7 @@
         <div class="footer-center">
             <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
             <div class="snapwidget-container">
-                <iframe
-                    src="https://snapwidget.com/embed/1072640"
-                    allowtransparency="true"
-                    frameborder="0"
-                    scrolling="no"
-                    title="Posts from Instagram">
-                </iframe>
+                <iframe src="https://snapwidget.com/embed/1072640" allowtransparency="true" frameborder="0" scrolling="no" title="Posts from Instagram"></iframe>
                 <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="snap-overlay"></a>
             </div>
             <p>&copy; 2024 North by Nature. All rights reserved.</p>
