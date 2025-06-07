@@ -4,24 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>North by Nature - Home</title>
-    <!-- Main stylesheet -->
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        body, html {
+        html, body {
             margin: 0;
             padding: 0;
             background-color: #000;
         }
         header {
             position: relative;
-            height: 100vh;
+            height: 400px;
             overflow: hidden;
             color: #fff;
         }
@@ -37,13 +32,12 @@
             object-fit: cover;
             z-index: 0;
         }
-        .header-content {
+        .sticky-header {
             position: sticky;
             top: 0;
-            z-index: 1;
+            z-index: 2;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -69,7 +63,7 @@
             font-size: 12px;
         }
         .instagram-link {
-            margin-top: 10px;
+            margin: 5px 0;
             text-align: center;
         }
         .instagram-link a {
@@ -87,25 +81,21 @@
 </head>
 <body>
 <header class="text-center">
-    <!-- Video Background -->
     <div class="video-container">
         <video autoplay muted loop playsinline>
-            <source src="Videos/nbn-vid.mp4" type="video/mp4">
-            <source src="Videos/nbn-vid.webm" type="video/webm">
+            <source src="Videos/nbn-vids.mp4" type="video/mp4">
+            <source src="Videos/nbn-vids.webm" type="video/webm">
             Your browser does not support the video tag.
         </video>
     </div>
 
-    <!-- Sticky Content Layered Over Video -->
-    <div class="header-content">
+    <!-- Sticky header content -->
+    <div class="sticky-header">
         <div class="top-bar">
             <div class="account-icon">
                 <a href="login.html" id="account-link">
                     <i class="fas fa-user" style="color:white;"></i>
                 </a>
-            </div>
-            <div class="instagram-link">
-                <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
             </div>
             <div class="cart-icon">
                 <a href="cart.html">
@@ -115,11 +105,15 @@
             </div>
         </div>
 
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
+
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
     </div>
 </header>
 
-<!-- Navigation (not sticky) -->
+<!-- Navigation -->
 <nav>
     <ul class="nav justify-content-center">
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -133,12 +127,10 @@
     </ul>
 </nav>
 
-<!-- Main content -->
 <main class="text-center">
     <h1 style="font-weight: bold; color: yellow;">Welcome to North by Nature</h1>
 </main>
 
-<!-- Footer -->
 <footer class="instagram-footer">
     <div class="footer-container">
         <div class="footer-links">
@@ -159,11 +151,9 @@
     </div>
 </footer>
 
-<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="scripts.js"></script>
-
 </body>
 </html>
