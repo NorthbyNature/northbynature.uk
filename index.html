@@ -36,30 +36,44 @@
             z-index: 0;
         }
         .overlay-content {
-            position: absolute;
+            position: sticky;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            z-index: 1;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 10px 20px;
         }
-        .overlay-top {
-            width: 100%;
+        .overlay-top-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
-        .overlay-bottom {
-            margin-top: 10px;
+        .instagram-link {
             text-align: center;
+            margin-top: 10px;
+        }
+        .instagram-link a {
+            color: white;
+            text-decoration: none;
+        }
+        .logo {
+            height: 120px;
+            margin: 10px 0;
+        }
+        nav ul.nav {
+            margin-top: 10px;
         }
         .account-icon, .cart-icon {
-            padding: 0 20px;
+            padding: 0 10px;
+        }
+        .cart-icon {
+            position: relative;
         }
         .cart-icon span {
             position: absolute;
@@ -71,34 +85,26 @@
             padding: 2px 6px;
             font-size: 12px;
         }
-        nav {
-            margin-top: 10px;
-        }
-        .logo {
-            height: 120px;
-        }
-        .instagram-link a {
-            color: white;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
 <div class="video-header">
     <video autoplay muted loop playsinline>
-        <source src="Videos/nbn-vid.mp4" type="video/mp4">
-        <source src="Videos/nbn-vid.webm" type="video/webm">
+        <source src="Videos/nbn-vids.mp4" type="video/mp4">
+        <source src="Videos/nbn-vids.webm" type="video/webm">
         Your browser does not support the video tag.
     </video>
 
     <div class="overlay-content">
-        <div class="overlay-top">
+        <div class="overlay-top-row">
             <div class="account-icon">
                 <a href="login.html" id="account-link">
                     <i class="fas fa-user" style="color:white;"></i>
                 </a>
             </div>
-
+            <div class="instagram-link">
+                <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+            </div>
             <div class="cart-icon">
                 <a href="cart.html">
                     <i class="fas fa-shopping-cart" style="color:white;"></i>
@@ -109,24 +115,18 @@
 
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
 
-        <div class="overlay-bottom">
-            <div class="instagram-link">
-                <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-            </div>
-
-            <nav>
-                <ul class="nav justify-content-center">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-                    <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-                    <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
     </div>
 </div>
 
