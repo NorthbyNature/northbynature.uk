@@ -35,28 +35,29 @@
             object-fit: cover;
             z-index: 0;
         }
-        .overlay-content {
+        .sticky-header-content {
             position: sticky;
             top: 0;
-            left: 0;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             z-index: 2;
+        }
+        .header-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 10px 20px;
         }
-        .overlay-top-row {
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
         .instagram-link {
-            text-align: center;
-            margin-top: 10px;
+            color: white;
+            font-size: 14px;
         }
         .instagram-link a {
             color: white;
@@ -66,8 +67,11 @@
             height: 120px;
             margin: 10px 0;
         }
-        nav ul.nav {
+        nav {
             margin-top: 10px;
+        }
+        nav ul.nav {
+            flex-wrap: wrap;
         }
         .account-icon, .cart-icon {
             padding: 0 10px;
@@ -95,40 +99,43 @@
         Your browser does not support the video tag.
     </video>
 
-    <div class="overlay-content">
-        <div class="overlay-top-row">
-            <div class="account-icon">
-                <a href="login.html" id="account-link">
-                    <i class="fas fa-user" style="color:white;"></i>
-                </a>
+    <div class="sticky-header-content">
+        <div class="header-inner">
+            <div class="top-bar">
+                <div class="account-icon">
+                    <a href="login.html" id="account-link">
+                        <i class="fas fa-user" style="color:white;"></i>
+                    </a>
+                </div>
+                <div class="instagram-link">
+                    <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+                </div>
+                <div class="cart-icon">
+                    <a href="cart.html">
+                        <i class="fas fa-shopping-cart" style="color:white;"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </div>
             </div>
-            <div class="instagram-link">
-                <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-            </div>
-            <div class="cart-icon">
-                <a href="cart.html">
-                    <i class="fas fa-shopping-cart" style="color:white;"></i>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
+
+            <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
         </div>
-
-        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-
-        <nav>
-            <ul class="nav justify-content-center">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
     </div>
 </div>
+
+<!-- Navigation (not sticky) -->
+<nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+        <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+        <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    </ul>
+</nav>
 
 <!-- Main content -->
 <main class="text-center">
