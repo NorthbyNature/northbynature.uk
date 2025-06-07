@@ -14,19 +14,71 @@
     <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+    <style>
+        header {
+            position: relative;
+            height: 400px; /* Adjust height as necessary */
+            overflow: hidden;
+            color: #fff;
+        }
+        .video-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .account-icon, .cart-icon {
+            position: absolute;
+            top: 10px;
+            z-index: 2;
+        }
+        .account-icon {
+            left: 10px;
+        }
+        .cart-icon {
+            right: 10px;
+        }
+    </style>
+</head>
 <body>
-    <header class="text-center">
-         <div class="account-icon">
-        <a href="login.html" id="account-link">
-            <i class="fas fa-user"></i> <!-- Account icon -->
-        </a>
+
+<header class="text-center">
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline>
+            <source src="Videos/nbn-vid.mp4" type="video/mp4">
+            <source src="Videos/nbn-vid.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
     </div>
+
+    <!-- Content above video -->
+    <div class="header-content">
+        <!-- Account Icon -->
+        <div class="account-icon">
+            <a href="login.html" id="account-link">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+
+        <!-- Instagram link -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
         </div>
-        
+
+        <!-- Logo -->
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-        
+
+        <!-- Navigation -->
         <nav>
             <ul class="nav justify-content-center">
                 <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -40,14 +92,15 @@
             </ul>
         </nav>
 
+        <!-- Shopping Cart Icon -->
         <div class="cart-icon">
             <a href="cart.html">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">0</span>
             </a>
         </div>
-    </header>
-
+    </div>
+</header>
     <main class="main-content">
         <section class="content-section text-centered-container container">
             <img src="Images/member-card.png" alt="Membership Card" class="img-fluid" style="max-width: 300px; margin-bottom: 40px;">
