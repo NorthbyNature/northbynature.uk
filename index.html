@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>North by Nature - Home</title>
+    <title>North by Nature - Members</title>
+    
+    <!-- Link to the main stylesheet (styles.css) -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Bootstrap CSS for layout and component styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+</head>
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-        }
         header {
             position: relative;
-            height: 400px;
+            height: 400px; /* Adjust height as necessary */
             overflow: hidden;
             color: #fff;
         }
@@ -30,57 +31,28 @@
             height: auto;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            z-index: 0;
         }
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 2;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 20px;
-        }
-        .top-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
         .account-icon, .cart-icon {
-            position: relative;
-        }
-        .cart-icon span {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            background: yellow;
-            color: black;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
+            top: 10px;
+            z-index: 2;
         }
-        .instagram-link {
-            margin: 5px 0;
-            text-align: center;
+        .account-icon {
+            left: 10px;
         }
-        .instagram-link a {
-            color: white;
-            text-decoration: none;
-        }
-        .logo {
-            height: 120px;
-            margin: 10px 0;
-        }
-        nav ul.nav {
-            flex-wrap: wrap;
+        .cart-icon {
+            right: 10px;
         }
     </style>
 </head>
 <body>
+
 <header class="text-center">
+    <!-- Video Background -->
     <div class="video-container">
         <video autoplay muted loop playsinline>
             <source src="Videos/nbn-vid.mp4" type="video/mp4">
@@ -89,46 +61,48 @@
         </video>
     </div>
 
-    <!-- Sticky header content -->
-    <div class="sticky-header">
-        <div class="top-bar">
-            <div class="account-icon">
-                <a href="login.html" id="account-link">
-                    <i class="fas fa-user" style="color:white;"></i>
-                </a>
-            </div>
-            <div class="cart-icon">
-                <a href="cart.html">
-                    <i class="fas fa-shopping-cart" style="color:white;"></i>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
+    <!-- Content above video -->
+    <div class="header-content">
+        <!-- Account Icon -->
+        <div class="account-icon">
+            <a href="login.html" id="account-link">
+                <i class="fas fa-user"></i>
+            </a>
         </div>
 
+        <!-- Instagram link -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
         </div>
 
+        <!-- Logo -->
         <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+
+        <!-- Navigation -->
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Shopping Cart Icon -->
+        <div class="cart-icon">
+            <a href="cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
     </div>
 </header>
-
-<!-- Navigation -->
-<nav>
-    <ul class="nav justify-content-center">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-        <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-        <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-    </ul>
-</nav>
-
 <main class="text-center">
-    <h1 style="font-weight: bold; color: yellow;">Welcome to North by Nature</h1>
+    <h1 style="font-weight: bold; color: gold;">Welcome to North by Nature</h1>
 </main>
 
 <footer class="instagram-footer">
