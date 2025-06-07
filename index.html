@@ -4,125 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>North by Nature - Home</title>
-    <!-- Linking to the main stylesheet (styles.css) -->
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Bootstrap CSS for responsive design and components -->
+
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome for icons (e.g., shopping cart icon) -->
+
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
-    <header class="text-center">
-         <div class="account-icon">
+
+<header class="text-center">
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline>
+            <source src="Videos/nbn-vids.mp4" type="video/mp4">
+            <source src="Videos/nbn-vids.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Account Icon -->
+    <div class="account-icon">
         <a href="login.html" id="account-link">
-            <i class="fas fa-user"></i> <!-- Account icon -->
+            <i class="fas fa-user"></i>
         </a>
     </div>
-        <!-- Instagram link with target="_blank" to open in a new tab -->
-        <div class="instagram-link">
-            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-        </div>
-        
-        <!-- Placeholder image for the logo -->
-        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-        
-        <!-- Navigation menu with links to different pages -->
-        <nav>
-            <ul class="nav justify-content-center">
-                <!-- Each li contains a link to a page, such as Home, Events, etc. -->
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+    <!-- Instagram link -->
+    <div class="instagram-link">
+        <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+    </div>
+
+    <!-- Logo -->
+    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+
+    <!-- Navigation -->
+    <nav>
+        <ul class="nav justify-content-center">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+            <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+            <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Shopping Cart Icon -->
+    <div class="cart-icon">
+        <a href="cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </a>
+    </div>
+</header>
+
+<!-- Main content -->
+<main class="text-center">
+    <h1 style="font-weight: bold;">Welcome to North by Nature</h1>
+    <!-- Add additional content here if needed -->
+</main>
+
+<!-- Footer -->
+<footer class="instagram-footer">
+    <div class="footer-container">
+        <div class="footer-links">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
             </ul>
-        </nav>
-
-        <!-- Shopping cart icon with Font Awesome and a counter for cart items -->
-        <div class="cart-icon">
-            <a href="cart.html">
-                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
-                <span id="cart-count">0</span> <!-- Initial cart item count set to 0 -->
-            </a>
- <!-- Video container that holds the video element -->
-        <div class="video-container">
-            <video width="460" height="460" autoplay muted playsinline loop>
-                <!-- Video source in MP4 format -->
-                <source src="Videos\nbn-vids.mp4" type="video/mp4">
-                
-                <!-- Video source in WebM format as fallback -->
-                <source src="Videos\nbn-vids.webm" type="video/webm">
-                
-                <!-- Message displayed if the browser does not support video tag -->
-                Your browser does not support the video tag.
-            </video>
         </div>
-    </header>
-
-    <!-- Main Content Section: Heading and embedded video -->
-    <main class="text-center">
-        <h1 style="font-weight: bold;">Welcome to North by Nature</h1>
-        </div>
-    </main>
-
-    <!-- Footer Section: Links to legal pages, Instagram widget, and copyright -->
-    <footer class="instagram-footer">
-        <div class="footer-container">
-            <!-- Policy links section -->
-            <div class="footer-links">
-                <h4>Policies</h4>
-                <ul>
-                    <!-- Links to privacy policy and terms of service pages -->
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms of Service</a></li>
-                </ul>
+        <div class="footer-center">
+            <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
+            <div class="snapwidget-container">
+                <iframe
+                    src="https://snapwidget.com/embed/1072640"
+                    allowtransparency="true"
+                    frameborder="0"
+                    scrolling="no"
+                    title="Posts from Instagram">
+                </iframe>
+                <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="snap-overlay"></a>
             </div>
-
-            <!-- Central footer content -->
-            <div class="footer-center">
-                <!-- Instagram link that opens in a new tab -->
-                <p>Follow us on <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a></p>
-                
-                <!-- Embedded Instagram widget using an iframe -->
-                <div class="snapwidget-container">
- <div class="snapwidget-container">
-  <iframe
-    src="https://snapwidget.com/embed/1072640"
-    allowtransparency="true"
-    frameborder="0"
-    scrolling="no"
-    title="Posts from Instagram"
-  ></iframe>
-  <a
-    href="https://www.instagram.com/eventsbynbn/"
-    target="_blank"
-    class="snap-overlay"
-    aria-label="Go to our Instagram"
-  ></a>
-</div>
-                <!-- Copyright information -->
-                <p>&copy; 2024 North by Nature. All rights reserved.</p>
-            </div>
+            <p>&copy; 2024 North by Nature. All rights reserved.</p>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <!-- JavaScript Section: External scripts to enable interactivity -->
-    <!-- jQuery for DOM manipulation and event handling -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
-    <!-- Popper.js for positioning elements, required by Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    
-    <!-- Bootstrap's JavaScript for components like modals and tooltips -->
-    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- Link to your custom JavaScript file (scripts.js) -->
-    <script src="scripts.js"></script>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="scripts.js"></script>
+
 </body>
 </html>

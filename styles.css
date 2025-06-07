@@ -31,6 +31,14 @@ header {
 /* Ensuring links and text remain white */
 header nav .nav-link, header .account-icon a, header .cart-icon a, header .instagram-link a {
     color: white;
+    z-index: 1;
+    position: relative;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* prevents white spaces elsewhere */
 }
 
 .logo {
