@@ -51,17 +51,25 @@
     </style>
 </head>
 <body>
-
-<header class="text-center">
-    <!-- Video Background -->
-    <div class="video-container">
-        <video autoplay muted loop playsinline>
-            <source src="Videos/nbn-vid.mp4" type="video/mp4">
-            <source src="Videos/nbn-vid.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
+<!-- Sticky Header Elements -->
+<div class="sticky-header">
+    <!-- Account Icon -->
+    <div class="account-icon">
+        <a href="login.html" id="account-link">
+            <i class="fas fa-user"></i>
+        </a>
     </div>
+<!-- Logo -->
+    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
 
+    <!-- Shopping Cart Icon -->
+    <div class="cart-icon">
+        <a href="cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </a>
+    </div>
+</div>
     <!-- Content above video -->
     <div class="header-content">
         <!-- Account Icon -->
@@ -70,7 +78,15 @@
                 <i class="fas fa-user"></i>
             </a>
         </div>
-
+<header class="text-center">
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline>
+            <source src="Videos/nbn-vids.mp4" type="video/mp4">
+            <source src="Videos/nbn-vids.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+    </div>
         <!-- Instagram link -->
         <div class="instagram-link">
             <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
