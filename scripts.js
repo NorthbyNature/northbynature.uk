@@ -611,6 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
+  });
   const menuToggle = document.getElementById("menuToggle");
   const menuClose = document.getElementById("menuClose");
   const sidebar = document.getElementById("sidebarMenu");
