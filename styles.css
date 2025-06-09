@@ -296,8 +296,8 @@ ul li {
 
 .cart-icon {
     position: absolute;
-    top: 1px;
-    right: -8px;
+    top: 5px;
+    right: -1px;
     z-index: 10; /* Ensure it stays on top of other content */
 }
 
@@ -1023,8 +1023,8 @@ textarea {
 }
 .account-icon {
     position: absolute;
-    top: 1px;
-    left: 5px;
+    top: 5px;
+    left: 10px;
     z-index: 1000;
 }
 
