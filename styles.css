@@ -2,17 +2,17 @@
 
 body {
     font-family: 'Philosopher', sans-serif !important;
-    background-color: #000;
-    color: #fff;
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    background-image: url('Images/bg-image.png'); /* Replace with your actual image path */
+    background-color: #000;
+    background-image: url('Images/bg-image.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    color: #fff;
     position: relative;
 }
 
@@ -52,12 +52,6 @@ header nav .nav-link, header .account-icon a, header .cart-icon a, header .insta
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #000; /* prevents white spaces elsewhere */
 }
 
 .logo {
