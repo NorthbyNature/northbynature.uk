@@ -56,15 +56,6 @@ header {
     align-items: center;
 }
 
-/* Top bar containing icons and Instagram */
-.top-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-}
-
 .logo {
     height: 150px;
     max-width: 100%;
