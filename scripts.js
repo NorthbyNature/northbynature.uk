@@ -611,8 +611,9 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
-document.addEventListener("DOMContentLoaded", function () { 
-// ✅ Sidebar toggle logic
+
+document.addEventListener("DOMContentLoaded", function () {
+  // ✅ Sidebar toggle logic
   const menuToggle = document.getElementById("menuToggle");
   const menuClose = document.getElementById("menuClose");
   const sidebar = document.getElementById("sidebarMenu");
@@ -635,4 +636,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } else {
     console.warn('One or more sidebar menu elements not found.');
+  }
 });
