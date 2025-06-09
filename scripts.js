@@ -611,7 +611,6 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
-
 document.addEventListener("DOMContentLoaded", function () {
   // ✅ Sidebar toggle logic
   const menuToggle = document.getElementById("menuToggle");
