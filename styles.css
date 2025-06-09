@@ -70,7 +70,7 @@ header {
   border: none;
   background: none;
   padding: 0;
-  z-index: 2001;
+  z-index: 1002;
 }
 
 .navbar-toggler-icon {
