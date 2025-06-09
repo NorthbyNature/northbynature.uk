@@ -8,7 +8,7 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    background-image: url('Images/bg.image.png'); /* Replace with your actual image path */
+    background-image: url('Images/bg-image.png'); /* Replace with your actual image path */
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
