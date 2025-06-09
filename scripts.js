@@ -611,25 +611,29 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
-const menuToggle = document.getElementById("menuToggle");
+document.addEventListener("DOMContentLoaded", function () { 
+// ✅ Sidebar toggle logic
+  const menuToggle = document.getElementById("menuToggle");
   const menuClose = document.getElementById("menuClose");
   const sidebar = document.getElementById("sidebarMenu");
   const overlay = document.getElementById("menuOverlay");
 
   if (menuToggle && menuClose && sidebar && overlay) {
     menuToggle.addEventListener("click", () => {
-      sidebar.classList.add("open");
+      sidebar.classList.add("active");
       overlay.classList.add("active");
     });
 
     menuClose.addEventListener("click", () => {
-      sidebar.classList.remove("open");
+      sidebar.classList.remove("active");
       overlay.classList.remove("active");
     });
 
     overlay.addEventListener("click", () => {
-      sidebar.classList.remove("open");
+      sidebar.classList.remove("active");
       overlay.classList.remove("active");
     });
+  } else {
+    console.warn('One or more sidebar menu elements not found.');
   }
 });
