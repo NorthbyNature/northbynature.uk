@@ -611,22 +611,23 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
-  const toggleBtn = document.getElementById('menuToggle');
-  const closeBtn = document.getElementById('menuClose');
-  const sidebar = document.getElementById('sidebarMenu');
-  const overlay = document.getElementById('menuOverlay');
+  const menuToggle = document.getElementById("menuToggle");
+  const menuClose = document.getElementById("menuClose");
+  const sidebar = document.getElementById("sidebarMenu");
+  const overlay = document.getElementById("menuOverlay");
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.add('active');
-    overlay.classList.add('active');
+  menuToggle.addEventListener("click", function () {
+    sidebar.classList.add("open");
+    overlay.classList.add("active");
   });
 
-  closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
+  menuClose.addEventListener("click", function () {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("active");
   });
 
-  overlay.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
+  overlay.addEventListener("click", function () {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("active");
   });
+});
