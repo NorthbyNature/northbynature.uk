@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-  <header class="text-center">
-    <!-- Video Background (now inside header) -->
-    <div class="video-wrapper">
-      <video autoplay muted loop playsinline>
-        <source src="Videos/nbn-vid.mp4" type="video/mp4">
-        <source src="Videos/nbn-vid.webm" type="video/webm">
-        Your browser does not support the video tag.
-      </video>
-    </div>
+  <!-- Video Background (not sticky) -->
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="Videos/nbn-vid.mp4" type="video/mp4">
+      <source src="Videos/nbn-vid.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
-    <!-- Sticky Content Above Video -->
+  <!-- Sticky Header Only -->
+  <header class="text-center">
     <div class="header-content">
       <div class="account-icon">
         <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
@@ -41,10 +41,10 @@
         </a>
       </div>
 
-      <!-- Logo (centered) -->
+      <!-- Logo -->
       <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
 
-      <!-- Menu Toggle Button (hamburger) -->
+      <!-- Menu Toggle Button -->
       <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
       </button>
@@ -68,7 +68,6 @@
       <div id="menuOverlay" class="menu-overlay"></div>
     </div>
   </header>
-
   <!-- Main Page Content -->
   <main class="text-center">
     <h1 style="font-weight: bold; color: gold;">Welcome to North by Nature!</h1>
