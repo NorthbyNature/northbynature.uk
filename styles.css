@@ -244,7 +244,8 @@ footer #social img {
   min-width: 100%;
   min-height: 100%;
   transform: translate(-50%, -50%);
-  object-fit: cover;}
+  object-fit: cover;
+}
 
 .text-centered-container {
     max-width: 800px;
