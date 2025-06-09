@@ -51,34 +51,26 @@ header {
   color: white;
 }
 
+/* Logo Styling */
 .logo {
-    height: 150px;
-    max-width: 100%;
-    margin-bottom: 20px;
-}
-
-/* Align logo and hamburger menu side by side */
-.logo-menu-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  position: relative;
+  height: 150px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   z-index: 2;
 }
 
-/* Logo styling */
-.logo-menu-wrapper .logo {
-  height: 120px;
-  width: auto;
-}
-
-/* Hamburger Icon placement */
-.navbar-toggler {
+/* Menu icon top-right under cart */
+.navbar-toggler.top-menu {
+  position: absolute;
+  top: 15px;
+  right: 20px;
   border: none;
   background: none;
   padding: 0;
-  margin-left: 10px;
+  z-index: 1001;
 }
 
 .navbar-toggler-icon {
@@ -87,7 +79,7 @@ header {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-/* Ensure nav collapses nicely */
+/* Responsive nav collapse styling */
 @media (max-width: 991px) {
   .navbar-collapse {
     background-color: rgba(0, 0, 0, 0.9);
