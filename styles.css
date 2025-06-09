@@ -65,12 +65,12 @@ header {
 /* Menu toggle icon (hamburger) */
 .menu-toggle {
   position: absolute;
-  top: 20px;
+  top: 100px;
   right: 15px;
   background: none;
   border: none;
   color: white;
-  font-size: 28px;
+  font-size: 36px;
   z-index: 1002;
   cursor: pointer;
 }
