@@ -8,6 +8,23 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+    background-image: url('Images/bg-image.png'); /* Replace with your actual image path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity here */
+    z-index: -1;
 }
 
 .header, .main-content, .footer {
