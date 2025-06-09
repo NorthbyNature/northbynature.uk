@@ -635,4 +635,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } else {
     console.warn('One or more sidebar menu elements not found.');
-  }
+});
