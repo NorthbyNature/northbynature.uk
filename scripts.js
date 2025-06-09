@@ -611,24 +611,25 @@ document.addEventListener('DOMContentLoaded', () => {
       registerInterest(e.target.dataset.id);
     }
   });
-  });
-  const menuToggle = document.getElementById("menuToggle");
+const menuToggle = document.getElementById("menuToggle");
   const menuClose = document.getElementById("menuClose");
   const sidebar = document.getElementById("sidebarMenu");
   const overlay = document.getElementById("menuOverlay");
 
-  menuToggle.addEventListener("click", function () {
-    sidebar.classList.add("open");
-    overlay.classList.add("active");
-  });
+  if (menuToggle && menuClose && sidebar && overlay) {
+    menuToggle.addEventListener("click", () => {
+      sidebar.classList.add("open");
+      overlay.classList.add("active");
+    });
 
-  menuClose.addEventListener("click", function () {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("active");
-  });
+    menuClose.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("active");
+    });
 
-  overlay.addEventListener("click", function () {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("active");
-  });
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("active");
+    });
+  }
 });
