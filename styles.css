@@ -77,6 +77,14 @@ header {
 .navbar-toggler.top-menu:focus {
   outline: none;
 }
+
+.fas.fa-bars {
+  color: white;
+  font-size: 28px;
+  z-index: 10;
+  position: relative;
+}
+
 /* Responsive nav collapse styling */
 @media (max-width: 991px) {
   .navbar-collapse {
