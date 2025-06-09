@@ -57,6 +57,21 @@ header {
     margin-bottom: 20px;
 }
 
+/* Navbar wrapper for logo + hamburger */
+.logo-menu-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+
+/* Logo settings */
+.logo-menu-wrapper .logo {
+  height: 100px;
+  max-width: 100%;
+}
+
 /* Bootstrap Navbar Custom Styling */
 .navbar {
   background-color: transparent !important;
@@ -64,27 +79,39 @@ header {
   justify-content: center;
   width: 100%;
   z-index: 1001;
+  margin-top: 10px;
 }
 
-/* Navbar brand optional */
+/* Optional brand styling if used */
 .navbar-brand {
   color: #fff;
   font-weight: bold;
   font-family: 'Philosopher', sans-serif;
 }
 
-/* Hamburger Icon */
+/* Hamburger icon button */
 .navbar-toggler {
-  border-color: #fff;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-left: 5px;
+  outline: none;
+  cursor: pointer;
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  width: 30px;
+  height: 30px;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='%23fff' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Navbar links */
 .navbar-nav {
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .navbar-nav .nav-link {
@@ -102,7 +129,7 @@ header {
   transition: background 0.3s ease;
 }
 
-/* Collapse menu layout on mobile */
+/* Mobile collapse layout */
 @media (max-width: 991px) {
   .navbar-collapse {
     background-color: rgba(0, 0, 0, 0.85);
