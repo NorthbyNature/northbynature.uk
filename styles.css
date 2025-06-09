@@ -1024,7 +1024,7 @@ textarea {
 .account-icon {
     position: absolute;
     top: 10px;
-    left: 15px;
+    left: 30px;
     z-index: 1000;
 }
 
