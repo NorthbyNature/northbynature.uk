@@ -65,7 +65,7 @@ header {
 /* Menu icon top-right under cart */
 .navbar-toggler.top-menu {
   position: absolute;
-  top: 15px;
+  top: 20px;
   right: 20px;
   border: none;
   background: none;
