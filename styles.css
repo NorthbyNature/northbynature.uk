@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-body::before {
+/* body::before {
     content: "";
     position: fixed;
     top: 0;
@@ -25,7 +25,7 @@ body::before {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity here */
     z-index: -1;
-}
+} */
 
 .header, .main-content, .footer {
     width: 100%;
