@@ -252,6 +252,7 @@ console.log("overlay:   ", document.getElementById("menuOverlay"));
   console.log({menuToggle, menuClose, sidebar, overlay});
   if (menuToggle && menuClose && sidebar && overlay) {
     menuToggle.addEventListener('click', () => {
+      console.log("🍔 Hamburger was clicked!");
       sidebar.classList.add('active');
       overlay.classList.add('active');
     });
