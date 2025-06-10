@@ -208,7 +208,7 @@ async function registerInterest(id) {
 //  MAIN INITIALIZATION
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
-
+console.log("✅ DOMContentLoaded fired, initializing scripts…");
   // 🔍 Debug: confirm elements exist
   console.log("menuToggle element:",  document.getElementById("menuToggle"));
   console.log("menuClose element: ",  document.getElementById("menuClose"));
