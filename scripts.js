@@ -208,6 +208,13 @@ async function registerInterest(id) {
 //  MAIN INITIALIZATION
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
+
+console.log("🔍 Searching for sidebar elements…");
+console.log("menuToggle:", document.getElementById("menuToggle"));
+console.log("menuClose: ", document.getElementById("menuClose"));
+console.log("sidebar:   ", document.getElementById("sidebarMenu"));
+console.log("overlay:   ", document.getElementById("menuOverlay"));
+
   // Cart & tickets
   document.getElementById('add-to-cart')?.addEventListener('click', addToCart);
   document.getElementById('buy-now')?.addEventListener('click', buyNow);
