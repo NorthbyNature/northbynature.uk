@@ -6,7 +6,7 @@
 // ===========================
 //    INITIAL SETUP + FUNCTIONS
 // ===========================
-
+console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
 function decreaseQuantity() {
   const q = document.getElementById('quantity-input');
@@ -202,6 +202,12 @@ async function registerInterest(id) {
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
 // Initialize Supabase client once
+console.log("✅ DOMContentLoaded fired.");
+
+console.log("menuToggle element:",  document.getElementById("menuToggle"));
+console.log("menuClose element: ",  document.getElementById("menuClose"));
+console.log("sidebarMenu element:", document.getElementById("sidebarMenu"));
+console.log("menuOverlay element:",  document.getElementById("menuOverlay"));
 
 const supabaseClient = supabase.createClient(
   "https://jwospecasjxrknmyycno.supabase.co",
