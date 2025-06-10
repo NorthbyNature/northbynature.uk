@@ -209,11 +209,11 @@ async function registerInterest(id) {
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
 
-console.log("🔍 Searching for sidebar elements…");
-console.log("menuToggle:", document.getElementById("menuToggle"));
-console.log("menuClose: ", document.getElementById("menuClose"));
-console.log("sidebar:   ", document.getElementById("sidebarMenu"));
-console.log("overlay:   ", document.getElementById("menuOverlay"));
+  // 🔍 Debug: confirm elements exist
+  console.log("menuToggle element:",  document.getElementById("menuToggle"));
+  console.log("menuClose element: ",  document.getElementById("menuClose"));
+  console.log("sidebarMenu element:", document.getElementById("sidebarMenu"));
+  console.log("menuOverlay element:",   document.getElementById("menuOverlay"));
 
   // Cart & tickets
   document.getElementById('add-to-cart')?.addEventListener('click', addToCart);
