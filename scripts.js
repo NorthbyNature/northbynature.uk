@@ -617,6 +617,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById("sidebarMenu");
   const overlay = document.getElementById("menuOverlay");
 
+ console.log({ menuToggle, menuClose, sidebar, overlay });
+
   if (menuToggle && menuClose && sidebar && overlay) {
     menuToggle.addEventListener("click", () => {
       sidebar.classList.add("active");
