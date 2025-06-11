@@ -71,8 +71,10 @@ header {
   border: none;
   color: white;
   font-size: 36px;
-  z-index: 1005;
+  z-index: 99999;
   cursor: pointer;
+   background: rgba(255, 0, 0, 0.3) !important;
+  outline: 2px solid yellow !important;
 }
 
 /* Sidebar menu */
