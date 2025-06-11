@@ -6,6 +6,13 @@
 // ===========================
 //    INITIAL SETUP + FUNCTIONS
 // ===========================
+// 1️⃣ Initialize Supabase client (globally)
+const supabaseClient = supabase.createClient(
+  "https://jwospecasjxrknmyycno.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs",
+  { auth: { persistSession: true, autoRefreshToken: true } }
+);
+
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
 function decreaseQuantity() {
@@ -203,17 +210,7 @@ async function registerInterest(id) {
 document.addEventListener('DOMContentLoaded', async () => {
 // Initialize Supabase client once
 console.log("✅ DOMContentLoaded fired.");
-
-console.log("menuToggle element:",  document.getElementById("menuToggle"));
-console.log("menuClose element: ",  document.getElementById("menuClose"));
-console.log("sidebarMenu element:", document.getElementById("sidebarMenu"));
-console.log("menuOverlay element:",  document.getElementById("menuOverlay"));
-
-const supabaseClient = supabase.createClient(
-  "https://jwospecasjxrknmyycno.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs",
-  { auth: { persistSession: true, autoRefreshToken: true } }
-);
+console.log("📑 scripts.js loaded and DOM ready—now binding events");
 
   // Cart & tickets
   document.getElementById('add-to-cart')?.addEventListener('click', addToCart);
