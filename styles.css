@@ -174,7 +174,7 @@ header {
 main {
     /* preserve your padding */
     padding: 20px;
-    padding-top: 120px; /* adjust if your header height changes */
+    padding-top: 50px; /* adjust if your header height changes */
 
     /* background image instead of flat black */
     background: url('/Images/bg-image.png') no-repeat center center fixed;
