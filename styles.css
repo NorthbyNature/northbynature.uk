@@ -174,7 +174,7 @@ header {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: 200px; /* adjust for header height */
+  padding-top: 400px; /* adjust for header height */
 
   /* image + overlay in one background shorthand */
   background: 
