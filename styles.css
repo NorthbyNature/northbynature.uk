@@ -297,6 +297,9 @@ footer #social img {
   height: 400px; /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
+  display: flex;
+  justify-content: center;    /* center the video on the page */
+  perspective: 800px;         /* how “strong” the 3D effect is */
 }
 
 .video-wrapper video {
@@ -307,6 +310,10 @@ footer #social img {
   height: 100%;           /* match the container’s height */
   transform: translate(-50%, -50%);
   object-fit: contain;    /* ★ scale the whole video down */
+    border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  transform: rotateX(4deg) rotateY(-2deg);
+  transform-origin: center center;
 }
 
 .text-centered-container {
