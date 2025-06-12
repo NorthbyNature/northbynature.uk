@@ -305,7 +305,7 @@ footer #social img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: auto;            /* let the browser pick a width */
+  width: 100%;            /* let the browser pick a width */
   height: 100%;           /* match the container’s height */
   transform: translate(-50%, -50%);
   object-fit: contain;    /* ★ scale the whole video down */
