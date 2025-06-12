@@ -266,7 +266,7 @@ form input[type="submit"]:hover {
 
 footer {
       background:
-    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), /* 50% black tint */
+    linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), /* 50% black tint */
     url('/Images/bg-image.png') no-repeat center center fixed;
     background-size: cover;
     padding: 20px;
