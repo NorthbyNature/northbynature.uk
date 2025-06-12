@@ -2,7 +2,9 @@
 
 /* Base body styles */
 body {
-    background: none;
+     /* image + overlay in one background shorthand */
+    background: url('/Images/bg-image.png') no-repeat center center fixed;
+    background-size: cover;
     font-family: 'Philosopher', sans-serif !important;
     margin: 0;
     padding: 0;
@@ -10,6 +12,11 @@ body {
     overflow-x: hidden;
     color: #fff;
     position: relative;
+}
+
+main,
+footer.instagram-footer {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Section layout */
@@ -175,12 +182,6 @@ main {
   /* preserve your existing padding */
   padding: 20px;
   padding-top: 120px; /* adjust for header height */
-
-  /* image + overlay in one background shorthand */
-  background: 
-    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), /* 50% black tint */
-    url('/Images/bg-image.png') no-repeat center center fixed;
-  background-size: cover;
 
   /* your existing text and layout */
   color: #fff;
