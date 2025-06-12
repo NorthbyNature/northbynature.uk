@@ -174,7 +174,7 @@ header {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: 400px; /* adjust for header height */
+  padding-top: 200px; /* adjust for header height */
 
   /* image + overlay in one background shorthand */
   background: 
@@ -294,7 +294,7 @@ footer #social img {
   top: 0;
   left: 0;
   width: 100%;
-  height: 300px; /* Or match the height of your header */
+  height: 100px; /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
 }
