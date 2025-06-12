@@ -290,34 +290,26 @@ footer #social img {
 
 /* Video is trapped inside header */
 .video-wrapper {
-  position: relative;        /* so the video stays clipped inside */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 400px;             /* match your header height */
+  height: 400px; /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
-  
-  display: flex;
-  justify-content: center;   /* center child in X */
-  align-items: center;       /* center child in Y */
-  
-  perspective: 800px;        /* strength of the 3D effect */
+  display: block;
+   border-radius: 8px;             /* subtle rounding */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5); /* soft, dark shadow */
 }
 
 .video-wrapper video {
   position: absolute;
-  top: 50%; left: 50%;
-  width: auto;
-  height: 100%;
-  object-fit: contain;
-
-  /* combine centering + tilt in one transform */
-  transform: translate(-50%, -50%) 
-             rotateX(4deg) 
-             rotateY(-2deg);
-  transform-origin: center center;
-
-  border-radius: 8px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  top: 50%;
+  left: 50%;
+  width: auto;            /* let the browser pick a width */
+  height: 100%;           /* match the container’s height */
+  transform: translate(-50%, -50%);
+  object-fit: contain;    /* ★ scale the whole video down */
 }
 
 .text-centered-container {
