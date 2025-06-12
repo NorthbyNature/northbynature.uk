@@ -2,9 +2,7 @@
 
 /* Base body styles */
 body {
-     /* image + overlay in one background shorthand */
-    background: url('/Images/bg-image.png') no-repeat center center fixed;
-    background-size: cover;
+    background: none;
     font-family: 'Philosopher', sans-serif !important;
     margin: 0;
     padding: 0;
@@ -12,11 +10,6 @@ body {
     overflow-x: hidden;
     color: #fff;
     position: relative;
-}
-
-main,
-footer.instagram-footer {
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Section layout */
@@ -183,6 +176,12 @@ main {
   padding: 20px;
   padding-top: 120px; /* adjust for header height */
 
+  /* image + overlay in one background shorthand */
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), /* 50% black tint */
+    url('/Images/bg-image.png') no-repeat center center fixed;
+  background-size: cover;
+
   /* your existing text and layout */
   color: #fff;
   text-align: center;
@@ -266,7 +265,8 @@ form input[type="submit"]:hover {
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.1);
+      background: url('Images/bg-image.png') no-repeat center center fixed;
+  background-size: cover;
     padding: 20px;
     color: #fff;
     text-align: center;
