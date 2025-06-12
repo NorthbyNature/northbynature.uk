@@ -266,7 +266,7 @@ form input[type="submit"]:hover {
 }
 
 footer {
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 20px;
     color: #fff;
     text-align: center;
