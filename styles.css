@@ -297,8 +297,6 @@ footer #social img {
   height: 400px; /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
-  display: block;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5); /* soft, dark shadow */
 }
 
 .video-wrapper video {
@@ -308,7 +306,7 @@ footer #social img {
   width: auto;            /* let the browser pick a width */
   height: 100%;           /* match the container’s height */
   transform: translate(-50%, -50%);
-  object-fit: contain;    /* ★ scale the whole video down */
+  object-fit: cover;    /* ★ scale the whole video down */
 }
 
 .text-centered-container {
