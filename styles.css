@@ -303,7 +303,7 @@ footer #social img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: auto;            /* let the browser pick a width */
+  width: 100%;            /* let the browser pick a width */
   height: 100%;           /* match the container’s height */
   transform: translate(-50%, -50%);
   object-fit: cover;    /* ★ scale the whole video down */
@@ -449,7 +449,7 @@ ul li {
 /* Adjustments for screens smaller than 600px */
 @media (max-width: 600px) {
     .video-container video {
-        width: 100%;
+        width: 50%;
         height: auto;
     }
     .footer-links {
