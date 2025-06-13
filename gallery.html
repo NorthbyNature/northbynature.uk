@@ -16,47 +16,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-  <!-- Sticky Header Only -->
-  <header class="text-center">
-    <div class="header-content">
-      <div class="account-icon">
-        <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
-      </div>
-
-      <div class="cart-icon">
-        <a href="cart.html">
-          <i class="fas fa-shopping-cart"></i>
-          <span id="cart-count">0</span>
+    <!-- Header Section: Contains logo, navigation menu, and shopping cart -->
+    <header class="text-center">
+         <div class="account-icon">
+        <a href="login.html" id="account-link">
+            <i class="fas fa-user"></i> <!-- Account icon -->
         </a>
-      </div>
-
-      <!-- Logo -->
-      <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-
-      <!-- Menu Toggle Button -->
-      <button class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Sidebar Menu -->
-      <div id="sidebarMenu" class="sidebar-menu">
-        <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
-        <ul class="sidebar-nav">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="events.html">EVENTS</a></li>
-          <li><a href="members.html">MEMBERS</a></li>
-          <li><a href="partnerships.html">PARTNERSHIPS & COLLABORATIONS</a></li>
-          <li><a href="exclusive.html">EXCLUSIVE</a></li>
-          <li><a href="gallery.html">GALLARY</a></li>
-          <li><a href="about.html">ABOUT US</a></li>
-          <li><a href="contact.html">CONTACT US</a></li>
-        </ul>
-      </div>
-
-      <!-- Overlay -->
-      <div id="menuOverlay" class="menu-overlay"></div>
     </div>
-  </header>
+        <!-- Instagram link that opens in a new tab -->
+        <!-- To update this link or text, change the href and the link text below -->
+        <div class="instagram-link">
+            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
+        </div>
+        
+        <!-- Placeholder for the logo image -->
+        <!-- Change 'logo-placeholder.png' to the actual path of your logo image if different -->
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+        
+        <!-- Navigation menu with links to different pages -->
+        <nav>
+            <ul class="nav justify-content-center">
+                <!-- Each list item contains a link to a different section of the website -->
+                <!-- To add more navigation items, copy and paste <li> elements and update the href -->
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
+                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
+                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Shopping cart icon with a counter -->
+        <!-- The cart icon uses Font Awesome. To change or add more icons, use Font Awesome's library -->
+        <!-- Update the href if the cart page is located elsewhere -->
+        <div class="cart-icon">
+            <a href="cart.html">
+                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
+                <span id="cart-count">0</span> <!-- Cart count set to 0 by default -->
+            </a>
+        </div>
+    </header>
+
     <!-- Main Content Section: Gallery with image carousel -->
     <main class="main-content">
         <section class="content-section text-centered-container">
@@ -127,7 +130,19 @@
             </div>
         </div>
     </footer>
-<script>
+
+    <!-- JavaScript Section: External scripts for functionality -->
+    <!-- jQuery for DOM manipulation -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <!-- Popper.js for positioning, required by Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    
+    <!-- Bootstrap's JavaScript for components like modals, tooltips, etc. -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Script to dynamically generate carousel indicators and items -->
+    <script>
     $(document).ready(function() {
         const totalImages = 97;  // Number of images in the gallery
         let indicators = '';
@@ -163,10 +178,5 @@
         $('.carousel-inner').append(items);
     });
     </script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="scripts.js"></script>
-    </body>
+</body>
 </html>
