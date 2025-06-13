@@ -56,8 +56,8 @@ header.scrolled {
 /* Menu toggle icon (hamburger) */
 .menu-toggle {
   position: absolute;
-  top: 1px;
-  right: 5px;
+  top: 5px;
+  right: -1px;
   background: none;
   border: none;
   color: white;
