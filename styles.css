@@ -24,7 +24,7 @@ header {
   z-index: 1000;
   background-color: transparent;
   backdrop-filter: none;
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  transition: background-color 0.6s ease, backdrop-filter 0.6s ease;
   padding: 10px 20px;
   width: 100%;
 }
@@ -56,8 +56,8 @@ header.scrolled {
 /* Menu toggle icon (hamburger) */
 .menu-toggle {
   position: absolute;
-  top: 75px;
-  right: 15px;
+  top: 15px;
+  right: 5px;
   background: none;
   border: none;
   color: white;
@@ -374,7 +374,7 @@ ul li {
 .cart-icon {
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 40px;
     z-index: 10; /* Ensure it stays on top of other content */
 }
 
@@ -383,13 +383,13 @@ ul li {
 }
 
 .cart-icon a i {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 #cart-count {
     background-color: #ffcc00;
     color: #000;
-    border-radius: 50%;
+    border-radius: 30%;
     padding: 5px 10px;
     position: relative;
     top: -10px;
