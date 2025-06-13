@@ -290,7 +290,7 @@ footer #social img {
 
 /* Video is trapped inside header */
 .video-wrapper {
-  position: absolute;
+  position: relative;
   padding-top: 100px;
   top: 0;
   left: 0;
