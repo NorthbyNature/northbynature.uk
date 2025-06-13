@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>North by Nature - Events</title>
     
     <!-- Link to the main stylesheet (styles.css) -->
-    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
     <link rel="stylesheet" href="styles.css">
     
     <!-- Bootstrap CSS for layout and component styling -->
@@ -15,94 +13,56 @@
     <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-    <style>
-        header {
-            position: relative;
-            height: 400px; /* Adjust height as necessary */
-            overflow: hidden;
-            color: #fff;
-        }
-        .video-container video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-        .account-icon, .cart-icon {
-            position: absolute;
-            top: 10px;
-            z-index: 2;
-        }
-        .account-icon {
-            left: 10px;
-        }
-        .cart-icon {
-            right: 10px;
-        }
-    </style>
-</head>
 <body>
-
-<header class="text-center">
-    <!-- Video Background -->
-    <div class="video-container">
-        <video autoplay muted loop playsinline>
-            <source src="Videos/nbn-vid.mp4" type="video/mp4">
-            <source src="Videos/nbn-vid.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <!-- Content above video -->
+<!-- Video Background (not sticky) -->
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="Videos/nbn-vid.mp4" type="video/mp4">
+      <source src="Videos/nbn-vid.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <!-- Sticky Header Only -->
+  <header class="text-center">
     <div class="header-content">
-        <!-- Account Icon -->
-        <div class="account-icon">
-            <a href="login.html" id="account-link">
-                <i class="fas fa-user"></i>
-            </a>
-        </div>
+      <div class="account-icon">
+        <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
+      </div>
 
-        <!-- Instagram link -->
-        <div class="instagram-link">
-            <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-        </div>
+      <div class="cart-icon">
+        <a href="cart.html">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
 
-        <!-- Logo -->
-        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+      <!-- Logo -->
+      <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
 
-        <!-- Navigation -->
-        <nav>
-            <ul class="nav justify-content-center">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-                <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-                <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-                <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+      <!-- Menu Toggle Button -->
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
 
-        <!-- Shopping Cart Icon -->
-        <div class="cart-icon">
-            <a href="cart.html">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </a>
-        </div>
+      <!-- Sidebar Menu -->
+      <div id="sidebarMenu" class="sidebar-menu">
+        <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
+        <ul class="sidebar-nav">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="events.html">EVENTS</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="partnerships.html">PARTNERSHIPS & COLLABORATIONS</a></li>
+          <li><a href="exclusive.html">EXCLUSIVE</a></li>
+          <li><a href="gallery.html">GALLARY</a></li>
+          <li><a href="about.html">ABOUT US</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+      </div>
+
+      <!-- Overlay -->
+      <div id="menuOverlay" class="menu-overlay"></div>
     </div>
-</header>
-
+  </header>
     <!-- Main Content Section: List of Upcoming Events -->
     <main class="main-content">
         <section class="content-section text-centered-container">
@@ -180,18 +140,10 @@
         </div>
     </footer>
 
-    <!-- JavaScript Section: External scripts for functionality -->
-    <!-- jQuery for DOM manipulation -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
-    <!-- Popper.js for positioning, required by Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    
-    <!-- Bootstrap's JavaScript for components like modals, tooltips, etc. -->
-    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- Link to your custom JavaScript file -->
-    <!-- Add custom scripts for dynamic functionality in the scripts.js file -->
-    <script src="scripts.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
