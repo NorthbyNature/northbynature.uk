@@ -80,7 +80,7 @@ header.scrolled {
   transform: translateX(100%);        /* 100% of its own width offscreen */
   transition: transform 0.3s ease;    /* GPU-accelerated */
   will-change: transform;
-  z-index: 1003;
+  z-index: 1006;
 }
 .sidebar-menu.active {
   transform: translateX(0);
