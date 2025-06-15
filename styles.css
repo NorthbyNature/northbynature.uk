@@ -80,7 +80,7 @@ header.scrolled {
   transform: translateX(100%);        /* 100% of its own width offscreen */
   transition: transform 0.3s ease;    /* GPU-accelerated */
   will-change: transform;
-  z-index: 1006;
+  z-index: 1500;
 }
 .sidebar-menu.active {
   transform: translateX(0);
@@ -128,7 +128,7 @@ header.scrolled {
   opacity: 0;
   pointer-events: none;              /* clicks pass through when hidden */
   transition: opacity 0.3s ease;     /* GPU-accelerated */
-  z-index: 1002;
+  z-index: 1400;
 }
 .menu-overlay.active {
   opacity: 1;
