@@ -56,8 +56,8 @@ header.scrolled {
 /* Menu toggle icon (hamburger) */
 .menu-toggle {
   position: absolute;
-  top: 1px;
-  right: -1px;
+  top: 11px;
+  right: 2px;
   background: none;
   border: none;
   color: white;
@@ -373,8 +373,8 @@ ul li {
 
 .cart-icon {
     position: absolute;
-    top: 15px;
-    right: 55px;
+    top: 25px;
+    right: 60px;
     z-index: 10; /* Ensure it stays on top of other content */
 }
 
@@ -1100,7 +1100,7 @@ textarea {
 }
 .account-icon {
     position: absolute;
-    top: 15px;
+    top: 25px;
     left: 35px;
     z-index: 1000;
 }
