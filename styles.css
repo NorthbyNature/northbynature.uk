@@ -180,7 +180,7 @@ header.scrolled {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: var(--header-height);
+  padding-top: var(--header-height-100px);
 
   /* image + overlay in one background shorthand */
   background: 
@@ -301,7 +301,7 @@ footer #social img {
 
 :root {
   --header-height: 120px;   /* the height of your sticky header */
-  --video-height: 700px;    /* the height of your .video-wrapper */
+  --video-height: 800px;    /* the height of your .video-wrapper */
 }
 
 /* Video is trapped inside header */
