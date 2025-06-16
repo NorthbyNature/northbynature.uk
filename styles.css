@@ -295,24 +295,22 @@ footer #social img {
 }
 
 /* Video is trapped inside header */
+/* Hero video sits in the flow, pushes everything below it */
 .video-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;       /* no longer absolute */
   width: 100%;
-  height: 800px; /* Or match the height of your header */
+  aspect-ratio: 4 / 3;      /* keeps 4:3 ratio automatically */
   overflow: hidden;
   z-index: 0;
+  margin-bottom: 20px;      /* optional gap between video and content */
 }
 
 .video-wrapper video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;            /* let the browser pick a width */
-  height: 100%;           /* match the container’s height */
-  transform: translate(-50%, -50%);
-  object-fit: cover;    /* ★ scale the whole video down */
+  position: absolute;       /* fill its wrapper */
+  inset: 0;                 /* shorthand for top:0;right:0;bottom:0;left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* cover the wrapper without distortion */
 }
 
 .text-centered-container {
