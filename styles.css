@@ -115,7 +115,7 @@ header.scrolled {
   transition: color 0.3s ease;
 }
 .sidebar-nav a:hover {
-  color: #ffcc00;
+  color: #BE9C5F;
 }
 
 /* Overlay behind sidebar */
@@ -169,7 +169,7 @@ header.scrolled {
 }
 
 .dropdown-content a:hover {
-    background-color: #ffcc00;
+    background-color: #BE9C5F;
     color: #000;
 }
 
@@ -221,7 +221,7 @@ section {
 }
 
 h1, h2, h3 {
-    color: #ffcc00;
+    color: #BE9C5F;
     font-family: Marcellus", serif !important;
     text-transform: uppercase;
     font-weight: normal;
@@ -259,7 +259,7 @@ form label {
 }
 
 form input[type="submit"] {
-    background-color: #ffcc00; /* Gold background */
+    background-color: #BE9C5F; /* Gold background */
     color: #000; /* Black text */
     cursor: pointer;
     font-size: 16px; /* Font size for readability */
@@ -292,7 +292,7 @@ footer a {
 }
 
 footer a:hover {
-    color: #ffcc00;
+    color: #BE9C5F;
 }
 
 footer #social img {
@@ -354,7 +354,7 @@ footer #social img {
 }
 
 a {
-    color: #ffcc00;
+    color: #BE9C5F;
     text-decoration: none;
 }
 
@@ -403,7 +403,7 @@ ul li {
 }
 
 #cart-count {
-    background-color: #ffcc00;
+    background-color: #BE9C5F;
     color: #000;
     border-radius: 20%;
     padding: 5px 10px;
@@ -521,7 +521,7 @@ ul li {
 }
 
 .membership-application legend {
-    color: #ffcc00; /* Gold text for subheadings */
+    color: #BE9C5F; /* Gold text for subheadings */
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
@@ -549,7 +549,7 @@ ul li {
     appearance: none;
     width: 20px;
     height: 20px;
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #BE9C5F; /* Gold border */
     border-radius: 50%; /* Make it circular */
     background-color: #333; /* Dark grey background */
     cursor: pointer;
@@ -558,8 +558,8 @@ ul li {
 }
 
 .membership-application input[type="radio"]:checked {
-    background-color: #ffcc00; /* Gold background when selected */
-    border-color: #ffcc00; /* Gold border when selected */
+    background-color: #BE9C5F; /* Gold background when selected */
+    border-color: #BE9C5F; /* Gold border when selected */
     position: relative;
 }
 
@@ -575,7 +575,7 @@ ul li {
     left: 4px;
 }
 button.submit-btn {
-    background-color: #ffcc00; /* Gold background */
+    background-color: #BE9C5F; /* Gold background */
     color: #000; /* Black text */
     cursor: pointer;
     font-size: 16px; /* Font size for readability */
@@ -597,7 +597,7 @@ button.submit-btn:hover {
     appearance: none;
     width: 20px; /* Size of the checkbox */
     height: 20px;
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #BE9C5F; /* Gold border */
     border-radius: 3px; /* Slight rounding */
     background-color: #333; /* Grey background */
     cursor: pointer;
@@ -608,8 +608,8 @@ button.submit-btn:hover {
 
 /* Checked state styling */
 .checkbox-group input[type="checkbox"]:checked {
-    background-color: #ffcc00; /* Gold background when checked */
-    border-color: #ffcc00; /* Gold border when checked */
+    background-color: #BE9C5F; /* Gold background when checked */
+    border-color: #BE9C5F; /* Gold border when checked */
     position: relative;
 }
 
@@ -649,7 +649,7 @@ top: 50%; /* Center vertically */
 /* Gold button style for links */
 .gold-button {
     display: inline-block; /* Makes it look like a button */
-    background-color: #ffcc00; /* Gold background */
+    background-color: #BE9C5F; /* Gold background */
     color: #000; /* Black text */
     padding: 12px 20px; /* Add padding for button appearance */
     border-radius: 5px; /* Rounded corners */
@@ -768,7 +768,7 @@ textarea {
 }
 
 .Partnership-application legend {
-    color: #ffcc00; /* Gold text for subheadings */
+    color: #BE9C5F; /* Gold text for subheadings */
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 10px;
@@ -796,7 +796,7 @@ textarea {
     appearance: none;
     width: 20px;
     height: 20px;
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #BE9C5F; /* Gold border */
     border-radius: 50%; /* Make it circular */
     background-color: #333; /* Dark grey background */
     cursor: pointer;
@@ -805,8 +805,8 @@ textarea {
 }
 
 .Partnership-application input[type="radio"]:checked {
-    background-color: #ffcc00; /* Gold background when selected */
-    border-color: #ffcc00; /* Gold border when selected */
+    background-color: #BE9C5F; /* Gold background when selected */
+    border-color: #BE9C5F; /* Gold border when selected */
     position: relative;
 }
 
@@ -824,7 +824,7 @@ textarea {
 
 /* Styling for buttons on the event details page */
 .buttons-container button {
-    background-color: #ffcc00; /* Gold background */
+    background-color: #BE9C5F; /* Gold background */
     color: #000; /* Black text */
     font-size: 16px; /* Make the text readable */
     font-weight: bold; /* Bold text for emphasis */
@@ -838,7 +838,7 @@ textarea {
 }
 
 .buttons-container button#add-to-cart {
-    background-color: #ffcc00; /* Gold for Add to Cart button */
+    background-color: #BE9C5F; /* Gold for Add to Cart button */
 }
 
 .buttons-container button#add-to-cart:hover {
@@ -984,7 +984,7 @@ textarea {
     font-weight: bold;
     color: #000;
     background-color: #fff;
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #BE9C5F; /* Gold border */
     border-radius: 5px;
     outline: none;
 }
@@ -999,7 +999,7 @@ textarea {
     color: #fff;
     font-size: 18px;
     font-weight: bold;
-    border: 2px solid #ffcc00; /* Gold border */
+    border: 2px solid #BE9C5F; /* Gold border */
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -1009,7 +1009,7 @@ textarea {
 #cart-items .quantity-selection button:hover,
 #cart-items .quantity-selection .decrease-quantity:hover,
 #cart-items .quantity-selection .increase-quantity:hover {
-    background-color: #ffcc00; /* Gold background on hover */
+    background-color: #BE9C5F; /* Gold background on hover */
     color: #000; /* Black text on hover */
 }
 
@@ -1034,7 +1034,7 @@ textarea {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    border-bottom: 2px solid #ffcc00;
+    border-bottom: 2px solid #BE9C5F;
     padding-bottom: 10px;
 }
 
@@ -1112,7 +1112,7 @@ textarea {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    border-top: 2px solid #ffcc00;
+    border-top: 2px solid #BE9C5F;
     padding-top: 10px;
 }
 .account-icon {
@@ -1129,7 +1129,7 @@ textarea {
 }
 
 .account-icon a:hover {
-    color: #ffcc00; /* Gold hover effect */
+    color: #BE9C5F; /* Gold hover effect */
 }
 
 /* Login and Account Containers */
@@ -1145,7 +1145,7 @@ textarea {
 
 .login-container h2, .account-container h2 {
     text-align: center;
-    color: #ffcc00; /* Gold for headings */
+    color: #BE9C5F; /* Gold for headings */
     font-size: 24px; /* Larger font size for prominence */
 }
 
@@ -1167,7 +1167,7 @@ textarea {
 
 /* Buttons */
 .login-container button, .account-container button, #logout-button {
-    background-color: #ffcc00; /* Gold background */
+    background-color: #BE9C5F; /* Gold background */
     color: #000; /* Black text */
     font-weight: bold;
     cursor: pointer;
@@ -1193,7 +1193,7 @@ textarea {
 
 #loading-spinner i {
     font-size: 24px; /* Larger spinner */
-    color: #ffcc00; /* Matches the site's gold color */
+    color: #BE9C5F; /* Matches the site's gold color */
 }
 
 /* Error Message */
@@ -1205,7 +1205,7 @@ textarea {
 
 /* Forgot Password Link */
 .gold-link {
-    color: #ffcc00; /* Gold for links */
+    color: #BE9C5F; /* Gold for links */
     text-decoration: none;
     font-weight: bold;
 }
