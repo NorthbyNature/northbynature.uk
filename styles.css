@@ -180,7 +180,7 @@ header.scrolled {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: var(--header-height-100px);
+  padding-top: var(--header-height);
 
   /* image + overlay in one background shorthand */
   background: 
@@ -211,7 +211,7 @@ main::before {
 
 /* this selector only matches when you have <div class="video-wrapper">…</div> earlier in the DOM */
 .video-wrapper ~ main {
-  padding-top: calc(var(--header-height) + var(--video-height));
+  padding-top: calc(var(--header-height) + var(--video-height) - 150px);
 }
 
 section {
