@@ -397,7 +397,7 @@ console.log("📑 scripts.js loaded and DOM ready—now binding events");
         .single();
       if (error) throw error;
       const name = data.full_name || cu.email;
-      acct.querySelector('h0').textContent = `Welcome, ${name}`;
+      acct.querySelector('h1').textContent = `Welcome, ${name}`;
       acct.querySelector('#user-role').textContent = data.role||'';
       acct.querySelector('p').textContent       = `Email: ${cu.email}`;
       const tierEl = acct.querySelector('#membership-tier');
