@@ -214,6 +214,10 @@ main::before {
   padding-top: calc(var(--header-height) + var(--video-height) - 150px);
 }
 
+#members-intro, #exclusive-intro, #partnersnips-intro, #about-intro{
+  scroll-margin-top: 120px;
+}
+
 section {
     margin-bottom: 40px;
     color: #fff;
