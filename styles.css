@@ -71,7 +71,7 @@ header.scrolled {
   position: fixed;
   top: 0;
   right: 0;               /* lock to the right edge */
-  width: 280px;
+  width: 240px;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.76);
   padding: 30px 20px;
@@ -411,7 +411,7 @@ ul li {
   min-width: 20px;           /* ensure it stays a circle */
   text-align: center;        /* center the number */
   position: relative;
-  top: -8px;                 /* tweak to align under the cart icon */
+  top: -15px;                 /* tweak to align under the cart icon */
   left: -8px;                /* tweak to align under the cart icon */
   line-height: 1;            /* tighten the line-height too */
 }
