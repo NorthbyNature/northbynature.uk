@@ -226,7 +226,7 @@ section {
 
 h1, h2, h3 {
     color: #BE9C5F;
-    font-family: Marcellus", serif !important;
+    font-family: "Marcellus", serif !important;
     text-transform: uppercase;
     font-weight: normal;
     text-align: center;
@@ -510,8 +510,7 @@ ul li {
     h3 {
         font-size: 1.4em !important; /* Adjust as needed */
     }
-    h0 {
-        font-size: 1.8em !important; /* Adjust as needed */
+
 }
 
 /* Membership Application Form */
@@ -671,11 +670,11 @@ top: 50%; /* Center vertically */
     overflow: hidden;
 
     /* 3D effect using shadow */
-    box-shadow: 0 6px 0 #8C7346, 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 0 #5E4D2F, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 .gold-button:active {
   transform: translateY(2px);
-  box-shadow: 0 3px 0 #966919, 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 0 #5E4D2F, 0 2px 5px rgba(0, 0, 0, 0.15);
 
 }
 .gold-button:hover {
@@ -1346,4 +1345,36 @@ card.style.setProperty("display", "none", "important");
 }
 .account-actions {
   margin-bottom: 25px; /* Adjust the value to your liking */
+}
+
+.btn-gradient {
+  --gold: #ffcc00;
+  position: relative;
+  display: inline-block;
+  padding: 12px 30px;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  background: transparent;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  overflow: hidden;
+}
+
+.btn-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.btn-gradient:hover {
+  color: #000;
+}
+.btn-gradient:hover::before {
+  transform: scaleX(1);
 }
