@@ -671,11 +671,11 @@ top: 50%; /* Center vertically */
     overflow: hidden;
 
     /* 3D effect using shadow */
-    box-shadow: 0 6px 0 #5E4D2F, 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 0 #8C7346, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 .gold-button:active {
   transform: translateY(2px);
-  box-shadow: 0 3px 0 #5E4D2F, 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 0 #966919, 0 2px 5px rgba(0, 0, 0, 0.15);
 
 }
 .gold-button:hover {
