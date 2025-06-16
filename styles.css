@@ -318,7 +318,7 @@ footer #social img {
 /* ---- Step 2: if there’s a video above the header, push main down ---- */
 .video-wrapper + header + main {
   /* match this to your video-wrapper’s height */
-  padding-top: 700px;   /* e.g. 400px video height + 20px gap */
+  padding-top: 420px;   /* e.g. 400px video height + 20px gap */
 }
 
 
