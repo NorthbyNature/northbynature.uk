@@ -301,7 +301,7 @@ footer #social img {
 
 :root {
   --header-height: 120px;   /* the height of your sticky header */
-  --video-height: 800px;    /* the height of your .video-wrapper */
+  --video-height: 700px;    /* the height of your .video-wrapper */
 }
 
 /* Video is trapped inside header */
