@@ -180,7 +180,7 @@ header.scrolled {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: 300px; /* adjust for header height */
+  padding-top: 600px; /* adjust for header height */
 
   /* image + overlay in one background shorthand */
   background: 
@@ -295,22 +295,24 @@ footer #social img {
 }
 
 /* Video is trapped inside header */
-/* Hero video sits in the flow, pushes everything below it */
 .video-wrapper {
-  position: relative;       /* no longer absolute */
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  aspect-ratio: 4 / 3;      /* keeps 4:3 ratio automatically */
+  height: 800px; /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
-  margin-bottom: 20px;      /* optional gap between video and content */
 }
 
 .video-wrapper video {
-  position: absolute;       /* fill its wrapper */
-  inset: 0;                 /* shorthand for top:0;right:0;bottom:0;left:0 */
-  width: 100%;
-  height: 100%;
-  object-fit: cover;        /* cover the wrapper without distortion */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;            /* let the browser pick a width */
+  height: 100%;           /* match the container’s height */
+  transform: translate(-50%, -50%);
+  object-fit: cover;    /* ★ scale the whole video down */
 }
 
 .text-centered-container {
