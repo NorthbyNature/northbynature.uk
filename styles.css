@@ -180,7 +180,7 @@ header.scrolled {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: 800px; /* adjust for header height */
+  padding-top: var(--header-height);
 
   /* image + overlay in one background shorthand */
   background: 
@@ -207,6 +207,11 @@ main::before {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.1); /* adjust opacity as desired */
     z-index: -1;
+}
+
+/* this selector only matches when you have <div class="video-wrapper">…</div> earlier in the DOM */
+.video-wrapper ~ main {
+  padding-top: calc(var(--header-height) + var(--video-height));
 }
 
 section {
@@ -294,13 +299,18 @@ footer #social img {
     height: 30px;
 }
 
+:root {
+  --header-height: 120px;   /* the height of your sticky header */
+  --video-height: 800px;    /* the height of your .video-wrapper */
+}
+
 /* Video is trapped inside header */
 .video-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 800px; /* Or match the height of your header */
+  height: var(--video-height); /* Or match the height of your header */
   overflow: hidden;
   z-index: 0;
 }
@@ -313,6 +323,12 @@ footer #social img {
   height: 100%;           /* match the container’s height */
   transform: translate(-50%, -50%);
   object-fit: cover;    /* ★ scale the whole video down */
+}
+
+.video-wrapper ~ header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .text-centered-container {
