@@ -1347,35 +1347,3 @@ card.style.setProperty("display", "none", "important");
 .account-actions {
   margin-bottom: 25px; /* Adjust the value to your liking */
 }
-
-.btn-gradient {
-  --gold: #ffcc00;
-  position: relative;
-  display: inline-block;
-  padding: 12px 30px;
-  color: var(--gold);
-  border: 2px solid var(--gold);
-  background: transparent;
-  text-transform: uppercase;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  overflow: hidden;
-}
-
-.btn-gradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-  z-index: -1;
-}
-
-.btn-gradient:hover {
-  color: #000;
-}
-.btn-gradient:hover::before {
-  transform: scaleX(1);
-}
