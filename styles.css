@@ -180,7 +180,7 @@ header.scrolled {
 main {
   /* preserve your existing padding */
   padding: 20px;
-  padding-top: 600px; /* adjust for header height */
+  padding-top: 800px; /* adjust for header height */
 
   /* image + overlay in one background shorthand */
   background: 
