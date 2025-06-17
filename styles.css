@@ -1352,7 +1352,7 @@ card.style.setProperty("display", "none", "important");
   visibility: visible !important;
   opacity: 1 !important;
   /* your gradient button styles… */
-  --gold: #4CAF50;
+  --gold: #BE9C5F;
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
