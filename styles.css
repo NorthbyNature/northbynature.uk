@@ -1352,12 +1352,12 @@ card.style.setProperty("display", "none", "important");
   visibility: visible !important;
   opacity: 1 !important;
   /* your gradient button styles… */
-  --gold: #ffcc00;
+  --gold: #4CAF50;
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
-  padding: 12px 30px !important;
+  padding: 12px 25px !important;
   color: var(--gold) !important;
   border: 5px solid var(--gold) !important;
   background: transparent !important;
