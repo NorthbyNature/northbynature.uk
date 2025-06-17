@@ -1275,9 +1275,6 @@ textarea {
   }
 }
 
-card.style.setProperty("display", "none", "important");
-}
-
 @keyframes pop {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.2); }
