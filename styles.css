@@ -310,7 +310,7 @@ footer #social img {
 
 /* Video is trapped inside header */
 .video-wrapper {
-  position: relative;
+  position: absolute;
   z-index: 0;
   top: 0;
   left: 0;
@@ -1369,7 +1369,7 @@ card.style.setProperty("display", "none", "important");
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
-  z-index: -1;
+  z-index: 0;
 }
 
 .btn-gradient:hover {
