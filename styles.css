@@ -316,11 +316,10 @@ footer #social img {
   width: 100%;
   height: var(--video-height); /* Or match the height of your header */
   overflow: hidden;
-  z-index: 0;
+  z-index: -1;
 }
 
 .video-wrapper video {
-  z-index: -1;
   position: absolute;
   top: 50%;
   left: 50%;
