@@ -429,11 +429,12 @@ window.addEventListener('scroll', () => {
   }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
   const vid = document.querySelector('.video-wrapper video');
   if (vid) {
     vid.muted = true;
     vid.playsInline = true;
     vid.setAttribute('webkit-playsinline', '');
-    vid.play().catch(()=>{/* silence mobile-block errors */});
+    vid.play().catch(() => { /* mobile autoplay may be blocked silently */ });
   }
 });
