@@ -428,3 +428,12 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 });
+
+  const vid = document.querySelector('.video-wrapper video');
+  if (vid) {
+    vid.muted = true;
+    vid.playsInline = true;
+    vid.setAttribute('webkit-playsinline', '');
+    vid.play().catch(()=>{/* silence mobile-block errors */});
+  }
+});
