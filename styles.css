@@ -1378,3 +1378,11 @@ card.style.setProperty("display", "none", "important");
 .btn-gradient:hover::before {
   transform: scaleX(1);
 }
+/* position the gradient button in the middle of the video */
+.video-wrapper .btn-gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;               /* above the video, but below your header (z-index:1000) */
+}
