@@ -1275,6 +1275,9 @@ textarea {
   }
 }
 
+card.style.setProperty("display", "none", "important");
+}
+
 @keyframes pop {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.2); }
@@ -1345,36 +1348,41 @@ textarea {
 }
 
 .btn-gradient {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* your gradient button styles… */
   --gold: #ffcc00;
-  position: relative;
-  display: inline-block;
-  padding: 12px 30px;
-  color: var(--gold);
-  border: 2px solid var(--gold);
-  background: transparent;
-  text-transform: uppercase;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  overflow: hidden;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  padding: 12px 30px !important;
+  color: var(--gold) !important;
+  border: 2px solid var(--gold) !important;
+  background: transparent !important;
+  z-index: 500 !important;       /* well above the video */
 }
 
 .btn-gradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-  z-index: 0;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: var(--gold) !important;
+  transform: scaleX(0) !important;
+  transform-origin: left !important;
+  transition: transform 0.3s ease !important;
+  z-index: -1 !important;
+}
+
+.btn-gradient:hover::before {
+  transform: scaleX(1) !important;
 }
 
 .btn-gradient:hover {
   color: #000;
 }
-.btn-gradient:hover::before {
-  transform: scaleX(1);
-}
+
 /* position the gradient button in the middle of the video */
 .video-wrapper .btn-gradient {
   position: absolute;
