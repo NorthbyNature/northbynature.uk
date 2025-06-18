@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-<!-- Video Background (not sticky) -->
   <!-- Sticky Header Only -->
   <header class="text-center">
     <div class="header-content">
@@ -30,11 +29,33 @@
       </div>
 
       <!-- Logo -->
-      <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+      <a href="index.html">
+  <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+</a>
 
-     
+      <!-- Menu Toggle Button -->
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
+      <!-- Sidebar Menu -->
+      <div id="sidebarMenu" class="sidebar-menu">
+        <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
+        <ul class="sidebar-nav">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="events.html">EVENTS</a></li>
+          <li><a href="members.html#members-intro">MEMBERS</a></li>
+          <li><a href="partnerships.html#partnerships-intro">PARTNERSHIPS & COLLABORATIONS</a></li>
+          <li><a href="exclusive.html#exclusive-intro">EXCLUSIVE</a></li>
+          <li><a href="gallery.html">GALLARY</a></li>
+          <li><a href="about.html#about-intro">ABOUT US</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+      </div>
+      <!-- Overlay -->
+      <div id="menuOverlay" class="menu-overlay">
+</div>
     <!-- Main Content Section: Contact Form -->
     <main>
         <h1>CONTACT US</h1>

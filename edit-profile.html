@@ -46,7 +46,7 @@
       font-weight: bold;
     }
     .edit-profile-container button.submit-btn {
-      background-color: #ffcc00;
+      background-color: #BE9C5F;
       color: #000;
       padding: 12px;
       border: none;
@@ -56,42 +56,56 @@
       cursor: pointer;
     }
     .edit-profile-container button.submit-btn:hover {
-      background-color: #e6b800;
+      background-color: #5E4D2F;
     }
   </style>
 </head>
 <body>
-  <!-- Header Section -->
+  <!-- Sticky Header Only -->
   <header class="text-center">
-    <div class="account-icon">
-      <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
-    </div>
-    <div class="instagram-link">
-      <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-    </div>
-    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-    <nav>
-      <ul class="nav justify-content-center">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-        <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships & Collaborations</a></li>
-        <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="cart-icon">
-      <a href="cart.html">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
-      </a>
+    <div class="header-content">
+      <div class="account-icon">
+        <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
+      </div>
+
+      <div class="cart-icon">
+        <a href="cart.html">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
+
+      <!-- Logo -->
+      <a href="index.html">
+  <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+</a>
+
+      <!-- Menu Toggle Button -->
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
-
+      <!-- Sidebar Menu -->
+      <div id="sidebarMenu" class="sidebar-menu">
+        <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
+        <ul class="sidebar-nav">
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="events.html">EVENTS</a></li>
+          <li><a href="members.html#members-intro">MEMBERS</a></li>
+          <li><a href="partnerships.html#partnerships-intro">PARTNERSHIPS & COLLABORATIONS</a></li>
+          <li><a href="exclusive.html#exclusive-intro">EXCLUSIVE</a></li>
+          <li><a href="gallery.html">GALLARY</a></li>
+          <li><a href="about.html#about-intro">ABOUT US</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+      </div>
+      <!-- Overlay -->
+      <div id="menuOverlay" class="menu-overlay">
+</div>
   <main class="main-content">
     <section class="content-section text-centered-container edit-profile-container">
+    <p><a href="index.html" class="gold-button">RETURN HOME</a></p>
       <h2>Edit Profile</h2>
       <form id="edit-profile-form">
         <div class="form-group">
