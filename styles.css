@@ -1360,9 +1360,25 @@ card.style.setProperty("display", "none", "important");
   padding: 12px 25px !important;
   color: var(--gold) !important;
   border: 5px solid var(--gold) !important;
-   background-color: rgba(0, 0, 0, 0.6) !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
   z-index: 500 !important;       /* well above the video */
   text-align: center;
+  background-image:
+    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%),
+    rgba(0,0,0,0.6);
+  /* paint the gradient in the border box, and the black fill only in the padding box */
+  background-origin: border-box, padding-box;
+  background-clip:   border-box, padding-box;
+  /* gradient is twice as wide so it can sweep across */
+  background-size: 200% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  /* start the shine off-to-the left */
+  background-position: -100% 0, 0 0;
+}
+
+/* move that gradient from left→right */
+@keyframes border-shine {
+  to { background-position: 200% 0, 0 0; }
 }
 
 .btn-gradient::before {
@@ -1376,33 +1392,9 @@ card.style.setProperty("display", "none", "important");
   z-index: -1 !important;
 }
 
-/* 2) create the “shine” stripe */
-.btn-gradient::after {
-  content: "";
-  position: absolute;
-  top: 0; left: -100%;
-  width: 50%;    /* width of the highlight band */
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0.5) 50%,
-    transparent 100%
-  );
-  transform: skewX(-25deg);
-  /* animate it sliding across */
-  animation: shine 2s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 1;    /* sits above the background but below your text */
-}
-
-/* 3) define the keyframes */
-@keyframes shine {
-  from { left: -50%; }
-  to   { left: 150%; }
-}
 .btn-gradient:hover {
   color: #000;
+  animation: border-shine 2s linear infinite;
 }
 
 /* position the gradient button in the middle of the video */
