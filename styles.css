@@ -1360,7 +1360,7 @@ card.style.setProperty("display", "none", "important");
   padding: 12px 25px !important;
   color: var(--gold) !important;
   border: 5px solid var(--gold) !important;
-   background-color: rgba(0, 0, 0, 0.3); !important;
+   background-color: rgba(0, 0, 0, 0.3) !important;
   z-index: 500 !important;       /* well above the video */
   text-align: center;
 }
