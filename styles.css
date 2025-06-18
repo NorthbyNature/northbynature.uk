@@ -1348,36 +1348,29 @@ card.style.setProperty("display", "none", "important");
 }
 
 .btn-gradient {
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  /* your gradient button styles… */
   --gold: #BE9C5F;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  padding: 12px 25px !important;
-  color: var(--gold) !important;
-  border: 5px solid transparent !important;
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  z-index: 500 !important;       /* well above the video */
-  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  padding: 12px 25px;
+  color: var(--gold);
+  border: 5px solid transparent;
+  background-color: rgba(0, 0, 0, 0.6);
   background-image:
     linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%),
     rgba(0,0,0,0.6);
-  /* paint the gradient in the border box, and the black fill only in the padding box */
   background-origin: border-box, padding-box;
-  background-clip:   border-box, padding-box;
-  /* gradient is twice as wide so it can sweep across */
+  background-clip: border-box, padding-box;
   background-size: 200% 100%, 100% 100%;
   background-repeat: no-repeat, no-repeat;
-  /* start the shine off-to-the left */
   background-position: -100% 0, 0 0;
+  text-transform: uppercase;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
-/* move that gradient from left→right */
 @keyframes border-shine {
   from { background-position: -100% 0, 0 0; }
   to   { background-position: 200% 0, 0 0; }
@@ -1386,13 +1379,4 @@ card.style.setProperty("display", "none", "important");
 .btn-gradient:hover {
   color: #000;
   animation: border-shine 2s linear infinite;
-}
-
-/* position the gradient button in the middle of the video */
-.video-wrapper .btn-gradient {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;               /* above the video, but below your header (z-index:1000) */
 }
