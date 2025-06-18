@@ -1374,11 +1374,13 @@ card.style.setProperty("display", "none", "important");
   background-repeat: no-repeat, no-repeat;
   /* start the shine off-to-the left */
   background-position: -100% 0, 0 0;
+  transition: color 0.3s ease;
 }
 
 /* move that gradient from left→right */
 @keyframes border-shine {
-  to { background-position: 200% 0, 0 0; }
+  from { background-position: -100% 0, 0 0; }
+  to   { background-position: 200% 0, 0 0; }
 }
 
 .btn-gradient:hover {
