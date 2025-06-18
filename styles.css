@@ -1349,6 +1349,7 @@ card.style.setProperty("display", "none", "important");
 
 .btn-gradient {
   --gold: #BE9C5F;
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1357,26 +1358,42 @@ card.style.setProperty("display", "none", "important");
   padding: 12px 25px;
   color: var(--gold);
   border: 5px solid transparent;
-  background-color: rgba(0, 0, 0, 0.6);
+  
+  /* two‐layer background:
+     1) black fill in the padding‐box
+     2) gradient in the border‐box */
   background-image:
-    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%),
-    rgba(0,0,0,0.6);
-  background-origin: border-box, padding-box;
-  background-clip: border-box, padding-box;
-  background-size: 200% 100%, 100% 100%;
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-size: 100% 100%, 200% 100%;
+  background-position: 0 0, -100% 0;
   background-repeat: no-repeat, no-repeat;
-  background-position: -100% 0, 0 0;
+
   text-transform: uppercase;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
-@keyframes border-shine {
-  from { background-position: -100% 0, 0 0; }
-  to   { background-position: 200% 0, 0 0; }
-}
-
 .btn-gradient:hover {
   color: #000;
+  /* animate just the second (gradient) layer */
   animation: border-shine 2s linear infinite;
+}
+
+@keyframes border-shine {
+  to {
+    /* move gradient from left (-100%) → right (200%) */
+    background-position: 0 0, 200% 0;
+  }
+}
+
+/* position the gradient button in the middle of the video */
+.video-wrapper .btn-gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;               /* above the video, but below your header (z-index:1000) */
 }
