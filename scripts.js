@@ -437,4 +437,8 @@ document.addEventListener('DOMContentLoaded', () => {
     vid.setAttribute('webkit-playsinline', '');
     vid.play().catch(() => { /* mobile autoplay may be blocked silently */ });
   }
+
+ if (!vid) {
+    document.body.classList.add('no-video-header');
+  }
 });
