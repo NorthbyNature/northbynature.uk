@@ -1355,9 +1355,9 @@ card.style.setProperty("display", "none", "important");
   left: 50%;
   transform: translate(-50%, -50%);
   display: inline-block;
+  text-align: center;
   padding: 12px 25px;
   color: var(--gold);
-  border: 5px solid transparent;
   
   /* two‐layer background:
      1) black fill in the padding‐box
@@ -1373,6 +1373,8 @@ card.style.setProperty("display", "none", "important");
 
   text-transform: uppercase;
   font-weight: 600;
+  /* static gold “border” above everything */
+  box-shadow: inset 0 0 0 5px var(--gold);
   transition: color 0.3s ease;
 }
 
