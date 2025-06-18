@@ -1360,7 +1360,7 @@ card.style.setProperty("display", "none", "important");
   padding: 12px 25px !important;
   color: var(--gold) !important;
   border: 5px solid var(--gold) !important;
-   background-color: rgba(0, 0, 0, 0.3) !important;
+   background-color: rgba(0, 0, 0, 0.6) !important;
   z-index: 500 !important;       /* well above the video */
   text-align: center;
 }
@@ -1374,10 +1374,6 @@ card.style.setProperty("display", "none", "important");
   transform-origin: left !important;
   transition: transform 0.3s ease !important;
   z-index: -1 !important;
-}
-
-.btn-gradient:hover::before {
-  transform: scaleX(1) !important;
 }
 
 .btn-gradient:hover {
