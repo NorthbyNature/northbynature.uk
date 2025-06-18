@@ -1377,7 +1377,7 @@ card.style.setProperty("display", "none", "important");
 }
 
 .btn-gradient:hover {
-  color: #000;
+  color: #BE9C5F;
   /* animate just the second (gradient) layer */
   animation: border-shine 2s linear infinite;
 }
