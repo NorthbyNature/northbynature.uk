@@ -1414,3 +1414,20 @@ card.style.setProperty("display", "none", "important");
     height: 40px;
     fill: #BE9C5F;
 }
+  .video-launcher {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .video-launcher img {
+    width: 60px; /* Adjust size of play button */
+    height: auto;
+  }
+
+  /* Hide the actual video by default */
+  #fullscreenVideo {
+    display: none;
+  }

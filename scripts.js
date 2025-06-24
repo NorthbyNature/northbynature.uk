@@ -442,3 +442,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('no-video-header');
   }
 });
+
+function playFullScreenVideo() {
+  const video = document.getElementById("fullscreenVideo");
+  if (!video) return;
+
+  video.style.display = "block";
+  video.play();
+
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  } else if (video.msRequestFullscreen) {
+    video.msRequestFullscreen();
+  }
+
+  video.onended = function () {
+    video.style.display = "none";
+  };
+}
