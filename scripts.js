@@ -443,7 +443,62 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-  const video = document.querySelector('video');
-  video.onended = () => {
-    window.location.href = "index.html"; // or your home URL
+function playFullScreenVideo() {
+  const video = document.getElementById("fullscreenVideo");
+  if (!video) return;
+
+  video.style.display = "block";
+
+  const playVideo = () => {
+    video.play().catch((err) => {
+      console.error("Video playback failed:", err);
+    });
   };
+
+  // Request fullscreen
+  let fullscreenPromise;
+  if (video.requestFullscreen) {
+    fullscreenPromise = video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    fullscreenPromise = video.webkitRequestFullscreen();
+  } else if (video.msRequestFullscreen) {
+    fullscreenPromise = video.msRequestFullscreen();
+  } else {
+    fullscreenPromise = Promise.resolve(); // fallback
+  }
+
+  fullscreenPromise
+    .then(() => {
+      playVideo();
+    })
+    .catch((err) => {
+      console.error("Fullscreen request failed:", err);
+      playVideo(); // still try to play
+    });
+
+  // Reset video on end or fullscreen exit
+  function resetVideo() {
+    video.pause();
+    video.currentTime = 0;
+    video.style.display = "none";
+  }
+
+  video.onended = resetVideo;
+
+  const onFullscreenExit = () => {
+    if (
+      !document.fullscreenElement &&
+      !document.webkitFullscreenElement &&
+      !document.msFullscreenElement
+    ) {
+      resetVideo();
+      document.removeEventListener("fullscreenchange", onFullscreenExit);
+      document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
+      document.removeEventListener("msfullscreenchange", onFullscreenExit);
+    }
+  };
+
+  document.addEventListener("fullscreenchange", onFullscreenExit);
+  document.addEventListener("webkitfullscreenchange", onFullscreenExit);
+  document.addEventListener("msfullscreenchange", onFullscreenExit);
+}
