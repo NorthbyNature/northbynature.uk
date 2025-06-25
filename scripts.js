@@ -447,41 +447,49 @@ function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
   if (!video) return;
 
+  // First: show the video element
   video.style.display = "block";
 
+  // Function to play video
   const playVideo = () => {
-    video.play().catch((err) => {
-      console.error("Video playback failed:", err);
-    });
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((err) => {
+        console.error("Video playback failed:", err);
+      });
+    }
   };
 
-  // Request fullscreen
-  let fullscreenPromise;
-  if (video.requestFullscreen) {
-    fullscreenPromise = video.requestFullscreen();
-  } else if (video.webkitRequestFullscreen) {
-    fullscreenPromise = video.webkitRequestFullscreen();
-  } else if (video.msRequestFullscreen) {
-    fullscreenPromise = video.msRequestFullscreen();
-  } else {
-    fullscreenPromise = Promise.resolve(); // fallback
-  }
+  // Then: request fullscreen
+  const enterFullscreen = () => {
+    if (video.requestFullscreen) {
+      return video.requestFullscreen();
+    } else if (video.webkitEnterFullscreen) { // iPhone Safari fallback
+      return video.webkitEnterFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      return video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+      return video.msRequestFullscreen();
+    } else {
+      return Promise.resolve(); // fallback if fullscreen not supported
+    }
+  };
 
-  fullscreenPromise
+  enterFullscreen()
     .then(() => {
       playVideo();
     })
     .catch((err) => {
-      console.error("Fullscreen request failed:", err);
-      playVideo(); // still try to play
+      console.warn("Fullscreen request failed:", err);
+      playVideo(); // still try to play even if fullscreen fails
     });
 
-  // Reset video on end or fullscreen exit
-  function resetVideo() {
+  // Reset on end or fullscreen exit
+  const resetVideo = () => {
     video.pause();
     video.currentTime = 0;
     video.style.display = "none";
-  }
+  };
 
   video.onended = resetVideo;
 
@@ -494,11 +502,3 @@ function playFullScreenVideo() {
       resetVideo();
       document.removeEventListener("fullscreenchange", onFullscreenExit);
       document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
-      document.removeEventListener("msfullscreenchange", onFullscreenExit);
-    }
-  };
-
-  document.addEventListener("fullscreenchange", onFullscreenExit);
-  document.addEventListener("webkitfullscreenchange", onFullscreenExit);
-  document.addEventListener("msfullscreenchange", onFullscreenExit);
-}
