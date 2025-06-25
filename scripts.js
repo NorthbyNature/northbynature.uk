@@ -447,42 +447,47 @@ function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
   if (!video) return;
 
+  // Force display so it’s allowed to request fullscreen
   video.style.display = "block";
-  video.play();
 
-  // Fullscreen entry
-  if (video.requestFullscreen) {
-    video.requestFullscreen();
-  } else if (video.webkitRequestFullscreen) {
-    video.webkitRequestFullscreen();
-  } else if (video.msRequestFullscreen) {
-    video.msRequestFullscreen();
+  const playAndFullscreen = () => {
+    video.play().then(() => {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    }).catch((err) => {
+      console.error('Playback error:', err);
+    });
+  };
+
+  if (video.readyState >= 3) {
+    // Video is likely already buffered enough
+    playAndFullscreen();
+  } else {
+    // Wait until the video is ready
+    video.addEventListener('canplay', playAndFullscreen, { once: true });
   }
 
-  // Hide video after playback ends
-  video.onended = function () {
+  // Reset on end or exit
+  const resetVideo = () => {
     video.pause();
     video.currentTime = 0;
     video.style.display = "none";
   };
 
-  // Also detect when user manually exits fullscreen
-  function onFullscreenExit() {
-    if (
-      !document.fullscreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
-    ) {
-      video.pause();
-      video.currentTime = 0;
-      video.style.display = "none";
-      document.removeEventListener('fullscreenchange', onFullscreenExit);
-      document.removeEventListener('webkitfullscreenchange', onFullscreenExit);
-      document.removeEventListener('msfullscreenchange', onFullscreenExit);
-    }
-  }
+  video.onended = resetVideo;
 
-  document.addEventListener('fullscreenchange', onFullscreenExit);
-  document.addEventListener('webkitfullscreenchange', onFullscreenExit);
-  document.addEventListener('msfullscreenchange', onFullscreenExit);
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) resetVideo();
+  });
+  document.addEventListener('webkitfullscreenchange', () => {
+    if (!document.webkitFullscreenElement) resetVideo();
+  });
+  document.addEventListener('msfullscreenchange', () => {
+    if (!document.msFullscreenElement) resetVideo();
+  });
 }
