@@ -450,6 +450,7 @@ function playFullScreenVideo() {
   video.style.display = "block";
   video.play();
 
+  // Fullscreen entry
   if (video.requestFullscreen) {
     video.requestFullscreen();
   } else if (video.webkitRequestFullscreen) {
@@ -458,7 +459,30 @@ function playFullScreenVideo() {
     video.msRequestFullscreen();
   }
 
+  // Hide video after playback ends
   video.onended = function () {
+    video.pause();
+    video.currentTime = 0;
     video.style.display = "none";
   };
+
+  // Also detect when user manually exits fullscreen
+  function onFullscreenExit() {
+    if (
+      !document.fullscreenElement &&
+      !document.webkitFullscreenElement &&
+      !document.msFullscreenElement
+    ) {
+      video.pause();
+      video.currentTime = 0;
+      video.style.display = "none";
+      document.removeEventListener('fullscreenchange', onFullscreenExit);
+      document.removeEventListener('webkitfullscreenchange', onFullscreenExit);
+      document.removeEventListener('msfullscreenchange', onFullscreenExit);
+    }
+  }
+
+  document.addEventListener('fullscreenchange', onFullscreenExit);
+  document.addEventListener('webkitfullscreenchange', onFullscreenExit);
+  document.addEventListener('msfullscreenchange', onFullscreenExit);
 }
