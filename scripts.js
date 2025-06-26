@@ -445,38 +445,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
-  const container = document.getElementById("video-container");
-  if (!video || !container) return;
+  const overlay = document.getElementById("video-overlay");
+  if (!video || !overlay) return;
 
-  container.style.display = "block";
+  overlay.style.display = "block";
 
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   if (isIOS && typeof video.webkitEnterFullscreen === "function") {
+    video.muted = false;
     video.controls = true;
-    video.muted = false; // prevent iOS from instantly closing
     video.play();
     video.webkitEnterFullscreen();
     return;
   }
 
-  video.muted = true; // mute for autoplay on desktop
+  video.muted = true;
   video.play().then(() => {
     if (video.requestFullscreen) {
-      video.requestFullscreen();
+      return video.requestFullscreen();
     } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen();
+      return video.webkitRequestFullscreen();
     } else if (video.msRequestFullscreen) {
-      video.msRequestFullscreen();
+      return video.msRequestFullscreen();
     }
   }).catch(err => {
     console.error("Playback or fullscreen failed:", err);
   });
 
-  // Reset on video end
-  video.onended = () => {
-    closeFullscreenVideo();
-  };
+  video.onended = closeFullscreenVideo;
 
   const onFullscreenExit = () => {
     if (
@@ -498,13 +495,12 @@ function playFullScreenVideo() {
 
 function closeFullscreenVideo() {
   const video = document.getElementById("fullscreenVideo");
-  const container = document.getElementById("video-container");
-
-  if (!video || !container) return;
+  const overlay = document.getElementById("video-overlay");
+  if (!video || !overlay) return;
 
   video.pause();
   video.currentTime = 0;
-  container.style.display = "none";
+  overlay.style.display = "none";
 
   if (document.fullscreenElement) document.exitFullscreen();
   else if (document.webkitFullscreenElement) document.webkitExitFullscreen();
