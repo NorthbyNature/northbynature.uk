@@ -452,12 +452,19 @@ function playFullScreenVideo() {
 
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+  const redirect = () => {
+    cleanupVideo(video, container);
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 300);
+  };
+
   if (isIOS && typeof video.webkitEnterFullscreen === "function") {
     video.controls = true;
     video.muted = false;
     video.play();
     video.webkitEnterFullscreen();
-    video.onended = redirectToHome;
+    video.onended = redirect;
     return;
   }
 
@@ -474,8 +481,10 @@ function playFullScreenVideo() {
     console.error("Playback or fullscreen failed:", err);
   });
 
-  video.onended = redirectToHome;
+  // Redirect if user exits video before it ends
+  video.onended = redirect;
 
+  // Fallback: check if fullscreen was exited manually
   const onFullscreenExit = () => {
     if (
       !document.fullscreenElement &&
@@ -485,34 +494,36 @@ function playFullScreenVideo() {
       document.removeEventListener("fullscreenchange", onFullscreenExit);
       document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
       document.removeEventListener("msfullscreenchange", onFullscreenExit);
-      redirectToHome();
+      redirect();
     }
   };
 
   document.addEventListener("fullscreenchange", onFullscreenExit);
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
+
+  // Bonus fallback: monitor if video time stops updating mid-way (covers Safari bugs)
+  let lastTime = 0;
+  const checkFreeze = () => {
+    if (!container.style.display || container.style.display === "none") return;
+    if (video.currentTime === lastTime && !video.paused) {
+      redirect();
+    } else {
+      lastTime = video.currentTime;
+      setTimeout(checkFreeze, 1000);
+    }
+  };
+  setTimeout(checkFreeze, 2000);
 }
 
-function redirectToHome() {
-  const video = document.getElementById("fullscreenVideo");
-  const container = document.getElementById("video-container");
+function cleanupVideo(video, container) {
+  if (!video || !container) return;
 
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
-  }
-
-  if (container) {
-    container.style.display = "none";
-  }
+  video.pause();
+  video.currentTime = 0;
+  container.style.display = "none";
 
   if (document.fullscreenElement) document.exitFullscreen();
   if (document.webkitFullscreenElement) document.webkitExitFullscreen();
   if (document.msFullscreenElement) document.msExitFullscreen();
-
-  // 🔁 Redirect to homepage after a short delay
-  setTimeout(() => {
-    window.location.href = "index.html"; // Change if your homepage URL is different
-  }, 300); // Slight delay to allow fullscreen exit
 }
