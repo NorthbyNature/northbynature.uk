@@ -454,13 +454,14 @@ function playFullScreenVideo() {
 
   if (isIOS && typeof video.webkitEnterFullscreen === "function") {
     video.controls = true;
-    video.muted = false; // prevent iOS from instantly closing
+    video.muted = false;
     video.play();
     video.webkitEnterFullscreen();
+    video.onended = redirectToHome;
     return;
   }
 
-  video.muted = true; // mute for autoplay on desktop
+  video.muted = true;
   video.play().then(() => {
     if (video.requestFullscreen) {
       video.requestFullscreen();
@@ -473,10 +474,7 @@ function playFullScreenVideo() {
     console.error("Playback or fullscreen failed:", err);
   });
 
-  // Reset on video end
-  video.onended = () => {
-    resetFullscreenVideo();
-  };
+  video.onended = redirectToHome;
 
   const onFullscreenExit = () => {
     if (
@@ -484,10 +482,10 @@ function playFullScreenVideo() {
       !document.webkitFullscreenElement &&
       !document.msFullscreenElement
     ) {
-      resetFullscreenVideo();
       document.removeEventListener("fullscreenchange", onFullscreenExit);
       document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
       document.removeEventListener("msfullscreenchange", onFullscreenExit);
+      redirectToHome();
     }
   };
 
@@ -496,17 +494,25 @@ function playFullScreenVideo() {
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
 
-function resetFullscreenVideo() {
+function redirectToHome() {
   const video = document.getElementById("fullscreenVideo");
   const container = document.getElementById("video-container");
 
-  if (!video || !container) return;
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
 
-  video.pause();
-  video.currentTime = 0;
-  container.style.display = "none";
+  if (container) {
+    container.style.display = "none";
+  }
 
   if (document.fullscreenElement) document.exitFullscreen();
-  else if (document.webkitFullscreenElement) document.webkitExitFullscreen();
-  else if (document.msFullscreenElement) document.msExitFullscreen();
+  if (document.webkitFullscreenElement) document.webkitExitFullscreen();
+  if (document.msFullscreenElement) document.msExitFullscreen();
+
+  // 🔁 Redirect to homepage after a short delay
+  setTimeout(() => {
+    window.location.href = "index.html"; // Change if your homepage URL is different
+  }, 300); // Slight delay to allow fullscreen exit
 }
