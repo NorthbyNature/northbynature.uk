@@ -464,18 +464,19 @@ function playFullScreenVideo() {
   };
 
   // Fullscreen logic
-  if (isIOS && typeof video.webkitEnterFullscreen === "function") {
-    tryPlay();
-    video.webkitEnterFullscreen();
-  } else if (video.requestFullscreen) {
-    tryPlay();
-    video.requestFullscreen().catch(err => {
-      console.warn("Fullscreen failed:", err);
-    });
-  } else {
-    tryPlay(); // fallback
-  }
-
+if (isIOS && typeof video.webkitEnterFullscreen === "function") {
+  tryPlay();
+  container.classList.remove("active"); // Hides overlay before fullscreen
+  video.webkitEnterFullscreen();
+  return; // Prevents other fullscreen attempts
+} else if (video.requestFullscreen) {
+  tryPlay();
+  video.requestFullscreen().catch(err => {
+    console.warn("Fullscreen failed:", err);
+  });
+} else {
+  tryPlay(); // fallback
+}
   const cleanUp = () => {
     video.pause();
     video.currentTime = 0;
