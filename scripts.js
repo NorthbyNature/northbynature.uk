@@ -451,79 +451,65 @@ function playFullScreenVideo() {
   container.style.display = "block";
 
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
 
-  const redirect = () => {
-    cleanupVideo(video, container);
-    setTimeout(() => {
-      window.location.href = "index.html";
-    }, 300);
+  // Unmute on mobile to allow user-initiated playback, mute on desktop for autoplay fullscreen
+  video.muted = !isIOS;
+
+  // Play video
+  const tryPlay = () => {
+    video.play().catch((err) => {
+      console.error("Play failed:", err);
+    });
   };
 
+  // Fullscreen handling
   if (isIOS && typeof video.webkitEnterFullscreen === "function") {
-    video.controls = true;
-    video.muted = false;
-    video.play();
+    tryPlay();
     video.webkitEnterFullscreen();
-    video.onended = redirect;
-    return;
+  } else if (video.requestFullscreen) {
+    tryPlay();
+    video.requestFullscreen().catch(err => {
+      console.warn("Fullscreen failed:", err);
+    });
+  } else {
+    tryPlay(); // fallback if no fullscreen
   }
 
-  video.muted = true;
-  video.play().then(() => {
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) {
-      video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) {
-      video.msRequestFullscreen();
-    }
-  }).catch(err => {
-    console.error("Playback or fullscreen failed:", err);
-  });
+  // When video ends or is exited
+  const cleanUp = () => {
+    video.pause();
+    video.currentTime = 0;
+    container.style.display = "none";
 
-  // Redirect if user exits video before it ends
-  video.onended = redirect;
+    if (document.fullscreenElement) document.exitFullscreen();
+    if (document.webkitFullscreenElement) document.webkitExitFullscreen();
+    if (document.msFullscreenElement) document.msExitFullscreen();
 
-  // Fallback: check if fullscreen was exited manually
+    // Optional: redirect
+    window.location.href = "www.northbynature.uk";
+  };
+
+  video.onended = cleanUp;
+
   const onFullscreenExit = () => {
     if (
       !document.fullscreenElement &&
       !document.webkitFullscreenElement &&
       !document.msFullscreenElement
     ) {
-      document.removeEventListener("fullscreenchange", onFullscreenExit);
-      document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
-      document.removeEventListener("msfullscreenchange", onFullscreenExit);
-      redirect();
+      cleanUp();
+      removeFullscreenListeners();
     }
+  };
+
+  const removeFullscreenListeners = () => {
+    document.removeEventListener("fullscreenchange", onFullscreenExit);
+    document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
+    document.removeEventListener("msfullscreenchange", onFullscreenExit);
   };
 
   document.addEventListener("fullscreenchange", onFullscreenExit);
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
-
-  // Bonus fallback: monitor if video time stops updating mid-way (covers Safari bugs)
-  let lastTime = 0;
-  const checkFreeze = () => {
-    if (!container.style.display || container.style.display === "none") return;
-    if (video.currentTime === lastTime && !video.paused) {
-      redirect();
-    } else {
-      lastTime = video.currentTime;
-      setTimeout(checkFreeze, 1000);
-    }
-  };
-  setTimeout(checkFreeze, 2000);
-}
-
-function cleanupVideo(video, container) {
-  if (!video || !container) return;
-
-  video.pause();
-  video.currentTime = 0;
-  container.style.display = "none";
-
-  if (document.fullscreenElement) document.exitFullscreen();
-  if (document.webkitFullscreenElement) document.webkitExitFullscreen();
-  if (document.msFullscreenElement) document.msExitFullscreen();
 }
