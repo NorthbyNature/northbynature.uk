@@ -485,9 +485,6 @@ function playFullScreenVideo() {
     if (document.fullscreenElement) document.exitFullscreen();
     if (document.webkitFullscreenElement) document.webkitExitFullscreen();
     if (document.msFullscreenElement) document.msExitFullscreen();
-
-    // Optional: redirect
-    window.location.href = "www.northbynature.uk";
   };
 
   video.onended = cleanUp;

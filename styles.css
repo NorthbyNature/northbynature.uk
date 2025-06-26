@@ -1401,33 +1401,39 @@ card.style.setProperty("display", "none", "important");
 }
 
 /* position the gradient button in the middle of the video */
+.video-launcher {
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.video-launcher img {
+  width: 60px;
+  height: auto;
+}
+
+/* Hide and show the video overlay container */
+#video-container {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 9999;
+}
+
+#video-container.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional: style for the membership button overlay on video background */
 .video-wrapper .btn-gradient {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;               /* above the video, but below your header (z-index:1000) */
+  z-index: 1; /* above video but below header */
 }
-
-  .tiktok-logo {
-    width: 40px;
-    height: 40px;
-    fill: #BE9C5F;
-}
-  .video-launcher {
-    display: inline-block;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .video-launcher img {
-    width: 60px; /* Adjust size of play button */
-    height: auto;
-  }
-
-  /* Hide the actual video by default */
-  #fullscreenVideo {
-    display: none;
-  }
