@@ -1412,7 +1412,7 @@ card.style.setProperty("display", "none", "important");
 .video-launcher img {
   width: 60px;
   height: auto;
-  padding: 12px; /* adjust as needed */
+  padding: 25px; /* adjust as needed */
 }
 
 /* Hide and show the video overlay container */
