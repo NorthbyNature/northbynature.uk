@@ -445,35 +445,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
-  const overlay = document.getElementById("video-overlay");
-  if (!video || !overlay) return;
+  const container = document.getElementById("video-container");
+  if (!video || !container) return;
 
-  overlay.style.display = "block";
+  container.style.display = "block";
 
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   if (isIOS && typeof video.webkitEnterFullscreen === "function") {
-    video.muted = false;
     video.controls = true;
+    video.muted = false; // prevent iOS from instantly closing
     video.play();
     video.webkitEnterFullscreen();
     return;
   }
 
-  video.muted = true;
+  video.muted = true; // mute for autoplay on desktop
   video.play().then(() => {
     if (video.requestFullscreen) {
-      return video.requestFullscreen();
+      video.requestFullscreen();
     } else if (video.webkitRequestFullscreen) {
-      return video.webkitRequestFullscreen();
+      video.webkitRequestFullscreen();
     } else if (video.msRequestFullscreen) {
-      return video.msRequestFullscreen();
+      video.msRequestFullscreen();
     }
   }).catch(err => {
     console.error("Playback or fullscreen failed:", err);
   });
 
-  video.onended = closeFullscreenVideo;
+  // Reset on video end
+  video.onended = () => {
+    resetFullscreenVideo();
+  };
 
   const onFullscreenExit = () => {
     if (
@@ -481,7 +484,7 @@ function playFullScreenVideo() {
       !document.webkitFullscreenElement &&
       !document.msFullscreenElement
     ) {
-      closeFullscreenVideo();
+      resetFullscreenVideo();
       document.removeEventListener("fullscreenchange", onFullscreenExit);
       document.removeEventListener("webkitfullscreenchange", onFullscreenExit);
       document.removeEventListener("msfullscreenchange", onFullscreenExit);
@@ -493,14 +496,15 @@ function playFullScreenVideo() {
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
 
-function closeFullscreenVideo() {
+function resetFullscreenVideo() {
   const video = document.getElementById("fullscreenVideo");
-  const overlay = document.getElementById("video-overlay");
-  if (!video || !overlay) return;
+  const container = document.getElementById("video-container");
+
+  if (!video || !container) return;
 
   video.pause();
   video.currentTime = 0;
-  overlay.style.display = "none";
+  container.style.display = "none";
 
   if (document.fullscreenElement) document.exitFullscreen();
   else if (document.webkitFullscreenElement) document.webkitExitFullscreen();
