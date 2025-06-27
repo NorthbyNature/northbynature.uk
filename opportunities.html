@@ -4,20 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Opportunities – North by Nature</title>
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="styles.css"/>
-    <!-- Link to the main stylesheet (styles.css) -->
-    <!-- Modify this file to change the layout, fonts, or styles for the entire page -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Bootstrap CSS for layout and component styling -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
-<body>
+
+  <!-- Bootstrap CSS for layout and styling -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome (optional for future use) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
   <style>
-    /* RESET & NO HORIZONTAL SCROLL */
     html, body {
       margin: 0;
       padding: 0;
@@ -28,13 +25,11 @@
       box-sizing: inherit;
     }
 
-    /* MAIN WRAPPER PADDING */
     main.main-content {
       padding: 0 1rem;
       max-width: 100vw;
     }
 
-    /* TOP IN-PAGE NAV */
     .opp-nav {
       display: flex;
       flex-wrap: wrap;
@@ -48,7 +43,6 @@
       text-decoration: none;
       border-bottom: 2px solid transparent;
       padding-bottom: 4px;
-      font-weight: normal;       /* ← changed from bold to normal */
       font-size: 1rem;
       line-height: 1.2;
     }
@@ -56,7 +50,6 @@
       border-color: #fff;
     }
 
-    /* SECTION TITLE */
     .section-title {
       font-size: 1.75rem;
       color: #9a7120;
@@ -65,7 +58,6 @@
       display: inline-block;
     }
 
-    /* CARDS GRID */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -92,7 +84,6 @@
       background: linear-gradient(90deg, #ffefd4, #9a7120);
     }
 
-    /* PORTRAIT-FIRST IMAGE (4:3) */
     .opportunity-card img {
       width: 100%;
       aspect-ratio: 3 / 4;
@@ -121,13 +112,12 @@
       color: #777;
     }
   </style>
+</head>
+
 <body>
   <main class="main-content">
-    <h1 style="text-align:center; color:#9a7120; margin-top:2rem;">
-      Opportunities
-    </h1>
+    <h1 style="text-align:center; color:#9a7120; margin-top:2rem;">Opportunities</h1>
 
-    <!-- in-page navigation -->
     <nav class="opp-nav">
       <a href="https://www.northbynature.uk/account">ACCOUNT</a>
       <a href="#section-private">PRIVATE EVENTS</a>
@@ -135,141 +125,116 @@
       <a href="#section-development">DEVELOPMENT</a>
     </nav>
 
-    <!-- PRIVATE EVENTS -->
     <section id="section-private">
       <h2 class="section-title">Private Events</h2>
       <div id="private-cards" class="cards-grid"></div>
     </section>
 
-    <!-- CONTENT OPPORTUNITIES -->
     <section id="section-content">
       <h2 class="section-title">Content Opportunities</h2>
       <div id="content-cards" class="cards-grid"></div>
     </section>
 
-    <!-- DEVELOPMENT -->
     <section id="section-development">
       <h2 class="section-title">Development</h2>
       <div id="development-cards" class="cards-grid"></div>
     </section>
   </main>
 
-<!-- Supabase client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  // 1) Init
-  const supabaseClient = supabase.createClient(
-    'https://jwospecasjxrknmyycno.supabase.co',
-'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
-  );
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = supabase.createClient(
+      'https://jwospecasjxrknmyycno.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs'
+    );
 
-  // 2) Load & render, including restoring session & checking registrations
-  async function loadOpportunities() {
-    // a) restore session for RLS
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
-      if (sessErr) console.error('Session restore failed:', sessErr);
-    }
+    async function loadOpportunities() {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        const { error: sessErr } = await supabaseClient.auth.setSession({ access_token: token });
+        if (sessErr) console.error('Session restore failed:', sessErr);
+      }
 
-    // b) fetch all opportunities
-    const { data: opps, error: oppErr } = await supabaseClient
-      .from('opportunities')
-      .select('*');
-    if (oppErr) {
-      console.error('Error loading opportunities:', oppErr);
-      return;
-    }
+      const { data: opps, error: oppErr } = await supabaseClient.from('opportunities').select('*');
+      if (oppErr) return console.error('Error loading opportunities:', oppErr);
 
-    // c) fetch this user's registrations
-    let registeredIds = [];
-    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (user.id) {
-      const { data: regs, error: regErr } = await supabaseClient
-        .from('registrations')
-        .select('opportunity_id')
-        .eq('user_id', user.id);
-      if (regErr) console.error('Error loading registrations:', regErr);
-      else registeredIds = regs.map(r => r.opportunity_id);
-    }
+      let registeredIds = [];
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      if (user.id) {
+        const { data: regs, error: regErr } = await supabaseClient
+          .from('registrations')
+          .select('opportunity_id')
+          .eq('user_id', user.id);
+        if (regErr) console.error('Error loading registrations:', regErr);
+        else registeredIds = regs.map(r => r.opportunity_id);
+      }
 
-    // d) render into each category container
-    const sections = {
-      'Private Events':        document.getElementById('private-cards'),
-      'Content Opportunities': document.getElementById('content-cards'),
-      'Development':           document.getElementById('development-cards'),
-    };
+      const sections = {
+        'Private Events':        document.getElementById('private-cards'),
+        'Content Opportunities': document.getElementById('content-cards'),
+        'Development':           document.getElementById('development-cards'),
+      };
 
-    for (const [cat, container] of Object.entries(sections)) {
-      if (!container) continue;
-      const items = opps.filter(o => o.category === cat);
-      if (items.length === 0) {
-        container.innerHTML = '<p>There are no available opportunities for this at this moment.</p>';
-      } else {
-        container.innerHTML = items.map(op => {
-          const isReg = registeredIds.includes(op.id);
-          return `
-            <div class="opportunity-card">
-              <div class="card-header"></div>
-              <img src="${op.image_url||'Images/default-placeholder.png'}" alt="${op.title}" />
-              <div class="card-body">
-                <h3>${op.title}</h3>
-                <p>${op.description}</p>
-                <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
-                <p class="requirements">Requirements: ${op.requirements}</p>
-                <button
-                  class="register-btn ${isReg? 'registered btn-success' : ''}"
-                  data-id="${op.id}"
-                  ${isReg? 'disabled' : ''}
-                >
-                  ${isReg ? '✓ Registered' : 'Register Interest'}
-                </button>
-              </div>
-            </div>
-          `;
-        }).join('');
+      for (const [cat, container] of Object.entries(sections)) {
+        if (!container) continue;
+        const items = opps.filter(o => o.category === cat);
+        container.innerHTML = items.length === 0
+          ? '<p>There are no available opportunities for this at this moment.</p>'
+          : items.map(op => {
+              const isReg = registeredIds.includes(op.id);
+              return `
+                <div class="opportunity-card">
+                  <div class="card-header"></div>
+                  <img src="${op.image_url || 'Images/default-placeholder.png'}" alt="${op.title}" />
+                  <div class="card-body">
+                    <h3>${op.title}</h3>
+                    <p>${op.description}</p>
+                    <p><strong>Date:</strong> ${new Date(op.date).toLocaleDateString()}</p>
+                    <p class="requirements">Requirements: ${op.requirements}</p>
+                    <button class="register-btn ${isReg ? 'registered btn-success' : ''}"
+                            data-id="${op.id}" ${isReg ? 'disabled' : ''}>
+                      ${isReg ? '✓ Registered' : 'Register Interest'}
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('');
       }
     }
-  }
 
-  // 3) Register interest and animate
-  async function registerInterest(opportunityId) {
-    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (!user.id) {
-      alert('Please log in first.');
-      return window.location.href = 'login.html';
-    }
-    const btn = document.querySelector(`.register-btn[data-id="${opportunityId}"]`);
-    const { error } = await supabaseClient
-      .from('registrations')
-      .insert({ user_id: user.id, opportunity_id: opportunityId });
-    if (error) {
-      if (error.code === '23505') {
-        return alert("You’ve already registered interest in this opportunity.");
+    async function registerInterest(opportunityId) {
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      if (!user.id) {
+        alert('Please log in first.');
+        return window.location.href = 'login.html';
       }
-      console.error('Registration failed:', error);
-      return alert('Could not register interest: ' + error.message);
+      const btn = document.querySelector(`.register-btn[data-id="${opportunityId}"]`);
+      const { error } = await supabaseClient.from('registrations').insert({
+        user_id: user.id,
+        opportunity_id: opportunityId
+      });
+      if (error) {
+        if (error.code === '23505') return alert("You’ve already registered interest.");
+        console.error('Registration failed:', error);
+        return alert('Error: ' + error.message);
+      }
+      if (btn) {
+        btn.classList.add('btn-pop', 'btn-success');
+        btn.textContent = '✓ Registered';
+        btn.disabled = true;
+      }
+      alert('Thanks! Your interest has been recorded.');
     }
-    // animate & swap to checkmark
-    if (btn) {
-      btn.classList.add('btn-pop', 'btn-success');
-      btn.textContent = '✓ Registered';
-      btn.disabled = true;
-    }
-    alert('Thanks! Your interest has been recorded.');
-  }
 
-  // 4) Wire it all up
-  async function loadAndBind() {
-    await loadOpportunities();
-    // delegate click on any register-btn
-    document.body.addEventListener('click', e => {
-      if (e.target.matches('.register-btn') && !e.target.disabled) {
-        registerInterest(e.target.dataset.id);
-      }
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadOpportunities();
+      document.body.addEventListener('click', e => {
+        if (e.target.matches('.register-btn') && !e.target.disabled) {
+          registerInterest(e.target.dataset.id);
+        }
+      });
     });
-  }
-
-  // 5) Start everything on DOM ready
-  document.addEventListener('DOMContentLoaded', loadAndBind);
-</script>
+  </script>
+</body>
+</html>
