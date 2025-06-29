@@ -420,6 +420,38 @@ console.log("📑 scripts.js loaded and DOM ready—now binding events");
   }
 }); 
 
+// Handle profile picture upload on form submit
+const membershipForm = document.querySelector('form[name="membership-application"]');
+if (membershipForm) {
+  membershipForm.addEventListener('submit', async function (e) {
+    const fileInput = document.getElementById('profile-picture');
+    const firstName = document.getElementById('first-name').value.trim();
+    const lastName = document.getElementById('last-name').value.trim();
+
+    if (fileInput && fileInput.files.length > 0) {
+      e.preventDefault(); // Stop form from auto-submitting
+      const file = fileInput.files[0];
+      const ext = file.name.split('.').pop();
+      const fileName = `${firstName}_${lastName}`.replace(/\s+/g, '_').toLowerCase() + '.' + ext;
+
+      const { error } = await supabaseClient.storage
+        .from('profile-images')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (error) {
+        alert('Image upload failed: ' + error.message);
+        return;
+      }
+
+      // Success — now submit the form as normal
+      this.submit();
+    }
+  });
+}
+
 const header = document.querySelector('header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 0) {
