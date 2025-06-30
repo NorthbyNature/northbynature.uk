@@ -477,7 +477,7 @@ if (header) {
   }
 
   // Profile picture upload field UI enhancement
-  const fileInput = document.getElementById('profile-picture');
+  const fileInput = document.getElementById('profile-upload');
   const fileNameDisplay = document.getElementById('file-name');
 
   if (fileInput && fileNameDisplay) {
