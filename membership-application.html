@@ -14,7 +14,7 @@
             <h1 class="section-title">Become a Member</h1>
             <p class="form-intro">A JOURNEY OF THOUSAND MILES BEGINS WITH A SINGLE STEP.</p>
 
-            <form name="membership-application" method="POST" class="membership-application" data-netlify="true" action="/thank-you.html">
+            <form name="membership-application" method="POST" enctype="multipart/form-data" class="membership-application" data-netlify="true" action="/thank-you.html">
                 <input type="hidden" name="membership-application" value="membership-application">
                 
                 <!-- Contact Information -->
@@ -56,8 +56,8 @@
                         <option value="public figure">Public Figure</option>
                         <option value="other">Other</option>
                     </select>
-                    <label for="description">Whats the nature of your engagement? *</label>
-                    <select id="description" name="description" required>
+                    <label for="engagement-nature">Whats the nature of your engagement? *</label>
+                    <select id="engagement-nature" name="engagement-nature" required>
                         <option value="Sporting">Sporting</option>
                         <option value="Gaming">Gaming</option>
                         <option value="Fashion">Fashion</option>
