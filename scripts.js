@@ -486,6 +486,7 @@ if (header) {
       fileNameDisplay.textContent = name;
     });
   }
+});
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
@@ -552,4 +553,3 @@ function playFullScreenVideo() {
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
-});
