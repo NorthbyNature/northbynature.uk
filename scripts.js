@@ -433,20 +433,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         const ext = file.name.split('.').pop();
         const fileName = `${firstName}_${lastName}`.replace(/\s+/g, '_').toLowerCase() + '.' + ext;
 
-        const { error } = await supabaseClient.storage
-          .from('profile-images')
-          .upload(fileName, file, {
-            cacheControl: '3600',
-            upsert: true
-          });
+const { data, error } = await supabaseClient.storage
+  .from('profile-images')
+  .upload(fileName, file, {
+    cacheControl: '3600',
+    upsert: true
+  });
 
-        if (error) {
-          alert('Image upload failed: ' + error.message);
-          return;
-        }
+if (error) {
+  console.error("❌ Upload failed:", error);
+  alert('Image upload failed: ' + error.message);
+  return;
+}
 
-        // Success — now submit the form as normal
-        this.submit();
+console.log("✅ Upload succeeded:", data);
+this.submit(); // Only submit if upload confirmed
+
       }
     });
   }
