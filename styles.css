@@ -1438,3 +1438,43 @@ card.style.setProperty("display", "none", "important");
   transform: translate(-50%, -50%);
   z-index: 1; /* above video but below header */
 }
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #111;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  max-width: 320px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload label {
+  background-color: #000;
+  color: gold;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid gold;
+  transition: background-color 0.3s ease;
+}
+
+.custom-file-upload label:hover {
+  background-color: #222;
+}
+
+#file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  display: inline-block;
+}

@@ -146,11 +146,15 @@
     </div>
 </fieldset>
 
- <fieldset>
-                    <legend>Upload Profile Picture</legend>
-                    <p>This will be used for your future member profile.</p>
-                    <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
-                </fieldset>
+<fieldset>
+  <legend>Upload Profile Picture</legend>
+  <p>This will be used for your future member profile.</p>
+  <div class="custom-file-upload">
+    <label for="profile-picture">Choose a file</label>
+    <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+    <span id="file-name">No file chosen</span>
+  </div>
+</fieldset>
 
                 <div class="form-group tc-label">
                   <input type="checkbox" id="terms" name="terms" class="tc-checkbox" required/>
