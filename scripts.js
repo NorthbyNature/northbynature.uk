@@ -486,6 +486,28 @@ if (header) {
       fileNameDisplay.textContent = name;
     });
   }
+  const form = document.querySelector('form[name="membership-application"]');
+  const dobInput = document.getElementById('dob');
+  const dobError = document.getElementById('dob-error');
+
+  if (form && dobInput) {
+    form.addEventListener('submit', (e) => {
+      const today = new Date();
+      const dob = new Date(dobInput.value);
+      const age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+
+      const isUnder18 = age < 18 || (age === 18 && m < 0) || (age === 18 && m === 0 && today.getDate() < dob.getDate());
+
+      if (isUnder18) {
+        e.preventDefault();
+        dobError.style.display = 'block';
+        dobInput.focus();
+      } else {
+        dobError.style.display = 'none';
+      }
+    });
+  }
 });
 
 function playFullScreenVideo() {
