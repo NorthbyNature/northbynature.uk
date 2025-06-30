@@ -476,7 +476,16 @@ document.addEventListener('DOMContentLoaded', () => {
  if (!vid) {
     document.body.classList.add('no-video-header');
   }
-});
+    const fileInput = document.getElementById('profile-picture');
+    const fileNameDisplay = document.getElementById('file-name');
+
+    if (fileInput && fileNameDisplay) {
+      fileInput.addEventListener('change', function () {
+        const name = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
+        fileNameDisplay.textContent = name;
+      });
+    }
+  });
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
@@ -545,3 +554,4 @@ if (isIOS && typeof video.webkitEnterFullscreen === "function") {
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
+
