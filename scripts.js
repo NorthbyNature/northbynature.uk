@@ -473,32 +473,32 @@ document.addEventListener('DOMContentLoaded', () => {
     vid.play().catch(() => { /* mobile autoplay may be blocked silently */ });
   }
 
- if (!vid) {
+  if (!vid) {
     document.body.classList.add('no-video-header');
   }
-    const fileInput = document.getElementById('profile-picture');
-    const fileNameDisplay = document.getElementById('file-name');
 
-    if (fileInput && fileNameDisplay) {
-      fileInput.addEventListener('change', function () {
-        const name = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
-        fileNameDisplay.textContent = name;
-      });
-    }
-  });
+  // Profile picture upload field UI enhancement
+  const fileInput = document.getElementById('profile-picture');
+  const fileNameDisplay = document.getElementById('file-name');
+
+  if (fileInput && fileNameDisplay) {
+    fileInput.addEventListener('change', function () {
+      const name = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
+      fileNameDisplay.textContent = name;
+    });
+  }
+});
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
   const container = document.getElementById("video-container");
   if (!video || !container) return;
 
-  // Show the video container using the CSS class
   container.classList.add("active");
 
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
 
-  // Unmute on mobile to allow user-initiated playback
   video.muted = !isIOS;
 
   const tryPlay = () => {
@@ -507,20 +507,20 @@ function playFullScreenVideo() {
     });
   };
 
-  // Fullscreen logic
-if (isIOS && typeof video.webkitEnterFullscreen === "function") {
-  tryPlay();
-  container.classList.remove("active"); // Hides overlay before fullscreen
-  video.webkitEnterFullscreen();
-  return; // Prevents other fullscreen attempts
-} else if (video.requestFullscreen) {
-  tryPlay();
-  video.requestFullscreen().catch(err => {
-    console.warn("Fullscreen failed:", err);
-  });
-} else {
-  tryPlay(); // fallback
-}
+  if (isIOS && typeof video.webkitEnterFullscreen === "function") {
+    tryPlay();
+    container.classList.remove("active");
+    video.webkitEnterFullscreen();
+    return;
+  } else if (video.requestFullscreen) {
+    tryPlay();
+    video.requestFullscreen().catch(err => {
+      console.warn("Fullscreen failed:", err);
+    });
+  } else {
+    tryPlay();
+  }
+
   const cleanUp = () => {
     video.pause();
     video.currentTime = 0;
