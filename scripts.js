@@ -422,35 +422,58 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Handle profile picture upload on form submit
   const membershipForm = document.querySelector('form[name="membership-application"]');
   if (membershipForm) {
-    membershipForm.addEventListener('submit', async function (e) {
-      const fileInput = document.getElementById('profile-picture');
-      const firstName = document.getElementById('first-name').value.trim();
-      const lastName = document.getElementById('last-name').value.trim();
+membershipForm.addEventListener('submit', async function (e) {
+  e.preventDefault(); // Always stop the browser from submitting natively
 
-      if (fileInput && fileInput.files.length > 0) {
-        e.preventDefault(); // Stop form from auto-submitting
-        const file = fileInput.files[0];
-        const ext = file.name.split('.').pop();
-        const fileName = `${firstName}_${lastName}`.replace(/\s+/g, '_').toLowerCase() + '.' + ext;
+  const fileInput = document.getElementById('profile-picture');
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
 
-const { data, error } = await supabaseClient.storage
-  .from('profile-images')
-  .upload(fileName, file, {
-    cacheControl: '3600',
-    upsert: true
-  });
+  // Step 1: Upload image if present
+  if (fileInput && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const ext = file.name.split('.').pop();
+    const fileName = `${firstName}_${lastName}`.replace(/\s+/g, '_').toLowerCase() + '.' + ext;
 
-if (error) {
-  console.error("❌ Upload failed:", error);
-  alert('Image upload failed: ' + error.message);
-  return;
-}
+    const { data, error } = await supabaseClient.storage
+      .from('profile-images')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: true
+      });
 
-console.log("✅ Upload succeeded:", data);
-this.submit(); // Only submit if upload confirmed
+    if (error) {
+      console.error("❌ Upload failed:", error);
+      alert('Image upload failed: ' + error.message);
+      return;
+    }
 
-      }
+    console.log("✅ Upload succeeded:", data);
+  } else {
+    console.log("ℹ️ No image uploaded.");
+  }
+
+  // Step 2: Manually submit the form to Netlify
+  const formData = new FormData(membershipForm);
+  try {
+    const res = await fetch(membershipForm.action, {
+      method: 'POST',
+      body: formData
     });
+
+    if (res.ok) {
+      console.log("✅ Form submitted to Netlify.");
+      window.location.href = membershipForm.action;
+    } else {
+      console.error("❌ Netlify form error:", res.statusText);
+      alert('There was a problem submitting the form.');
+    }
+  } catch (err) {
+    console.error("❌ Network error:", err);
+    alert('Submission failed: Network error.');
+  }
+});
+
   }
 });
 
