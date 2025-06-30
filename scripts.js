@@ -423,17 +423,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   const membershipForm = document.querySelector('form[name="membership-application"]');
   if (membershipForm) {
 membershipForm.addEventListener('submit', async function (e) {
-  e.preventDefault(); // Always stop the browser from submitting natively
+  console.log("📤 Form submission started");
+
+  e.preventDefault();
 
   const fileInput = document.getElementById('profile-picture');
-  const firstName = document.getElementById('first-name').value.trim();
-  const lastName = document.getElementById('last-name').value.trim();
+  const firstName = document.getElementById('first-name')?.value.trim() || 'unknown';
+  const lastName = document.getElementById('last-name')?.value.trim() || 'user';
 
-  // Step 1: Upload image if present
-  if (fileInput && fileInput.files.length > 0) {
+  if (!fileInput) {
+    console.error("❌ No file input found!");
+    return;
+  }
+
+  if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
     const ext = file.name.split('.').pop();
     const fileName = `${firstName}_${lastName}`.replace(/\s+/g, '_').toLowerCase() + '.' + ext;
+
+    console.log("🖼 Uploading file:", fileName, file);
 
     const { data, error } = await supabaseClient.storage
       .from('profile-images')
@@ -450,10 +458,10 @@ membershipForm.addEventListener('submit', async function (e) {
 
     console.log("✅ Upload succeeded:", data);
   } else {
-    console.log("ℹ️ No image uploaded.");
+    console.log("ℹ️ No image selected.");
   }
 
-  // Step 2: Manually submit the form to Netlify
+  // Manually submit to Netlify
   const formData = new FormData(membershipForm);
   try {
     const res = await fetch(membershipForm.action, {
@@ -473,7 +481,6 @@ membershipForm.addEventListener('submit', async function (e) {
     alert('Submission failed: Network error.');
   }
 });
-
   }
 });
 
