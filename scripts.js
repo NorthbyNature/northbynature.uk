@@ -12,6 +12,18 @@ const supabaseClient = supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs",
   { auth: { persistSession: true, autoRefreshToken: true } }
 );
+(async () => {
+  const {
+    data: { session },
+    error,
+  } = await supabaseClient.auth.signInAnonymously();
+
+  if (error) {
+    console.error("❌ Anonymous login failed:", error.message);
+  } else {
+    console.log("✅ Anonymous session established:", session);
+  }
+})();
 
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
