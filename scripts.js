@@ -7,35 +7,45 @@
 //    INITIAL SETUP + FUNCTIONS
 // ===========================
 
+// 1️⃣ Initialize Supabase client
 const supabaseClient = supabase.createClient(
   "https://jwospecasjxrknmyycno.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs",
-  { 
+  {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
-      storage: localStorage // ✅ ✅ ✅ NO COMMA OR BRACKET ISSUE HERE
+      storage: localStorage
     }
   }
 );
 
-// Wrap in an async IIFE to allow await at top level
-(async () => {
-  const { data: existing, error: sessionErr } = await supabaseClient.auth.getSession();
-  console.log("👀 Existing session check:", existing);
+// ✅ Place this AFTER client is created, not inside the config object
+let supabaseSessionReady;
+
+// 🔐 Ensure anonymous session
+const ensureAnonymousSession = async () => {
+  const { data: existing } = await supabaseClient.auth.getSession();
+  console.log("👀 Session on load:", existing);
 
   if (!existing.session) {
     const { data, error } = await supabaseClient.auth.signInAnonymously();
     if (error) {
       console.error("❌ Anonymous login failed:", error.message);
+      return null;
     } else {
       console.log("✅ Anonymous session established:", data.session);
+      return data.session;
     }
   } else {
-    console.log("✅ Existing anonymous session:", existing.session);
+    console.log("✅ Existing session:", existing.session);
+    return existing.session;
   }
-})();
+};
+
+// 🚀 Kick off session and hold the promise
+supabaseSessionReady = ensureAnonymousSession();
 
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
@@ -450,6 +460,10 @@ membershipForm.addEventListener('submit', async function (e) {
   console.log("📤 Form submission started");
 
   e.preventDefault();
+
+  // 🔍 Check session right before upload
+  const sessionResult = await supabaseClient.auth.getSession();
+  console.log("👤 Session data:", sessionResult);
 
   const fileInput = document.getElementById('profile-picture');
   const firstName = document.getElementById('first-name')?.value.trim() || 'unknown';
