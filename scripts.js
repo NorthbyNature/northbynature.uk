@@ -6,7 +6,7 @@
 // ===========================
 //    INITIAL SETUP + FUNCTIONS
 // ===========================
-// 1️⃣ Initialize Supabase client (globally)
+
 const supabaseClient = supabase.createClient(
   "https://jwospecasjxrknmyycno.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b3NwZWNhc2p4cmtubXl5Y25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQxNDcwOTUsImV4cCI6MjA0OTcyMzA5NX0.jKncofXlz0xqm0OP5gAFzDVzMnF7tBsGHcC9we0CbWs",
@@ -14,19 +14,26 @@ const supabaseClient = supabase.createClient(
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: true} 
+      detectSessionInUrl: true,
+      storage: localStorage // ✅ ✅ ✅ NO COMMA OR BRACKET ISSUE HERE
+    }
   }
 );
-(async () => {
-  const {
-    data: { session },
-    error,
-  } = await supabaseClient.auth.signInAnonymously();
 
-  if (error) {
-    console.error("❌ Anonymous login failed:", error.message);
+// Wrap in an async IIFE to allow await at top level
+(async () => {
+  const { data: existing, error: sessionErr } = await supabaseClient.auth.getSession();
+  console.log("👀 Existing session check:", existing);
+
+  if (!existing.session) {
+    const { data, error } = await supabaseClient.auth.signInAnonymously();
+    if (error) {
+      console.error("❌ Anonymous login failed:", error.message);
+    } else {
+      console.log("✅ Anonymous session established:", data.session);
+    }
   } else {
-    console.log("✅ Anonymous session established:", session);
+    console.log("✅ Existing anonymous session:", existing.session);
   }
 })();
 
