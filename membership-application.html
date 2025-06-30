@@ -8,201 +8,208 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-      <main class="main-content">
-        <section class="content-section text-centered-container container">
-      <p><a href="index.html" class="gold-button">RETURN HOME</a></p>
-            <h1 class="section-title">Become a Member</h1>
-            <p class="form-intro">A JOURNEY OF THOUSAND MILES BEGINS WITH A SINGLE STEP.</p>
+<main class="main-content">
+  <section class="content-section text-centered-container container">
+    <p><a href="index.html" class="gold-button">RETURN HOME</a></p>
+    <h1 class="section-title">Become a Member</h1>
+    <p class="form-intro">A JOURNEY OF THOUSAND MILES BEGINS WITH A SINGLE STEP.</p>
 
-            <form name="membership-application" method="POST" enctype="multipart/form-data" class="membership-application" data-netlify="true" action="/thank-you.html">                
-                <!-- Contact Information -->
-                <fieldset>
-                    <legend>Contact Information</legend>
-                    <p>We collect this information so we can contact you with the outcome of your application.</p>
-                    <label for="first-name">First Name *</label>
-                    <input type="text" id="first-name" name="first_name" required>
+    <form name="membership-application" method="POST" enctype="multipart/form-data" class="membership-application" data-netlify="true" action="/thank-you.html">                
+      <!-- Contact Information -->
+      <fieldset>
+        <legend>Contact Information</legend>
+        <p>We collect this information so we can contact you with the outcome of your application.</p>
+        <label for="first-name">First Name *</label>
+        <input type="text" id="first-name" name="first_name" required>
 
-                    <label for="last-name">Last Name *</label>
-                    <input type="text" id="last-name" name="last_name" required>
+        <label for="last-name">Last Name *</label>
+        <input type="text" id="last-name" name="last_name" required>
 
-                    <label for="phone-number">Phone Number</label>
-                    <input type="tel" id="phone-number" name="phone_number">
+        <label for="phone-number">Phone Number</label>
+        <input type="tel" id="phone-number" name="phone_number">
 
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
 
-                    <label for="city">Primary City/Town Residency *</label>
-                    <input type="text" id="city" name="city" required>
+        <label for="city">Primary City/Town Residency *</label>
+        <input type="text" id="city" name="city" required>
 
-                    <label for="ethnicity">What best describes your Ethnicity? *</label>
-                    <select id="ethnicity" name="ethnicity" required>
-                        <option value="white british">White British</option>
-                        <option value="white irish">White Irish</option>
-                        <option value="other white">Other White</option>
-                        <option value="black african">Black African</option>
-                        <option value="black caribbean">Black Caribbean</option>
-                        <option value="other black">Other Black</option>
-                        <option value="pakistani">Pakistani</option>
-                        <option value="bangladeshi">Bangladeshi</option>
-                        <option value="indian">Indian</option>
-                        <option value="chinese">Chinese</option>
-                        <option value="other asian">Other Asian</option>
-                        <option value="mixed white and black african">Mixed White and Black African</option>
-                        <option value="mixed white and black caribbean">Mixed White and Black Caribbean</option>
-                        <option value="other mixed">Other Mixed</option>
-                        <option value="any other">Other</option>
-                    </select>
-                    <label for="gender">What best describes your Gender? *</label>
-                    <select id="gender" name="gender" required>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="prefer not to say">Prefer not to say</option>
-                    </select>
+        <label for="ethnicity">What best describes your Ethnicity? *</label>
+        <select id="ethnicity" name="ethnicity" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="white british">White British</option>
+          <option value="white irish">White Irish</option>
+          <option value="other white">Other White</option>
+          <option value="black african">Black African</option>
+          <option value="black caribbean">Black Caribbean</option>
+          <option value="other black">Other Black</option>
+          <option value="pakistani">Pakistani</option>
+          <option value="bangladeshi">Bangladeshi</option>
+          <option value="indian">Indian</option>
+          <option value="chinese">Chinese</option>
+          <option value="other asian">Other Asian</option>
+          <option value="mixed white and black african">Mixed White and Black African</option>
+          <option value="mixed white and black caribbean">Mixed White and Black Caribbean</option>
+          <option value="other mixed">Other Mixed</option>
+          <option value="any other">Other</option>
+        </select>
 
-                </fieldset>
+        <label for="gender">What best describes your Gender? *</label>
+        <select id="gender" name="gender" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="prefer not to say">Prefer not to say</option>
+        </select>
+      </fieldset>
 
-                <!-- Social Media Profile -->
-                <fieldset>
-                    <legend>Social Media Profile</legend>
-                    <label for="description">What best describes you? *</label>
-                    <select id="description" name="description" required>
-                        <option value="public audience">Public Audience</option>
-                        <option value="social media influencer">Social Media Influencer</option>
-                        <option value="content creator">Content Creator</option>
-                        <option value="streamer">Streamer</option>
-                        <option value="business owner/representative">Business Owner/Representative</option>
-                        <option value="entrepreneur">Entrepreneur</option>
-                        <option value="media creative">Media Creative</option>
-                        <option value="sportsperson">Sportsperson</option>
-                        <option value="tv personality">TV Personality</option>
-                        <option value="public figure">Public Figure</option>
-                        <option value="model or actor/actress">Model or Actor/Actress</option>
-                        <option value="public figure">Public Figure</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <label for="engagement-nature">Whats the nature of your engagement? *</label>
-                    <select id="engagement-nature" name="engagement-nature" required>
-                        <option value="Sporting">Sporting</option>
-                        <option value="Gaming">Gaming</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Music">Music</option>
-                        <option value="Live Entertainment">Live Entertainment</option>
-                        <option value="Food & Beverages">Food & Beverages</option>
-                        <option value="TV or Film">TV or Film</option>
-                        <option value="Events">Events</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Product Promotion">Product Promotion</option>
-                        <option value="News">News</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Lifestyle">Lifestyle</option>
-                        <option value="Media">Media</option>
-                        <option value="Adult Entertainment">Adult Entertainment</option>
-                        <option value="Other">Other</option>            
-                    </select>
-                  <label>Which social media platforms do you post on/engage with regularly? (You may select multiple) *</label>
-<div class="checkbox-group">
-    <label class="checkbox-item"><span>Instagram</span><input type="checkbox" name="platforms" value="instagram"></label>
-    <label class="checkbox-item"><span>TikTok</span><input type="checkbox" name="platforms" value="tiktok"></label>
-    <label class="checkbox-item"><span>Facebook</span><input type="checkbox" name="platforms" value="facebook"></label>
-    <label class="checkbox-item"><span>LinkedIn</span><input type="checkbox" name="platforms" value="linkedin"></label>
-    <label class="checkbox-item"><span>Twitch</span><input type="checkbox" name="platforms" value="twitch"></label>
-    <label class="checkbox-item"><span>YouTube</span><input type="checkbox" name="platforms" value="youtube"></label>
-    <label class="checkbox-item"><span>OnlyFans</span><input type="checkbox" name="platforms" value="onlyfans"></label>
-</div>
+      <!-- Social Media Profile -->
+      <fieldset>
+        <legend>Social Media Profile</legend>
+        <label for="description">What best describes you? *</label>
+        <select id="description" name="description" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="public audience">Public Audience</option>
+          <option value="social media influencer">Social Media Influencer</option>
+          <option value="content creator">Content Creator</option>
+          <option value="streamer">Streamer</option>
+          <option value="business owner/representative">Business Owner/Representative</option>
+          <option value="entrepreneur">Entrepreneur</option>
+          <option value="media creative">Media Creative</option>
+          <option value="sportsperson">Sportsperson</option>
+          <option value="tv personality">TV Personality</option>
+          <option value="public figure">Public Figure</option>
+          <option value="model or actor/actress">Model or Actor/Actress</option>
+          <option value="other">Other</option>
+        </select>
 
-          <!-- Social Media Engagement -->
-<fieldset>
-    <legend>Social Media Engagement</legend>
-    <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
-    <select id="highest-engagement" name="highest_engagement" required>
-        <option value="instagram">Instagram</option>
-        <option value="tiktok">TikTok</option>
-        <option value="facebook">Facebook</option>
-        <option value="linkedin">LinkedIn</option>
-        <option value="twitch">Twitch</option>
-        <option value="youtube">YouTube</option>
-        <option value="onlyfans">OnlyFans</option>
-    </select>
+        <label for="engagement-nature">What's the nature of your engagement? *</label>
+        <select id="engagement-nature" name="engagement-nature" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="Sporting">Sporting</option>
+          <option value="Gaming">Gaming</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Music">Music</option>
+          <option value="Live Entertainment">Live Entertainment</option>
+          <option value="Food & Beverages">Food & Beverages</option>
+          <option value="TV or Film">TV or Film</option>
+          <option value="Events">Events</option>
+          <option value="Sales">Sales</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Product Promotion">Product Promotion</option>
+          <option value="News">News</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Media">Media</option>
+          <option value="Adult Entertainment">Adult Entertainment</option>
+          <option value="Other">Other</option>            
+        </select>
 
-    <label for="followers">How many followers/subscribers do you have on your personal or business's primary social media? *</label>
-    <select id="followers" name="followers" required>
-        <option value="<5k">Less than 5k</option>
-        <option value="5k-9k">5k - 9k</option>
-        <option value="10k-24k">10k - 24k</option>
-        <option value="25k-49k">25k - 49k</option>
-        <option value="50k-99k">50k - 99k</option>
-        <option value="100k-249k">100k - 249k</option>
-        <option value="250k-500k">250k - 500k</option>
-        <option value="500k-1M">500k - 1M</option>
-        <option value="1M+">1M +</option>
-    </select>
+        <label>Which social media platforms do you post on/engage with regularly? (You may select multiple) *</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><span>Instagram</span><input type="checkbox" name="platforms" value="instagram"></label>
+          <label class="checkbox-item"><span>TikTok</span><input type="checkbox" name="platforms" value="tiktok"></label>
+          <label class="checkbox-item"><span>Facebook</span><input type="checkbox" name="platforms" value="facebook"></label>
+          <label class="checkbox-item"><span>LinkedIn</span><input type="checkbox" name="platforms" value="linkedin"></label>
+          <label class="checkbox-item"><span>Twitch</span><input type="checkbox" name="platforms" value="twitch"></label>
+          <label class="checkbox-item"><span>YouTube</span><input type="checkbox" name="platforms" value="youtube"></label>
+          <label class="checkbox-item"><span>OnlyFans</span><input type="checkbox" name="platforms" value="onlyfans"></label>
+        </div>
+      </fieldset>
 
-    <label for="username">Your Personal or Business's Primary Social Media Username *</label>
-    <input type="text" id="username" name="username" required>
-</fieldset>
+      <!-- Social Media Engagement -->
+      <fieldset>
+        <legend>Social Media Engagement</legend>
+        <label for="highest-engagement">Which social media platform has your highest engagement? *</label>
+        <select id="highest-engagement" name="highest_engagement" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="instagram">Instagram</option>
+          <option value="tiktok">TikTok</option>
+          <option value="facebook">Facebook</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="twitch">Twitch</option>
+          <option value="youtube">YouTube</option>
+          <option value="onlyfans">OnlyFans</option>
+        </select>
 
-<fieldset>
-    <legend>Additional Notes</legend>
-    <label for="additional-notes">Please add any further notes about you or your business that may be relevant for your membership</label>
-    <textarea id="additional-notes" name="additional-notes" rows="5"></textarea>
-</fieldset>
-               <fieldset>
-    <legend>Interests</legend>
-    <div class="radio-group">
-        <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
-        <div class="radio-options">
+        <label for="followers">How many followers/subscribers do you have on your personal or business's primary social media? *</label>
+        <select id="followers" name="followers" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="<5k">Less than 5k</option>
+          <option value="5k-9k">5k - 9k</option>
+          <option value="10k-24k">10k - 24k</option>
+          <option value="25k-49k">25k - 49k</option>
+          <option value="50k-99k">50k - 99k</option>
+          <option value="100k-249k">100k - 249k</option>
+          <option value="250k-500k">250k - 500k</option>
+          <option value="500k-1M">500k - 1M</option>
+          <option value="1M+">1M +</option>
+        </select>
+
+        <label for="username">Your Personal or Business's Primary Social Media Username *</label>
+        <input type="text" id="username" name="username" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>Additional Notes</legend>
+        <label for="additional-notes">Please add any further notes about you or your business that may be relevant for your membership</label>
+        <textarea id="additional-notes" name="additional-notes" rows="5"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Interests</legend>
+        <div class="radio-group">
+          <label>Are you interested in receiving discounts and offers from a range of exclusive bars, restaurants, clothing brands, + more, as well as paid opportunities? *</label>
+          <div class="radio-options">
             <label><input type="radio" name="discounts" value="yes" required> Yes</label>
             <label><input type="radio" name="discounts" value="no"> No</label>
+          </div>
         </div>
-    </div>
-    <div class="radio-group">
-        <label>Are you interested in attending events with high-profile guests? *</label>
-        <div class="radio-options">
+        <div class="radio-group">
+          <label>Are you interested in attending events with high-profile guests? *</label>
+          <div class="radio-options">
             <label><input type="radio" name="events" value="yes" required> Yes</label>
             <label><input type="radio" name="events" value="no"> No</label>
+          </div>
         </div>
-    </div>
-    <div class="radio-group">
-        <label>Are you ready to take yourself or your brand to the next level? *</label>
-        <div class="radio-options">
+        <div class="radio-group">
+          <label>Are you ready to take yourself or your brand to the next level? *</label>
+          <div class="radio-options">
             <label><input type="radio" name="next_level" value="yes" required> Yes</label>
             <label><input type="radio" name="next_level" value="no"> No</label>
+          </div>
         </div>
-    </div>
-</fieldset>
+      </fieldset>
 
-<fieldset>
-  <legend>Upload Profile Picture</legend>
-  <p>This will be used for your future member profile.</p>
-  <div class="custom-file-upload">
-    <input type="file" id="profile-upload" name="profile-picture" accept="image/*">
-    <label for="profile-upload">📁 Choose Photo</label>
-    <span id="file-name">No file chosen</span>
-  </div>
-</fieldset>
+      <fieldset>
+        <legend>Upload Profile Picture</legend>
+        <p>This will be used for your future member profile.</p>
+        <div class="custom-file-upload">
+          <input type="file" id="profile-upload" name="profile-picture" accept="image/*">
+          <label for="profile-upload">📁 Choose Photo</label>
+          <span id="file-name">No file chosen</span>
+        </div>
+      </fieldset>
 
-                <div class="form-group tc-label">
-                  <input type="checkbox" id="terms" name="terms" class="tc-checkbox" required/>
-                  <label for="terms">
-                    I agree to the 
-                    <a href="Documents/Terms_and_Conditions.pdf" target="_blank">Terms &amp; Conditions</a>
-                    *
-                  </label>
-                </div>
-              </fieldset>
-                <button type="submit" class="submit-btn">Submit Application</button>
-            </form>
-        </section>
-    </main>
+      <div class="form-group tc-label">
+        <input type="checkbox" id="terms" name="terms" class="tc-checkbox" required/>
+        <label for="terms">
+          I agree to the 
+          <a href="Documents/Terms_and_Conditions.pdf" target="_blank">Terms &amp; Conditions</a>
+          *
+        </label>
+      </div>
 
-     <!-- External JavaScript -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+  </section>
+</main>
 
-  <!-- Supabase client (must come before your app script) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="scripts.js"></script>
+<!-- External JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
