@@ -552,4 +552,3 @@ function playFullScreenVideo() {
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
-
