@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       acct.querySelector('#user-role').textContent = data.role||'';
       acct.querySelector('p').textContent       = `Email: ${cu.email}`;
       const tierEl = acct.querySelector('#membership-tier');
-      if (data.membership_tier) {
+      if (tierEl && data.membership_tier) {
         tierEl.textContent = `${data.membership_tier} MEMBER`;
         tierEl.classList.toggle('gold',    data.membership_tier.toLowerCase()==='gold');
         tierEl.classList.toggle('platinum',data.membership_tier.toLowerCase()==='platinum');
