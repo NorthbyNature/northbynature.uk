@@ -464,7 +464,6 @@ if (header) {
     }
   });
 }
-document.addEventListener('DOMContentLoaded', () => {
   const vid = document.querySelector('.video-wrapper video');
   if (vid) {
     vid.muted = true;
@@ -487,7 +486,6 @@ document.addEventListener('DOMContentLoaded', () => {
       fileNameDisplay.textContent = name;
     });
   }
-});
 
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
