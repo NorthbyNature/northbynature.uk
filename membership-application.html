@@ -150,8 +150,8 @@
   <legend>Upload Profile Picture</legend>
   <p>This will be used for your future member profile.</p>
   <div class="custom-file-upload">
-    <label for="profile-picture">Choose a file</label>
     <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+    <label for="profile-picture">📁 Choose Photo</label>
     <span id="file-name">No file chosen</span>
   </div>
 </fieldset>
@@ -178,5 +178,18 @@
   <!-- Supabase client (must come before your app script) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const fileInput = document.getElementById('profile-picture');
+    const fileNameDisplay = document.getElementById('file-name');
+
+    if (fileInput && fileNameDisplay) {
+      fileInput.addEventListener('change', function () {
+        const name = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
+        fileNameDisplay.textContent = name;
+      });
+    }
+  });
+</script>
 </body>
 </html>
