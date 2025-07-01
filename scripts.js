@@ -21,32 +21,6 @@ const supabaseClient = supabase.createClient(
   }
 );
 
-// ✅ Place this AFTER client is created, not inside the config object
-let supabaseSessionReady;
-
-// 🔐 Ensure anonymous session
-const ensureAnonymousSession = async () => {
-  const { data: existing } = await supabaseClient.auth.getSession();
-  console.log("👀 Session on load:", existing);
-
-  if (!existing.session) {
-    const { data, error } = await supabaseClient.auth.signInAnonymously();
-    if (error) {
-      console.error("❌ Anonymous login failed:", error.message);
-      return null;
-    } else {
-      console.log("✅ Anonymous session established:", data.session);
-      return data.session;
-    }
-  } else {
-    console.log("✅ Existing session:", existing.session);
-    return existing.session;
-  }
-};
-
-// 🚀 Kick off session and hold the promise
-supabaseSessionReady = ensureAnonymousSession();
-
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
 function decreaseQuantity() {
