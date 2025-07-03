@@ -483,13 +483,15 @@ if (header) {
     });
   }
 
-try {
-  const { data: { session } } = await supabaseClient.auth.getSession();
-  if (!session) {
-    window.location.href = "/login.html";
+if (!window.location.pathname.includes("login.html")) {
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) {
+      window.location.href = "/login.html";
+    }
+  } catch (err) {
+    console.error("Error checking session:", err);
   }
-} catch (err) {
-  console.error("Error checking session:", err);
 }
 });
 
