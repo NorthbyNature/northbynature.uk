@@ -482,6 +482,15 @@ if (header) {
       }
     });
   }
+
+try {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    window.location.href = "/login.html";
+  }
+} catch (err) {
+  console.error("Error checking session:", err);
+}
 });
 
 function playFullScreenVideo() {
@@ -549,3 +558,14 @@ function playFullScreenVideo() {
   document.addEventListener("webkitfullscreenchange", onFullscreenExit);
   document.addEventListener("msfullscreenchange", onFullscreenExit);
 }
+
+
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registered:', reg))
+      .catch(err => console.error('Service Worker registration failed:', err));
+  });
+}
+
