@@ -482,8 +482,20 @@ if (header) {
       }
     });
   }
-});
+    function isiOS() {
+     return /iphone|ipad|ipod/i.test(navigator.userAgent);
+   }   
 
+     function isInStandaloneMode() {
+     return ('standalone' in window.navigator) && window.navigator.standalone;
+   }
+
+     if (isiOS() && !isInStandaloneMode()) {
+     const banner = document.getElementById('iosInstallBanner');
+     if (banner) banner.style.display = 'block';
+   }
+});
+///////////////////////////////////////////////////////////////////////////////
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
   const container = document.getElementById("video-container");

@@ -1498,3 +1498,28 @@ card.style.setProperty("display", "none", "important");
 #installBtn:hover {
   background-color: #222;
 }
+.ios-banner {
+  display: none;
+  position: fixed;
+  bottom: 25px;
+  left: 20px;
+  right: 20px;
+  background: #000;
+  color: #d4af37;
+  border: 2px solid #d4af37;
+  padding: 15px;
+  border-radius: 12px;
+  z-index: 9999;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.ios-banner-close {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  cursor: pointer;
+  color: #d4af37;
+  font-size: 18px;
+}
