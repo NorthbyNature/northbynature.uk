@@ -563,25 +563,25 @@ if ('serviceWorker' in navigator) {
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('✅ beforeinstallprompt event fired');
   e.preventDefault();
   deferredPrompt = e;
 
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
+    console.log('✅ install button found in DOM');
     installBtn.style.display = 'block';
 
     installBtn.addEventListener('click', () => {
+      console.log('🖱️ Install button clicked');
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted A2HS prompt');
-        } else {
-          console.log('User dismissed A2HS prompt');
-        }
+        console.log(`🎯 User choice: ${choiceResult.outcome}`);
         deferredPrompt = null;
         installBtn.style.display = 'none';
       });
     });
+  } else {
+    console.warn('⚠️ install button NOT found in DOM when event fired');
   }
 });
-
