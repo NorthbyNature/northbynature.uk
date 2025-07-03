@@ -482,17 +482,6 @@ if (header) {
       }
     });
   }
-
-if (!window.location.pathname.includes("login.html")) {
-  try {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (!session) {
-      window.location.href = "/login.html";
-    }
-  } catch (err) {
-    console.error("Error checking session:", err);
-  }
-}
 });
 
 function playFullScreenVideo() {
@@ -574,21 +563,24 @@ if ('serviceWorker' in navigator) {
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Prevent default mini-infobar
+  e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('installBtn').style.display = 'block';
-});
 
-document.getElementById('installBtn').addEventListener('click', () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted A2HS prompt');
-      } else {
-        console.log('User dismissed A2HS prompt');
-      }
-      deferredPrompt = null;
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.style.display = 'block';
+
+    installBtn.addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted A2HS prompt');
+        } else {
+          console.log('User dismissed A2HS prompt');
+        }
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
     });
   }
 });
