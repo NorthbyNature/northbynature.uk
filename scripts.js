@@ -331,6 +331,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     editProfileForm.addEventListener('submit', async e => {
       e.preventDefault();
       const loc  = document.getElementById('location-input').value.trim();
+      const ind = document.getElementById('industry-input').value.trim();
       const prim = document.getElementById('primary-social-media-input').value.trim();
       let   usern= document.getElementById('social-media-username-input').value.trim();
       if (!loc||!prim||!usern) { alert('Please fill in every field.'); return; }
@@ -341,7 +342,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const res = await fetch('/.netlify/functions/updateProfile',{
           method:'POST',
           headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({ email:cu.email, location:loc, primary_social_media:prim, social_media_username:usern })
+          body:JSON.stringify({ email:cu.email, location:loc, industry: ind, primary_social_media:prim, social_media_username:usern })
         });
         if (!res.ok) {
           const {error} = await res.json();
@@ -417,6 +418,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       acct.querySelector('#location').textContent             = data.location
         ? `Primary Location: ${data.location}` : "Primary Location: Not set";
       acct.querySelector('#primary-social-media').textContent = data.primary_social_media
+        ? `Industry: ${data.engagement_nature}` : "Industry: Not set";
+      acct.querySelector('#industry').textContent= data.industry
         ? `Primary Social Media: ${data.primary_social_media}` : "Primary Social Media: Not set";
       acct.querySelector('#social-media-username').textContent= data.social_media_username
         ? `Social Media Username: ${data.social_media_username}` : "Social Media Username: Not set";
