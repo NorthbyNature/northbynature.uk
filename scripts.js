@@ -326,40 +326,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // PROFILE UPDATE
-  if (editProfileForm) {
-    editProfileForm.addEventListener('submit', async e => {
-      e.preventDefault();
-      const loc  = document.getElementById('location-input').value.trim();
-      const prim = document.getElementById('primary-social-media-input').value.trim();
-      let   usern= document.getElementById('social-media-username-input').value.trim();
-      if (!loc||!prim||!usern) { alert('Please fill in every field.'); return; }
-      if (!usern.startsWith('@')) usern='@'+usern;
-      const cu = JSON.parse(localStorage.getItem('currentUser')||'{}');
-      if (!cu.email) return window.location.href='login.html';
-      try {
-        const res = await fetch('/.netlify/functions/updateProfile',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({ email:cu.email, location:loc, primary_social_media:prim, social_media_username:usern })
-        });
-        if (!res.ok) {
-          const {error} = await res.json();
-          if (error?.includes('JWT expired')) {
-            alert('Session expired. Log in again.');
-            localStorage.clear();
-            return window.location.href='login.html';
-          }
-          alert('Update error: '+error);
-          return;
+// PROFILE UPDATE
+if (editProfileForm) {
+  editProfileForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const loc  = document.getElementById('location-input').value.trim();
+    const prim = document.getElementById('primary-social-media-input').value.trim();
+    let   usern= document.getElementById('social-media-username-input').value.trim();
+    const industry = document.getElementById('engagement-nature-input').value;
+
+    if (!loc || !prim || !usern || !industry) {
+      alert('Please fill in every field.');
+      return;
+    }
+
+    if (!usern.startsWith('@')) usern = '@' + usern;
+
+    const cu = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (!cu.email) return window.location.href = 'login.html';
+
+    try {
+      const res = await fetch('/.netlify/functions/updateProfile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: cu.email,
+          location: loc,
+          primary_social_media: prim,
+          social_media_username: usern,
+          engagement_nature: industry // 👈 new field added here
+        })
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        if (error?.includes('JWT expired')) {
+          alert('Session expired. Log in again.');
+          localStorage.clear();
+          return window.location.href = 'login.html';
         }
-        alert('Profile updated!');
-        window.location.href='account.html';
-      } catch {
-        alert('Network error updating profile.');
+        alert('Update error: ' + error);
+        return;
       }
-    });
-  }
+
+      alert('Profile updated!');
+      window.location.href = 'account.html';
+
+    } catch {
+      alert('Network error updating profile.');
+    }
+  });
+}
 
   // CHANGE PASSWORD
   if (changePassForm) {
