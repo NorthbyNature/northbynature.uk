@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const { data, error } = await supabaseClient
         .from('profiles')
-        .select('full_name,membership_tier,location,primary_social_media,social_media_username,profile_picture,role')
+        .select('full_name,membership_tier,location,primary_social_media,social_media_username,profile_picture,role,engagement_nature')
         .eq('email', cu.email)
         .single();
       if (error) throw error;
@@ -420,6 +420,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? `Primary Social Media: ${data.primary_social_media}` : "Primary Social Media: Not set";
       acct.querySelector('#social-media-username').textContent= data.social_media_username
         ? `Social Media Username: ${data.social_media_username}` : "Social Media Username: Not set";
+      acct.querySelector('#engagement-nature').textContent = data.engagement_nature
+        ? `Industry: ${data.engagement_nature}` : "Industry: Not set";
+
       acct.querySelector('#profile-picture').src = data.profile_picture
         || "Images/default-placeholder.png";
     } catch (err) {
