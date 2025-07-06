@@ -101,13 +101,13 @@
     <div class="footer-center">
       <div style="display: flex; justify-content: center; gap: 14px; align-items: center; margin-bottom: 24px;">
         <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
-          <img src="Images/facebook-logo.png" alt="Facebook" style="width: 28px; height: 28px;">
+          <img src="Images/facebook-logo.png" alt="Facebook" style="width: 28px; height: 28px;" loading="lazy">
         </a>
         <a href="https://www.instagram.com/eventsbynbn" target="_blank" aria-label="Instagram">
-          <img src="Images/instagram-logo.png" alt="Instagram" style="width: 28px; height: 28px;">
+          <img src="Images/instagram-logo.png" alt="Instagram" style="width: 28px; height: 28px;" loading="lazy">
         </a>
         <a href="https://www.tiktok.com/@northbynature" target="_blank" aria-label="TikTok">
-          <img src="Images/tiktok-logo.png" alt="TikTok" style="width: 28px; height: 28px;">
+          <img src="Images/tiktok-logo.png" alt="TikTok" style="width: 28px; height: 28px;"loading="lazy">
         </a>
       </div>
       <div class="snapwidget-container">
@@ -143,7 +143,7 @@ $(document).ready(function() {
     indicators += `<li data-target="#carouselExampleIndicators" data-slide-to="${i}" ${i === 0 ? 'class="active"' : ''}></li>`;
     items += `
       <div class="carousel-item ${i === 0 ? 'active' : ''}">
-        <img src="Images/Image (${imageArray[i]}).jpg" class="d-block w-100" alt="Image ${imageArray[i]}">
+        <img src="Images/Image (${imageArray[i]}).webp" class="d-block w-100" alt="Image ${imageArray[i]}" loading="lazy">
       </div>
     `;
   }

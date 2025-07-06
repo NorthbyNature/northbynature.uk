@@ -26,6 +26,7 @@ header {
   z-index: 1000;
   background-color: transparent;
   backdrop-filter: none;
+  will-change: transform, background-color;
   transition: background-color 0.6s ease, backdrop-filter 0.6s ease;
   padding: 10px 20px;
   width: 100%;
