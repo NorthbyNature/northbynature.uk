@@ -1402,7 +1402,7 @@ card.style.setProperty("display", "none", "important");
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px; /* space between buttons */
+  gap: 20px; /* creates visible space between buttons */
   z-index: 2;
 }
 
