@@ -1356,95 +1356,56 @@ card.style.setProperty("display", "none", "important");
   margin-bottom: 25px; /* Adjust the value to your liking */
 }
 
-.btn-gradient {
+.btn-gradient,
+.btn-gradient-two {
   --gold: #BE9C5F;
 
+  display: inline-block;
+  text-align: center;
+  padding: 12px 25px;
+  margin: 10px auto; /* space between buttons */
+  color: var(--gold);
+  
+  background-image:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-size: 100% 100%, 200% 100%;
+  background-position: 0 0, -100% 0;
+  background-repeat: no-repeat, no-repeat;
+
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 4px solid var(--gold);
+  background-color: transparent;
+  transition: color 0.3s ease;
+}
+
+.btn-gradient:hover,
+.btn-gradient-two:hover {
+  color: #BE9C5F;
+  animation: border-shine 2s linear infinite;
+}
+
+@keyframes border-shine {
+  to {
+    background-position: 0 0, 200% 0;
+  }
+}
+
+.video-buttons {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: inline-block;
-  text-align: center;
-  padding: 12px 25px;
-  color: var(--gold);
-  
-  /* two‐layer background:
-     1) black fill in the padding‐box
-     2) gradient in the border‐box */
-  background-image:
-    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-size: 100% 100%, 200% 100%;
-  background-position: 0 0, -100% 0;
-  background-repeat: no-repeat, no-repeat;
-
-  text-transform: uppercase;
-  font-weight: 600;
-  /* static gold “border” above everything */
-  border: 4px solid var(--gold);
-  background-color: transparent;
-  transition: color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px; /* space between buttons */
+  z-index: 2;
 }
 
-.btn-gradient:hover {
-  color: #BE9C5F;
-  /* animate just the second (gradient) layer */
-  animation: border-shine 2s linear infinite;
-}
-
-@keyframes border-shine {
-  to {
-    /* move gradient from left (-100%) → right (200%) */
-    background-position: 0 0, 200% 0;
-  }
-}
-
-.btn-gradient-two {
-  --gold: #BE9C5F;
-
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-block;
-  text-align: center;
-  padding: 12px 25px;
-  color: var(--gold);
-  
-  /* two‐layer background:
-     1) black fill in the padding‐box
-     2) gradient in the border‐box */
-  background-image:
-    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-size: 100% 100%, 200% 100%;
-  background-position: 0 0, -100% 0;
-  background-repeat: no-repeat, no-repeat;
-
-  text-transform: uppercase;
-  font-weight: 600;
-  /* static gold “border” above everything */
-  border: 4px solid var(--gold);
-  background-color: transparent;
-  transition: color 0.3s ease;
-}
-
-.btn-gradient-two:hover {
-  color: #BE9C5F;
-  /* animate just the second (gradient) layer */
-  animation: border-shine 2s linear infinite;
-}
-
-@keyframes border-shine {
-  to {
-    /* move gradient from left (-100%) → right (200%) */
-    background-position: 0 0, 200% 0;
-  }
-}
 
 /* position the gradient button in the middle of the video */
 .video-launcher {
