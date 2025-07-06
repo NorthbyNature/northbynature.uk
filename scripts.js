@@ -450,17 +450,14 @@ if (editProfileForm) {
 // Sticky header on scroll
 const header = document.querySelector('header');
 if (header) {
-  let scrollTimeout;
   window.addEventListener('scroll', () => {
-    if (!scrollTimeout) {
-      scrollTimeout = setTimeout(() => {
-        scrollTimeout = null;
-        header.classList.toggle('scrolled', window.scrollY > 0);
-      }, 100); // You can reduce to 50ms for faster response
+    if (window.scrollY > 0) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
     }
   });
 }
-
   const vid = document.querySelector('.video-wrapper video');
   if (vid) {
     vid.muted = true;
