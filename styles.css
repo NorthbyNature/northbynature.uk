@@ -1443,13 +1443,6 @@ card.style.setProperty("display", "none", "important");
   align-items: center;
 }
 
-/* Optional: style for the membership button overlay on video background */
-.video-wrapper .btn-gradient {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2; /* above video but below header */
-}
 .custom-file-upload {
   display: flex;
   align-items: center;
