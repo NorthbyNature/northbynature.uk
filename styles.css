@@ -1405,6 +1405,14 @@ card.style.setProperty("display", "none", "important");
   top: 40%; /* slightly higher */
 }
 
+.member-button,
+.partner-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
 /* position the gradient button in the middle of the video */
 .video-launcher {
   display: inline-block;
