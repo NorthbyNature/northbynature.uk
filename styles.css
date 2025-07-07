@@ -1356,8 +1356,7 @@ card.style.setProperty("display", "none", "important");
   margin-bottom: 25px; /* Adjust the value to your liking */
 }
 
-.btn-gradient,
-.btn-gradient-two {
+.btn-gradient {
   --gold: #BE9C5F;
 
   display: inline-block;
@@ -1382,8 +1381,7 @@ card.style.setProperty("display", "none", "important");
   transition: color 0.3s ease;
 }
 
-.btn-gradient:hover,
-.btn-gradient-two:hover {
+.btn-gradient:hover {
   color: #BE9C5F;
   animation: border-shine 2s linear infinite;
 }
@@ -1394,18 +1392,13 @@ card.style.setProperty("display", "none", "important");
   }
 }
 
-.video-buttons {
-  position: absolute;
-  top: 50%;
+.partner-button {
+  position: relative;
+  top: calc(50% + 70px); /* push it down a bit */
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px; /* creates visible space between buttons */
-  z-index: 2;
+  z-index: 1;
 }
-
 
 /* position the gradient button in the middle of the video */
 .video-launcher {
