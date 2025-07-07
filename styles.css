@@ -1362,7 +1362,7 @@ card.style.setProperty("display", "none", "important");
   display: inline-block;
   text-align: center;
   padding: 12px 25px;
-  margin: 10px auto; /* space between buttons */
+  margin: 0; /* space between buttons */
   color: var(--gold);
   
   background-image:
@@ -1382,7 +1382,7 @@ card.style.setProperty("display", "none", "important");
 
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   z-index: 2;
 }
 
