@@ -319,7 +319,7 @@ footer #social img {
 
 /* Video is trapped inside header */
 .video-wrapper {
-  position: absolute;
+  position: relative;
   z-index: 0;
   top: 0;
   left: 0;
@@ -1393,15 +1393,11 @@ card.style.setProperty("display", "none", "important");
 }
 
 .partner-button {
-  position: relative;
   top: 55% /* height *
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
 }
 
 .member-button {
-  top: 45%; /* slightly higher */
+  top: 40%; /* slightly higher */
 }
 
 /* position the gradient button in the middle of the video */
@@ -1439,7 +1435,7 @@ card.style.setProperty("display", "none", "important");
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1; /* above video but below header */
+  z-index: 2; /* above video but below header */
 }
 .custom-file-upload {
   display: flex;
