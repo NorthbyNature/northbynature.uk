@@ -1436,8 +1436,7 @@ card.style.setProperty("display", "none", "important");
 
 /* Optional: style for the membership button overlay on video background */
 .video-wrapper .btn-gradient {
-  position: relative;
-  top: 50%;
+  position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1; /* above video but below header */
