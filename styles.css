@@ -1400,14 +1400,6 @@ card.style.setProperty("display", "none", "important");
   z-index: 2;
 }
 
-.partner-button {
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-
 /* position the gradient button in the middle of the video */
 .video-launcher {
   display: inline-block;
