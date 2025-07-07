@@ -1360,8 +1360,6 @@ card.style.setProperty("display", "none", "important");
   --gold: #BE9C5F;
 
   position: absolute;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
   display: inline-block;
   text-align: center;
