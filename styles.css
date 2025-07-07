@@ -1379,11 +1379,6 @@ card.style.setProperty("display", "none", "important");
   border: 4px solid var(--gold);
   background-color: transparent;
   transition: color 0.3s ease;
-
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
 }
 
 .btn-gradient:hover {
