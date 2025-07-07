@@ -1392,17 +1392,17 @@ card.style.setProperty("display", "none", "important");
   }
 }
 
-.partner-button {
-  top: 65%; /* height */
-}
-
 .member-button {
-  top: 30%; /* slightly higher */
+  position: absolute;
+  top: 40% !important;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
-.member-button,
 .partner-button {
   position: absolute;
+  top: 55%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
