@@ -1360,7 +1360,6 @@ card.style.setProperty("display", "none", "important");
   --gold: #BE9C5F;
 
   position: absolute;
-  transform: translate(-50%, -50%);
   display: inline-block;
   text-align: center;
   padding: 12px 25px;
@@ -1399,6 +1398,14 @@ card.style.setProperty("display", "none", "important");
   }
 }
 
+/* Optional: style for the membership button overlay on video background */
+.video-wrapper .btn-gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* above video but below header */
+}
 /* position the gradient button in the middle of the video */
 .video-launcher {
   display: inline-block;
@@ -1429,14 +1436,6 @@ card.style.setProperty("display", "none", "important");
   align-items: center;
 }
 
-/* Optional: style for the membership button overlay on video background */
-.video-wrapper .btn-gradient {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1; /* above video but below header */
-}
 .custom-file-upload {
   display: flex;
   align-items: center;
