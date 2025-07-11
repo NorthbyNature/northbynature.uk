@@ -516,6 +516,16 @@ if (header) {
      const banner = document.getElementById('iosInstallBanner');
      if (banner) banner.style.display = 'block';
    }
+
+setTimeout(() => {
+      const iframe = document.createElement('iframe');
+      iframe.src = "https://snapwidget.com/embed/1098891";
+      iframe.allowTransparency = "true";
+      iframe.frameBorder = "0";
+      iframe.scrolling = "no";
+      iframe.title = "Posts from Instagram";
+      document.getElementById('snapwidget-container').appendChild(iframe);
+    }, 1000); // Load after 1 second
 });
 ///////////////////////////////////////////////////////////////////////////////
 function playFullScreenVideo() {
