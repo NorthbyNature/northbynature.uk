@@ -517,7 +517,7 @@ if (header) {
      if (banner) banner.style.display = 'block';
    }
 });
-///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
 function playFullScreenVideo() {
   const video = document.getElementById("fullscreenVideo");
   const container = document.getElementById("video-container");
