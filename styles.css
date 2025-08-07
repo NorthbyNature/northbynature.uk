@@ -1522,3 +1522,26 @@ card.style.setProperty("display", "none", "important");
   color: #d4af37;
   font-size: 18px;
 }
+
+.main-title {
+  font-family: 'Parisienne', serif; /* or 'Great Vibes', cursive */
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #d4af37; /* gold tone */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  letter-spacing: 2px;
+  opacity: 0; /* start invisible */
+  animation: fadeIn 2s ease-in-out forwards; /* trigger fade */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* slight slide up effect */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
