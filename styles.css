@@ -1524,21 +1524,20 @@ card.style.setProperty("display", "none", "important");
 }
 
 .main-title {
-  font-family: 'Parisienne', serif; /* or 'Great Vibes', cursive */
+  font-family: 'Parisienne', cursive;
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: normal; /* script fonts often don't need bold */
   color: #d4af37; /* gold tone */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-  letter-spacing: 2px;
-  opacity: 0; /* start invisible */
-  animation: fadeIn 2s ease-in-out forwards; /* trigger fade */
+  letter-spacing: 0; /* keep script flowing naturally */
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px); /* slight slide up effect */
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
