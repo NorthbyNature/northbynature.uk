@@ -1523,7 +1523,7 @@ card.style.setProperty("display", "none", "important");
   font-size: 18px;
 }
 
-.main-title {
+h1.main-title {
   font-family: 'Bonheur Royale', cursive !important;
   font-size: 3.5rem;
   font-weight: normal; /* script fonts often don't need bold */
