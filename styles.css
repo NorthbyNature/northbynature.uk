@@ -233,12 +233,15 @@ section {
     text-align: center;
 }
 
-h1, h2, h3 {
-    color: #BE9C5F;
-    font-family: "Marcellus", serif !important;
-    text-transform: uppercase;
-    font-weight: normal;
-    text-align: center;
+/* keep this where it is */
+h1:not(.main-title), 
+h2, 
+h3 {
+  color: #BE9C5F;
+  font-family: "Marcellus", serif !important;
+  text-transform: uppercase;
+  font-weight: normal;
+  text-align: center;
 }
 
 form {
@@ -1524,22 +1527,17 @@ card.style.setProperty("display", "none", "important");
 }
 
 h1.main-title {
-  font-family: 'Parisienne', cursive;
+  font-family: 'Parisienne', cursive !important; /* beats the global !important */
+  text-transform: none;
+  color: #d4af37;
   font-size: 3.5rem;
-  font-weight: normal; /* script fonts don't need bold */
-  color: #d4af37; /* gold tone */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-  letter-spacing: 0; /* keep script natural */
+  font-weight: normal;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+  letter-spacing: 0;
   opacity: 0;
   animation: fadeIn 2s ease-in-out forwards;
 }
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
