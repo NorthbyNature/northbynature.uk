@@ -1524,16 +1524,15 @@ card.style.setProperty("display", "none", "important");
 }
 
 h1.main-title {
-  font-family: 'Bonheur Royale', cursive !important;
+  font-family: 'Parisienne', cursive;
   font-size: 3.5rem;
-  font-weight: normal; /* script fonts often don't need bold */
-  color: hotpink !important; /* gold tone */
+  font-weight: normal; /* script fonts don't need bold */
+  color: #d4af37; /* gold tone */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-  letter-spacing: 0; /* keep script flowing naturally */
+  letter-spacing: 0; /* keep script natural */
   opacity: 0;
   animation: fadeIn 2s ease-in-out forwards;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
