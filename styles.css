@@ -1527,7 +1527,7 @@ card.style.setProperty("display", "none", "important");
   font-family: 'Bonheur Royale', cursive !important;
   font-size: 3.5rem;
   font-weight: normal; /* script fonts often don't need bold */
-  color: #d4af37; /* gold tone */
+  color: hotpink !important; /* gold tone */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
   letter-spacing: 0; /* keep script flowing naturally */
   opacity: 0;
