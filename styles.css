@@ -1531,7 +1531,7 @@ card.style.setProperty("display", "none", "important");
 }
 
 .welcome-title {
-  font-family: 'Fleur De Leah', cursive !important; /* beat body’s Parisienne */
+  font-family: 'Italianno', cursive !important; /* beat body’s Italianno */
   text-transform: none;
   color: #d4af37;
   font-size: clamp(2.4rem, 6vw, 4rem);
