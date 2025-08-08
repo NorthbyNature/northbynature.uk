@@ -1527,7 +1527,7 @@ card.style.setProperty("display", "none", "important");
 }
 
 .welcome-title {
-  font-family: 'Italianno', cursive !important; /* beat body’s Italianno */
+  font-family: 'Italianno', cursive; /* beat body’s Italianno */
   text-transform: none;
   color: #d4af37;
   font-size: clamp(3rem, 8vw, 6rem);
