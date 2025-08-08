@@ -3,7 +3,7 @@
 /* Base body styles */
 body {
     background: #000;
-    font-family: 'Marcellus', serif;
+    font-family: 'Italianno', serif;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -242,10 +242,6 @@ h3 {
   text-transform: uppercase;
   font-weight: normal;
   text-align: center;
-}
-
-p {
-    font-family: "Marcellus", serif !important;
 }
 
 form {
