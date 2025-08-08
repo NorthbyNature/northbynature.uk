@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 
 /* Base body styles */
 body {
@@ -234,7 +235,7 @@ section {
 }
 
 /* keep this where it is */
-h1:not(.main-title), 
+h1:not(.welcome-title), 
 h2, 
 h3 {
   color: #BE9C5F;
