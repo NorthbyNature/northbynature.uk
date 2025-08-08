@@ -1527,9 +1527,9 @@ card.style.setProperty("display", "none", "important");
 }
 
 h1.main-title {
-  font-family: 'Parisienne', cursive;  /* wins because rule is last + more specific */
-  text-transform: none;                 /* cancels uppercase */
-  color: #d4af37;
+  font-family: 'Parisienne', cursive !important; /* forces it */
+  text-transform: none !important; /* cancel uppercase */
+  color: #d4af37 !important;
   font-size: 3.5rem;
   font-weight: normal;
   text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
@@ -1537,7 +1537,6 @@ h1.main-title {
   opacity: 0;
   animation: fadeIn 2s ease-in-out forwards;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
