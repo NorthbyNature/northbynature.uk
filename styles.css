@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 
 /* Base body styles */
 body {
     background: #000;
-    font-family: 'Parisienne', cursive !important;
+    font-family: 'Fleur De Leah', cursive;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -1528,19 +1527,21 @@ card.style.setProperty("display", "none", "important");
 }
 
 .welcome-title {
-    font-family: 'Fleur De Leah', cursive;
-    text-transform: none;
-    color: #d4af37;
-    font-size: 3.5rem;
-    font-weight: normal;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    letter-spacing: 0;
-    text-align: center;
-    margin: 20px 0;
-    opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
+  font-family: 'Fleur De Leah', cursive !important; /* beat body’s Parisienne */
+  text-transform: none;
+  color: #d4af37;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0,0,0,.4);
+  margin: 24px 0 12px;
+  opacity: 0;
+  animation: fadeIn 1.8s ease-out forwards;
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
