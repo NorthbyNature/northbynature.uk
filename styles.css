@@ -244,6 +244,10 @@ h3 {
   text-align: center;
 }
 
+p {
+    font-family: "Marcellus", serif !important;
+}
+
 form {
     display: flex;
     flex-direction: column;
