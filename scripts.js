@@ -196,7 +196,7 @@ async function registerInterest(id) {
  *  ========================= *****/
 
 // Your Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_YOUR_PUBLISHABLE_KEY';
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SAHb1RuOcGwo8226Bupcc9bqSnyXX6SV3cHf0EmE1F1XSHeC0mYOSqNtgdjKC7zjUm78c1YeFm6T5NPFnKAB0O700UONT47ip';
 
 // Read cart from localStorage safely
 function getCart() {

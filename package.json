@@ -1,19 +1,19 @@
 {
   "name": "website",
+  "private": true,
   "version": "1.0.0",
-  "main": "payment.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "netlify dev",
+    "build": "echo \"Static site\"",
+    "start": "netlify dev"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "@paypal/checkout-server-sdk": "^1.0.3",
+    "stripe": "^16.0.0",
     "@sendgrid/mail": "^7.4.0",
-    "@supabase/supabase-js": "^2.47.7",
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2"
+    "@supabase/supabase-js": "^2.47.7"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
