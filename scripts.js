@@ -112,26 +112,6 @@ function redirectToPayment() {
   window.location.href = 'payment.html';
 }
 
-// PayPal button
-function renderPayPalButton() {
-  paypal.Buttons({
-    createOrder(data, actions) {
-      return fetch('/create-order',{method:'post',headers:{'content-type':'application/json'}})
-        .then(r=>r.json()).then(d=>d.id);
-    },
-    onApprove(data, actions) {
-      return fetch('/capture-order',{
-        method:'post',
-        headers:{'content-type':'application/json'},
-        body: JSON.stringify({ orderID: data.orderID })
-      }).then(r=>r.json())
-        .then(d=> {
-          window.location.href = d.status==='COMPLETED'?'success.html':'failure.html';
-        });
-    }
-  }).render('#paypal-button-container');
-}
-
 // Opportunities logic
 async function updateOpportunityCount() {
   const { count, error } = await supabaseClient
@@ -211,6 +191,115 @@ async function registerInterest(id) {
   const btn = document.querySelector(`.register-btn[data-id="${id}"]`);
   if (btn) { btn.textContent='✓ Registered'; btn.disabled=true; btn.classList.add('btn-success'); }
 }
+/***** =========================
+ *  STRIPE CHECKOUT – PAYMENT PAGE
+ *  ========================= *****/
+
+// Your Stripe publishable key
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_YOUR_PUBLISHABLE_KEY';
+
+// Read cart from localStorage safely
+function getCart() {
+  try { return JSON.parse(localStorage.getItem('cart') || '[]'); }
+  catch { return []; }
+}
+
+// Format numbers as GBP
+function formatGBP(n) {
+  return `£${Number(n || 0).toFixed(2)}`;
+}
+
+// Render the payment summary (expects #summary on payment.html)
+function renderPaymentSummary(cart) {
+  const summary = document.getElementById('summary');
+  const payBtn  = document.getElementById('pay-btn');
+  if (!summary || !payBtn) return;
+
+  if (!cart.length) {
+    summary.innerHTML = '<p>Your cart is empty.</p>';
+    payBtn.disabled = true;
+    return;
+  }
+
+  const rows = cart.map(i => {
+    const qty = Number(i.quantity || 0);
+    const lineTotal = Number(i.price || 0) * qty;
+    return `
+      <div class="d-flex justify-content-between align-items-center py-1">
+        <div>
+          <strong>${i.eventTitle}</strong>
+          <div class="text-muted small">${i.ticketType} × ${qty}</div>
+        </div>
+        <div>${formatGBP(lineTotal)}</div>
+      </div>
+    `;
+  }).join('');
+
+  const total = cart.reduce((s, i) => s + (Number(i.price || 0) * Number(i.quantity || 0)), 0);
+
+  summary.innerHTML = `
+    <div class="card p-3">
+      ${rows}
+      <hr/>
+      <div class="d-flex justify-content-between">
+        <strong>Total</strong>
+        <strong>${formatGBP(total)}</strong>
+      </div>
+    </div>
+  `;
+
+  payBtn.disabled = false;
+}
+
+// Call your Netlify function to create a Stripe Checkout Session
+async function createCheckoutSession(cart) {
+  const res = await fetch('/.netlify/functions/create-checkout-session', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cart })
+  });
+  return res.json(); // -> { id } or { error }
+}
+
+// Initialise Stripe on payment page
+function initStripePaymentPage() {
+  if (!document.body.classList.contains('payment-page')) return;
+
+  // Optional: keep your badge fresh
+  if (typeof updateCartCount === 'function') updateCartCount();
+
+  const cart = getCart();
+  renderPaymentSummary(cart);
+
+  const payBtn = document.getElementById('pay-btn');
+  const payMsg = document.getElementById('pay-msg');
+  if (!payBtn) return;
+
+  let stripe;
+  try {
+    stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+  } catch (e) {
+    if (payMsg) payMsg.textContent = 'Stripe initialisation failed.';
+    if (payBtn) payBtn.disabled = true;
+    return;
+  }
+
+  payBtn.addEventListener('click', async () => {
+    payBtn.disabled = true;
+    if (payMsg) payMsg.textContent = 'Creating secure checkout…';
+
+    try {
+      const data = await createCheckoutSession(getCart());
+      if (data.error) throw new Error(data.error);
+
+      const { error } = await stripe.redirectToCheckout({ sessionId: data.id });
+      if (error) throw error;
+    } catch (err) {
+      if (payMsg) payMsg.textContent = err.message || 'Payment error.';
+      payBtn.disabled = false;
+    }
+  });
+}
 
 // ===========================
 //  MAIN INITIALIZATION
@@ -226,7 +315,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('decrease-quantity')?.addEventListener('click', decreaseQuantity);
   document.getElementById('increase-quantity')?.addEventListener('click', increaseQuantity);
   document.querySelectorAll('.ticket-btn').forEach(b => b.addEventListener('click', () => {
-    document.querySelectorAll('.ticket-btn').forEach(x=>x.classList.remove('selected'));
+  document.querySelectorAll('.ticket-btn').forEach(x=>x.classList.remove('selected'));
     b.classList.add('selected');
   }));
 
@@ -238,7 +327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('checkout-button')?.addEventListener('click', redirectToPayment);
   if (document.body.classList.contains('cart-page')) displayCartItems();
-  if (document.body.classList.contains('payment-page')) renderPayPalButton();
+  if (document.body.classList.contains('payment-page')) initStripePaymentPage();
   updateCartCount();
 
   // Opportunities
