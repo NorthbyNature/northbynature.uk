@@ -71,9 +71,7 @@
         <iframe
           src="https://snapwidget.com/embed/1098891"
           class="snapwidget-widget"
-          allowtransparency="true"
-          frameborder="0"
-          scrolling="no"
+          allowtransparency="true" frameborder="0" scrolling="no"
           style="border:none; overflow:hidden; width:480px; height:160px"
           title="Posts from Instagram">
         </iframe>
@@ -85,80 +83,9 @@
   <!-- JS (kept at end for performance) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <!-- fixed URL: stackpath.bootstrapcdn.com -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <!-- Your global script bundle -->
-  <script src="scripts.js"></script>
-
-  <!-- Page-specific script to handle Stripe Checkout -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Update cart icon if your scripts.js exposes updateCartCount()
-      if (typeof updateCartCount === 'function') updateCartCount();
-
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      const summary = document.getElementById('summary');
-      const payBtn = document.getElementById('pay-btn');
-      const payMsg = document.getElementById('pay-msg');
-
-      if (!cart.length) {
-        summary.innerHTML = '<p>Your cart is empty.</p>';
-        payBtn.disabled = true;
-        return;
-      }
-
-      const rows = cart.map(i => {
-        const qty = Number(i.quantity || 0);
-        const lineTotal = (Number(i.price || 0) * qty).toFixed(2);
-        return `
-          <div class="d-flex justify-content-between align-items-center py-1">
-            <div>
-              <strong>${i.eventTitle}</strong>
-              <div class="text-muted small">${i.ticketType} × ${qty}</div>
-            </div>
-            <div>£${lineTotal}</div>
-          </div>
-        `;
-      }).join('');
-
-      const total = cart.reduce((s, i) => s + (Number(i.price || 0) * Number(i.quantity || 0)), 0);
-      summary.innerHTML = `
-        <div class="card p-3">
-          ${rows}
-          <hr/>
-          <div class="d-flex justify-content-between">
-            <strong>Total</strong>
-            <strong>£${total.toFixed(2)}</strong>
-          </div>
-        </div>
-      `;
-
-      // Initialise Stripe (replace with your real publishable key)
-      const stripe = Stripe('pk_live_YOUR_PUBLISHABLE_KEY');
-
-      payBtn.addEventListener('click', async () => {
-        payBtn.disabled = true;
-        payMsg.textContent = 'Creating secure checkout…';
-
-        try {
-          const res = await fetch('/.netlify/functions/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cart })
-          });
-
-          const data = await res.json();
-          if (data.error) throw new Error(data.error);
-
-          const { error } = await stripe.redirectToCheckout({ sessionId: data.id });
-          if (error) throw error;
-        } catch (err) {
-          payMsg.textContent = err.message || 'Payment error.';
-          payBtn.disabled = false;
-        }
-      });
-    });
-  </script>
+  <!-- Your global bundle (cache-busted) -->
+  <script src="scripts.js?v=4"></script>
 </body>
 </html>
