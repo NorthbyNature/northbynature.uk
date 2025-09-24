@@ -2,51 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Complete Your Purchase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <!-- Vendor CSS first -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Fonts before your styles (mirroring home page order) -->
+  <link rel="stylesheet" href="/styles.css?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
 
   <!-- Stripe.js -->
   <script src="https://js.stripe.com/v3"></script>
+
+  <title>Complete Your Purchase</title>
 </head>
-
 <body class="payment-page">
+  <!-- Sticky Header Only -->
   <header class="text-center">
-    <div class="instagram-link">
-      <a href="https://ig.me/m/eventsbynbn" target="_blank">Click and Message Us on Instagram</a>
-    </div>
+    <div class="header-content">
+      <div class="account-icon">
+        <a href="login.html" id="account-link"><i class="fas fa-user"></i></a>
+      </div>
 
-    <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo" />
+      <div class="cart-icon">
+        <a href="cart.html">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
 
-    <nav>
-      <ul class="nav justify-content-center">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="members.html">Members</a></li>
-        <li class="nav-item"><a class="nav-link" href="partnerships.html">Partnerships and Collaborations</a></li>
-        <li class="nav-item"><a class="nav-link" href="exclusive.html">Exclusive</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-
-    <div class="cart-icon">
-      <a href="cart.html">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
+      <!-- Logo -->
+      <a href="index.html">
+        <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
       </a>
+
+      <!-- Menu Toggle Button -->
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
 
-  <main class="container main-content">
+  <!-- Sidebar Menu -->
+  <div id="sidebarMenu" class="sidebar-menu">
+    <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
+    <ul class="sidebar-nav">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="events.html">EVENTS</a></li>
+      <li><a href="members.html#members-intro">MEMBERS</a></li>
+      <li><a href="partnerships.html#partnerships-intro">PARTNERSHIPS & COLLABORATIONS</a></li>
+      <li><a href="exclusive.html#exclusive-intro">EXCLUSIVE</a></li>
+      <li><a href="gallery.html">GALLARY</a></li>
+      <li><a href="about.html#about-intro">ABOUT US</a></li>
+      <li><a href="contact.html">CONTACT US</a></li>
+    </ul>
+  </div>
+
+  <!-- Overlay -->
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <!-- Main Page Content -->
+  <main class="text-center main-content">
     <h2>Complete Your Purchase</h2>
 
-    <!-- Order summary -->
+    <!-- Order summary (filled by scripts.js) -->
     <div id="summary" class="mb-3"></div>
 
     <!-- Pay button -->
@@ -64,17 +86,25 @@
         </ul>
       </div>
       <div class="footer-center">
-        <p>
-          Follow us on
-          <a href="https://www.instagram.com/eventsbynbn/" target="_blank" class="instagram-link">@eventsbynbn</a>
-        </p>
-        <iframe
-          src="https://snapwidget.com/embed/1098891"
-          class="snapwidget-widget"
-          allowtransparency="true" frameborder="0" scrolling="no"
-          style="border:none; overflow:hidden; width:480px; height:160px"
-          title="Posts from Instagram">
-        </iframe>
+        <div style="display: flex; justify-content: center; gap: 14px; align-items: center; margin-bottom: 24px;">
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook">
+            <img src="Images/facebook-logo.png" alt="Facebook" style="width: 28px; height: 28px;" loading="lazy">
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/eventsbynbn" target="_blank" aria-label="Instagram">
+            <img src="Images/instagram-logo.png" alt="Instagram" style="width: 28px; height: 28px;" loading="lazy">
+          </a>
+          <!-- TikTok -->
+          <a href="https://www.tiktok.com/@northbynature" target="_blank" aria-label="TikTok">
+            <img src="Images/tiktok-logo.png" alt="TikTok" style="width: 28px; height: 28px;" loading="lazy">
+          </a>
+        </div>
+
+        <div class="snapwidget-container">
+          <iframe src="https://snapwidget.com/embed/1098891" allowtransparency="true" frameborder="0" scrolling="no" title="Posts from Instagram"></iframe>
+          <a href="https://www.instagram.com/exclusivebynbn/" target="_blank" class="snap-overlay"></a>
+        </div>
         <p>&copy; 2024 North by Nature. All rights reserved.</p>
       </div>
     </div>
@@ -84,8 +114,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <!-- Your global bundle (cache-busted) -->
-  <script src="scripts.js?v=4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="scripts.js?v=5"></script>
 </body>
 </html>
