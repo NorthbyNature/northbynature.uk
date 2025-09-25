@@ -1533,7 +1533,7 @@ card.style.setProperty("display", "none", "important");
 .welcome-title {
   font-family: 'Italianno', cursive; /* beat body’s Italianno */
   text-transform: none;
-  color: #d4af37;
+  color: #BE9C5F;
   font-size: clamp(4.5rem, 8vw, 6rem);
   line-height: 1.1;
   font-weight: 400;
