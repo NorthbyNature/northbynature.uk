@@ -199,7 +199,7 @@ async function registerInterest(id) {
  *  ========================= *****/
 
 // Your Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SAHb1RuOcGwo8226Bupcc9bqSnyXX6SV3cHf0EmE1F1XSHeC0mYOSqNtgdjKC7zjUm78c1YeFm6T5NPFnKAB0O700UONT47ip';
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SAHaSRr3q7KpjFWCRncPtauBP6KVeYiC8QpcAV2S9aG5ctpTX1TQ5z9eCY8fcm9u4EPIA18c2PrEV7YQOjt6TVC00uWe3tC35';
 
 // Read cart from localStorage safely
 function getCart() {
@@ -710,4 +710,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
   } else {
     console.warn('⚠️ install button NOT found in DOM when event fired');
   }
+function refreshTicketLabels() {
+  document.querySelectorAll('.ticket-btn').forEach(btn => {
+    const name = btn.dataset.name || btn.textContent;
+    const price = Number(btn.dataset.price || 0);
+    btn.textContent = `${name} - £${price}`;
+  });
+}
+refreshTicketLabels();
+
 });
