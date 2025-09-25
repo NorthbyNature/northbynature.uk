@@ -35,17 +35,20 @@ function increaseQuantity() {
   q.value = (parseInt(q.value) || 0) + 1;
 }
 function addToCart() {
-  const sel = document.querySelector('.ticket-btn.selected');
-  const price = sel ? sel.getAttribute('data-price') : 0;
+  const sel   = document.querySelector('.ticket-btn.selected');
+  const price = Number(sel?.dataset.price || 0);
   const qty   = parseInt(document.getElementById('quantity-input').value) || 0;
   const title = document.querySelector('.event-title')?.innerText || '';
-  const type  = sel ? sel.getAttribute('data-name') : '';
-  let cart    = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ eventTitle: title, ticketType: type, price, quantity: qty });
+  const type  = sel?.dataset.name || '';
+  const sku   = sel?.dataset.sku || '';   // <-- NEW
+
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ sku, eventTitle: title, ticketType: type, price, quantity: qty }); // <-- add sku
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartCount();
   alert('Item added to cart!');
 }
+
 function buyNow() {
   addToCart();
   window.location.href = 'cart.html';
@@ -196,7 +199,7 @@ async function registerInterest(id) {
  *  ========================= *****/
 
 // Your Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51SAHb1RuOcGwo8226Bupcc9bqSnyXX6SV3cHf0EmE1F1XSHeC0mYOSqNtgdjKC7zjUm78c1YeFm6T5NPFnKAB0O700UONT47ip';
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SAHb1RuOcGwo8226Bupcc9bqSnyXX6SV3cHf0EmE1F1XSHeC0mYOSqNtgdjKC7zjUm78c1YeFm6T5NPFnKAB0O700UONT47ip';
 
 // Read cart from localStorage safely
 function getCart() {

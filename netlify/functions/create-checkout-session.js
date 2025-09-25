@@ -1,22 +1,24 @@
 // netlify/functions/create-checkout-session.js
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// Normalise to build consistent keys from client items
+// Use the same spelling you've used elsewhere
 const normalise = s => String(s || '').trim().toLowerCase();
 
-// 🔐 TRUSTED prices (amounts are in pence)
+// 🔐 TRUSTED prices (pence). Prefer SKU-style keys.
 const PRICE_BOOK = {
-  // format: '<event title>|<ticket type>'
-  'sample event|early bird':     { name: 'Sample Event — Early Bird',     unit_amount: 100,  currency: 'gbp' }, // £1.00
-  'sample event|second release': { name: 'Sample Event — Second Release', unit_amount: 3000, currency: 'gbp' }, // £30.00
-  'sample event|final release':  { name: 'Sample Event — Final Release',  unit_amount: 4000, currency: 'gbp' }, // £40.00
-  // add your real events/tickets here
+  // SKU-style keys (recommended)
+  'sample-event|early-bird':     { name: 'Sample Event — Early Bird',     unit_amount: 100,  currency: 'gbp' }, // £1.00
+  'sample-event|second-release': { name: 'Sample Event — Second Release', unit_amount: 3000, currency: 'gbp' }, // £30.00
+  'sample-event|final-release':  { name: 'Sample Event — Final Release',  unit_amount: 4000, currency: 'gbp' }, // £40.00
+
+  // Optional: fallback keys based on title|type if you haven't added data-sku yet
+  'sample event|early bird':     { name: 'Sample Event — Early Bird',     unit_amount: 100,  currency: 'gbp' },
+  'sample event|second release': { name: 'Sample Event — Second Release', unit_amount: 7500, currency: 'gbp' },
+  'sample event|final release':  { name: 'Sample Event — Final Release',  unit_amount: 4000, currency: 'gbp' }
 };
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
 
   try {
     const { cart = [] } = JSON.parse(event.body || '{}');
@@ -25,20 +27,30 @@ exports.handler = async (event) => {
     }
 
     const line_items = [];
+
     for (const item of cart) {
-      const key = `${normalise(item.eventTitle)}|${normalise(item.ticketType)}`;
+      // Prefer sku if present; otherwise use eventTitle|ticketType
+      const key = item.sku
+        ? normalise(item.sku)
+        : `${normalise(item.eventTitle)}|${normalise(item.ticketType)}`;
+
       const price = PRICE_BOOK[key];
       const qty = Number(item.quantity || 1);
+
       if (!price || qty < 1) {
-        return { statusCode: 400, body: JSON.stringify({ error: `Invalid item: ${item.eventTitle} ${item.ticketType}` }) };
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: `Invalid item: ${item.eventTitle} ${item.ticketType}` })
+        };
       }
+
       line_items.push({
         price_data: {
           currency: price.currency,
           product_data: { name: price.name },
-          unit_amount: price.unit_amount,
+          unit_amount: price.unit_amount
         },
-        quantity: qty,
+        quantity: qty
       });
     }
 
@@ -47,10 +59,9 @@ exports.handler = async (event) => {
       line_items,
       customer_creation: 'if_required',
       billing_address_collection: 'required',
-      // Redirects
       success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
       cancel_url:  'https://www.northbynature.uk/payment-cancelled.html',
-      metadata: { source: 'nbn-site' },
+      metadata: { source: 'nbn-site' }
     });
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id }) };
