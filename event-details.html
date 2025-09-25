@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Link to the main stylesheet (styles.css) -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Bootstrap CSS for layout and component styling -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome for using icon fonts (e.g., shopping cart or social media icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Vendor CSS first -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Fonts before your styles -->
+<link rel="stylesheet" href="/styles.css?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- Video Background (not sticky) -->
+<div class="video-wrapper">
+  <video
+    muted
+    autoplay
+    loop
+    playsinline
+    webkit-playsinline
+  >    
+    <source src="Videos/nbn-vid.mp4" type="video/mp4">
+    <source src="Videos/nbn-vid.webm" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+
+    <a href="membership-application.html" class="btn-gradient">APPLY TO BECOME A MEMBER</a>
+</div>
   <!-- Sticky Header Only -->
   <header class="text-center">
     <div class="header-content">
@@ -30,33 +46,33 @@
       </div>
 
       <!-- Logo -->
-      <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
-<!-- Menu Toggle Button -->
+      <a href="index.html">
+  <img src="logo-placeholder.png" alt="North by Nature Logo" class="logo">
+</a>
+
+      <!-- Menu Toggle Button -->
       <button class="menu-toggle" id="menuToggle">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </header>
-      
-
       <!-- Sidebar Menu -->
       <div id="sidebarMenu" class="sidebar-menu">
         <button class="close-btn" id="menuClose"><i class="fas fa-times"></i></button>
         <ul class="sidebar-nav">
           <li><a href="index.html">HOME</a></li>
           <li><a href="events.html">EVENTS</a></li>
-          <li><a href="members.html">MEMBERS</a></li>
-          <li><a href="partnerships.html">PARTNERSHIPS & COLLABORATIONS</a></li>
-          <li><a href="exclusive.html">EXCLUSIVE</a></li>
+          <li><a href="members.html#members-intro">MEMBERS</a></li>
+          <li><a href="partnerships.html#partnerships-intro">PARTNERSHIPS & COLLABORATIONS</a></li>
+          <li><a href="exclusive.html#exclusive-intro">EXCLUSIVE</a></li>
           <li><a href="gallery.html">GALLARY</a></li>
-          <li><a href="about.html">ABOUT US</a></li>
+          <li><a href="about.html#about-intro">ABOUT US</a></li>
           <li><a href="contact.html">CONTACT US</a></li>
         </ul>
       </div>
-
       <!-- Overlay -->
-      <div id="menuOverlay" class="menu-overlay"></div>
-
+      <div id="menuOverlay" class="menu-overlay">
+</div>
     <main class="main-content">
         <section class="content-section text-centered-container">
             <div class="event-details">
