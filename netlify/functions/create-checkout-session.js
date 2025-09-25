@@ -7,7 +7,7 @@ const PRICE_BOOK = {
   'launch party x showcase|pre-release':    { name: 'LAUNCH PARTY X SHOWCASE — Pre Release',    unit_amount:  500, currency: 'gbp' }, // £5.00
   'launch party x showcase|first-release':  { name: 'LAUNCH PARTY X SHOWCASE — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10.00
   'launch party x showcase|second-release': { name: 'LAUNCH PARTY X SHOWCASE — Second Release', unit_amount: 1500, currency: 'gbp' }, // £15.00
-  'launch party x showcase|final-release':  { name: 'LAUNCH PARTY X SHOWCASE — Final Release',  unit_amount: 2000, currency: 'gbp' }  // £20.00
+  'launch party x showcase|final-release':  { name: 'LAUNCH PARTY X SHOWCASE — Final Release',  unit_amount: 2000, currency: 'gbp' },  // £20.00
   'launch party x showcase|bottomless-brunch':  { name: 'LAUNCH PARTY X SHOWCASE — Bottomless Brunch',  unit_amount: 5000, currency: 'gbp' }  // £50.00
 };
 
