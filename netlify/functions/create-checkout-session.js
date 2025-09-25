@@ -7,14 +7,16 @@ const normalise = s => String(s || '').trim().toLowerCase();
 // 🔐 TRUSTED prices (pence). Prefer SKU-style keys.
 const PRICE_BOOK = {
   // SKU-style keys (recommended)
-  'sample-event|early-bird':     { name: 'Sample Event — Early Bird',     unit_amount: 100,  currency: 'gbp' }, // £1.00
-  'sample-event|second-release': { name: 'Sample Event — Second Release', unit_amount: 3000, currency: 'gbp' }, // £30.00
-  'sample-event|final-release':  { name: 'Sample Event — Final Release',  unit_amount: 4000, currency: 'gbp' }, // £40.00
+  'LAUNCH PARTY X SHOWCASE|pre-release':     { name: 'LAUNCH PARTY X SHOWCASE — Pre Release',     unit_amount: 500,  currency: 'gbp' }, // £5.00
+  'LAUNCH PARTY X SHOWCASE|first-release': { name: 'LAUNCH PARTY X SHOWCASE — First Release', unit_amount: 1000, currency: 'gbp' }, // £10.00
+  'LAUNCH PARTY X SHOWCASE|second-release':  { name: 'LAUNCH PARTY X SHOWCASE — Second Release',  unit_amount: 1500, currency: 'gbp' }, // £15.00
+  'LAUNCH PARTY X SHOWCASE|final-release':  { name: 'LAUNCH PARTY X SHOWCASE — Final Release',  unit_amount: 2000, currency: 'gbp' } // £20.00
 
   // Optional: fallback keys based on title|type if you haven't added data-sku yet
-  'sample event|early bird':     { name: 'Sample Event — Early Bird',     unit_amount: 100,  currency: 'gbp' },
-  'sample event|second release': { name: 'Sample Event — Second Release', unit_amount: 7500, currency: 'gbp' },
-  'sample event|final release':  { name: 'Sample Event — Final Release',  unit_amount: 4000, currency: 'gbp' }
+  'LAUNCH PARTY X SHOWCASE|pre release':     { name: 'LAUNCH PARTY X SHOWCASE — Pre Release',     unit_amount: 500,  currency: 'gbp' },
+  'LAUNCH PARTY X SHOWCASE|first release': { name: 'LAUNCH PARTY X SHOWCASE — First Release', unit_amount: 1000, currency: 'gbp' },
+  'LAUNCH PARTY X SHOWCASE|second release':  { name: 'LAUNCH PARTY X SHOWCASE — Second Release',  unit_amount: 1500, currency: 'gbp' }
+  'LAUNCH PARTY X SHOWCASE|final release':  { name: 'LAUNCH PARTY X SHOWCASE — Final Release',  unit_amount: 2000, currency: 'gbp' }
 };
 
 exports.handler = async (event) => {
