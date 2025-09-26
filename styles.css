@@ -901,11 +901,13 @@ textarea {
     text-align: center; /* Center-align text */
 }
 
-.ticket-btn.sold-out {
+.ticket-btn.sold-out,
+.ticket-btn[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: auto; /* keep clicks so we can show a note */
+  pointer-events: auto; /* still allow click to show alert */
 }
+
 
 /* Hover effect for ticket buttons */
 .ticket-btn:hover {
