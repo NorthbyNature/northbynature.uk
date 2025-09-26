@@ -901,6 +901,12 @@ textarea {
     text-align: center; /* Center-align text */
 }
 
+.ticket-btn.sold-out {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: auto; /* keep clicks so we can show a note */
+}
+
 /* Hover effect for ticket buttons */
 .ticket-btn:hover {
     background-color: #ffffff; /* White background on hover */

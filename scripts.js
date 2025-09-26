@@ -21,6 +21,13 @@ const supabaseClient = supabase.createClient(
   }
 );
 
+function isSoldOut(btn) {
+  return btn?.dataset.soldout === 'true'
+      || btn?.classList.contains('sold-out')
+      || btn?.hasAttribute('aria-disabled')
+      || btn?.hasAttribute('disabled');
+}
+
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
 function decreaseQuantity() {
@@ -35,17 +42,23 @@ function increaseQuantity() {
   q.value = (parseInt(q.value) || 0) + 1;
 }
 function addToCart() {
-  const sel   = document.querySelector('.ticket-btn.selected');
-  const price = Number(sel?.dataset.price || 0);
-  const qty   = parseInt(document.getElementById('quantity-input').value) || 0;
-  const title = document.querySelector('.event-title')?.innerText || '';
-  const type  = sel?.dataset.name || '';
-  const sku   = sel?.dataset.sku || '';   // <-- NEW
+  const sel = document.querySelector('.ticket-btn.selected');
+  if (!sel) { alert('Please select a ticket type'); return; }
+  if (isSoldOut(sel)) { alert('Sorry, this ticket is sold out.'); return; }
 
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ sku, eventTitle: title, ticketType: type, price, quantity: qty }); // <-- add sku
+  const price = Number(sel.dataset.price || 0);
+  const qtyEl = document.getElementById('quantity-input');
+  const qty   = qtyEl ? Math.max(1, parseInt(qtyEl.value) || 1) : 1;
+
+  const title = document.querySelector('.event-title')?.innerText || '';
+  const type  = sel.dataset.name || '';
+  const sku   = sel.dataset.sku || '';
+
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push({ sku, eventTitle: title, ticketType: type, price, quantity: qty });
   localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
+
+  updateCartCount?.();
   alert('Item added to cart!');
 }
 
@@ -313,14 +326,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log("📑 scripts.js loaded and DOM ready—now binding events");
 
   // Cart & tickets
-  document.getElementById('add-to-cart')?.addEventListener('click', addToCart);
-  document.getElementById('buy-now')?.addEventListener('click', buyNow);
-  document.getElementById('decrease-quantity')?.addEventListener('click', decreaseQuantity);
-  document.getElementById('increase-quantity')?.addEventListener('click', increaseQuantity);
-  document.querySelectorAll('.ticket-btn').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('.ticket-btn').forEach(x=>x.classList.remove('selected'));
+document.getElementById('add-to-cart')?.addEventListener('click', addToCart);
+document.getElementById('buy-now')?.addEventListener('click', buyNow);
+document.getElementById('decrease-quantity')?.addEventListener('click', decreaseQuantity);
+document.getElementById('increase-quantity')?.addEventListener('click', increaseQuantity);
+
+// Replace your existing .ticket-btn handler with this:
+document.querySelectorAll('.ticket-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    if (isSoldOut(b)) {
+      alert('Sorry, this ticket is sold out.');
+      return;
+    }
+    document.querySelectorAll('.ticket-btn').forEach(x => x.classList.remove('selected'));
     b.classList.add('selected');
-  }));
+  });
+});
 
   document.querySelectorAll('.event-card').forEach(c => {
     if (c.getAttribute('data-active')!== "true") {
