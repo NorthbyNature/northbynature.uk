@@ -42,15 +42,16 @@ exports.handler = async (event) => {
       };
     });
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items,
-      customer_creation: 'if_required',
-      billing_address_collection: 'required',
-      success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url:  'https://www.northbynature.uk/payment-cancelled.html',
-      metadata: { source: 'nbn-site' }
-    });
+const session = await stripe.checkout.sessions.create({
+  mode: 'payment',
+  line_items,
+  allow_promotion_codes: true,  // 👈 add this
+  customer_creation: 'if_required',
+  billing_address_collection: 'required',
+  success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
+  cancel_url: 'https://www.northbynature.uk/payment-cancelled.html',
+  metadata: { source: 'nbn-site' }
+});
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id }) };
   } catch (err) {
