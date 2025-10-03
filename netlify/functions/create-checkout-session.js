@@ -49,7 +49,7 @@ const session = await stripe.checkout.sessions.create({
   customer_creation: 'if_required',
   billing_address_collection: 'required',
   success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
-  cancel_url: 'https://www.northbynature.uk/payment-cancelled.html',
+  cancel_url: 'https://www.northbynature.uk/cart.html',
   metadata: { source: 'nbn-site' }
 });
 
