@@ -703,8 +703,8 @@ top: 50%; /* Center vertically */
 /* silver button style for links */
 .silver-button {
     display: inline-block;
-    background-color: #999B9B;
-    color: #F5F5F5;
+    background-color: #111111;
+    color: #1A1A1A;
     padding: 12px 20px;
     border-radius: 5px;
     text-transform: uppercase;
