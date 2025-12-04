@@ -4,10 +4,10 @@ const normalise = s => String(s || '').trim().toLowerCase();
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'home alone house party|free-ticket':    { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',    unit_amount:  000, currency: 'gbp' }, // £0.00
-  'home alone house party|first-release':    { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — First Release',    unit_amount:  500, currency: 'gbp' }, // £5.00
-  'home alone house party|final-release':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Final Release',  unit_amount: 100, currency: 'gbp' }, // £1.00
-  'home alone house party|bottomless-ticket':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket',  unit_amount: 2000, currency: 'gbp' }  // £20.00
+  'home alone house party|free-ticket':        { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',       unit_amount: 0,    currency: 'gbp' }, // £0.00
+  'home alone house party|first-release':      { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — First Release',     unit_amount: 500,  currency: 'gbp' }, // £5.00
+  'home alone house party|final-release':      { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Final Release',     unit_amount: 100,  currency: 'gbp' }, // £1.00
+  'home alone house party|bottomless-ticket':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' }  // £20.00
 };
 
 exports.handler = async (event) => {
@@ -34,23 +34,41 @@ exports.handler = async (event) => {
       return {
         price_data: {
           currency: price.currency,
-          product_data: { name: price.name },
-          unit_amount: price.unit_amount
+          unit_amount: price.unit_amount,
+          product_data: {
+            name: price.name,
+            // 👇 lets you search in Stripe: metadata["sku"]:"home alone house party|final-release"
+            metadata: { sku: key }
+          }
         },
         quantity: qty
       };
     });
 
-const session = await stripe.checkout.sessions.create({
-  mode: 'payment',
-  line_items,
-  allow_promotion_codes: true,  // 👈 add this
-  customer_creation: 'if_required',
-  billing_address_collection: 'required',
-  success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
-  cancel_url: 'https://www.northbynature.uk/cart.html',
-  metadata: { source: 'nbn-site' }
-});
+    // Optional but useful: session-level summary of SKUs (for quick dashboard search/audit)
+    const skusSummary = cart
+      .map(i => {
+        const k = i.sku
+          ? normalise(i.sku)
+          : `${normalise(i.eventTitle)}|${normalise(i.ticketType)}`;
+        const q = Math.max(1, Number(i.quantity || 1));
+        return `${k} x${q}`;
+      })
+      .join('; ');
+
+    const session = await stripe.checkout.sessions.create({
+      mode: 'payment',
+      line_items,
+      allow_promotion_codes: true,  // 👈 stays
+      customer_creation: 'if_required',
+      billing_address_collection: 'required',
+      success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://www.northbynature.uk/cart.html',
+      metadata: {
+        source: 'nbn-site',
+        skus: skusSummary // 👈 handy summary
+      }
+    });
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id }) };
   } catch (err) {
