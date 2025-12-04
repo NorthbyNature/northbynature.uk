@@ -26,7 +26,6 @@ function isSoldOut(btn) {
   const ariaDisabled = (btn?.getAttribute('aria-disabled') || '').toLowerCase() === 'true';
   return soldoutData || ariaDisabled || btn?.classList.contains('sold-out') || btn?.disabled === true;
 }
-}
 
 console.log("📑 scripts.js loaded!");
 // Cart / ticket functions
