@@ -22,9 +22,10 @@ const supabaseClient = supabase.createClient(
 );
 
 function isSoldOut(btn) {
-  const soldoutData  = (btn?.dataset.soldout || '').toLowerCase() === 'true';
-  const ariaDisabled = (btn?.getAttribute('aria-disabled') || '').toLowerCase() === 'true';
-  return soldoutData || ariaDisabled || btn?.classList.contains('sold-out') || btn?.disabled === true;
+  return btn?.dataset.soldout === 'true'
+      || btn?.classList.contains('sold-out')
+      || btn?.hasAttribute('aria-disabled')
+      || btn?.hasAttribute('disabled');
 }
 
 console.log("📑 scripts.js loaded!");
