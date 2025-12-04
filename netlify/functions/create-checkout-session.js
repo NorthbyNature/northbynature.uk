@@ -4,11 +4,10 @@ const normalise = s => String(s || '').trim().toLowerCase();
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'launch party x showcase|pre-release':    { name: 'LAUNCH PARTY X SHOWCASE — Pre Release',    unit_amount:  500, currency: 'gbp' }, // £5.00
-  'launch party x showcase|first-release':  { name: 'LAUNCH PARTY X SHOWCASE — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10.00
-  'launch party x showcase|second-release': { name: 'LAUNCH PARTY X SHOWCASE — Second Release', unit_amount: 1500, currency: 'gbp' }, // £15.00
-  'launch party x showcase|final-release':  { name: 'LAUNCH PARTY X SHOWCASE — Final Release',  unit_amount: 2000, currency: 'gbp' },  // £20.00
-  'launch party x showcase|bottomless-dinner':  { name: 'LAUNCH PARTY X SHOWCASE — Bottomless Dinner',  unit_amount: 5000, currency: 'gbp' }  // £50.00
+  'Home Alone House Party|free-ticket':    { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',    unit_amount:  000, currency: 'gbp' }, // £0.00
+  'Home Alone House Party|first-release':    { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — First Release',    unit_amount:  500, currency: 'gbp' }, // £5.00
+  'Home Alone House Party|final-release':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Final Release',  unit_amount: 1000, currency: 'gbp' }, // £10.00
+  'Home Alone House Party|bottomless-ticket':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket',  unit_amount: 2000, currency: 'gbp' }  // £20.00
 };
 
 exports.handler = async (event) => {
