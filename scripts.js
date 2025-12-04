@@ -22,10 +22,9 @@ const supabaseClient = supabase.createClient(
 );
 
 function isSoldOut(btn) {
-  return btn?.dataset.soldout === 'true'
-      || btn?.classList.contains('sold-out')
-      || btn?.hasAttribute('aria-disabled')
-      || btn?.hasAttribute('disabled');
+  const soldoutData  = (btn?.dataset.soldout || '').toLowerCase() === 'true';
+  const ariaDisabled = (btn?.getAttribute('aria-disabled') || '').toLowerCase() === 'true';
+  return soldoutData || ariaDisabled || btn?.classList.contains('sold-out') || btn?.disabled === true;
 }
 
 console.log("📑 scripts.js loaded!");
@@ -269,19 +268,38 @@ function renderPaymentSummary(cart) {
 
 // Call your Netlify function to create a Stripe Checkout Session
 async function createCheckoutSession(cart) {
-  const res = await fetch('/.netlify/functions/create-checkout-session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cart })
-  });
-  return res.json(); // -> { id } or { error }
+  try {
+    const safeCart = Array.isArray(cart) ? cart : [];
+    console.log('[createCheckoutSession] sending cart:', safeCart);
+
+    const res = await fetch('/.netlify/functions/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cart: safeCart })
+    });
+
+    // Read raw text so we can handle non-JSON error pages (e.g., 502 HTML)
+    const text = await res.text();
+    let data;
+    try { data = text ? JSON.parse(text) : {}; }
+    catch { data = { error: `Non-JSON response (${res.status})`, raw: text }; }
+
+    console.log('[createCheckoutSession] status:', res.status, 'data:', data);
+
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    if (!data.id) throw new Error(data.error || 'No session id returned');
+
+    return data; // { id: 'cs_...' }
+  } catch (err) {
+    console.error('[createCheckoutSession] failed:', err);
+    throw err;
+  }
 }
 
 // Initialise Stripe on payment page
 function initStripePaymentPage() {
   if (!document.body.classList.contains('payment-page')) return;
 
-  // Optional: keep your badge fresh
   if (typeof updateCartCount === 'function') updateCartCount();
 
   const cart = getCart();
@@ -295,23 +313,23 @@ function initStripePaymentPage() {
   try {
     stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
   } catch (e) {
-    if (payMsg) payMsg.textContent = 'Stripe initialisation failed.';
-    if (payBtn) payBtn.disabled = true;
+    console.error('Stripe init failed:', e);
+    payMsg && (payMsg.textContent = 'Payment initialisation failed.');
+    payBtn.disabled = true;
     return;
   }
 
   payBtn.addEventListener('click', async () => {
-    payBtn.disabled = true;
-    if (payMsg) payMsg.textContent = 'Creating secure checkout…';
-
     try {
-      const data = await createCheckoutSession(getCart());
-      if (data.error) throw new Error(data.error);
+      payBtn.disabled = true;
+      payMsg && (payMsg.textContent = 'Creating secure checkout…');
 
-      const { error } = await stripe.redirectToCheckout({ sessionId: data.id });
+      const { id } = await createCheckoutSession(getCart());
+      const { error } = await stripe.redirectToCheckout({ sessionId: id });
       if (error) throw error;
     } catch (err) {
-      if (payMsg) payMsg.textContent = err.message || 'Payment error.';
+      console.error('[PAY] error:', err);
+      payMsg && (payMsg.textContent = err.message || 'Payment error.');
       payBtn.disabled = false;
     }
   });
