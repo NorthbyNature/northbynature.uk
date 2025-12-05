@@ -4,10 +4,10 @@ const normalise = s => String(s || '').trim().toLowerCase();
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'home alone house party|free-ticket':        { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',       unit_amount: 0,    currency: 'gbp' }, // £0.00
-  'home alone house party|first-release':      { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — First Release',     unit_amount: 500,  currency: 'gbp' }, // £5.00
-  'home alone house party|final-release':      { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Final Release',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
-  'home alone house party|bottomless-ticket':  { name: 'PEDATAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' }  // £20.00
+  'home alone house party|free-ticket':        { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',       unit_amount: 0,    currency: 'gbp' }, // £0.00
+  'home alone house party|first-release':      { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — First Release',     unit_amount: 500,  currency: 'gbp' }, // £5.00
+  'home alone house party|final-release':      { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Final Release',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
+  'home alone house party|bottomless-ticket':  { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' }  // £20.00
 };
 
 exports.handler = async (event) => {
