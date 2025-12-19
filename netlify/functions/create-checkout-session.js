@@ -7,7 +7,12 @@ const PRICE_BOOK = {
   'home alone house party|free-ticket':        { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Free Ticket',       unit_amount: 0,    currency: 'gbp' }, // £0.00
   'home alone house party|first-release':      { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — First Release',     unit_amount: 500,  currency: 'gbp' }, // £5.00
   'home alone house party|final-release':      { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Final Release',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
-  'home alone house party|bottomless-ticket':  { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' }  // £20.00
+  'home alone house party|bottomless-ticket':  { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' },  // £20.00
+
+ // ✅ second event (example)
+  'new years eve at alura|first-release':  { name: 'NEW YEARS EVE X ALURA — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10
+  'new years eve at alura|second-release':  { name: 'NEW YEARS EVE X ALURA — Second Release',  unit_amount: 1500, currency: 'gbp' }, // £15
+  'new years eve at alura|final-release':   { name: 'NEW YEARS EVE X ALURA — Final Release',   unit_amount: 2000, currency: 'gbp' }  // £20
 };
 
 exports.handler = async (event) => {
