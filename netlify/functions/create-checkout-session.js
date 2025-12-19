@@ -10,7 +10,7 @@ const PRICE_BOOK = {
   'home alone house party|bottomless-ticket':  { name: 'PEDETAL LIVE: HOME ALONE HOUSE PARTY — Bottomless Ticket', unit_amount: 2000, currency: 'gbp' },  // £20.00
 
  // ✅ second event (example)
-  'new years eve x alura|first-release':  { name: 'NEW YEARS EVE X ALURA — First Release',  unit_amount: 100, currency: 'gbp' }, // £1
+  'new years eve x alura|first-release':  { name: 'NEW YEARS EVE X ALURA — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10
   'new years eve x alura|second-release':  { name: 'NEW YEARS EVE X ALURA — Second Release',  unit_amount: 1500, currency: 'gbp' }, // £15
   'new years eve x alura|final-release':   { name: 'NEW YEARS EVE X ALURA — Final Release',   unit_amount: 2000, currency: 'gbp' }  // £20
 };
