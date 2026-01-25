@@ -4,10 +4,10 @@ const normalise = s => String(s || '').trim().toLowerCase();
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'ActBad x NBN Timeless: Love & Toxic|ladies 1st release':        { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC'' - LADIES 1ST RELEASE,       unit_amount: 500,    currency: 'gbp' }, // £5.00
-  'ActBad x NBN Timeless: Love & Toxic|ladies 2nd release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC'' - LADIES 2ND RELEASE,     unit_amount: 700,  currency: 'gbp' }, // £7.00
-  'ActBad x NBN Timeless: Love & Toxic|ladies final release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC'' - LADIES FINAL RELEASE,     unit_amount: 1000,  currency: 'gbp' }, // £10.00
-  'ActBad x NBN Timeless: Love & Toxic|men's general release':  { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC'' - MEN'S GENERAL RELEASE, unit_amount: 1500, currency: 'gbp' },  // £15.00
+  'ActBad x NBN Timeless: Love & Toxic|ladies 1st release':        { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC' - LADIES 1ST RELEASE',       unit_amount: 500,    currency: 'gbp' }, // £5.00
+  'ActBad x NBN Timeless: Love & Toxic|ladies 2nd release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC' - LADIES 2ND RELEASE',     unit_amount: 700,  currency: 'gbp' }, // £7.00
+  'ActBad x NBN Timeless: Love & Toxic|ladies final release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC' - LADIES FINAL RELEASE',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
+  'ActBad x NBN Timeless: Love & Toxic|men's general release':  { name: 'ACTBAD X NBN VALENTINES SPECIAL 'TIMELESS: LOVE & TOXIC' - MEN'S GENERAL RELEASE', unit_amount: 1500, currency: 'gbp' },  // £15.00
 
  // ✅ second event (example)
   'new years eve x alura|first-release':  { name: 'NEW YEARS EVE X ALURA — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10
