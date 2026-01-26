@@ -43,9 +43,16 @@ exports.handler = async (event) => {
     }
 
     const line_items = cart.map(item => {
-      const key = item.sku
-        ? String(item.sku).trim().toLowerCase().replace(/\s*\|\s*/g, '|')
-        : `${normalise(item.eventTitle)}|${slugify(item.ticketType)}`;
+      const key = (() => {
+        if (item.sku) {
+          const raw = String(item.sku).trim();
+          const parts = raw.split('|');
+          const left = parts[0] || '';
+          const right = parts[1] || '';
+          return `${normalise(left)}|${slugify(right)}`;
+        }
+        return `${normalise(item.eventTitle)}|${slugify(item.ticketType)}`;
+      })();
 
       const price = PRICE_BOOK[key];
       const qty = Math.max(1, Number(item.quantity || 1));
@@ -68,9 +75,17 @@ exports.handler = async (event) => {
     // Optional but useful: session-level summary of SKUs (for quick dashboard search/audit)
     const skusSummary = cart
       .map(i => {
-        const k = i.sku
-          ? normalise(i.sku)
-          : `${normalise(i.eventTitle)}|${slugify(i.ticketType)}`;
+        const k = (() => {
+          if (i.sku) {
+            const raw = String(i.sku).trim();
+            const parts = raw.split('|');
+            const left = parts[0] || '';
+            const right = parts[1] || '';
+            return `${normalise(left)}|${slugify(right)}`;
+          }
+          return `${normalise(i.eventTitle)}|${slugify(i.ticketType)}`;
+        })();
+
         const q = Math.max(1, Number(i.quantity || 1));
         return `${k} x${q}`;
       })
