@@ -266,16 +266,37 @@ function renderPaymentSummary(cart) {
   payBtn.disabled = false;
 }
 
+// Promoter tracking (non-discount) via URL ?ref=CODE
+function getPromoterCode() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+
+    // If present in URL, persist for the session (so it survives navigation)
+    if (ref) {
+      sessionStorage.setItem('promoterCode', ref);
+      return ref;
+    }
+
+    // Otherwise use any stored value
+    return sessionStorage.getItem('promoterCode') || '';
+  } catch (e) {
+    return '';
+  }
+}
+
 // Call your Netlify function to create a Stripe Checkout Session
 async function createCheckoutSession(cart) {
   try {
     const safeCart = Array.isArray(cart) ? cart : [];
     console.log('[createCheckoutSession] sending cart:', safeCart);
 
+console.log('[promoter] code:', getPromoterCode());
+
     const res = await fetch('/.netlify/functions/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cart: safeCart })
+      body: JSON.stringify({ cart: safeCart, promoterCode: getPromoterCode() })
     });
 
     // Read raw text so we can handle non-JSON error pages (e.g., 502 HTML)

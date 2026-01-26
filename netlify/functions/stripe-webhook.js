@@ -28,6 +28,19 @@ exports.handler = async (event) => {
     if (constructed.type === 'checkout.session.completed') {
       const session = constructed.data.object;
 
+      // ✅ Promoter tracking (ref code) - stored on the session metadata/client_reference_id
+      const promoterCode = (
+        session?.metadata?.promoter_code ||
+        session?.client_reference_id ||
+        ''
+      ).trim();
+
+      // Ensure metadata always includes promoter_code (without breaking existing metadata)
+      const mergedMetadata = {
+        ...(session.metadata || {}),
+        promoter_code: promoterCode
+      };
+
       // Pull more detail (line items, PI) for storage
       const [lineItems, paymentIntent] = await Promise.all([
         stripe.checkout.sessions.listLineItems(session.id, { limit: 100 }),
@@ -61,7 +74,7 @@ exports.handler = async (event) => {
           currency,
           payment_status: session.payment_status,
           billing,
-          metadata: session.metadata || null
+          metadata: mergedMetadata
         })
         .select('id')
         .single();

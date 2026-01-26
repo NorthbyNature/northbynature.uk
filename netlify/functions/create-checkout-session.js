@@ -23,6 +23,12 @@ exports.handler = async (event) => {
   try {
     const payload = JSON.parse(event.body || '{}');
     const cart = Array.isArray(payload.cart) ? payload.cart : [];
+
+    // ✅ NEW: promoter code passed from scripts.js (?ref=CODE)
+    const promoterCode = typeof payload.promoterCode === 'string'
+      ? payload.promoterCode.trim()
+      : '';
+
     if (!cart.length) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Cart empty' }) };
     }
@@ -69,9 +75,17 @@ exports.handler = async (event) => {
       billing_address_collection: 'required',
       success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://www.northbynature.uk/cart.html',
+
+      // ✅ NEW (safe): ties this purchase to a promoter/ref code (no discount needed)
+      // Shows in Stripe session + can be copied into Supabase orders.metadata later
+      client_reference_id: promoterCode || undefined,
+
       metadata: {
         source: 'nbn-site',
-        skus: skusSummary // 👈 handy summary
+        skus: skusSummary, // 👈 handy summary
+
+        // ✅ NEW: promoter code stored on the session
+        promoter_code: promoterCode || ''
       }
     });
 
