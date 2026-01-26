@@ -2,6 +2,15 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const normalise = s => String(s || '').trim().toLowerCase();
 
+// ✅ NEW: slugify ticket types so "Ladies 1st Release" -> "ladies-1st-release"
+const slugify = s =>
+  String(s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
   'actbad x nbn timeless: love & toxic|ladies-1st-release':        { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Ladies 1st Release',       unit_amount: 500,    currency: 'gbp' }, // £5.00
@@ -35,8 +44,8 @@ exports.handler = async (event) => {
 
     const line_items = cart.map(item => {
       const key = item.sku
-        ? normalise(item.sku)
-        : `${normalise(item.eventTitle)}|${normalise(item.ticketType)}`;
+        ? String(item.sku).trim().toLowerCase().replace(/\s*\|\s*/g, '|')
+        : `${normalise(item.eventTitle)}|${slugify(item.ticketType)}`;
 
       const price = PRICE_BOOK[key];
       const qty = Math.max(1, Number(item.quantity || 1));
@@ -61,7 +70,7 @@ exports.handler = async (event) => {
       .map(i => {
         const k = i.sku
           ? normalise(i.sku)
-          : `${normalise(i.eventTitle)}|${normalise(i.ticketType)}`;
+          : `${normalise(i.eventTitle)}|${slugify(i.ticketType)}`;
         const q = Math.max(1, Number(i.quantity || 1));
         return `${k} x${q}`;
       })
