@@ -349,6 +349,7 @@ function initStripePaymentPage() {
       payMsg && (payMsg.textContent = 'Creating secure checkout…');
 
       const { id } = await createCheckoutSession(getCart());
+      console.log('[stripe] session id:', id);
       const { error } = await stripe.redirectToCheckout({ sessionId: id });
       if (error) throw error;
     } catch (err) {
