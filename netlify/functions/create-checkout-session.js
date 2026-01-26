@@ -34,9 +34,11 @@ exports.handler = async (event) => {
     const cart = Array.isArray(payload.cart) ? payload.cart : [];
 
     // ✅ NEW: promoter code passed from scripts.js (?ref=CODE)
-    const promoterCode = typeof payload.promoterCode === 'string'
-      ? payload.promoterCode.trim()
-      : '';
+const promoterCode = typeof payload.promoterCode === 'string'
+  ? payload.promoterCode.trim().toUpperCase()
+  : '';
+
+console.log('[create-checkout-session] promoterCode received:', promoterCode);
 
     if (!cart.length) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Cart empty' }) };
@@ -91,27 +93,25 @@ exports.handler = async (event) => {
       })
       .join('; ');
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items,
-      allow_promotion_codes: true,  // 👈 stays
-      customer_creation: 'if_required',
-      billing_address_collection: 'required',
-      success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'https://www.northbynature.uk/cart.html',
+const session = await stripe.checkout.sessions.create({
+  mode: 'payment',
+  line_items,
+  allow_promotion_codes: true,  // 👈 stays
+  customer_creation: 'if_required',
+  billing_address_collection: 'required',
+  success_url: 'https://www.northbynature.uk/success.html?session_id={CHECKOUT_SESSION_ID}',
+  cancel_url: 'https://www.northbynature.uk/cart.html',
 
-      // ✅ NEW (safe): ties this purchase to a promoter/ref code (no discount needed)
-      // Shows in Stripe session + can be copied into Supabase orders.metadata later
-      client_reference_id: promoterCode || undefined,
+  // ✅ only set if non-empty
+  client_reference_id: promoterCode ? promoterCode : undefined,
 
-      metadata: {
-        source: 'nbn-site',
-        skus: skusSummary, // 👈 handy summary
-
-        // ✅ NEW: promoter code stored on the session
-        promoter_code: promoterCode || ''
-      }
-    });
+  // ✅ only include promoter_code if non-empty
+  metadata: {
+    source: 'nbn-site',
+    skus: skusSummary,
+    ...(promoterCode ? { promoter_code: promoterCode } : {})
+  }
+});
 
     return { statusCode: 200, body: JSON.stringify({ id: session.id }) };
   } catch (err) {
