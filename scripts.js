@@ -285,6 +285,9 @@ function getPromoterCode() {
   }
 }
 
+// ✅ Capture ref as early as possible on page load
+getPromoterCode();
+
 // Call your Netlify function to create a Stripe Checkout Session
 async function createCheckoutSession(cart) {
   try {
@@ -307,7 +310,7 @@ console.log('[promoter] code:', getPromoterCode());
 
     console.log('[createCheckoutSession] status:', res.status, 'data:', data);
 
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    if (!res.ok) throw new Error((data.error || `HTTP ${res.status}`) + (data.detail ? ` — ${data.detail}` : ''));
     if (!data.id) throw new Error(data.error || 'No session id returned');
 
     return data; // { id: 'cs_...' }
