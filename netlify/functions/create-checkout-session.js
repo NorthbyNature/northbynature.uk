@@ -13,7 +13,7 @@ const slugify = s =>
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'actbad x nbn timeless: love & toxic|ladies-1st-release':        { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Ladies 1st Release',       unit_amount: 100,    currency: 'gbp' }, // £1.00
+  'actbad x nbn timeless: love & toxic|ladies-1st-release':        { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Ladies 1st Release',       unit_amount: 500,    currency: 'gbp' }, // £5.00
   'actbad x nbn timeless: love & toxic|ladies-2nd-release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Ladies 2nd Release',     unit_amount: 700,  currency: 'gbp' }, // £7.00
   'actbad x nbn timeless: love & toxic|ladies-final-release':      { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Ladies Final Release',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
   'actbad x nbn timeless: love & toxic|mens-general-release':  { name: 'ACTBAD X NBN VALENTINES SPECIAL TIMELESS: LOVE & TOXIC - Mens General Release', unit_amount: 1500, currency: 'gbp' },  // £15.00
