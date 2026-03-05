@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NBN Staff Scanner</title>
+
+  <!-- QR scanner library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .card {
+      background: #131313;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: 18px; margin: 0 0 10px; }
+    .muted { color: #bdbdbd; font-size: 13px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    input, button, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #0f0f0f;
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+    button {
+      cursor: pointer;
+      border: 1px solid #444;
+      background: #1b1b1b;
+    }
+    button.primary { background: #2a2a2a; border-color: #666; }
+    button.danger { background: #2b1111; border-color: #7a2a2a; }
+    #reader {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      background: #000;
+    }
+    .status {
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+      margin-top: 12px;
+      border: 1px solid #2a2a2a;
+      background: #111;
+    }
+    .ok { background: #0e2a16; border-color: #1f6a38; }
+    .bad { background: #2a0e0e; border-color: #6a1f1f; }
+    .infoGrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .infoItem {
+      background: #0f0f0f;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .label { color: #bdbdbd; font-size: 12px; margin-bottom: 4px; }
+    .value { word-break: break-word; }
+    .tiny { font-size: 12px; color: #bdbdbd; margin-top: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>NBN Staff Ticket Scanner</h1>
+      <div class="muted">
+        Uses your phone camera. Internet required. Scans are one-time (your backend blocks duplicates).
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <div style="flex: 1 1 260px;">
+          <label class="muted">Door secret (required)</label>
+          <input id="secretInput" type="password" placeholder="Enter door secret..." autocomplete="off" />
+          <div class="tiny">Tip: we store this in <b>session</b> only (clears when you close the tab).</div>
+        </div>
+        <div style="flex: 1 1 180px; align-self: end;">
+          <button class="primary" id="saveSecretBtn">Save secret</button>
+          <button class="danger hidden" id="clearSecretBtn" style="margin-top:10px;">Clear secret</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;">
+        <div style="flex: 1 1 260px;">
+          <label class="muted">Camera</label>
+          <select id="cameraSelect"></select>
+        </div>
+        <div style="flex: 1 1 180px; align-self: end;">
+          <button class="primary" id="startBtn">Start scanner</button>
+          <button id="stopBtn" class="hidden" style="margin-top:10px;">Stop scanner</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="reader"></div>
+
+      <div id="statusBox" class="status">Ready to scan</div>
+
+      <div id="details" class="infoGrid hidden">
+        <div class="infoItem">
+          <div class="label">Result</div>
+          <div class="value" id="detailResult">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Ticket type</div>
+          <div class="value" id="detailType">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Event SKU</div>
+          <div class="value" id="detailEvent">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Scanned at</div>
+          <div class="value" id="detailScannedAt">—</div>
+        </div>
+      </div>
+
+      <div class="tiny" id="lastCodeWrap">Last code: <span id="lastCode">—</span></div>
+    </div>
+  </div>
+
+  <script>
+    const ENDPOINT = "https://www.northbynature.uk/.netlify/functions/scan-ticket";
+
+    // session-scoped secret
+    const SECRET_KEY = "nbn_door_secret_session";
+
+    let html5QrCode = null;
+    let isScanning = false;
+    let lastScanTs = 0;
+    let lastTicketCode = null;
+
+    const secretInput = document.getElementById("secretInput");
+    const saveSecretBtn = document.getElementById("saveSecretBtn");
+    const clearSecretBtn = document.getElementById("clearSecretBtn");
+
+    const cameraSelect = document.getElementById("cameraSelect");
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+
+    const statusBox = document.getElementById("statusBox");
+    const details = document.getElementById("details");
+    const detailResult = document.getElementById("detailResult");
+    const detailType = document.getElementById("detailType");
+    const detailEvent = document.getElementById("detailEvent");
+    const detailScannedAt = document.getElementById("detailScannedAt");
+    const lastCode = document.getElementById("lastCode");
+
+    function setStatus(text, kind) {
+      statusBox.textContent = text;
+      statusBox.classList.remove("ok", "bad");
+      if (kind) statusBox.classList.add(kind);
+    }
+
+    function vibrateOk() {
+      if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
+    }
+
+    function vibrateBad() {
+      if (navigator.vibrate) navigator.vibrate([200]);
+    }
+
+    function getSecret() {
+      return sessionStorage.getItem(SECRET_KEY) || "";
+    }
+
+    function setSecret(val) {
+      sessionStorage.setItem(SECRET_KEY, val);
+    }
+
+    function clearSecret() {
+      sessionStorage.removeItem(SECRET_KEY);
+    }
+
+    function updateSecretUI() {
+      const s = getSecret();
+      if (s) {
+        secretInput.value = "********";
+        clearSecretBtn.classList.remove("hidden");
+        saveSecretBtn.textContent = "Secret saved";
+      } else {
+        secretInput.value = "";
+        clearSecretBtn.classList.add("hidden");
+        saveSecretBtn.textContent = "Save secret";
+      }
+    }
+
+    saveSecretBtn.addEventListener("click", () => {
+      const val = secretInput.value.trim();
+      if (!val || val === "********") {
+        alert("Paste the door secret value (not ********).");
+        return;
+      }
+      setSecret(val);
+      updateSecretUI();
+      alert("Secret saved for this session.");
+    });
+
+    clearSecretBtn.addEventListener("click", () => {
+      clearSecret();
+      updateSecretUI();
+      alert("Secret cleared.");
+    });
+
+    async function loadCameras() {
+      cameraSelect.innerHTML = "";
+      const devices = await Html5Qrcode.getCameras();
+      if (!devices || devices.length === 0) {
+        cameraSelect.innerHTML = `<option value="">No cameras found</option>`;
+        return;
+      }
+
+      devices.forEach((d, idx) => {
+        const opt = document.createElement("option");
+        opt.value = d.id;
+        opt.textContent = d.label || `Camera ${idx + 1}`;
+        cameraSelect.appendChild(opt);
+      });
+
+      // Prefer a "back/environment" camera if present
+      const backCam = devices.find(d => (d.label || "").toLowerCase().includes("back") || (d.label || "").toLowerCase().includes("rear"));
+      if (backCam) cameraSelect.value = backCam.id;
+    }
+
+    async function scanTicket(ticket_code) {
+      const secret = getSecret();
+      if (!secret) {
+        setStatus("Enter door secret first", "bad");
+        vibrateBad();
+        return;
+      }
+
+      lastCode.textContent = ticket_code;
+      details.classList.add("hidden");
+
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-door-secret": secret
+          },
+          body: JSON.stringify({ ticket_code })
+        });
+
+        const text = await res.text();
+        let data = null;
+        try { data = JSON.parse(text); } catch (_) {}
+
+        // Handle auth / server errors
+        if (res.status === 401) {
+          setStatus("Unauthorised (wrong secret)", "bad");
+          vibrateBad();
+          return;
+        }
+        if (!data) {
+          setStatus(`Unexpected response (${res.status})`, "bad");
+          vibrateBad();
+          return;
+        }
+
+        // Your API contract:
+        // ok:true -> scanned now
+        // ok:false -> already_scanned / not_found / etc.
+        if (data.ok === true) {
+          setStatus("✅ Valid – Checked in", "ok");
+          vibrateOk();
+
+          details.classList.remove("hidden");
+          detailResult.textContent = "Checked in";
+          detailType.textContent = data.ticket?.ticket_type || "—";
+          detailEvent.textContent = data.ticket?.event_sku || "—";
+          detailScannedAt.textContent = data.ticket?.scanned_at || "—";
+          return;
+        }
+
+        const reason = data.reason || "unknown";
+        if (reason === "already_scanned" || reason === "already_scanned_race") {
+          setStatus("❌ Already scanned", "bad");
+          vibrateBad();
+
+          details.classList.remove("hidden");
+          detailResult.textContent = "Already scanned";
+          detailType.textContent = data.ticket?.ticket_type || "—";
+          detailEvent.textContent = data.ticket?.event_sku || "—";
+          detailScannedAt.textContent = data.scanned_at || data.ticket?.scanned_at || "—";
+          return;
+        }
+
+        if (reason === "not_found") {
+          setStatus("❌ Invalid ticket (not found)", "bad");
+          vibrateBad();
+          return;
+        }
+
+        setStatus(`❌ Not valid (${reason})`, "bad");
+        vibrateBad();
+      } catch (e) {
+        setStatus("❌ Network error – try again", "bad");
+        vibrateBad();
+      }
+    }
+
+    function shouldThrottle(code) {
+      const now = Date.now();
+      // Prevent repeated triggers from the same QR staying in frame
+      if (code === lastTicketCode && (now - lastScanTs) < 2000) return true;
+      lastTicketCode = code;
+      lastScanTs = now;
+      return false;
+    }
+
+    async function startScanner() {
+      if (isScanning) return;
+
+      const camId = cameraSelect.value;
+      if (!camId) {
+        alert("Select a camera first.");
+        return;
+      }
+
+      if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
+
+      setStatus("Starting camera…");
+      try {
+        isScanning = true;
+        startBtn.classList.add("hidden");
+        stopBtn.classList.remove("hidden");
+
+        await html5QrCode.start(
+          { deviceId: { exact: camId } },
+          {
+            fps: 10,
+            qrbox: { width: 260, height: 260 },
+            aspectRatio: 1.0
+          },
+          async (decodedText) => {
+            if (!decodedText) return;
+            const code = decodedText.trim();
+
+            if (shouldThrottle(code)) return;
+
+            setStatus("Scanning…");
+            await scanTicket(code);
+          },
+          () => { /* ignore per-frame errors */ }
+        );
+
+        setStatus("Ready to scan");
+      } catch (e) {
+        isScanning = false;
+        startBtn.classList.remove("hidden");
+        stopBtn.classList.add("hidden");
+        setStatus("❌ Could not start camera", "bad");
+        alert("Camera failed to start. Check permissions and try again.");
+      }
+    }
+
+    async function stopScanner() {
+      if (!html5QrCode || !isScanning) return;
+      try {
+        await html5QrCode.stop();
+      } catch (_) {}
+      isScanning = false;
+      startBtn.classList.remove("hidden");
+      stopBtn.classList.add("hidden");
+      setStatus("Stopped");
+    }
+
+    startBtn.addEventListener("click", startScanner);
+    stopBtn.addEventListener("click", stopScanner);
+
+    // Init
+    updateSecretUI();
+    loadCameras().catch(() => {
+      cameraSelect.innerHTML = `<option value="">Camera access blocked</option>`;
+    });
+  </script>
+</body>
+</html>
