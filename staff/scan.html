@@ -193,35 +193,42 @@
     });
 
     // UPDATED: more reliable camera loading
-    async function loadCameras() {
-      cameraSelect.innerHTML = "";
+async function loadCameras() {
+  cameraSelect.innerHTML = "";
 
-      try {
-        const devices = await Html5Qrcode.getCameras();
+  try {
+    const devices = await Html5Qrcode.getCameras();
 
-        if (!devices || devices.length === 0) {
-          cameraSelect.innerHTML = `<option value="">No cameras found</option>`;
-          return;
-        }
-
-        devices.forEach((d, idx) => {
-          const opt = document.createElement("option");
-          opt.value = d.id;
-          opt.textContent = d.label || `Camera ${idx + 1}`;
-          cameraSelect.appendChild(opt);
-        });
-
-        // Prefer a back camera if label exists
-        const backCam = devices.find(d => {
-          const label = (d.label || "").toLowerCase();
-          return label.includes("back") || label.includes("rear") || label.includes("environment");
-        });
-        if (backCam) cameraSelect.value = backCam.id;
-
-      } catch (e) {
-        cameraSelect.innerHTML = `<option value="">Camera access blocked</option>`;
-      }
+    // If browser won't give us a list, add a fallback option
+    if (!devices || devices.length === 0) {
+      const opt = document.createElement("option");
+      opt.value = "__FALLBACK_REAR__";
+      opt.textContent = "Default (Rear camera)";
+      cameraSelect.appendChild(opt);
+      return;
     }
+
+    devices.forEach((d, idx) => {
+      const opt = document.createElement("option");
+      opt.value = d.id;
+      opt.textContent = d.label || `Camera ${idx + 1}`;
+      cameraSelect.appendChild(opt);
+    });
+
+    const backCam = devices.find(d => {
+      const label = (d.label || "").toLowerCase();
+      return label.includes("back") || label.includes("rear") || label.includes("environment");
+    });
+    if (backCam) cameraSelect.value = backCam.id;
+
+  } catch (e) {
+    // Even if blocked, still let staff try rear camera fallback
+    const opt = document.createElement("option");
+    opt.value = "__FALLBACK_REAR__";
+    opt.textContent = "Default (Rear camera)";
+    cameraSelect.appendChild(opt);
+  }
+}
 
     async function scanTicket(ticket_code) {
       const secret = getSecret();
@@ -309,63 +316,67 @@
     }
 
     // UPDATED: request camera permission on Start (user gesture), then reload cameras
-    async function startScanner() {
-      if (isScanning) return;
+async function startScanner() {
+  if (isScanning) return;
 
-      // Ask for camera permission first (this triggers the prompt on iOS/Android)
-      try {
-        setStatus("Requesting camera permission…");
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        stream.getTracks().forEach(t => t.stop());
-        await loadCameras();
-      } catch (e) {
-        setStatus("❌ Camera permission denied", "bad");
-        alert("Camera permission is blocked. Allow camera access for northbynature.uk and refresh.");
-        return;
-      }
+  // Ask for camera permission first (this triggers the prompt on iOS/Android)
+  try {
+    setStatus("Requesting camera permission…");
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream.getTracks().forEach(t => t.stop());
+    await loadCameras();
+  } catch (e) {
+    setStatus("❌ Camera permission denied", "bad");
+    alert("Camera permission is blocked. Allow camera access for northbynature.uk and refresh.");
+    return;
+  }
 
-      const camId = cameraSelect.value;
-      if (!camId) {
-        alert("Select a camera first (or allow camera access and refresh).");
-        return;
-      }
+  const camId = cameraSelect.value;
+  if (!camId) {
+    alert("Select a camera (or allow camera access and refresh).");
+    return;
+  }
 
-      if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
+  if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
-      setStatus("Starting camera…");
-      try {
-        isScanning = true;
-        startBtn.classList.add("hidden");
-        stopBtn.classList.remove("hidden");
+  setStatus("Starting camera…");
+  try {
+    isScanning = true;
+    startBtn.classList.add("hidden");
+    stopBtn.classList.remove("hidden");
 
-        await html5QrCode.start(
-          { deviceId: { exact: camId } },
-          {
-            fps: 10,
-            qrbox: { width: 260, height: 260 },
-            aspectRatio: 1.0
-          },
-          async (decodedText) => {
-            if (!decodedText) return;
-            const code = decodedText.trim();
-            if (shouldThrottle(code)) return;
+    const cameraConfig =
+      camId === "__FALLBACK_REAR__"
+        ? { facingMode: "environment" } // ✅ rear camera fallback
+        : { deviceId: { exact: camId } };
 
-            setStatus("Scanning…");
-            await scanTicket(code);
-          },
-          () => { /* ignore per-frame errors */ }
-        );
+    await html5QrCode.start(
+      cameraConfig,
+      {
+        fps: 10,
+        qrbox: { width: 260, height: 260 },
+        aspectRatio: 1.0
+      },
+      async (decodedText) => {
+        if (!decodedText) return;
+        const code = decodedText.trim();
+        if (shouldThrottle(code)) return;
 
-        setStatus("Ready to scan");
-      } catch (e) {
-        isScanning = false;
-        startBtn.classList.remove("hidden");
-        stopBtn.classList.add("hidden");
-        setStatus("❌ Could not start camera", "bad");
-        alert("Camera failed to start. Check permissions and try again.");
-      }
-    }
+        setStatus("Scanning…");
+        await scanTicket(code);
+      },
+      () => { /* ignore per-frame errors */ }
+    );
 
+    setStatus("Ready to scan");
+  } catch (e) {
+    isScanning = false;
+    startBtn.classList.remove("hidden");
+    stopBtn.classList.add("hidden");
+    setStatus("❌ Could not start camera", "bad");
+    alert("Camera failed to start. Check permissions and try again.");
+  }
+}
     async function stopScanner() {
       if (!html5QrCode || !isScanning) return;
       try {
