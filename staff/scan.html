@@ -319,44 +319,44 @@ async function loadCameras() {
 async function startScanner() {
   if (isScanning) return;
 
-  // Ask for camera permission first (this triggers the prompt on iOS/Android)
+  // Helper: timeout wrapper so it doesn't hang forever
+  const withTimeout = (promise, ms, msg) =>
+    Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error(msg)), ms))
+    ]);
+
+  setStatus("Requesting camera permission…");
+
+  // 1) Ask for rear camera permission with a timeout
   try {
-    setStatus("Requesting camera permission…");
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const stream = await withTimeout(
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }),
+      6000,
+      "Camera permission timed out"
+    );
+    // Stop immediately - we only wanted the permission prompt
     stream.getTracks().forEach(t => t.stop());
-    await loadCameras();
+    setStatus("Starting scanner…");
   } catch (e) {
-    setStatus("❌ Camera permission denied", "bad");
-    alert("Camera permission is blocked. Allow camera access for northbynature.uk and refresh.");
+    setStatus("❌ Camera permission failed", "bad");
+    alert(
+      "Camera didn’t start.\n\nTry:\n- Open in Safari/Chrome (not Instagram/TikTok browser)\n- Turn off Private Browsing\n- iPhone Settings → Safari → Camera → Allow\n\nError: " + (e.message || e)
+    );
     return;
   }
 
-  const camId = cameraSelect.value;
-  if (!camId) {
-    alert("Select a camera (or allow camera access and refresh).");
-    return;
-  }
-
+  // 2) Start html5-qrcode directly with rear camera
   if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
-  setStatus("Starting camera…");
   try {
     isScanning = true;
     startBtn.classList.add("hidden");
     stopBtn.classList.remove("hidden");
 
-    const cameraConfig =
-      camId === "__FALLBACK_REAR__"
-        ? { facingMode: "environment" } // ✅ rear camera fallback
-        : { deviceId: { exact: camId } };
-
     await html5QrCode.start(
-      cameraConfig,
-      {
-        fps: 10,
-        qrbox: { width: 260, height: 260 },
-        aspectRatio: 1.0
-      },
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 260, height: 260 }, aspectRatio: 1.0 },
       async (decodedText) => {
         if (!decodedText) return;
         const code = decodedText.trim();
@@ -365,7 +365,7 @@ async function startScanner() {
         setStatus("Scanning…");
         await scanTicket(code);
       },
-      () => { /* ignore per-frame errors */ }
+      () => {}
     );
 
     setStatus("Ready to scan");
@@ -374,10 +374,9 @@ async function startScanner() {
     startBtn.classList.remove("hidden");
     stopBtn.classList.add("hidden");
     setStatus("❌ Could not start camera", "bad");
-    alert("Camera failed to start. Check permissions and try again.");
+    alert("Scanner failed to start. Error: " + (e.message || e));
   }
-}
-    async function stopScanner() {
+}    async function stopScanner() {
       if (!html5QrCode || !isScanning) return;
       try {
         await html5QrCode.stop();
