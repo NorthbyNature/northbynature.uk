@@ -9,24 +9,9 @@
   <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
-    }
-    .wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .card {
-      background: #131313;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: #0b0b0b; color: #fff; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 16px; }
+    .card { background: #131313; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
     h1 { font-size: 18px; margin: 0 0 10px; }
     .muted { color: #bdbdbd; font-size: 13px; }
     .row { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -40,45 +25,20 @@
       box-sizing: border-box;
       font-size: 15px;
     }
-    button {
-      cursor: pointer;
-      border: 1px solid #444;
-      background: #1b1b1b;
-    }
+    button { cursor: pointer; border: 1px solid #444; background: #1b1b1b; }
     button.primary { background: #2a2a2a; border-color: #666; }
     button.danger { background: #2b1111; border-color: #7a2a2a; }
-    #reader {
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #2a2a2a;
-      background: #000;
-    }
+    #reader { width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid #2a2a2a; background: #000; }
     .status {
-      padding: 14px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 18px;
-      text-align: center;
-      margin-top: 12px;
-      border: 1px solid #2a2a2a;
-      background: #111;
+      padding: 14px; border-radius: 14px; font-weight: 700; font-size: 18px;
+      text-align: center; margin-top: 12px; border: 1px solid #2a2a2a; background: #111;
     }
     .ok { background: #0e2a16; border-color: #1f6a38; }
     .bad { background: #2a0e0e; border-color: #6a1f1f; }
     .infoGrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-      font-size: 14px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; font-size: 14px;
     }
-    .infoItem {
-      background: #0f0f0f;
-      border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      padding: 10px;
-    }
+    .infoItem { background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 12px; padding: 10px; }
     .label { color: #bdbdbd; font-size: 12px; margin-bottom: 4px; }
     .value { word-break: break-word; }
     .tiny { font-size: 12px; color: #bdbdbd; margin-top: 8px; }
@@ -112,6 +72,7 @@
         <div style="flex: 1 1 260px;">
           <label class="muted">Camera</label>
           <select id="cameraSelect"></select>
+          <div class="tiny">If this says “Camera access blocked”, allow camera permission for northbynature.uk and refresh.</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="startBtn">Start scanner</button>
@@ -231,24 +192,35 @@
       alert("Secret cleared.");
     });
 
+    // UPDATED: more reliable camera loading
     async function loadCameras() {
       cameraSelect.innerHTML = "";
-      const devices = await Html5Qrcode.getCameras();
-      if (!devices || devices.length === 0) {
-        cameraSelect.innerHTML = `<option value="">No cameras found</option>`;
-        return;
+
+      try {
+        const devices = await Html5Qrcode.getCameras();
+
+        if (!devices || devices.length === 0) {
+          cameraSelect.innerHTML = `<option value="">No cameras found</option>`;
+          return;
+        }
+
+        devices.forEach((d, idx) => {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.label || `Camera ${idx + 1}`;
+          cameraSelect.appendChild(opt);
+        });
+
+        // Prefer a back camera if label exists
+        const backCam = devices.find(d => {
+          const label = (d.label || "").toLowerCase();
+          return label.includes("back") || label.includes("rear") || label.includes("environment");
+        });
+        if (backCam) cameraSelect.value = backCam.id;
+
+      } catch (e) {
+        cameraSelect.innerHTML = `<option value="">Camera access blocked</option>`;
       }
-
-      devices.forEach((d, idx) => {
-        const opt = document.createElement("option");
-        opt.value = d.id;
-        opt.textContent = d.label || `Camera ${idx + 1}`;
-        cameraSelect.appendChild(opt);
-      });
-
-      // Prefer a "back/environment" camera if present
-      const backCam = devices.find(d => (d.label || "").toLowerCase().includes("back") || (d.label || "").toLowerCase().includes("rear"));
-      if (backCam) cameraSelect.value = backCam.id;
     }
 
     async function scanTicket(ticket_code) {
@@ -276,21 +248,18 @@
         let data = null;
         try { data = JSON.parse(text); } catch (_) {}
 
-        // Handle auth / server errors
         if (res.status === 401) {
           setStatus("Unauthorised (wrong secret)", "bad");
           vibrateBad();
           return;
         }
+
         if (!data) {
           setStatus(`Unexpected response (${res.status})`, "bad");
           vibrateBad();
           return;
         }
 
-        // Your API contract:
-        // ok:true -> scanned now
-        // ok:false -> already_scanned / not_found / etc.
         if (data.ok === true) {
           setStatus("✅ Valid – Checked in", "ok");
           vibrateOk();
@@ -304,6 +273,7 @@
         }
 
         const reason = data.reason || "unknown";
+
         if (reason === "already_scanned" || reason === "already_scanned_race") {
           setStatus("❌ Already scanned", "bad");
           vibrateBad();
@@ -332,19 +302,31 @@
 
     function shouldThrottle(code) {
       const now = Date.now();
-      // Prevent repeated triggers from the same QR staying in frame
       if (code === lastTicketCode && (now - lastScanTs) < 2000) return true;
       lastTicketCode = code;
       lastScanTs = now;
       return false;
     }
 
+    // UPDATED: request camera permission on Start (user gesture), then reload cameras
     async function startScanner() {
       if (isScanning) return;
 
+      // Ask for camera permission first (this triggers the prompt on iOS/Android)
+      try {
+        setStatus("Requesting camera permission…");
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        stream.getTracks().forEach(t => t.stop());
+        await loadCameras();
+      } catch (e) {
+        setStatus("❌ Camera permission denied", "bad");
+        alert("Camera permission is blocked. Allow camera access for northbynature.uk and refresh.");
+        return;
+      }
+
       const camId = cameraSelect.value;
       if (!camId) {
-        alert("Select a camera first.");
+        alert("Select a camera first (or allow camera access and refresh).");
         return;
       }
 
@@ -366,7 +348,6 @@
           async (decodedText) => {
             if (!decodedText) return;
             const code = decodedText.trim();
-
             if (shouldThrottle(code)) return;
 
             setStatus("Scanning…");
