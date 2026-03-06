@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NBN Staff Scanner</title>
 
-  <!-- Self-hosted QR library (make sure this file exists and loads!) -->
+  <!-- Self-hosted QR library -->
   <script src="/staff/vendor/html5-qrcode.min.js"></script>
 
   <style>
@@ -115,6 +115,11 @@
       </div>
 
       <div class="tiny">Last code: <span id="lastCode">—</span></div>
+
+      <!-- Manual resume button to prevent rapid double-scans -->
+      <button id="resumeBtn" class="primary hidden" style="margin-top:12px;">
+        Scan next ticket
+      </button>
     </div>
   </div>
 
@@ -135,6 +140,7 @@
     const cameraSelect = document.getElementById("cameraSelect");
     const startBtn = document.getElementById("startBtn");
     const stopBtn = document.getElementById("stopBtn");
+    const resumeBtn = document.getElementById("resumeBtn");
 
     const statusBox = document.getElementById("statusBox");
     const details = document.getElementById("details");
@@ -189,12 +195,27 @@
       alert("Secret cleared.");
     });
 
+    async function pauseScanner() {
+      if (!html5QrCode || !isScanning) return;
+      try { await html5QrCode.pause(true); } catch (_) {}
+    }
+
+    async function resumeScanner() {
+      if (!html5QrCode || !isScanning) return;
+      try { await html5QrCode.resume(); } catch (_) {}
+    }
+
+    resumeBtn.addEventListener("click", async () => {
+      resumeBtn.classList.add("hidden");
+      setStatus("Ready to scan");
+      await resumeScanner();
+    });
+
     async function scanTicket(ticket_code) {
       const secret = getSecret();
       if (!secret) { setStatus("Enter door secret first", "bad"); return; }
 
       lastCode.textContent = ticket_code;
-      details.classList.add("hidden");
 
       const res = await fetch(ENDPOINT, {
         method: "POST",
@@ -205,37 +226,62 @@
       const text = await res.text();
       let data = null; try { data = JSON.parse(text); } catch (_) {}
 
-      if (res.status === 401) { setStatus("Unauthorised (wrong secret)", "bad"); vibrateBad(); return; }
-      if (!data) { setStatus(`Unexpected response (${res.status})`, "bad"); vibrateBad(); debug(text); return; }
+      if (res.status === 401) {
+        setStatus("Unauthorised (wrong secret)", "bad");
+        vibrateBad();
+        details.classList.add("hidden");
+        return;
+      }
+
+      if (!data) {
+        setStatus(`Unexpected response (${res.status})`, "bad");
+        vibrateBad();
+        debug(text);
+        details.classList.add("hidden");
+        return;
+      }
+
+      // Show ticket info section (where available)
+      details.classList.remove("hidden");
+      detailType.textContent = data.ticket?.ticket_type || "—";
+      detailEvent.textContent = data.ticket?.event_sku || "—";
 
       if (data.ok === true) {
-        setStatus("✅ Valid – Checked in", "ok"); vibrateOk();
-        details.classList.remove("hidden");
+        setStatus("✅ Valid – Checked in", "ok");
+        vibrateOk();
         detailResult.textContent = "Checked in";
-        detailType.textContent = data.ticket?.ticket_type || "—";
-        detailEvent.textContent = data.ticket?.event_sku || "—";
         detailScannedAt.textContent = data.ticket?.scanned_at || "—";
         return;
       }
 
       const reason = data.reason || "unknown";
+
       if (reason === "already_scanned" || reason === "already_scanned_race") {
-        setStatus("❌ Already scanned", "bad"); vibrateBad();
-        details.classList.remove("hidden");
+        setStatus("❌ Already scanned", "bad");
+        vibrateBad();
         detailResult.textContent = "Already scanned";
-        detailType.textContent = data.ticket?.ticket_type || "—";
-        detailEvent.textContent = data.ticket?.event_sku || "—";
         detailScannedAt.textContent = data.scanned_at || data.ticket?.scanned_at || "—";
         return;
       }
 
-      if (reason === "not_found") { setStatus("❌ Invalid ticket (not found)", "bad"); vibrateBad(); return; }
-      setStatus(`❌ Not valid (${reason})`, "bad"); vibrateBad();
+      if (reason === "not_found") {
+        setStatus("❌ Invalid ticket (not found)", "bad");
+        vibrateBad();
+        detailResult.textContent = "Not found";
+        detailScannedAt.textContent = "—";
+        return;
+      }
+
+      setStatus(`❌ Not valid (${reason})`, "bad");
+      vibrateBad();
+      detailResult.textContent = reason;
+      detailScannedAt.textContent = "—";
     }
 
     function shouldThrottle(code) {
       const now = Date.now();
-      if (code === lastTicketCode && (now - lastScanTs) < 2000) return true;
+      // Increased to 5 seconds to avoid rapid re-firing on the same QR staying in frame
+      if (code === lastTicketCode && (now - lastScanTs) < 5000) return true;
       lastTicketCode = code;
       lastScanTs = now;
       return false;
@@ -249,6 +295,9 @@
         debug("Html5Qrcode missing. Check /staff/vendor/html5-qrcode.min.js loads in browser.");
         return;
       }
+
+      // Hide resume button when starting
+      resumeBtn.classList.add("hidden");
 
       setStatus("Requesting camera permission…");
       try {
@@ -276,9 +325,20 @@
           async (decodedText) => {
             if (!decodedText) return;
             const code = decodedText.trim();
+
+            // If resume button is visible, we are "paused" waiting for staff
+            if (!resumeBtn.classList.contains("hidden")) return;
+
             if (shouldThrottle(code)) return;
-            setStatus("Scanning…");
+
+            setStatus("Checking ticket…");
+            // Pause camera scanning immediately to prevent double-scan
+            await pauseScanner();
+
             await scanTicket(code);
+
+            // Require manual tap to scan the next ticket
+            resumeBtn.classList.remove("hidden");
           },
           () => {}
         );
@@ -301,6 +361,7 @@
       isScanning = false;
       startBtn.classList.remove("hidden");
       stopBtn.classList.add("hidden");
+      resumeBtn.classList.add("hidden");
       setStatus("Stopped");
       debug("Scanner stopped.");
     }
