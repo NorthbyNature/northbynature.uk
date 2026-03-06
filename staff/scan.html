@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NBN Staff Scanner</title>
 
-  <!-- Self-hosted QR library -->
+  <!-- Self-hosted QR library (make sure this file exists and loads!) -->
   <script src="/staff/vendor/html5-qrcode.min.js"></script>
 
   <style>
@@ -82,7 +82,7 @@
           <select id="cameraSelect">
             <option value="__FALLBACK_REAR__">Default (Rear camera)</option>
           </select>
-          <div class="tiny">If list is empty, rear camera fallback will be used.</div>
+          <div class="tiny">Rear camera fallback will be used on iPhone even if the list is empty.</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="startBtn">Start scanner</button>
@@ -96,10 +96,22 @@
       <div id="statusBox" class="status">Ready to scan</div>
 
       <div id="details" class="infoGrid hidden">
-        <div class="infoItem"><div class="label">Result</div><div class="value" id="detailResult">—</div></div>
-        <div class="infoItem"><div class="label">Ticket type</div><div class="value" id="detailType">—</div></div>
-        <div class="infoItem"><div class="label">Event SKU</div><div class="value" id="detailEvent">—</div></div>
-        <div class="infoItem"><div class="label">Scanned at</div><div class="value" id="detailScannedAt">—</div></div>
+        <div class="infoItem">
+          <div class="label">Result</div>
+          <div class="value" id="detailResult">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Ticket type</div>
+          <div class="value" id="detailType">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Event SKU</div>
+          <div class="value" id="detailEvent">—</div>
+        </div>
+        <div class="infoItem">
+          <div class="label">Scanned at</div>
+          <div class="value" id="detailScannedAt">—</div>
+        </div>
       </div>
 
       <div class="tiny">Last code: <span id="lastCode">—</span></div>
@@ -133,7 +145,7 @@
     const lastCode = document.getElementById("lastCode");
 
     const debugEl = document.getElementById("debug");
-    function debug(msg) { debugEl.textContent += msg + "\n"; }
+    const debug = (m) => { debugEl.textContent += m + "\n"; };
 
     debug("Loaded. Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
 
@@ -234,7 +246,7 @@
 
       if (typeof Html5Qrcode === "undefined") {
         setStatus("❌ QR library not loaded", "bad");
-        debug("Html5Qrcode missing. Check /staff/vendor/html5-qrcode.min.js exists.");
+        debug("Html5Qrcode missing. Check /staff/vendor/html5-qrcode.min.js loads in browser.");
         return;
       }
 
