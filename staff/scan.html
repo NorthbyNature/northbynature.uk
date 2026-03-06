@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script src="/staff/vendor/html5-qrcode.min.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NBN Staff Scanner</title>
+
+  <!-- Self-hosted QR library -->
+  <script src="/staff/vendor/html5-qrcode.min.js"></script>
 
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #0b0b0b; color: #fff; }
@@ -52,37 +54,6 @@
       font-size: 12px;
     }
   </style>
-
-  <!-- Load html5-qrcode with fallback (unpkg -> jsDelivr) -->
-  <script>
-    (function () {
-      function addScript(src) {
-        return new Promise((resolve, reject) => {
-          const s = document.createElement("script");
-          s.src = src;
-          s.async = true;
-          s.onload = resolve;
-          s.onerror = reject;
-          document.head.appendChild(s);
-        });
-      }
-
-      window.__loadHtml5Qrcode = async function () {
-        const sources = [
-          "https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js",
-          "https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.10/minified/html5-qrcode.min.js"
-        ];
-
-        for (const src of sources) {
-          try {
-            await addScript(src);
-            return src;
-          } catch (e) { /* try next */ }
-        }
-        throw new Error("Failed to load html5-qrcode from all CDNs");
-      };
-    })();
-  </script>
 </head>
 
 <body>
@@ -108,8 +79,10 @@
       <div class="row" style="margin-top: 10px;">
         <div style="flex: 1 1 260px;">
           <label class="muted">Camera</label>
-          <select id="cameraSelect"></select>
-          <div class="tiny">If the list is empty, we’ll use rear camera fallback.</div>
+          <select id="cameraSelect">
+            <option value="__FALLBACK_REAR__">Default (Rear camera)</option>
+          </select>
+          <div class="tiny">If list is empty, rear camera fallback will be used.</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="startBtn">Start scanner</button>
@@ -162,6 +135,8 @@
     const debugEl = document.getElementById("debug");
     function debug(msg) { debugEl.textContent += msg + "\n"; }
 
+    debug("Loaded. Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
+
     function setStatus(text, kind) {
       statusBox.textContent = text;
       statusBox.classList.remove("ok", "bad");
@@ -202,34 +177,6 @@
       alert("Secret cleared.");
     });
 
-    async function loadCameras() {
-      cameraSelect.innerHTML = "";
-      try {
-        const devices = await Html5Qrcode.getCameras();
-        if (!devices || devices.length === 0) {
-          const opt = document.createElement("option");
-          opt.value = "__FALLBACK_REAR__";
-          opt.textContent = "Default (Rear camera)";
-          cameraSelect.appendChild(opt);
-          debug("No camera list returned. Using fallback.");
-          return;
-        }
-        devices.forEach((d, idx) => {
-          const opt = document.createElement("option");
-          opt.value = d.id;
-          opt.textContent = d.label || `Camera ${idx + 1}`;
-          cameraSelect.appendChild(opt);
-        });
-        debug("Cameras loaded: " + devices.length);
-      } catch (e) {
-        const opt = document.createElement("option");
-        opt.value = "__FALLBACK_REAR__";
-        opt.textContent = "Default (Rear camera)";
-        cameraSelect.appendChild(opt);
-        debug("getCameras error: " + (e && (e.name + " - " + e.message)));
-      }
-    }
-
     async function scanTicket(ticket_code) {
       const secret = getSecret();
       if (!secret) { setStatus("Enter door secret first", "bad"); return; }
@@ -237,46 +184,41 @@
       lastCode.textContent = ticket_code;
       details.classList.add("hidden");
 
-      try {
-        const res = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "x-door-secret": secret },
-          body: JSON.stringify({ ticket_code })
-        });
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-door-secret": secret },
+        body: JSON.stringify({ ticket_code })
+      });
 
-        const text = await res.text();
-        let data = null; try { data = JSON.parse(text); } catch (_) {}
+      const text = await res.text();
+      let data = null; try { data = JSON.parse(text); } catch (_) {}
 
-        if (res.status === 401) { setStatus("Unauthorised (wrong secret)", "bad"); vibrateBad(); return; }
-        if (!data) { setStatus(`Unexpected response (${res.status})`, "bad"); vibrateBad(); debug(text); return; }
+      if (res.status === 401) { setStatus("Unauthorised (wrong secret)", "bad"); vibrateBad(); return; }
+      if (!data) { setStatus(`Unexpected response (${res.status})`, "bad"); vibrateBad(); debug(text); return; }
 
-        if (data.ok === true) {
-          setStatus("✅ Valid – Checked in", "ok"); vibrateOk();
-          details.classList.remove("hidden");
-          detailResult.textContent = "Checked in";
-          detailType.textContent = data.ticket?.ticket_type || "—";
-          detailEvent.textContent = data.ticket?.event_sku || "—";
-          detailScannedAt.textContent = data.ticket?.scanned_at || "—";
-          return;
-        }
-
-        const reason = data.reason || "unknown";
-        if (reason === "already_scanned" || reason === "already_scanned_race") {
-          setStatus("❌ Already scanned", "bad"); vibrateBad();
-          details.classList.remove("hidden");
-          detailResult.textContent = "Already scanned";
-          detailType.textContent = data.ticket?.ticket_type || "—";
-          detailEvent.textContent = data.ticket?.event_sku || "—";
-          detailScannedAt.textContent = data.scanned_at || data.ticket?.scanned_at || "—";
-          return;
-        }
-
-        if (reason === "not_found") { setStatus("❌ Invalid ticket (not found)", "bad"); vibrateBad(); return; }
-        setStatus(`❌ Not valid (${reason})`, "bad"); vibrateBad();
-      } catch (e) {
-        setStatus("❌ Network error – try again", "bad"); vibrateBad();
-        debug("Network error: " + (e && (e.name + " - " + e.message)));
+      if (data.ok === true) {
+        setStatus("✅ Valid – Checked in", "ok"); vibrateOk();
+        details.classList.remove("hidden");
+        detailResult.textContent = "Checked in";
+        detailType.textContent = data.ticket?.ticket_type || "—";
+        detailEvent.textContent = data.ticket?.event_sku || "—";
+        detailScannedAt.textContent = data.ticket?.scanned_at || "—";
+        return;
       }
+
+      const reason = data.reason || "unknown";
+      if (reason === "already_scanned" || reason === "already_scanned_race") {
+        setStatus("❌ Already scanned", "bad"); vibrateBad();
+        details.classList.remove("hidden");
+        detailResult.textContent = "Already scanned";
+        detailType.textContent = data.ticket?.ticket_type || "—";
+        detailEvent.textContent = data.ticket?.event_sku || "—";
+        detailScannedAt.textContent = data.scanned_at || data.ticket?.scanned_at || "—";
+        return;
+      }
+
+      if (reason === "not_found") { setStatus("❌ Invalid ticket (not found)", "bad"); vibrateBad(); return; }
+      setStatus(`❌ Not valid (${reason})`, "bad"); vibrateBad();
     }
 
     function shouldThrottle(code) {
@@ -290,24 +232,12 @@
     async function startScanner() {
       if (isScanning) return;
 
-      setStatus("Loading scanner library…");
-      try {
-        const used = await window.__loadHtml5Qrcode();
-        debug("Loaded html5-qrcode from: " + used);
-      } catch (e) {
-        setStatus("❌ QR library failed to load", "bad");
-        debug("Library load error: " + (e && (e.message || e)));
-        alert("QR library failed to load. If you have a blocker, disable it or try mobile data.");
-        return;
-      }
-
-      debug("Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
       if (typeof Html5Qrcode === "undefined") {
-        setStatus("❌ QR library not available", "bad");
+        setStatus("❌ QR library not loaded", "bad");
+        debug("Html5Qrcode missing. Check /staff/vendor/html5-qrcode.min.js exists.");
         return;
       }
 
-      // Permission kick
       setStatus("Requesting camera permission…");
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
@@ -320,8 +250,6 @@
         return;
       }
 
-      await loadCameras();
-
       if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
       setStatus("Starting scanner…");
@@ -330,16 +258,8 @@
         startBtn.classList.add("hidden");
         stopBtn.classList.remove("hidden");
 
-        const camId = cameraSelect.value;
-        const cameraConfig =
-          camId === "__FALLBACK_REAR__" || !camId
-            ? { facingMode: "environment" }
-            : { deviceId: { exact: camId } };
-
-        debug("Starting with config: " + JSON.stringify(cameraConfig));
-
         await html5QrCode.start(
-          cameraConfig,
+          { facingMode: "environment" },
           { fps: 10, qrbox: { width: 260, height: 260 }, aspectRatio: 1.0 },
           async (decodedText) => {
             if (!decodedText) return;
@@ -377,10 +297,6 @@
     stopBtn.addEventListener("click", stopScanner);
 
     updateSecretUI();
-    cameraSelect.innerHTML = `<option value="__FALLBACK_REAR__">Default (Rear camera)</option>`;
-    debug("Ready. UserAgent: " + navigator.userAgent);
-    debug("mediaDevices: " + (!!navigator.mediaDevices));
-    debug("getUserMedia: " + (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
   </script>
 </body>
 </html>
