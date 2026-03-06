@@ -146,14 +146,13 @@
     const lastCode = document.getElementById("lastCode");
 
     const debugEl = document.getElementById("debug");
-    function debug(msg) {
-      debugEl.textContent += msg + "\n";
-    }
+    function debug(msg) { debugEl.textContent += msg + "\n"; }
 
     debug("Loaded.");
     debug("UserAgent: " + navigator.userAgent);
     debug("mediaDevices: " + (!!navigator.mediaDevices));
     debug("getUserMedia: " + (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
+    debug("Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
 
     function setStatus(text, kind) {
       statusBox.textContent = text;
@@ -202,6 +201,7 @@
       cameraSelect.innerHTML = "";
       try {
         const devices = await Html5Qrcode.getCameras();
+
         if (!devices || devices.length === 0) {
           const opt = document.createElement("option");
           opt.value = "__FALLBACK_REAR__";
@@ -217,12 +217,6 @@
           opt.textContent = d.label || `Camera ${idx + 1}`;
           cameraSelect.appendChild(opt);
         });
-
-        const backCam = devices.find(d => {
-          const label = (d.label || "").toLowerCase();
-          return label.includes("back") || label.includes("rear") || label.includes("environment");
-        });
-        if (backCam) cameraSelect.value = backCam.id;
 
         debug("Cameras loaded: " + devices.length);
       } catch (e) {
@@ -248,10 +242,7 @@
       try {
         const res = await fetch(ENDPOINT, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-door-secret": secret
-          },
+          headers: { "Content-Type": "application/json", "x-door-secret": secret },
           body: JSON.stringify({ ticket_code })
         });
 
@@ -275,7 +266,6 @@
         if (data.ok === true) {
           setStatus("✅ Valid – Checked in", "ok");
           vibrateOk();
-
           details.classList.remove("hidden");
           detailResult.textContent = "Checked in";
           detailType.textContent = data.ticket?.ticket_type || "—";
@@ -285,11 +275,9 @@
         }
 
         const reason = data.reason || "unknown";
-
         if (reason === "already_scanned" || reason === "already_scanned_race") {
           setStatus("❌ Already scanned", "bad");
           vibrateBad();
-
           details.classList.remove("hidden");
           detailResult.textContent = "Already scanned";
           detailType.textContent = data.ticket?.ticket_type || "—";
@@ -349,7 +337,6 @@
       }
 
       await loadCameras();
-
       if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
       setStatus("Starting scanner…");
@@ -394,9 +381,7 @@
 
     async function stopScanner() {
       if (!html5QrCode || !isScanning) return;
-      try {
-        await html5QrCode.stop();
-      } catch (_) {}
+      try { await html5QrCode.stop(); } catch (_) {}
       isScanning = false;
       startBtn.classList.remove("hidden");
       stopBtn.classList.add("hidden");
