@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NBN Staff Scanner</title>
 
-  <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
-
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #0b0b0b; color: #fff; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 16px; }
@@ -53,15 +51,44 @@
       font-size: 12px;
     }
   </style>
+
+  <!-- Load html5-qrcode with fallback (unpkg -> jsDelivr) -->
+  <script>
+    (function () {
+      function addScript(src) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = src;
+          s.async = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
+
+      window.__loadHtml5Qrcode = async function () {
+        const sources = [
+          "https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js",
+          "https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.10/minified/html5-qrcode.min.js"
+        ];
+
+        for (const src of sources) {
+          try {
+            await addScript(src);
+            return src;
+          } catch (e) { /* try next */ }
+        }
+        throw new Error("Failed to load html5-qrcode from all CDNs");
+      };
+    })();
+  </script>
 </head>
 
 <body>
   <div class="wrap">
     <div class="card">
       <h1>NBN Staff Ticket Scanner</h1>
-      <div class="muted">
-        Uses your phone camera. Internet required. Scans are one-time (your backend blocks duplicates).
-      </div>
+      <div class="muted">Uses your phone camera. Internet required. Scans are one-time.</div>
     </div>
 
     <div class="card">
@@ -69,7 +96,7 @@
         <div style="flex: 1 1 260px;">
           <label class="muted">Door secret (required)</label>
           <input id="secretInput" type="password" placeholder="Enter door secret..." autocomplete="off" />
-          <div class="tiny">Tip: we store this in <b>session</b> only (clears when you close the tab).</div>
+          <div class="tiny">Stored in <b>session</b> only (clears when you close the tab).</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="saveSecretBtn">Save secret</button>
@@ -81,7 +108,7 @@
         <div style="flex: 1 1 260px;">
           <label class="muted">Camera</label>
           <select id="cameraSelect"></select>
-          <div class="tiny">If camera doesn’t start on iPhone, check Settings → Safari → Camera, and disable Private Browsing.</div>
+          <div class="tiny">If the list is empty, we’ll use rear camera fallback.</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="startBtn">Start scanner</button>
@@ -92,29 +119,16 @@
 
     <div class="card">
       <div id="reader"></div>
-
       <div id="statusBox" class="status">Ready to scan</div>
 
       <div id="details" class="infoGrid hidden">
-        <div class="infoItem">
-          <div class="label">Result</div>
-          <div class="value" id="detailResult">—</div>
-        </div>
-        <div class="infoItem">
-          <div class="label">Ticket type</div>
-          <div class="value" id="detailType">—</div>
-        </div>
-        <div class="infoItem">
-          <div class="label">Event SKU</div>
-          <div class="value" id="detailEvent">—</div>
-        </div>
-        <div class="infoItem">
-          <div class="label">Scanned at</div>
-          <div class="value" id="detailScannedAt">—</div>
-        </div>
+        <div class="infoItem"><div class="label">Result</div><div class="value" id="detailResult">—</div></div>
+        <div class="infoItem"><div class="label">Ticket type</div><div class="value" id="detailType">—</div></div>
+        <div class="infoItem"><div class="label">Event SKU</div><div class="value" id="detailEvent">—</div></div>
+        <div class="infoItem"><div class="label">Scanned at</div><div class="value" id="detailScannedAt">—</div></div>
       </div>
 
-      <div class="tiny" id="lastCodeWrap">Last code: <span id="lastCode">—</span></div>
+      <div class="tiny">Last code: <span id="lastCode">—</span></div>
     </div>
   </div>
 
@@ -132,7 +146,6 @@
     const secretInput = document.getElementById("secretInput");
     const saveSecretBtn = document.getElementById("saveSecretBtn");
     const clearSecretBtn = document.getElementById("clearSecretBtn");
-
     const cameraSelect = document.getElementById("cameraSelect");
     const startBtn = document.getElementById("startBtn");
     const stopBtn = document.getElementById("stopBtn");
@@ -147,12 +160,6 @@
 
     const debugEl = document.getElementById("debug");
     function debug(msg) { debugEl.textContent += msg + "\n"; }
-
-    debug("Loaded.");
-    debug("UserAgent: " + navigator.userAgent);
-    debug("mediaDevices: " + (!!navigator.mediaDevices));
-    debug("getUserMedia: " + (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
-    debug("Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
 
     function setStatus(text, kind) {
       statusBox.textContent = text;
@@ -182,10 +189,7 @@
 
     saveSecretBtn.addEventListener("click", () => {
       const val = secretInput.value.trim();
-      if (!val || val === "********") {
-        alert("Paste the door secret value (not ********).");
-        return;
-      }
+      if (!val || val === "********") return alert("Paste the door secret value (not ********).");
       setSecret(val);
       updateSecretUI();
       alert("Secret saved for this session.");
@@ -201,23 +205,20 @@
       cameraSelect.innerHTML = "";
       try {
         const devices = await Html5Qrcode.getCameras();
-
         if (!devices || devices.length === 0) {
           const opt = document.createElement("option");
           opt.value = "__FALLBACK_REAR__";
           opt.textContent = "Default (Rear camera)";
           cameraSelect.appendChild(opt);
-          debug("No device list returned. Using fallback.");
+          debug("No camera list returned. Using fallback.");
           return;
         }
-
         devices.forEach((d, idx) => {
           const opt = document.createElement("option");
           opt.value = d.id;
           opt.textContent = d.label || `Camera ${idx + 1}`;
           cameraSelect.appendChild(opt);
         });
-
         debug("Cameras loaded: " + devices.length);
       } catch (e) {
         const opt = document.createElement("option");
@@ -230,11 +231,7 @@
 
     async function scanTicket(ticket_code) {
       const secret = getSecret();
-      if (!secret) {
-        setStatus("Enter door secret first", "bad");
-        vibrateBad();
-        return;
-      }
+      if (!secret) { setStatus("Enter door secret first", "bad"); return; }
 
       lastCode.textContent = ticket_code;
       details.classList.add("hidden");
@@ -247,25 +244,13 @@
         });
 
         const text = await res.text();
-        let data = null;
-        try { data = JSON.parse(text); } catch (_) {}
+        let data = null; try { data = JSON.parse(text); } catch (_) {}
 
-        if (res.status === 401) {
-          setStatus("Unauthorised (wrong secret)", "bad");
-          vibrateBad();
-          return;
-        }
-
-        if (!data) {
-          setStatus(`Unexpected response (${res.status})`, "bad");
-          vibrateBad();
-          debug("Non-JSON response: " + text);
-          return;
-        }
+        if (res.status === 401) { setStatus("Unauthorised (wrong secret)", "bad"); vibrateBad(); return; }
+        if (!data) { setStatus(`Unexpected response (${res.status})`, "bad"); vibrateBad(); debug(text); return; }
 
         if (data.ok === true) {
-          setStatus("✅ Valid – Checked in", "ok");
-          vibrateOk();
+          setStatus("✅ Valid – Checked in", "ok"); vibrateOk();
           details.classList.remove("hidden");
           detailResult.textContent = "Checked in";
           detailType.textContent = data.ticket?.ticket_type || "—";
@@ -276,8 +261,7 @@
 
         const reason = data.reason || "unknown";
         if (reason === "already_scanned" || reason === "already_scanned_race") {
-          setStatus("❌ Already scanned", "bad");
-          vibrateBad();
+          setStatus("❌ Already scanned", "bad"); vibrateBad();
           details.classList.remove("hidden");
           detailResult.textContent = "Already scanned";
           detailType.textContent = data.ticket?.ticket_type || "—";
@@ -286,17 +270,10 @@
           return;
         }
 
-        if (reason === "not_found") {
-          setStatus("❌ Invalid ticket (not found)", "bad");
-          vibrateBad();
-          return;
-        }
-
-        setStatus(`❌ Not valid (${reason})`, "bad");
-        vibrateBad();
+        if (reason === "not_found") { setStatus("❌ Invalid ticket (not found)", "bad"); vibrateBad(); return; }
+        setStatus(`❌ Not valid (${reason})`, "bad"); vibrateBad();
       } catch (e) {
-        setStatus("❌ Network error – try again", "bad");
-        vibrateBad();
+        setStatus("❌ Network error – try again", "bad"); vibrateBad();
         debug("Network error: " + (e && (e.name + " - " + e.message)));
       }
     }
@@ -312,31 +289,38 @@
     async function startScanner() {
       if (isScanning) return;
 
-      const withTimeout = (promise, ms, msg) =>
-        Promise.race([
-          promise,
-          new Promise((_, reject) => setTimeout(() => reject(new Error(msg)), ms))
-        ]);
-
-      setStatus("Requesting camera permission…");
-      debug("Start pressed. Requesting getUserMedia...");
-
+      setStatus("Loading scanner library…");
       try {
-        const stream = await withTimeout(
-          navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }),
-          8000,
-          "Camera permission timed out"
-        );
+        const used = await window.__loadHtml5Qrcode();
+        debug("Loaded html5-qrcode from: " + used);
+      } catch (e) {
+        setStatus("❌ QR library failed to load", "bad");
+        debug("Library load error: " + (e && (e.message || e)));
+        alert("QR library failed to load. If you have a blocker, disable it or try mobile data.");
+        return;
+      }
+
+      debug("Html5Qrcode exists: " + (typeof Html5Qrcode !== "undefined"));
+      if (typeof Html5Qrcode === "undefined") {
+        setStatus("❌ QR library not available", "bad");
+        return;
+      }
+
+      // Permission kick
+      setStatus("Requesting camera permission…");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
         stream.getTracks().forEach(t => t.stop());
         debug("getUserMedia OK.");
       } catch (e) {
-        debug("getUserMedia ERROR: " + (e && (e.name + " - " + e.message)));
         setStatus("❌ Camera permission failed", "bad");
+        debug("getUserMedia ERROR: " + (e && (e.name + " - " + e.message)));
         alert("Camera didn’t start. Error: " + (e && (e.name + " - " + e.message)));
         return;
       }
 
       await loadCameras();
+
       if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
       setStatus("Starting scanner…");
@@ -351,7 +335,7 @@
             ? { facingMode: "environment" }
             : { deviceId: { exact: camId } };
 
-        debug("Starting html5-qrcode with config: " + JSON.stringify(cameraConfig));
+        debug("Starting with config: " + JSON.stringify(cameraConfig));
 
         await html5QrCode.start(
           cameraConfig,
@@ -360,7 +344,6 @@
             if (!decodedText) return;
             const code = decodedText.trim();
             if (shouldThrottle(code)) return;
-
             setStatus("Scanning…");
             await scanTicket(code);
           },
@@ -370,11 +353,11 @@
         setStatus("Ready to scan");
         debug("Scanner started.");
       } catch (e) {
-        debug("html5-qrcode start ERROR: " + (e && (e.name + " - " + e.message)));
         isScanning = false;
         startBtn.classList.remove("hidden");
         stopBtn.classList.add("hidden");
         setStatus("❌ Could not start camera", "bad");
+        debug("start ERROR: " + (e && (e.name + " - " + e.message)));
         alert("Scanner failed to start. Error: " + (e && (e.name + " - " + e.message)));
       }
     }
@@ -393,7 +376,10 @@
     stopBtn.addEventListener("click", stopScanner);
 
     updateSecretUI();
-    loadCameras();
+    cameraSelect.innerHTML = `<option value="__FALLBACK_REAR__">Default (Rear camera)</option>`;
+    debug("Ready. UserAgent: " + navigator.userAgent);
+    debug("mediaDevices: " + (!!navigator.mediaDevices));
+    debug("getUserMedia: " + (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
   </script>
 </body>
 </html>
