@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NBN Staff Scanner</title>
 
-  <!-- QR scanner library -->
   <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
 
   <style>
@@ -43,6 +42,16 @@
     .value { word-break: break-word; }
     .tiny { font-size: 12px; color: #bdbdbd; margin-top: 8px; }
     .hidden { display: none; }
+    #debug {
+      white-space: pre-wrap;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 12px;
+      margin: 16px;
+      color: #ddd;
+      font-size: 12px;
+    }
   </style>
 </head>
 
@@ -72,7 +81,7 @@
         <div style="flex: 1 1 260px;">
           <label class="muted">Camera</label>
           <select id="cameraSelect"></select>
-          <div class="tiny">If this says “Camera access blocked”, allow camera permission for northbynature.uk and refresh.</div>
+          <div class="tiny">If camera doesn’t start on iPhone, check Settings → Safari → Camera, and disable Private Browsing.</div>
         </div>
         <div style="flex: 1 1 180px; align-self: end;">
           <button class="primary" id="startBtn">Start scanner</button>
@@ -109,10 +118,10 @@
     </div>
   </div>
 
+  <div id="debug"></div>
+
   <script>
     const ENDPOINT = "https://www.northbynature.uk/.netlify/functions/scan-ticket";
-
-    // session-scoped secret
     const SECRET_KEY = "nbn_door_secret_session";
 
     let html5QrCode = null;
@@ -136,31 +145,28 @@
     const detailScannedAt = document.getElementById("detailScannedAt");
     const lastCode = document.getElementById("lastCode");
 
+    const debugEl = document.getElementById("debug");
+    function debug(msg) {
+      debugEl.textContent += msg + "\n";
+    }
+
+    debug("Loaded.");
+    debug("UserAgent: " + navigator.userAgent);
+    debug("mediaDevices: " + (!!navigator.mediaDevices));
+    debug("getUserMedia: " + (!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)));
+
     function setStatus(text, kind) {
       statusBox.textContent = text;
       statusBox.classList.remove("ok", "bad");
       if (kind) statusBox.classList.add(kind);
     }
 
-    function vibrateOk() {
-      if (navigator.vibrate) navigator.vibrate([80, 40, 80]);
-    }
+    function vibrateOk() { if (navigator.vibrate) navigator.vibrate([80, 40, 80]); }
+    function vibrateBad() { if (navigator.vibrate) navigator.vibrate([200]); }
 
-    function vibrateBad() {
-      if (navigator.vibrate) navigator.vibrate([200]);
-    }
-
-    function getSecret() {
-      return sessionStorage.getItem(SECRET_KEY) || "";
-    }
-
-    function setSecret(val) {
-      sessionStorage.setItem(SECRET_KEY, val);
-    }
-
-    function clearSecret() {
-      sessionStorage.removeItem(SECRET_KEY);
-    }
+    function getSecret() { return sessionStorage.getItem(SECRET_KEY) || ""; }
+    function setSecret(val) { sessionStorage.setItem(SECRET_KEY, val); }
+    function clearSecret() { sessionStorage.removeItem(SECRET_KEY); }
 
     function updateSecretUI() {
       const s = getSecret();
@@ -192,43 +198,41 @@
       alert("Secret cleared.");
     });
 
-    // UPDATED: more reliable camera loading
-async function loadCameras() {
-  cameraSelect.innerHTML = "";
+    async function loadCameras() {
+      cameraSelect.innerHTML = "";
+      try {
+        const devices = await Html5Qrcode.getCameras();
+        if (!devices || devices.length === 0) {
+          const opt = document.createElement("option");
+          opt.value = "__FALLBACK_REAR__";
+          opt.textContent = "Default (Rear camera)";
+          cameraSelect.appendChild(opt);
+          debug("No device list returned. Using fallback.");
+          return;
+        }
 
-  try {
-    const devices = await Html5Qrcode.getCameras();
+        devices.forEach((d, idx) => {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.label || `Camera ${idx + 1}`;
+          cameraSelect.appendChild(opt);
+        });
 
-    // If browser won't give us a list, add a fallback option
-    if (!devices || devices.length === 0) {
-      const opt = document.createElement("option");
-      opt.value = "__FALLBACK_REAR__";
-      opt.textContent = "Default (Rear camera)";
-      cameraSelect.appendChild(opt);
-      return;
+        const backCam = devices.find(d => {
+          const label = (d.label || "").toLowerCase();
+          return label.includes("back") || label.includes("rear") || label.includes("environment");
+        });
+        if (backCam) cameraSelect.value = backCam.id;
+
+        debug("Cameras loaded: " + devices.length);
+      } catch (e) {
+        const opt = document.createElement("option");
+        opt.value = "__FALLBACK_REAR__";
+        opt.textContent = "Default (Rear camera)";
+        cameraSelect.appendChild(opt);
+        debug("getCameras error: " + (e && (e.name + " - " + e.message)));
+      }
     }
-
-    devices.forEach((d, idx) => {
-      const opt = document.createElement("option");
-      opt.value = d.id;
-      opt.textContent = d.label || `Camera ${idx + 1}`;
-      cameraSelect.appendChild(opt);
-    });
-
-    const backCam = devices.find(d => {
-      const label = (d.label || "").toLowerCase();
-      return label.includes("back") || label.includes("rear") || label.includes("environment");
-    });
-    if (backCam) cameraSelect.value = backCam.id;
-
-  } catch (e) {
-    // Even if blocked, still let staff try rear camera fallback
-    const opt = document.createElement("option");
-    opt.value = "__FALLBACK_REAR__";
-    opt.textContent = "Default (Rear camera)";
-    cameraSelect.appendChild(opt);
-  }
-}
 
     async function scanTicket(ticket_code) {
       const secret = getSecret();
@@ -264,6 +268,7 @@ async function loadCameras() {
         if (!data) {
           setStatus(`Unexpected response (${res.status})`, "bad");
           vibrateBad();
+          debug("Non-JSON response: " + text);
           return;
         }
 
@@ -304,6 +309,7 @@ async function loadCameras() {
       } catch (e) {
         setStatus("❌ Network error – try again", "bad");
         vibrateBad();
+        debug("Network error: " + (e && (e.name + " - " + e.message)));
       }
     }
 
@@ -315,68 +321,78 @@ async function loadCameras() {
       return false;
     }
 
-    // UPDATED: request camera permission on Start (user gesture), then reload cameras
-async function startScanner() {
-  if (isScanning) return;
+    async function startScanner() {
+      if (isScanning) return;
 
-  // Helper: timeout wrapper so it doesn't hang forever
-  const withTimeout = (promise, ms, msg) =>
-    Promise.race([
-      promise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error(msg)), ms))
-    ]);
+      const withTimeout = (promise, ms, msg) =>
+        Promise.race([
+          promise,
+          new Promise((_, reject) => setTimeout(() => reject(new Error(msg)), ms))
+        ]);
 
-  setStatus("Requesting camera permission…");
+      setStatus("Requesting camera permission…");
+      debug("Start pressed. Requesting getUserMedia...");
 
-  // 1) Ask for rear camera permission with a timeout
-  try {
-    const stream = await withTimeout(
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }),
-      6000,
-      "Camera permission timed out"
-    );
-    // Stop immediately - we only wanted the permission prompt
-    stream.getTracks().forEach(t => t.stop());
-    setStatus("Starting scanner…");
-  } catch (e) {
-    setStatus("❌ Camera permission failed", "bad");
-    alert(
-      "Camera didn’t start.\n\nTry:\n- Open in Safari/Chrome (not Instagram/TikTok browser)\n- Turn off Private Browsing\n- iPhone Settings → Safari → Camera → Allow\n\nError: " + (e.message || e)
-    );
-    return;
-  }
+      try {
+        const stream = await withTimeout(
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false }),
+          8000,
+          "Camera permission timed out"
+        );
+        stream.getTracks().forEach(t => t.stop());
+        debug("getUserMedia OK.");
+      } catch (e) {
+        debug("getUserMedia ERROR: " + (e && (e.name + " - " + e.message)));
+        setStatus("❌ Camera permission failed", "bad");
+        alert("Camera didn’t start. Error: " + (e && (e.name + " - " + e.message)));
+        return;
+      }
 
-  // 2) Start html5-qrcode directly with rear camera
-  if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
+      await loadCameras();
 
-  try {
-    isScanning = true;
-    startBtn.classList.add("hidden");
-    stopBtn.classList.remove("hidden");
+      if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
 
-    await html5QrCode.start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: { width: 260, height: 260 }, aspectRatio: 1.0 },
-      async (decodedText) => {
-        if (!decodedText) return;
-        const code = decodedText.trim();
-        if (shouldThrottle(code)) return;
+      setStatus("Starting scanner…");
+      try {
+        isScanning = true;
+        startBtn.classList.add("hidden");
+        stopBtn.classList.remove("hidden");
 
-        setStatus("Scanning…");
-        await scanTicket(code);
-      },
-      () => {}
-    );
+        const camId = cameraSelect.value;
+        const cameraConfig =
+          camId === "__FALLBACK_REAR__" || !camId
+            ? { facingMode: "environment" }
+            : { deviceId: { exact: camId } };
 
-    setStatus("Ready to scan");
-  } catch (e) {
-    isScanning = false;
-    startBtn.classList.remove("hidden");
-    stopBtn.classList.add("hidden");
-    setStatus("❌ Could not start camera", "bad");
-    alert("Scanner failed to start. Error: " + (e.message || e));
-  }
-}    async function stopScanner() {
+        debug("Starting html5-qrcode with config: " + JSON.stringify(cameraConfig));
+
+        await html5QrCode.start(
+          cameraConfig,
+          { fps: 10, qrbox: { width: 260, height: 260 }, aspectRatio: 1.0 },
+          async (decodedText) => {
+            if (!decodedText) return;
+            const code = decodedText.trim();
+            if (shouldThrottle(code)) return;
+
+            setStatus("Scanning…");
+            await scanTicket(code);
+          },
+          () => {}
+        );
+
+        setStatus("Ready to scan");
+        debug("Scanner started.");
+      } catch (e) {
+        debug("html5-qrcode start ERROR: " + (e && (e.name + " - " + e.message)));
+        isScanning = false;
+        startBtn.classList.remove("hidden");
+        stopBtn.classList.add("hidden");
+        setStatus("❌ Could not start camera", "bad");
+        alert("Scanner failed to start. Error: " + (e && (e.name + " - " + e.message)));
+      }
+    }
+
+    async function stopScanner() {
       if (!html5QrCode || !isScanning) return;
       try {
         await html5QrCode.stop();
@@ -385,16 +401,14 @@ async function startScanner() {
       startBtn.classList.remove("hidden");
       stopBtn.classList.add("hidden");
       setStatus("Stopped");
+      debug("Scanner stopped.");
     }
 
     startBtn.addEventListener("click", startScanner);
     stopBtn.addEventListener("click", stopScanner);
 
-    // Init
     updateSecretUI();
-    loadCameras().catch(() => {
-      cameraSelect.innerHTML = `<option value="">Camera access blocked</option>`;
-    });
+    loadCameras();
   </script>
 </body>
 </html>
