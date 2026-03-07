@@ -704,7 +704,7 @@ top: 50%; /* Center vertically */
 .silver-button {
     display: inline-block;
     background-color: #111111;
-    color: #1A1A1A;
+    color: #ffffff;
     padding: 12px 20px;
     border-radius: 5px;
     text-transform: uppercase;
@@ -716,7 +716,7 @@ top: 50%; /* Center vertically */
     overflow: hidden;
 
     /* 3D effect using shadow */
-    box-shadow: 0 6px 0 #4D4F51, 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 0 #1A1A1A, 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .silver-button:active {
