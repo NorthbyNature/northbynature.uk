@@ -582,11 +582,23 @@ if (editProfileForm) {
       acct.querySelector('#user-role').textContent = data.role||'';
       acct.querySelector('p').textContent       = `Email: ${cu.email}`;
       const tierEl = acct.querySelector('#membership-tier');
-      if (tierEl && data.membership_tier) {
-        tierEl.textContent = `${data.membership_tier} MEMBER`;
-        tierEl.classList.toggle('gold',    data.membership_tier.toLowerCase()==='gold');
-        tierEl.classList.toggle('platinum',data.membership_tier.toLowerCase()==='platinum');
-      }
+
+if (tierEl) {
+  const tier = (data.membership_tier || '').trim().toLowerCase();
+
+  const isPremium = tier === 'gold' || tier === 'platinum';
+
+  if (isPremium) {
+    tierEl.textContent = `${tier.toUpperCase()} MEMBER`;
+    tierEl.classList.toggle('gold', tier === 'gold');
+    tierEl.classList.toggle('platinum', tier === 'platinum');
+    tierEl.style.display = ''; // show (uses default)
+  } else {
+    tierEl.textContent = '';
+    tierEl.classList.remove('gold', 'platinum');
+    tierEl.style.display = 'none'; // hide completely
+  }
+}
       acct.querySelector('#location').textContent             = data.location
         ? `Primary Location: ${data.location}` : "Primary Location: Not set";
       acct.querySelector('#primary-social-media').textContent = data.primary_social_media
