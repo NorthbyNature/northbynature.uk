@@ -700,55 +700,62 @@ top: 50%; /* Center vertically */
     box-shadow: 0 3px 0 #7a7a7a, 0 3px 8px rgba(0, 0, 0, 0.15);
 
 }
-/* silver button style for links */
+/* dark 3D button style */
 .silver-button {
-    display: inline-block;
-    background-color: #111111;
-    color: #ffffff;
-    padding: 12px 20px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  display: inline-block;
+  background-color: #111111;      /* face */
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 
-    /* 3D effect using shadow */
-    box-shadow: 0 6px 0 #1A1A1A, 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease, background-color 0.12s ease;
+
+  border: 1px solid #222;         /* defines edge on dark backgrounds */
+
+  /* 3D effect: step must be DARKER than the face */
+  box-shadow: 0 6px 0 #050505, 0 10px 18px rgba(0, 0, 0, 0.45);
+}
+
+.silver-button:hover {
+  /* keep it dark; just brighten slightly */
+  background-color: #141414;
+  color: #ffffff;
+  filter: brightness(1.08);
+
+  /* don’t push it down on hover (feels like it’s already pressed) */
+  transform: translateY(0);
+  box-shadow: 0 6px 0 #050505, 0 12px 20px rgba(0, 0, 0, 0.5);
 }
 
 .silver-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 3px 0 #4D4F51, 0 2px 5px rgba(0, 0, 0, 0.15);
+  /* press down to meet the “step” */
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #050505, 0 6px 12px rgba(0, 0, 0, 0.45);
 }
 
 /* Shine effect layer */
 .silver-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    transform: skewX(-25deg);
-    animation: silverAutoShine 2.5s infinite ease-in-out;
-    pointer-events: none;
-}
-
-/* Hover press-in effect */
-.silver-button:hover {
-    background-color: #71706e;
-   color: #ffffff; /* Keep text white */
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #7a7a7a, 0 3px 8px rgba(0, 0, 0, 0.15);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  animation: silverAutoShine 2.5s infinite ease-in-out;
+  pointer-events: none;
 }
 
 /* Shine animation */
