@@ -704,7 +704,7 @@ top: 50%; /* Center vertically */
 .silver-button {
   display: inline-block;
   background-color: #111111;      /* face */
-  color: #ffffff;
+  color: #ffffff !important;
   padding: 12px 20px;
   border-radius: 6px;
   text-transform: uppercase;
