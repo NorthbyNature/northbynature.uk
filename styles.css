@@ -700,11 +700,11 @@ top: 50%; /* Center vertically */
     box-shadow: 0 3px 0 #7a7a7a, 0 3px 8px rgba(0, 0, 0, 0.15);
 
 }
-/* dark 3D button style */
+/* dark-theme friendly 3D button (lighter face) */
 .silver-button {
   display: inline-block;
-  background-color: #111111;      /* face */
-  color: #ffffff !important;
+  background-color: #2a2a2a;        /* lighter face */
+  color: #ffffff;
   padding: 12px 20px;
   border-radius: 6px;
   text-transform: uppercase;
@@ -714,29 +714,24 @@ top: 50%; /* Center vertically */
   position: relative;
   overflow: hidden;
 
+  border: 1px solid #3a3a3a;        /* edge definition */
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease, background-color 0.12s ease;
 
-  border: 1px solid #222;         /* defines edge on dark backgrounds */
-
-  /* 3D effect: step must be DARKER than the face */
-  box-shadow: 0 6px 0 #050505, 0 10px 18px rgba(0, 0, 0, 0.45);
+  /* 3D step is darker than the face */
+  box-shadow: 0 6px 0 #151515, 0 10px 18px rgba(0,0,0,0.55);
 }
 
 .silver-button:hover {
-  /* keep it dark; just brighten slightly */
-  background-color: #141414;
+  background-color: #333333;        /* slightly lighter on hover */
   color: #ffffff;
-  filter: brightness(1.08);
-
-  /* don’t push it down on hover (feels like it’s already pressed) */
+  filter: brightness(1.06);
   transform: translateY(0);
-  box-shadow: 0 6px 0 #050505, 0 12px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 0 #151515, 0 12px 20px rgba(0,0,0,0.6);
 }
 
 .silver-button:active {
-  /* press down to meet the “step” */
-  transform: translateY(6px);
-  box-shadow: 0 0 0 #050505, 0 6px 12px rgba(0, 0, 0, 0.45);
+  transform: translateY(6px);       /* pressed */
+  box-shadow: 0 0 0 #151515, 0 6px 12px rgba(0,0,0,0.5);
 }
 
 /* Shine effect layer */
@@ -745,13 +740,13 @@ top: 50%; /* Center vertically */
   position: absolute;
   top: 0;
   left: -100%;
-  width: 50%;
+  width: 55%;
   height: 100%;
   background: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.28) 50%,
+    rgba(255,255,255,0) 100%
   );
   transform: skewX(-25deg);
   animation: silverAutoShine 2.5s infinite ease-in-out;
