@@ -13,15 +13,48 @@ const slugify = s =>
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'actbad x nbn timeless: nostalgia|ladies-early-release':        { name: 'ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Ladies Only Early Release',       unit_amount: 500,    currency: 'gbp' }, // £5.00
-  'actbad x nbn timeless: nostalgia|first-release':      { name: 'ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - First Release',     unit_amount: 700,  currency: 'gbp' }, // £7.00
-  'actbad x nbn timeless: nostalgia|second-release':      { name: 'ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Second Release',     unit_amount: 1000,  currency: 'gbp' }, // £10.00
-  'actbad x nbn timeless: nostalgia|final-release':  { name: 'ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Final Release', unit_amount: 1500, currency: 'gbp' },  // £15.00
+  'actbad x nbn timeless: nostalgia|ladies-early-release': {
+    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Ladies Only Early Release",
+    unit_amount: 500,
+    currency: 'gbp'
+  }, // £5.00
 
- // ✅ second event (example)
-  'new years eve x alura|first-release':  { name: 'NEW YEARS EVE X ALURA — First Release',  unit_amount: 1000, currency: 'gbp' }, // £10
-  'new years eve x alura|second-release':  { name: 'NEW YEARS EVE X ALURA — Second Release',  unit_amount: 1500, currency: 'gbp' }, // £15
-  'new years eve x alura|final-release':   { name: 'NEW YEARS EVE X ALURA — Final Release',   unit_amount: 1500, currency: 'gbp' }  // £15
+  'actbad x nbn timeless: nostalgia|first-release': {
+    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - First Release",
+    unit_amount: 700,
+    currency: 'gbp'
+  }, // £7.00
+
+  'actbad x nbn timeless: nostalgia|second-release': {
+    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Second Release",
+    unit_amount: 1000,
+    currency: 'gbp'
+  }, // £10.00
+
+  'actbad x nbn timeless: nostalgia|final-release': {
+    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Final Release",
+    unit_amount: 1500,
+    currency: 'gbp'
+  }, // £15.00
+
+  // ✅ second event (example)
+  'new years eve x alura|first-release': {
+    name: 'NEW YEARS EVE X ALURA — First Release',
+    unit_amount: 1000,
+    currency: 'gbp'
+  }, // £10
+
+  'new years eve x alura|second-release': {
+    name: 'NEW YEARS EVE X ALURA — Second Release',
+    unit_amount: 1500,
+    currency: 'gbp'
+  }, // £15
+
+  'new years eve x alura|final-release': {
+    name: 'NEW YEARS EVE X ALURA — Final Release',
+    unit_amount: 1500,
+    currency: 'gbp'
+  } // £15
 };
 
 exports.handler = async (event) => {
