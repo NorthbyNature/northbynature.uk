@@ -241,7 +241,7 @@ exports.handler = async (event) => {
 
           const resendResp = await resend.emails.send({
 from: 'North By Nature <tickets@northbynature.uk>',            
-to: 'info@northbynature.uk',
+to: customer_email,
             subject: 'Your NBN ticket order',
             html: `
               <div style="font-family: Arial, sans-serif; line-height: 1.5;">
