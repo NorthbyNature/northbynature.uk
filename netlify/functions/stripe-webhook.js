@@ -237,7 +237,7 @@ originalCustomerEmail: customer_email,
             )
             .join('');
 
-          console.log('Sending QR email to info@northbynature.uk');
+console.log('Sending QR email to:', customer_email);
 
           const resendResp = await resend.emails.send({
 from: 'North By Nature <tickets@northbynature.uk>',            
