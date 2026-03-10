@@ -15,7 +15,7 @@ body {
   font-optical-sizing: auto;
 text-transform: uppercase;
   font-weight: 300;
-  font-style: normal;
+  font-style: normal;p
 letter-spacing: 0.25em;
 }
 
@@ -514,7 +514,7 @@ ul li {
     }
 
     nav ul li a {
-        font-size: 0.9em; /* Smaller font size for nav items */
+        font-size: 0.5em; /* Smaller font size for nav items */
         padding: 3px 5px; /* Reduce padding to make items fit better */
     }
 
