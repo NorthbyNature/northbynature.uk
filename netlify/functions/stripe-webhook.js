@@ -240,8 +240,8 @@ exports.handler = async (event) => {
           console.log('Sending QR email to info@northbynature.uk');
 
           const resendResp = await resend.emails.send({
-            from: 'North By Nature <onboarding@resend.dev>',
-            to: 'info@northbynature.uk',
+from: 'North By Nature <tickets@northbynature.uk>',            
+to: 'info@northbynature.uk',
             subject: 'Your NBN ticket order',
             html: `
               <div style="font-family: Arial, sans-serif; line-height: 1.5;">
