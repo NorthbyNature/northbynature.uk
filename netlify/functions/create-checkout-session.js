@@ -15,9 +15,9 @@ const slugify = s =>
 const PRICE_BOOK = {
   'actbad x nbn timeless: nostalgia|ladies-early-release': {
     name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Ladies Only Early Release",
-    unit_amount: 10,
+    unit_amount: 30,
     currency: 'gbp'
-  }, // £0.10
+  }, // £0.30
 
   'actbad x nbn timeless: nostalgia|first-release': {
     name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - First Release",
