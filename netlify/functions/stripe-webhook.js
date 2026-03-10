@@ -213,8 +213,8 @@ exports.handler = async (event) => {
       if (process.env.RESEND_API_KEY && customer_email && createdTickets.length) {
         try {
           console.log('Preparing QR email', {
-            to: 'info@northbynature.uk',
-            originalCustomerEmail: customer_email,
+to: customer_email,            
+originalCustomerEmail: customer_email,
             ticketCount: createdTickets.length
           });
 
