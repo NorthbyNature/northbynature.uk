@@ -16,6 +16,7 @@ body {
 text-transform: uppercase;
   font-weight: 300;
   font-style: normal;
+letter-spacing: 0.25em;
 }
 
 /* Section layout */
@@ -246,6 +247,7 @@ h3 {
   text-transform: uppercase;
   font-weight: normal;
   text-align: center;
+  font-style: bold;
 }
 
 h5 {
