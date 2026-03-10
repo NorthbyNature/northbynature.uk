@@ -191,19 +191,26 @@ exports.handler = async (event) => {
             width: 500
           });
 
+          const ticketPayload = {
+            ticket_code: ticketCode,
+            checkout_session_id: session.id,
+            payment_intent_id: session.payment_intent || null,
+            order_email: customer_email,
+            event_sku: eventSku,
+            ticket_type: ticketType,
+            status: 'issued'
+          };
+
+          console.log('Inserting ticket:', ticketPayload);
+
           const { error: ticketErr } = await SUPABASE
             .from('tickets')
-            .insert({
-              ticket_code: ticketCode,
-              checkout_session_id: session.id,
-              payment_intent_id: session.payment_intent || null,
-              order_email: customer_email,
-              event_sku: eventSku,
-              ticket_type: ticketType,
-              status: 'active'
-            });
+            .insert(ticketPayload);
 
-          if (ticketErr) throw ticketErr;
+          if (ticketErr) {
+            console.error('ticketErr full:', JSON.stringify(ticketErr, null, 2));
+            throw ticketErr;
+          }
 
           createdTickets.push({
             ticketCode,
