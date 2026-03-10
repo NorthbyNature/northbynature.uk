@@ -1,7 +1,8 @@
 // netlify/functions/stripe-webhook.js
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
-const sgMail = require('@sendgrid/mail');
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 const QRCode = require('qrcode');
 const crypto = require('crypto');
 
@@ -9,8 +10,6 @@ const SUPABASE = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY // server-side only
 );
-
-if (process.env.SENDGRID_API_KEY) sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function makeTicketCode() {
   return `NBN-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
@@ -50,25 +49,21 @@ exports.handler = async (event) => {
         return { statusCode: 200, body: 'already processed' };
       }
 
-      // ✅ Promoter tracking (ref code) - stored on the session metadata/client_reference_id
+      // Promoter tracking
       const promoterCode = (
         session?.metadata?.promoter_code ||
         session?.client_reference_id ||
         ''
       ).trim();
 
-      // Ensure metadata always includes promoter_code (without breaking existing metadata)
       const mergedMetadata = {
         ...(session.metadata || {}),
         promoter_code: promoterCode
       };
 
-      // Pull more detail (line items, PI) for storage
-      const [lineItems, paymentIntent] = await Promise.all([
-        stripe.checkout.sessions.listLineItems(session.id, { limit: 100 }),
-        session.payment_intent
-          ? stripe.paymentIntents.retrieve(session.payment_intent)
-          : Promise.resolve(null)
+      // Pull more detail for storage
+      const [lineItems] = await Promise.all([
+        stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
       ]);
 
       const amount_total = session.amount_total || 0;
@@ -109,8 +104,8 @@ exports.handler = async (event) => {
       // 2) Insert line items
       const itemsPayload = (lineItems?.data || []).map((li) => ({
         order_id: orderId,
-        name: li.description, // Product name from Checkout line item
-        ticket_type: null,    // optional: parse from name if you follow "Event — Type"
+        name: li.description,
+        ticket_type: null,
         unit_amount: li.price?.unit_amount ?? 0,
         quantity: li.quantity ?? 1,
         subtotal:
@@ -182,7 +177,6 @@ exports.handler = async (event) => {
         for (let i = 0; i < qty; i++) {
           const ticketCode = makeTicketCode();
 
-          // Encode the ticket code itself in the QR
           const qrPayload = ticketCode;
 
           const qrDataUrl = await QRCode.toDataURL(qrPayload, {
@@ -222,7 +216,7 @@ exports.handler = async (event) => {
       }
 
       // 5) Send confirmation email with QR code(s)
-      if (process.env.SENDGRID_API_KEY && customer_email && createdTickets.length) {
+      if (process.env.RESEND_API_KEY && customer_email && createdTickets.length) {
         try {
           console.log('Preparing QR email', {
             to: customer_email,
@@ -233,26 +227,26 @@ exports.handler = async (event) => {
             content: ticket.qrDataUrl.replace(/^data:image\/png;base64,/, ''),
             filename: `ticket-${ticket.ticketCode}.png`,
             type: 'image/png',
-            disposition: 'inline',
-            content_id: `qr${index}`
+            disposition: 'attachment'
           }));
 
           const ticketsHtml = createdTickets
             .map(
-              (ticket, index) => `
+              (ticket) => `
                 <div style="margin-bottom:32px; padding:16px; border:1px solid #ddd; border-radius:8px;">
                   <p style="margin:0 0 8px;"><strong>${ticket.ticketType}</strong></p>
                   <p style="margin:0 0 8px;">Ticket code: <strong>${ticket.ticketCode}</strong></p>
                   <p style="margin:0 0 8px;">Event: <strong>${ticket.eventSku}</strong></p>
-                  <img src="cid:qr${index}" alt="QR Code for ${ticket.ticketCode}" style="max-width:220px; height:auto;" />
                 </div>
               `
             )
             .join('');
 
-          const msg = {
+          console.log('Sending QR email to:', customer_email);
+
+          const resendResp = await resend.emails.send({
+            from: 'North By Nature <onboarding@resend.dev>',
             to: customer_email,
-            from: { email: 'no-reply@northbynature.uk', name: 'North by Nature' },
             subject: 'Your NBN ticket order',
             html: `
               <div style="font-family: Arial, sans-serif; line-height: 1.5;">
@@ -261,26 +255,23 @@ exports.handler = async (event) => {
                   Order: ${session.id}<br>
                   Amount: £${(amount_total / 100).toFixed(2)} ${currency.toUpperCase()}
                 </p>
-                <p>Your ticket QR code${createdTickets.length > 1 ? 's are' : ' is'} below:</p>
+                <p>Your QR ticket${createdTickets.length > 1 ? 's are' : ' is'} attached to this email.</p>
                 ${ticketsHtml}
               </div>
             `,
             attachments
-          };
+          });
 
-          console.log('Sending QR email to:', customer_email);
-          const sgResp = await sgMail.send(msg);
-          console.log('QR email sent successfully:', JSON.stringify(sgResp));
+          console.log('QR email sent successfully:', JSON.stringify(resendResp));
         } catch (e) {
           console.error(
-            'SendGrid email failed full:',
-            JSON.stringify(e.response?.body || e.message, null, 2)
+            'Resend email failed full:',
+            JSON.stringify(e?.response?.data || e?.message || e, null, 2)
           );
-          // Non-fatal; don’t fail the webhook
         }
       } else {
         console.log('Skipping QR email step', {
-          hasSendgrid: !!process.env.SENDGRID_API_KEY,
+          hasResend: !!process.env.RESEND_API_KEY,
           customer_email,
           createdTicketsLength: createdTickets.length
         });
