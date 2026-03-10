@@ -285,3 +285,11 @@ exports.handler = async (event) => {
           createdTicketsLength: createdTickets.length
         });
       }
+    }
+
+    return { statusCode: 200, body: 'ok' };
+  } catch (err) {
+    console.error('Webhook handler error:', err);
+    return { statusCode: 500, body: 'handler error' };
+  }
+};
