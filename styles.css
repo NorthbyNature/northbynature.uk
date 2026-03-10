@@ -1384,7 +1384,7 @@ card.style.setProperty("display", "none", "important");
   position: absolute;
   display: inline-block;
   text-align: center;
-  padding: 10px 25px;
+  padding: 12px 30px;
   color: var(--gold);
   
   /* two‐layer background:
