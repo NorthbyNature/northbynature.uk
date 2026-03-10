@@ -16,12 +16,11 @@ function makeTicketCode() {
 }
 
 exports.handler = async (event) => {
-  // Stripe signature verification needs the raw body
   const sig = event.headers['stripe-signature'];
   const rawBody = event.isBase64Encoded
     ? Buffer.from(event.body, 'base64')
     : event.body;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET; // set in Stripe Dashboard
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   let constructed;
   try {
@@ -35,7 +34,6 @@ exports.handler = async (event) => {
     if (constructed.type === 'checkout.session.completed') {
       const session = constructed.data.object;
 
-      // Prevent duplicate processing if Stripe retries the webhook
       const { data: existingOrder, error: existingOrderErr } = await SUPABASE
         .from('orders')
         .select('id')
@@ -49,7 +47,6 @@ exports.handler = async (event) => {
         return { statusCode: 200, body: 'already processed' };
       }
 
-      // Promoter tracking
       const promoterCode = (
         session?.metadata?.promoter_code ||
         session?.client_reference_id ||
@@ -61,7 +58,6 @@ exports.handler = async (event) => {
         promoter_code: promoterCode
       };
 
-      // Pull more detail for storage
       const [lineItems] = await Promise.all([
         stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
       ]);
@@ -155,7 +151,7 @@ exports.handler = async (event) => {
         }
       }
 
-      // 4) Create one ticket row + QR code per ticket purchased
+      // 4) Create tickets + QR codes
       const createdTickets = [];
 
       for (const li of lineItems?.data || []) {
@@ -177,9 +173,7 @@ exports.handler = async (event) => {
         for (let i = 0; i < qty; i++) {
           const ticketCode = makeTicketCode();
 
-          const qrPayload = ticketCode;
-
-          const qrDataUrl = await QRCode.toDataURL(qrPayload, {
+          const qrDataUrl = await QRCode.toDataURL(ticketCode, {
             errorCorrectionLevel: 'M',
             margin: 1,
             width: 500
@@ -219,11 +213,12 @@ exports.handler = async (event) => {
       if (process.env.RESEND_API_KEY && customer_email && createdTickets.length) {
         try {
           console.log('Preparing QR email', {
-            to: customer_email,
+            to: 'info@northbynature.uk',
+            originalCustomerEmail: customer_email,
             ticketCount: createdTickets.length
           });
 
-          const attachments = createdTickets.map((ticket, index) => ({
+          const attachments = createdTickets.map((ticket) => ({
             content: ticket.qrDataUrl.replace(/^data:image\/png;base64,/, ''),
             filename: `ticket-${ticket.ticketCode}.png`,
             type: 'image/png',
@@ -242,16 +237,17 @@ exports.handler = async (event) => {
             )
             .join('');
 
-          console.log('Sending QR email to:', customer_email);
+          console.log('Sending QR email to info@northbynature.uk');
 
           const resendResp = await resend.emails.send({
             from: 'North By Nature <onboarding@resend.dev>',
-            to: 'info@northbynature.uk',,
+            to: 'info@northbynature.uk',
             subject: 'Your NBN ticket order',
             html: `
               <div style="font-family: Arial, sans-serif; line-height: 1.5;">
                 <p>Thanks for your order${customer_name ? `, ${customer_name}` : ''}.</p>
                 <p>
+                  Customer email: ${customer_email || 'N/A'}<br>
                   Order: ${session.id}<br>
                   Amount: £${(amount_total / 100).toFixed(2)} ${currency.toUpperCase()}
                 </p>
@@ -262,7 +258,14 @@ exports.handler = async (event) => {
             attachments
           });
 
-          console.log('QR email sent successfully:', JSON.stringify(resendResp));
+          if (resendResp.error) {
+            console.error(
+              'Resend email failed full:',
+              JSON.stringify(resendResp.error, null, 2)
+            );
+          } else {
+            console.log('QR email sent successfully:', JSON.stringify(resendResp));
+          }
         } catch (e) {
           console.error(
             'Resend email failed full:',
