@@ -12,6 +12,7 @@
     "@sendgrid/mail": "^7.4.0",
     "@supabase/supabase-js": "^2.47.7",
     "qrcode": "^1.5.4",
+    "resend": "^6.9.3",
     "stripe": "^16.0.0"
   },
   "engines": {
