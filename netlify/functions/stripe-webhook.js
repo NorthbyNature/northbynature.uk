@@ -224,6 +224,11 @@ exports.handler = async (event) => {
       // 5) Send confirmation email with QR code(s)
       if (process.env.SENDGRID_API_KEY && customer_email && createdTickets.length) {
         try {
+          console.log('Preparing QR email', {
+            to: customer_email,
+            ticketCount: createdTickets.length
+          });
+
           const attachments = createdTickets.map((ticket, index) => ({
             content: ticket.qrDataUrl.replace(/^data:image\/png;base64,/, ''),
             filename: `ticket-${ticket.ticketCode}.png`,
@@ -245,7 +250,7 @@ exports.handler = async (event) => {
             )
             .join('');
 
-          await sgMail.send({
+          const msg = {
             to: customer_email,
             from: { email: 'no-reply@northbynature.uk', name: 'North by Nature' },
             subject: 'Your NBN ticket order',
@@ -261,17 +266,22 @@ exports.handler = async (event) => {
               </div>
             `,
             attachments
-          });
+          };
+
+          console.log('Sending QR email to:', customer_email);
+          const sgResp = await sgMail.send(msg);
+          console.log('QR email sent successfully:', JSON.stringify(sgResp));
         } catch (e) {
-          console.warn('SendGrid email failed:', e.response?.body || e.message);
+          console.error(
+            'SendGrid email failed full:',
+            JSON.stringify(e.response?.body || e.message, null, 2)
+          );
           // Non-fatal; don’t fail the webhook
         }
+      } else {
+        console.log('Skipping QR email step', {
+          hasSendgrid: !!process.env.SENDGRID_API_KEY,
+          customer_email,
+          createdTicketsLength: createdTickets.length
+        });
       }
-    }
-
-    return { statusCode: 200, body: 'ok' };
-  } catch (err) {
-    console.error('Webhook handler error:', err);
-    return { statusCode: 500, body: 'handler error' };
-  }
-};
