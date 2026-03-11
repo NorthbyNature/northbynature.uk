@@ -267,7 +267,7 @@ exports.handler = async (event) => {
                     <img src="https://www.northbynature.uk/Images/Exclusive-logo.png" style="height:50px;" />
                   </div>
 
-                  <img src="https://www.northbynature.uk/Images/nostalgiaI.jpg" style="width:100%;display:block;" />
+                  <img src="https://www.northbynature.uk/Images/nostalgiaI.jpg" style="height:100px; max-width:320px;" />
 
                   <div style="padding:30px;">
                     <p style="margin:0 0 20px;color:#555;font-size:15px;">
