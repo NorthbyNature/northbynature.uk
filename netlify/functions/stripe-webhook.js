@@ -213,8 +213,8 @@ exports.handler = async (event) => {
       if (process.env.RESEND_API_KEY && customer_email && createdTickets.length) {
         try {
           console.log('Preparing QR email', {
-to: customer_email,            
-originalCustomerEmail: customer_email,
+            to: customer_email,
+            originalCustomerEmail: customer_email,
             ticketCount: createdTickets.length
           });
 
@@ -228,31 +228,70 @@ originalCustomerEmail: customer_email,
           const ticketsHtml = createdTickets
             .map(
               (ticket) => `
-                <div style="margin-bottom:32px; padding:16px; border:1px solid #ddd; border-radius:8px;">
-                  <p style="margin:0 0 8px;"><strong>${ticket.ticketType}</strong></p>
-                  <p style="margin:0 0 8px;">Ticket code: <strong>${ticket.ticketCode}</strong></p>
-                  <p style="margin:0 0 8px;">Event: <strong>${ticket.eventSku}</strong></p>
+                <div style="margin-bottom:32px; padding:30px; border:1px solid #e8d8b0; border-radius:12px; background:#fffaf2;">
+                  <p style="margin:0 0 8px; font-size:24px; color:#111; font-weight:bold;">
+                    ${ticket.ticketType}
+                  </p>
+
+                  <p style="margin:0 0 18px; color:#666;">
+                    Order ID: ${session.id}
+                  </p>
+
+                  <div style="background:#f5f5f5; padding:15px; border-radius:8px; margin-bottom:18px;">
+                    <strong>Ticket Code:</strong><br>
+                    <span style="font-size:18px;">${ticket.ticketCode}</span>
+                  </div>
+
+                  <p style="margin:0 0 8px; color:#333;">
+                    <strong>Event:</strong> ${ticket.eventSku}
+                  </p>
+
+                  <p style="margin:18px 0 0; text-align:center; color:#666; font-size:14px;">
+                    Your QR code is attached to this email.
+                  </p>
                 </div>
               `
             )
             .join('');
 
-console.log('Sending QR email to:', customer_email);
+          console.log('Sending QR email to:', customer_email);
 
           const resendResp = await resend.emails.send({
-from: 'North By Nature <tickets@northbynature.uk>',            
-to: customer_email,
+            from: 'North By Nature <tickets@northbynature.uk>',
+            to: customer_email,
             subject: 'Your NBN ticket order',
             html: `
-              <div style="font-family: Arial, sans-serif; line-height: 1.5;">
-                <p>Thanks for your order${customer_name ? `, ${customer_name}` : ''}.</p>
-                <p>
-                  Customer email: ${customer_email || 'N/A'}<br>
-                  Order: ${session.id}<br>
-                  Amount: £${(amount_total / 100).toFixed(2)} ${currency.toUpperCase()}
-                </p>
-                <p>Your QR ticket${createdTickets.length > 1 ? 's are' : ' is'} attached to this email.</p>
-                ${ticketsHtml}
+              <div style="background:#0b0b0b;padding:40px 0;font-family:Arial,sans-serif;">
+                <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+
+                  <div style="background:#000;padding:25px;text-align:center;">
+                    <img src="logo-placeholder.png" style="height:50px;" />
+                  </div>
+
+                  <img src="Images/nostalgiaI.jpg" style="width:100%;display:block;" />
+
+                  <div style="padding:30px;">
+                    <p style="margin:0 0 20px;color:#555;font-size:15px;">
+                      Thanks for your order${customer_name ? `, ${customer_name}` : ''}.
+                    </p>
+
+                    ${ticketsHtml}
+
+                    <hr style="margin:30px 0;border:none;border-top:1px solid #eee;" />
+
+                    <p style="font-size:14px;color:#666;text-align:center;">
+                      If you experience any issues with your ticket please contact us.
+                    </p>
+
+                    <p style="text-align:center;font-size:14px;line-height:1.7;">
+                      WhatsApp: <b>07498111054</b><br>
+                      <a href="https://www.northbynature.uk/contact" style="color:#000;text-decoration:none;">
+                        www.northbynature.uk/contact
+                      </a>
+                    </p>
+                  </div>
+
+                </div>
               </div>
             `,
             attachments
@@ -279,7 +318,6 @@ to: customer_email,
           createdTicketsLength: createdTickets.length
         });
       }
-    }
 
     return { statusCode: 200, body: 'ok' };
   } catch (err) {
