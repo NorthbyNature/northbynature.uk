@@ -263,7 +263,6 @@ exports.handler = async (event) => {
             html: `
               <div style="background:#0b0b0b;padding:40px 0;font-family:Arial,sans-serif;">
                 <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,0.3);">
-
                   <div style="background:#000;padding:25px;text-align:center;">
                     <img src="logo-placeholder.png" style="height:50px;" />
                   </div>
@@ -290,7 +289,6 @@ exports.handler = async (event) => {
                       </a>
                     </p>
                   </div>
-
                 </div>
               </div>
             `,
@@ -318,6 +316,7 @@ exports.handler = async (event) => {
           createdTicketsLength: createdTickets.length
         });
       }
+    }
 
     return { statusCode: 200, body: 'ok' };
   } catch (err) {
