@@ -1380,16 +1380,14 @@ card.style.setProperty("display", "none", "important");
 
 .btn-gradient {
   --gold: #BE9C5F;
-
   position: absolute;
   display: inline-block;
+  width: 260px;
+  max-width: 90vw;
   text-align: center;
-  padding: 12px 50px;
+  padding: 12px 20px;
   color: var(--gold);
-  
-  /* two‐layer background:
-     1) black fill in the padding‐box
-     2) gradient in the border‐box */
+
   background-image:
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
@@ -1401,7 +1399,6 @@ card.style.setProperty("display", "none", "important");
 
   text-transform: uppercase;
   font-weight: 600;
-  /* static gold “border” above everything */
   border: 4px solid var(--gold);
   background-color: transparent;
   transition: color 0.3s ease;
