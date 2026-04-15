@@ -13,29 +13,35 @@ const slugify = s =>
 
 // 🔐 TRUSTED prices (in pence)
 const PRICE_BOOK = {
-  'actbad x nbn timeless: nostalgia|ladies-early-release': {
-    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Ladies Only Early Release",
+  'actbad x nbn timeless: nostalgia|ladies-1st-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.2' - Ladies 1st Release",
     unit_amount: 500,
     currency: 'gbp'
   }, // £5.00
 
-  'actbad x nbn timeless: nostalgia|first-release': {
-    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - First Release",
-    unit_amount: 700,
-    currency: 'gbp'
-  }, // £7.00
-
-  'actbad x nbn timeless: nostalgia|second-release': {
-    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Second Release",
+  'actbad x nbn timeless: nostalgia|ladies-final-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.2' - Ladies Final Release",
     unit_amount: 1000,
     currency: 'gbp'
   }, // £10.00
 
-  'actbad x nbn timeless: nostalgia|final-release': {
-    name: "ACTBAD X NBN EASTER SPECIAL 'TIMELESS: NOSTALGIA' - Final Release",
+  'actbad x nbn timeless: nostalgia|mens-1st-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.2' - Mens 1st Release",
+    unit_amount: 1000,
+    currency: 'gbp'
+  }, // £10.00
+
+  'actbad x nbn timeless: nostalgia|mens-2nd-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.2' - Mens 2nd Release",
     unit_amount: 1500,
     currency: 'gbp'
   }, // £15.00
+
+  'actbad x nbn timeless: nostalgia|mens-final-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.2' - Mens Final Release",
+    unit_amount: 2000,
+    currency: 'gbp'
+  }, // £20.00
 
   // ✅ second event (example)
   'new years eve x alura|first-release': {
