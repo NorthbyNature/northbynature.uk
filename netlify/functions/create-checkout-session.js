@@ -15,33 +15,33 @@ const slugify = s =>
 const PRICE_BOOK = {
   'actbad x nbn timeless: nostalgia ep.3|ladies-1st-release': {
     name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Ladies 1st Release",
-    unit_amount: 500,
+    unit_amount: 1000,
     currency: 'gbp'
-  }, // £5.00
+  }, // £10.00
 
   'actbad x nbn timeless: nostalgia ep.3|ladies-final-release': {
     name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Ladies Final Release",
-    unit_amount: 1000,
-    currency: 'gbp'
-  }, // £10.00
-
-  'actbad x nbn timeless: nostalgia ep.3|mens-1st-release': {
-    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens 1st Release",
-    unit_amount: 1000,
-    currency: 'gbp'
-  }, // £10.00
-
-  'actbad x nbn timeless: nostalgia ep.3|mens-2nd-release': {
-    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens 2nd Release",
     unit_amount: 1500,
     currency: 'gbp'
   }, // £15.00
 
-  'actbad x nbn timeless: nostalgia ep.3|mens-final-release': {
-    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens Final Release",
+  'actbad x nbn timeless: nostalgia ep.3|mens-1st-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens 1st Release",
+    unit_amount: 1500,
+    currency: 'gbp'
+  }, // £15.00
+
+  'actbad x nbn timeless: nostalgia ep.3|mens-2nd-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens 2nd Release",
     unit_amount: 2000,
     currency: 'gbp'
   }, // £20.00
+
+  'actbad x nbn timeless: nostalgia ep.3|mens-final-release': {
+    name: "ACTBAD X NBN 'TIMELESS: NOSTALGIA EP.3' - Mens Final Release",
+    unit_amount: 2500,
+    currency: 'gbp'
+  }, // £25.00
 
   // ✅ second event (example)
   'new years eve x alura|first-release': {
