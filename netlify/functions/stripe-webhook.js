@@ -228,28 +228,45 @@ exports.handler = async (event) => {
           const ticketsHtml = createdTickets
             .map(
               (ticket) => `
-                <div style="margin-bottom:32px; padding:30px; border:1px solid #e8d8b0; border-radius:12px; background:#fffaf2;">
-                  <p style="margin:0 0 8px; font-size:24px; color:#111; font-weight:bold;">
-                    ${ticket.ticketType}
-                  </p>
-
-                  <p style="margin:0 0 18px; color:#666;">
-                    Order ID: ${session.id}
-                  </p>
-
-                  <div style="background:#f5f5f5; padding:15px; border-radius:8px; margin-bottom:18px;">
-                    <strong>Ticket Code:</strong><br>
-                    <span style="font-size:18px;">${ticket.ticketCode}</span>
-                  </div>
-
-                  <p style="margin:0 0 8px; color:#333;">
-                    <strong>Event:</strong> ${ticket.eventSku}
-                  </p>
-
-                  <p style="margin:18px 0 0; text-align:center; color:#666; font-size:14px;">
-                    Your QR code is attached to this email.
-                  </p>
-                </div>
+                <tr>
+                  <td style="padding:0 40px 24px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#161616; border:1px solid #2a2a2a;">
+                      <tr>
+                        <td style="padding:28px 28px 20px; border-bottom:1px dashed #333333;">
+                          <p style="margin:0 0 4px; font-family:Georgia, 'Times New Roman', serif; font-size:20px; color:#f5f5f0;">
+                            ${ticket.ticketType}
+                          </p>
+                          <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8a8a8a;">
+                            ${ticket.eventSku}
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:20px 28px;">
+                          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td style="font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#6b6b6b; padding-bottom:6px;">
+                                Ticket code
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="font-family:'Courier New', monospace; font-size:19px; letter-spacing:1px; color:#f5f5f0; padding-bottom:2px;">
+                                ${ticket.ticketCode}
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 28px 28px;">
+                          <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#6b6b6b;">
+                            Order ref ${session.id}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
               `
             )
             .join('');
@@ -261,36 +278,64 @@ exports.handler = async (event) => {
             to: customer_email,
             subject: 'Your NBN ticket order',
             html: `
-              <div style="background:#0b0b0b;padding:40px 0;font-family:Arial,sans-serif;">
-                <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,0.3);">
-                  <div style="background:#000;padding:25px;text-align:center;">
-                    <img src="https://www.northbynature.uk/Images/Exclusive-logo.png" style="height:100px; max-width:320px;" />
-                  </div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a; padding:48px 0;">
+                <tr>
+                  <td align="center">
+                    <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background:#111111; border:1px solid #262626;">
 
-                  <img src="https://www.northbynature.uk/Images/NostalgiaIII.jpg" style="width:100%;display:block;" />
+                      <tr>
+                        <td align="center" style="padding:40px 24px 32px;">
+                          <img src="https://www.northbynature.uk/Images/Exclusive-logo.png" style="height:56px; max-width:220px; display:block;" alt="North By Nature" />
+                        </td>
+                      </tr>
 
-                  <div style="padding:30px;">
-                    <p style="margin:0 0 20px;color:#555;font-size:15px;">
-                      Thanks for your order${customer_name ? `, ${customer_name}` : ''}.
-                    </p>
+                      <tr>
+                        <td>
+                          <img src="https://www.northbynature.uk/Images/NostalgiaIII.jpg" style="width:100%; display:block;" alt="Event artwork" />
+                        </td>
+                      </tr>
 
-                    ${ticketsHtml}
+                      <tr>
+                        <td style="padding:40px 40px 8px;">
+                          <p style="margin:0; font-family:Georgia, 'Times New Roman', serif; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:#8a8a8a;">
+                            Order confirmed
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:8px 40px 32px;">
+                          <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:1.6; color:#c7c7c7;">
+                            Thanks for your order${customer_name ? `, ${customer_name}` : ''}. Your ticket${createdTickets.length > 1 ? 's are' : ' is'} below — you'll need the QR code at the door.
+                          </p>
+                        </td>
+                      </tr>
 
-                    <hr style="margin:30px 0;border:none;border-top:1px solid #eee;" />
+                      ${ticketsHtml}
 
-                    <p style="font-size:14px;color:#666;text-align:center;">
-                      If you experience any issues with your ticket please contact us.
-                    </p>
+                      <tr>
+                        <td style="padding:8px 40px 40px;">
+                          <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#6b6b6b; text-align:center;">
+                            Your QR code${createdTickets.length > 1 ? 's are' : ' is'} attached to this email — no need to print, just show it on your phone.
+                          </p>
+                        </td>
+                      </tr>
 
-                    <p style="text-align:center;font-size:14px;line-height:1.7;">
-                      WhatsApp: <b>07498111054</b><br>
-                      <a href="https://www.northbynature.uk/contact" style="color:#000;text-decoration:none;">
-                        www.northbynature.uk/contact
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+                      <tr>
+                        <td style="padding:28px 40px; border-top:1px solid #222222;">
+                          <p style="margin:0 0 12px; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8a8a8a; text-align:center; line-height:1.7;">
+                            Questions about your order? Get in touch.
+                          </p>
+                          <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#c7c7c7; text-align:center; line-height:1.7;">
+                            WhatsApp <span style="color:#f5f5f0;">07498 111054</span><br />
+                            <a href="https://www.northbynature.uk/contact" style="color:#c7c7c7; text-decoration:underline;">northbynature.uk/contact</a>
+                          </p>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
             `,
             attachments
           });
